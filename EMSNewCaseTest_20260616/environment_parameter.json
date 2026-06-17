@@ -1,0 +1,69 @@
+{
+  "LOOP": {
+    "count": "1"
+  },
+  "ELEMENT": {
+    "wait_time": "3"
+  },
+  "AUTO_SITE": {
+    "pc_ip": "",
+    "upload_path": "./ForUpload/",
+    "report_path": "./report/",
+    "download_path": "./download/",
+    "browser": "chrome"
+  },
+  "EMS": {
+    "report_title": "Web_EMS_NewCase",
+    "url": "https://<EMS_IP>:9116/netatlasems/index",
+    "ip": "<EMS_IP>",
+    "version": "",
+    "login_username": "admin",
+    "login_password": "<PASSWORD>",
+    "server_username": "admin",
+    "server_password": "<PASSWORD>",
+    "sudo_password": "<PASSWORD>",
+    "db_username": "root",
+    "db_password": "<PASSWORD>",
+    "ftp_username": "admin",
+    "ftp_password": "<PASSWORD>",
+    "executeNode": [
+      "NODE1"
+    ]
+  },
+  "ZYXEL_DUT": {
+    "NODE1": {
+      "url": "http://<DUT_IP>",
+      "ip": "<DUT_IP>",
+      "login_username": "admin",
+      "login_password": "<PASSWORD>",
+      "default_username": "admin",
+      "default_password": "1234",
+      "name": "DUT_NODE1",
+      "description": "New automation target",
+      "name_display": "DUT_NODE1(<DUT_IP>)",
+      "submap_name": "EMS",
+      "submap_description": "",
+      "map_name": "EMS",
+      "type": "",
+      "slot_total": "0",
+      "set_community": "",
+      "get_community": "",
+      "snmp_ver": "SNMP V2C",
+      "snmp3_auth": "",
+      "snmp3_hash": "",
+      "snmp3_encrypt": "",
+      "geo_position": "",
+      "CARDINFO": {},
+      "ONT": {
+        "exe_ontCount": 0,
+        "exe_upgrade_ont": "",
+        "exe_provision_ont": ""
+      },
+      "GE": {
+        "exe_geCount": 0,
+        "exe_provision_ge": ""
+      }
+    }
+  }
+}
+

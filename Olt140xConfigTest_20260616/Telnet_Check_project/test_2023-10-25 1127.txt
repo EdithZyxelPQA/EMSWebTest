@@ -1,0 +1,6 @@
+bootfwversion Test Pass (V2.03(AAWC.2))
+image 1 version Test Fail (V2.03(AAWC.2)!= V2.03(ACCH.0)b19)
+image 2 version Test Fail (V2.03(AAWC.2)!= V2.03(ACCH.2))
+location Test Fail (L_Zyxel_EM_PQA_4F_IES5206_OLC3708-43A_OLC3416-42_IES4204QA_GLC1440X-55_OLC3416-42_CecilyChi_DUT_systemLocation_2023_@auto_end !!=)
+contact Test Fail ([C_Zyxel_EM_PQA_4F_IES5206_OLC3708-43A_OLC3416-42_IES4204QA_GLC1440X-55_OLC3416-42_CecilyChi_DUT_systemContact_2022_@auto_end !!=)
+MAC address Test Pass (00:AC:AB:BC:BD:01)

@@ -1,0 +1,581 @@
+b'\r\r\nIES6217 login: '
+b'admin\r\nPassword: '
+b'\r\nWarning: Please change admin default password!!\r\nMSC1240XA# '
+show version
+: b'\x1b[ss\x1b[Jh\x1b[Jo\x1b[Jw\x1b[J \x1b[Jv\x1b[Je\x1b[Jr\x1b[Js\x1b[Ji\x1b[Jo\x1b[Jn\x1b[J\x1b[J
+: running image : V2.03(AAWC.2)
+: MSC1240XA# '
+show lc status < MSC >
+: b'\x1b[ss\x1b[Jh\x1b[Jo\x1b[Jw\x1b[J \x1b[Jl\x1b[Jc\x1b[J \x1b[Js\x1b[Jt\x1b[Ja\x1b[Jt\x1b[Ju\x1b[Js\x1b[J \x1b[J<\x1b[J \x1b[JM\x1b[JS\x1b[JC\x1b[J \x1b[J>\x1b[J\x1b[J
+:   Too many arguments "show lcman status <slot>"
+: MSC1240XA# '
+show lcman status 17
+: b"\x1b[ss\x1b[Jh\x1b[Jo\x1b[Jw\x1b[J \x1b[Jl\x1b[Jc\x1b[Jm\x1b[Ja\x1b[Jn\x1b[J \x1b[Js\x1b[Jt\x1b[Ja\x1b[Jt\x1b[Ju\x1b[Js\x1b[J \x1b[J1\x1b[J7\x1b[J\x1b[J
+: slot17:
+:  name  : OLC3416B-IA
+:  uptime:    1 days,07:21:46
+:  status:
+:    hardware sensor: ok
+:    temperature    : ok
+:    voltage        : ok
+:    module exist   : ok
+:    module status  : ok
+:  firmware information :
+:    image 1 version: V2.03(ACCH.0)b19
+:    image 2 version: V2.03(ACCH.2)
+:    running image  : 2
+:    next boot image: 2
+:    upgrade status : idle
+:    config load status : idle
+:  inventory information:
+:    hardware version        : ABC
+:    hardware serial number  : S210Z50005807
+:    firmware version        : V2.03(ACCH.2)
+:    mac address             : 5C:F4:AB:70:80:90
+: 
+:  current voltage level:   current temperature:
+:     +3.3V:  3.291            PON  : 52.000        
+:     +12V : 12.015            SWITCH: 52.000       
+:     +0.87V_CPU:  0.873       CPU  : 55.000        
+:     +0.9V_SW:  0.904                              
+:     +1VAVS_PON:  0.885                            
+: 
+: '*' indicates a current alarm
+: 
+: MSC1240XA# "
+show system
+: b'\x1b[ss\x1b[Jh\x1b[Jo\x1b[Jw\x1b[J \x1b[Js\x1b[Jy\x1b[Js\x1b[Jt\x1b[Je\x1b[Jm\x1b[J\x1b[J
+:            Hostname: MSC1240XA
+:            Location: 
+:             Contact: 
+:               Model: MSC1240XA
+:         F/W version: V2.03(AAWC.2)
+:            F/W date: 09/22/2023
+:         Kernel size: 53793552
+:         MAC address: 00:AC:AB:BC:BD:01
+:      System up time:   1(days) :    7:23:43
+:      U-boot version: V1.0.1 (Nov 04 2015 - 13:46:41)
+:   U-bootext version: V2.03(AAWC.2) (Sep 22 2023 - 16:17:58)
+:      F/W build date: Fri Sep 22 08:21:54 2023
+:    Hardware version: ABB
+:       Serial number: S150Z51001427
+:  Manufacturing date: 2015/11/30
+:    Console baudrate: 115200 bps
+:      Chassis serial: 
+:       running image: image-2 (V2.03(AAWC.2))
+:     next boot image: image-2 (V2.03(AAWC.2))
+:      startup config: config-1
+:    next boot config: config-1
+: MSC1240XA# '
+show snmp
+: b'\x1b[ss\x1b[Jh\x1b[Jo\x1b[Jw\x1b[J \x1b[Js\x1b[Jn\x1b[Jm\x1b[Jp\x1b[J\x1b[J
+: [general settings]
+: get community : public
+: set community : public
+: trap community: public
+: version       : v2c
+: 
+: [trap destination]
+: index ver ip                              port user            
+: ----- --- ------------------------------ ----- ----------------
+:     1 v2c 0.0.0.0                          162 -               
+:     2 v2c 0.0.0.0                          162 -               
+:     3 v2c 0.0.0.0                          162 -               
+:     4 v2c 0.0.0.0                          162 -               
+: 
+: [user]
+: index name                             level  auth priv   
+: ----- -------------------------------- ------ ---- -------
+:     1 admin                            auth   md5  des    
+: MSC1240XA# '
+show ip
+: b'\x1b[ss\x1b[Jh\x1b[Jo\x1b[Jw\x1b[J \x1b[Ji\x1b[Jp\x1b[J\x1b[J
+: Static IP
+:   interface ip              netmask         gateway         vid  pbit
+:   --------- --------------- --------------- --------------- ---- ----
+:   inband    192.168.169.86  255.255.255.0   192.168.169.254 7    7   
+:   outband   192.168.0.1     255.255.255.0   0.0.0.0         0    0   
+:   default gateway : 192.168.169.254 (inband)
+: 
+: Dynamic IP
+:   interface ip              netmask         gateway        
+:   --------- --------------- --------------- ---------------
+:   inband    0.0.0.0         0.0.0.0         0.0.0.0         
+:   outband   0.0.0.0         0.0.0.0         0.0.0.0         
+: MSC1240XA# '
+show lc st 9
+: b"\x1b[ss\x1b[Jh\x1b[Jo\x1b[Jw\x1b[J \x1b[Jl\x1b[Jc\x1b[J \x1b[Js\x1b[Jt\x1b[J \x1b[J9\x1b[J\x1b[J
+: slot9:
+:  name  : MSC1240XA
+:  uptime:    1 days,07:23:43
+:  status:
+:    hardware sensor: ok
+:    temperature    : ok
+:    voltage        : ok
+:    module exist   : ok
+:    module status  : ok
+:  inventory information:
+:    hardware version      : ABB
+:    hardware serial number: S150Z51001427
+:    image 1 version       : V2.03(AAWC.0)
+:    image 2 version       : V2.03(AAWC.2)
+:    running image         : 2
+:    next boot image       : 2
+:    upgrade status        : idle
+:    inband mac address    : 00:AC:AB:BC:BD:01
+:    outband mac address   : 00:AC:AB:BC:BD:02
+: 
+:  current voltage level:   current temperature:     current fan speed:
+:     +1.0VIN:  1.023          CPU  : 54.750            FAN1 : 2252          
+:     +1.5VIN:  1.512          SWITCH: 48.250           FAN2 : 2315          
+:     +3.3V:  3.317            POWER IC: 42.250         FAN3 : 2248          
+:     +1.0VIN:  1.021                                   FAN4 : 2362          
+:     +12.0VIN: 11.828                                  FAN5 : 2307          
+:                                                       FAN6 : 2117          
+:                                                       FAN7 : 2055          
+:                                                       FAN8 : 1940          
+: 
+: '*' indicates a current alarm
+: 
+: MSC1240XA# "
+show lc st 16
+: b"\x1b[ss\x1b[Jh\x1b[Jo\x1b[Jw\x1b[J \x1b[Jl\x1b[Jc\x1b[J \x1b[Js\x1b[Jt\x1b[J \x1b[J1\x1b[J6\x1b[J\x1b[J
+: slot16:
+:  name  : GLC1440X-55
+:  uptime:    1 days,07:20:23
+:  status:
+:    hardware sensor: ok
+:    temperature    : ok
+:    voltage        : ok
+:    module exist   : ok
+:    module status  : ok
+:  firmware information :
+:    image 1 version: V2.03(AAWO.3)
+:    image 2 version: V2.03(AAWO.3)
+:    running image  : 1
+:    next boot image: 1
+:    upgrade status : idle
+:    config load status : idle
+:  inventory information:
+:    hardware version        : A0B
+:    hardware serial number  : S160Z42006944
+:    firmware version        : V2.03(AAWO.3)
+:    mac address             : 5C:F4:AB:7D:24:B1
+: 
+:  current voltage level:   current temperature:
+:     +3.3V:  3.364            Power Brick: 62.000  
+:     +12VIN: 12.000           Slave Switch: 63.000 
+:     +1.5VIN:  1.508          Master Switch: 49.000
+:     +1.01VIN:  1.018                              
+:     +1.2VIN:  1.236                               
+: 
+: '*' indicates a current alarm
+: 
+: MSC1240XA# "
+show lc st 10
+: b"\x1b[ss\x1b[Jh\x1b[Jo\x1b[Jw\x1b[J \x1b[Jl\x1b[Jc\x1b[J \x1b[Js\x1b[Jt\x1b[J \x1b[J1\x1b[J0\x1b[J\x1b[J
+: slot10:
+:  name  : OLC3416-42
+:  uptime: 07:21:41
+:  status:
+:    hardware sensor: ok
+:    temperature    : ok
+:    voltage        : ok
+:    module exist   : ok
+:    module status  : ok
+:  firmware information :
+:    image 1 version: V2.03(ABCH.2) | 2023-09-11
+:    image 2 version: V2.03(ABCH.2)b12 | 2023-09-01
+:    running image  : 1
+:    next boot image: 1
+:    upgrade status : idle
+:    config load status : idle
+:  inventory information:
+:    hardware version        : A0B
+:    hardware serial number  : S170Z38022489
+:    firmware version        : V2.03(ABCH.2)
+:    mac address             : 5C:F4:AB:97:13:22
+: 
+:  current voltage level:   current temperature:
+:     +1.0V:  1.009            POWER: 58.000        
+:     +1.0V_PON:  1.013        BCM68622: 52.000     
+:     +1.8V:  1.835            BCM56450: 50.000     
+:     +3.3V:  3.360                                 
+:     +12.0V: 12.093                                
+: 
+: '*' indicates a current alarm
+: 
+: MSC1240XA# "
+show lc st 17
+: b"\x1b[ss\x1b[Jh\x1b[Jo\x1b[Jw\x1b[J \x1b[Jl\x1b[Jc\x1b[J \x1b[Js\x1b[Jt\x1b[J \x1b[J1\x1b[J7\x1b[J\x1b[J
+: slot17:
+:  name  : OLC3416B-IA
+:  uptime:    1 days,07:21:48
+:  status:
+:    hardware sensor: ok
+:    temperature    : ok
+:    voltage        : ok
+:    module exist   : ok
+:    module status  : ok
+:  firmware information :
+:    image 1 version: V2.03(ACCH.0)b19
+:    image 2 version: V2.03(ACCH.2)
+:    running image  : 2
+:    next boot image: 2
+:    upgrade status : idle
+:    config load status : idle
+:  inventory information:
+:    hardware version        : ABC
+:    hardware serial number  : S210Z50005807
+:    firmware version        : V2.03(ACCH.2)
+:    mac address             : 5C:F4:AB:70:80:90
+: 
+:  current voltage level:   current temperature:
+:     +3.3V:  3.291            PON  : 52.000        
+:     +12V : 12.015            SWITCH: 52.000       
+:     +0.87V_CPU:  0.873       CPU  : 55.000        
+:     +0.9V_SW:  0.904                              
+:     +1VAVS_PON:  0.885                            
+: 
+: '*' indicates a current alarm
+: 
+: MSC1240XA# "
+show lc status < MSC >
+: b'\x1b[ss\x1b[Jh\x1b[Jo\x1b[Jw\x1b[J \x1b[Jl\x1b[Jc\x1b[J \x1b[Js\x1b[Jt\x1b[Ja\x1b[Jt\x1b[Ju\x1b[Js\x1b[J \x1b[J<\x1b[J \x1b[JM\x1b[JS\x1b[JC\x1b[J \x1b[J>\x1b[J\x1b[J
+:   Too many arguments "show lcman status <slot>"
+: MSC1240XA# '
+show lcman status 9
+: b"\x1b[ss\x1b[Jh\x1b[Jo\x1b[Jw\x1b[J \x1b[Jl\x1b[Jc\x1b[Jm\x1b[Ja\x1b[Jn\x1b[J \x1b[Js\x1b[Jt\x1b[Ja\x1b[Jt\x1b[Ju\x1b[Js\x1b[J \x1b[J9\x1b[J\x1b[J
+: slot9:
+:  name  : MSC1240XA
+:  uptime:    1 days,07:23:44
+:  status:
+:    hardware sensor: ok
+:    temperature    : ok
+:    voltage        : ok
+:    module exist   : ok
+:    module status  : ok
+:  inventory information:
+:    hardware version      : ABB
+:    hardware serial number: S150Z51001427
+:    image 1 version       : V2.03(AAWC.0)
+:    image 2 version       : V2.03(AAWC.2)
+:    running image         : 2
+:    next boot image       : 2
+:    upgrade status        : idle
+:    inband mac address    : 00:AC:AB:BC:BD:01
+:    outband mac address   : 00:AC:AB:BC:BD:02
+: 
+:  current voltage level:   current temperature:     current fan speed:
+:     +1.0VIN:  1.023          CPU  : 54.750            FAN1 : 2252          
+:     +1.5VIN:  1.512          SWITCH: 48.250           FAN2 : 2315          
+:     +3.3V:  3.317            POWER IC: 42.250         FAN3 : 2248          
+:     +1.0VIN:  1.021                                   FAN4 : 2362          
+:     +12.0VIN: 11.828                                  FAN5 : 2307          
+:                                                       FAN6 : 2117          
+:                                                       FAN7 : 2055          
+:                                                       FAN8 : 1940          
+: 
+: '*' indicates a current alarm
+: 
+: MSC1240XA# "
+show interface genni 1 status
+: b'\x1b[ss\x1b[Jh\x1b[Jo\x1b[Jw\x1b[J \x1b[Ji\x1b[Jn\x1b[Jt\x1b[Je\x1b[Jr\x1b[Jf\x1b[Ja\x1b[Jc\x1b[Je\x1b[J \x1b[Jg\x1b[Je\x1b[Jn\x1b[Jn\x1b[Ji\x1b[J \x1b[J1\x1b[J \x1b[Js\x1b[Jt\x1b[Ja\x1b[Jt\x1b[Ju\x1b[Js\x1b[J\x1b[J
+:   ------+-------------------------------------------------------------------------------------
+:    Port |    Status             Mode                 Up-Time    TX Power(dBm)    RX Power(dBm)
+:   ------+-------------------------------------------------------------------------------------
+:       1 |    linkup          1g-full    1(days) :    7:22:34           0.0000           0.0000
+:   ------+-------------------------------------------------------------------------------------
+: MSC1240XA# '
+show ru interface genni 1
+: b'\x1b[ss\x1b[Jh\x1b[Jo\x1b[Jw\x1b[J \x1b[Jr\x1b[Ju\x1b[J \x1b[Ji\x1b[Jn\x1b[Jt\x1b[Je\x1b[Jr\x1b[Jf\x1b[Ja\x1b[Jc\x1b[Je\x1b[J \x1b[Jg\x1b[Je\x1b[Jn\x1b[Jn\x1b[Ji\x1b[J \x1b[J1\x1b[J\x1b[J
+:   Current configuration: 
+: 
+: interface genni 1 
+: \r  enable 
+: \r  auto-negotiation enable 
+: \r  flow-control enable 
+: \r  speed 1g 
+: \r  mode uplink 
+: \r  spanning-tree protocol rstp disable 
+: \r  loopguard policy fix 
+: \rexit 
+: \rMSC1240XA# '
+show lc status < MSC >
+: b'\x1b[ss\x1b[Jh\x1b[Jo\x1b[Jw\x1b[J \x1b[Jl\x1b[Jc\x1b[J \x1b[Js\x1b[Jt\x1b[Ja\x1b[Jt\x1b[Ju\x1b[Js\x1b[J \x1b[J<\x1b[J \x1b[JM\x1b[JS\x1b[JC\x1b[J \x1b[J>\x1b[J\x1b[J
+:   Too many arguments "show lcman status <slot>"
+: MSC1240XA# '
+show lcman status 16
+: b"\x1b[ss\x1b[Jh\x1b[Jo\x1b[Jw\x1b[J \x1b[Jl\x1b[Jc\x1b[Jm\x1b[Ja\x1b[Jn\x1b[J \x1b[Js\x1b[Jt\x1b[Ja\x1b[Jt\x1b[Ju\x1b[Js\x1b[J \x1b[J1\x1b[J6\x1b[J\x1b[J
+: slot16:
+:  name  : GLC1440X-55
+:  uptime:    1 days,07:20:25
+:  status:
+:    hardware sensor: ok
+:    temperature    : ok
+:    voltage        : ok
+:    module exist   : ok
+:    module status  : ok
+:  firmware information :
+:    image 1 version: V2.03(AAWO.3)
+:    image 2 version: V2.03(AAWO.3)
+:    running image  : 1
+:    next boot image: 1
+:    upgrade status : idle
+:    config load status : idle
+:  inventory information:
+:    hardware version        : A0B
+:    hardware serial number  : S160Z42006944
+:    firmware version        : V2.03(AAWO.3)
+:    mac address             : 5C:F4:AB:7D:24:B1
+: 
+:  current voltage level:   current temperature:
+:     +3.3V:  3.364            Power Brick: 62.000  
+:     +12VIN: 12.000           Slave Switch: 63.000 
+:     +1.5VIN:  1.508          Master Switch: 49.000
+:     +1.01VIN:  1.018                              
+:     +1.2VIN:  1.236                               
+: 
+: '*' indicates a current alarm
+: 
+: MSC1240XA# "
+show interface genni 1 status
+: b'\x1b[ss\x1b[Jh\x1b[Jo\x1b[Jw\x1b[J \x1b[Ji\x1b[Jn\x1b[Jt\x1b[Je\x1b[Jr\x1b[Jf\x1b[Ja\x1b[Jc\x1b[Je\x1b[J \x1b[Jg\x1b[Je\x1b[Jn\x1b[Jn\x1b[Ji\x1b[J \x1b[J1\x1b[J \x1b[Js\x1b[Jt\x1b[Ja\x1b[Jt\x1b[Ju\x1b[Js\x1b[J\x1b[J
+:   ------+-------------------------------------------------------------------------------------
+:    Port |    Status             Mode                 Up-Time    TX Power(dBm)    RX Power(dBm)
+:   ------+-------------------------------------------------------------------------------------
+:       1 |    linkup          1g-full    1(days) :    7:22:35           0.0000           0.0000
+:   ------+-------------------------------------------------------------------------------------
+: MSC1240XA# '
+show ru interface genni 1
+: b'\x1b[ss\x1b[Jh\x1b[Jo\x1b[Jw\x1b[J \x1b[Jr\x1b[Ju\x1b[J \x1b[Ji\x1b[Jn\x1b[Jt\x1b[Je\x1b[Jr\x1b[Jf\x1b[Ja\x1b[Jc\x1b[Je\x1b[J \x1b[Jg\x1b[Je\x1b[Jn\x1b[Jn\x1b[Ji\x1b[J \x1b[J1\x1b[J\x1b[J
+:   Current configuration: 
+: 
+: interface genni 1 
+: \r  enable 
+: \r  auto-negotiation enable 
+: \r  flow-control enable 
+: \r  speed 1g 
+: \r  mode uplink 
+: \r  spanning-tree protocol rstp disable 
+: \r  loopguard policy fix 
+: \rexit 
+: \rMSC1240XA# '
+show lc status < MSC >
+: b'\x1b[ss\x1b[Jh\x1b[Jo\x1b[Jw\x1b[J \x1b[Jl\x1b[Jc\x1b[J \x1b[Js\x1b[Jt\x1b[Ja\x1b[Jt\x1b[Ju\x1b[Js\x1b[J \x1b[J<\x1b[J \x1b[JM\x1b[JS\x1b[JC\x1b[J \x1b[J>\x1b[J\x1b[J
+:   Too many arguments "show lcman status <slot>"
+: MSC1240XA# '
+show lcman status 10
+: b"\x1b[ss\x1b[Jh\x1b[Jo\x1b[Jw\x1b[J \x1b[Jl\x1b[Jc\x1b[Jm\x1b[Ja\x1b[Jn\x1b[J \x1b[Js\x1b[Jt\x1b[Ja\x1b[Jt\x1b[Ju\x1b[Js\x1b[J \x1b[J1\x1b[J0\x1b[J\x1b[J
+: slot10:
+:  name  : OLC3416-42
+:  uptime: 07:21:43
+:  status:
+:    hardware sensor: ok
+:    temperature    : ok
+:    voltage        : ok
+:    module exist   : ok
+:    module status  : ok
+:  firmware information :
+:    image 1 version: V2.03(ABCH.2) | 2023-09-11
+:    image 2 version: V2.03(ABCH.2)b12 | 2023-09-01
+:    running image  : 1
+:    next boot image: 1
+:    upgrade status : idle
+:    config load status : idle
+:  inventory information:
+:    hardware version        : A0B
+:    hardware serial number  : S170Z38022489
+:    firmware version        : V2.03(ABCH.2)
+:    mac address             : 5C:F4:AB:97:13:22
+: 
+:  current voltage level:   current temperature:
+:     +1.0V:  1.009            POWER: 58.000        
+:     +1.0V_PON:  1.013        BCM68622: 52.000     
+:     +1.8V:  1.835            BCM56450: 50.000     
+:     +3.3V:  3.360                                 
+:     +12.0V: 12.093                                
+: 
+: '*' indicates a current alarm
+: 
+: MSC1240XA# "
+show interface genni 1 status
+: b'\x1b[ss\x1b[Jh\x1b[Jo\x1b[Jw\x1b[J \x1b[Ji\x1b[Jn\x1b[Jt\x1b[Je\x1b[Jr\x1b[Jf\x1b[Ja\x1b[Jc\x1b[Je\x1b[J \x1b[Jg\x1b[Je\x1b[Jn\x1b[Jn\x1b[Ji\x1b[J \x1b[J1\x1b[J \x1b[Js\x1b[Jt\x1b[Ja\x1b[Jt\x1b[Ju\x1b[Js\x1b[J\x1b[J
+:   ------+-------------------------------------------------------------------------------------
+:    Port |    Status             Mode                 Up-Time    TX Power(dBm)    RX Power(dBm)
+:   ------+-------------------------------------------------------------------------------------
+:       1 |    linkup          1g-full    1(days) :    7:22:36           0.0000           0.0000
+:   ------+-------------------------------------------------------------------------------------
+: MSC1240XA# '
+show ru interface genni 1
+: b'\x1b[ss\x1b[Jh\x1b[Jo\x1b[Jw\x1b[J \x1b[Jr\x1b[Ju\x1b[J \x1b[Ji\x1b[Jn\x1b[Jt\x1b[Je\x1b[Jr\x1b[Jf\x1b[Ja\x1b[Jc\x1b[Je\x1b[J \x1b[Jg\x1b[Je\x1b[Jn\x1b[Jn\x1b[Ji\x1b[J \x1b[J1\x1b[J\x1b[J
+:   Current configuration: 
+: 
+: interface genni 1 
+: \r  enable 
+: \r  auto-negotiation enable 
+: \r  flow-control enable 
+: \r  speed 1g 
+: \r  mode uplink 
+: \r  spanning-tree protocol rstp disable 
+: \r  loopguard policy fix 
+: \rexit 
+: \rMSC1240XA# '
+show lc status < MSC >
+: b'\x1b[ss\x1b[Jh\x1b[Jo\x1b[Jw\x1b[J \x1b[Jl\x1b[Jc\x1b[J \x1b[Js\x1b[Jt\x1b[Ja\x1b[Jt\x1b[Ju\x1b[Js\x1b[J \x1b[J<\x1b[J \x1b[JM\x1b[JS\x1b[JC\x1b[J \x1b[J>\x1b[J\x1b[J
+:   Too many arguments "show lcman status <slot>"
+: MSC1240XA# '
+show lcman status 17
+: b"\x1b[ss\x1b[Jh\x1b[Jo\x1b[Jw\x1b[J \x1b[Jl\x1b[Jc\x1b[Jm\x1b[Ja\x1b[Jn\x1b[J \x1b[Js\x1b[Jt\x1b[Ja\x1b[Jt\x1b[Ju\x1b[Js\x1b[J \x1b[J1\x1b[J7\x1b[J\x1b[J
+: slot17:
+:  name  : OLC3416B-IA
+:  uptime:    1 days,07:21:50
+:  status:
+:    hardware sensor: ok
+:    temperature    : ok
+:    voltage        : ok
+:    module exist   : ok
+:    module status  : ok
+:  firmware information :
+:    image 1 version: V2.03(ACCH.0)b19
+:    image 2 version: V2.03(ACCH.2)
+:    running image  : 2
+:    next boot image: 2
+:    upgrade status : idle
+:    config load status : idle
+:  inventory information:
+:    hardware version        : ABC
+:    hardware serial number  : S210Z50005807
+:    firmware version        : V2.03(ACCH.2)
+:    mac address             : 5C:F4:AB:70:80:90
+: 
+:  current voltage level:   current temperature:
+:     +3.3V:  3.291            PON  : 52.000        
+:     +12V : 12.015            SWITCH: 52.000       
+:     +0.87V_CPU:  0.873       CPU  : 55.000        
+:     +0.9V_SW:  0.904                              
+:     +1VAVS_PON:  0.885                            
+: 
+: '*' indicates a current alarm
+: 
+: MSC1240XA# "
+show interface genni 1 status
+: b'\x1b[ss\x1b[Jh\x1b[Jo\x1b[Jw\x1b[J \x1b[Ji\x1b[Jn\x1b[Jt\x1b[Je\x1b[Jr\x1b[Jf\x1b[Ja\x1b[Jc\x1b[Je\x1b[J \x1b[Jg\x1b[Je\x1b[Jn\x1b[Jn\x1b[Ji\x1b[J \x1b[J1\x1b[J \x1b[Js\x1b[Jt\x1b[Ja\x1b[Jt\x1b[Ju\x1b[Js\x1b[J\x1b[J
+:   ------+-------------------------------------------------------------------------------------
+:    Port |    Status             Mode                 Up-Time    TX Power(dBm)    RX Power(dBm)
+:   ------+-------------------------------------------------------------------------------------
+:       1 |    linkup          1g-full    1(days) :    7:22:36           0.0000           0.0000
+:   ------+-------------------------------------------------------------------------------------
+: MSC1240XA# '
+show ru interface genni 1
+: b'\x1b[ss\x1b[Jh\x1b[Jo\x1b[Jw\x1b[J \x1b[Jr\x1b[Ju\x1b[J \x1b[Ji\x1b[Jn\x1b[Jt\x1b[Je\x1b[Jr\x1b[Jf\x1b[Ja\x1b[Jc\x1b[Je\x1b[J \x1b[Jg\x1b[Je\x1b[Jn\x1b[Jn\x1b[Ji\x1b[J \x1b[J1\x1b[J\x1b[J
+:   Current configuration: 
+: 
+: interface genni 1 
+: \r  enable 
+: \r  auto-negotiation enable 
+: \r  flow-control enable 
+: \r  speed 1g 
+: \r  mode uplink 
+: \r  spanning-tree protocol rstp disable 
+: \r  loopguard policy fix 
+: \rexit 
+: \rMSC1240XA# '
+sh in remote x 17-1-128 status
+: b'\x1b[ss\x1b[Jh\x1b[J \x1b[Ji\x1b[Jn\x1b[J \x1b[Jr\x1b[Je\x1b[Jm\x1b[Jo\x1b[Jt\x1b[Je\x1b[J \x1b[Jx\x1b[J \x1b[J1\x1b[J7\x1b[J-\x1b[J1\x1b[J-\x1b[J1\x1b[J2\x1b[J8\x1b[J \x1b[Js\x1b[Jt\x1b[Ja\x1b[Jt\x1b[Ju\x1b[Js\x1b[J\x1b[J
+: AID                    |                                                                    17-1-128\r
+: SN                     |                                                                ZYYG4B5DB78F\r
+: Registration-Id        |                                                                     DEFAULT\r
+: Status                 |                                                                 IS (4m 51s)\r
+: Authentication         |                                                                        PASS\r
+: System uptime          |                                                             (2d 4h 59m 59s)\r
+: Defects                |                                                                            \r
+: US TX power (dBm)      |                                                                       2.984\r
+: US RX power (dBm)      |                                                                     -19.809\r
+: DS TX power (dBm)      |                                                                       5.200\r
+: DS RX power (dBm)      |                                                                     -19.032\r
+: Type                   |                                                                        GPON\r
+: Estimated distance     |                                                                       449 m\r
+: FW version 1           |                                                               V V540ABNA2C0\r
+: FW version 2           |                                                                 V540ABNA2b4\r
+: Vendor ID              |                                                                        ZYYG\r
+: Vendor version         |                                                                   PMG5617GA\r
+: Equipment ID           |                                                                   PMG5617GA\r
+: System MAC             |                                                           00:00:00:00:00:00\r
+: Number of lan ports    |                                                                           4\r
+: Number of xlan ports   |                                                                           0\r
+: Number of veip ports   |                                                                           1\r
+: Number of video ports  |                                                                           0\r
+: Number of pots ports   |                                                                           2\r
+: VEIP                   |                                                                        7-IS\r
+: LAN-1                  |                                                                      OOS-OD\r
+: LAN-2                  |                                                                      OOS-OD\r
+: LAN-3                  |                                                                      OOS-OD\r
+: LAN-4                  |                                                                      OOS-OD\r
+: -----------------------+----------------------------------------------------------------------------------\r
+: MSC1240XA# '
+sh in remote x 17-1-128 config
+: b'\x1b[ss\x1b[Jh\x1b[J \x1b[Ji\x1b[Jn\x1b[J \x1b[Jr\x1b[Je\x1b[Jm\x1b[Jo\x1b[Jt\x1b[Je\x1b[J \x1b[Jx\x1b[J \x1b[J1\x1b[J7\x1b[J-\x1b[J1\x1b[J-\x1b[J1\x1b[J2\x1b[J8\x1b[J \x1b[Jc\x1b[Jo\x1b[Jn\x1b[Jf\x1b[Ji\x1b[Jg\x1b[J\x1b[J
+: remote xont entry:17-1-128\r
+:   active                        :Active
+:   registration-id               :DEFAULT
+:   serialNumber                  :ZYYG4B5DB78F
+:   description                   :1234567890123456789012345678901
+:   template                      :wanip
+:   qos                           :
+:   ds-pir                        :
+:   wan                           :
+:   wifi                          :
+:   voip                          :
+: MSC1240XA# '
+sh in remote x 17-1-128 wan-status
+: b'\x1b[ss\x1b[Jh\x1b[J \x1b[Ji\x1b[Jn\x1b[J \x1b[Jr\x1b[Je\x1b[Jm\x1b[Jo\x1b[Jt\x1b[Je\x1b[J \x1b[Jx\x1b[J \x1b[J1\x1b[J7\x1b[J-\x1b[J1\x1b[J-\x1b[J1\x1b[J2\x1b[J8\x1b[J \x1b[Jw\x1b[Ja\x1b[Jn\x1b[J-\x1b[Js\x1b[Jt\x1b[Ja\x1b[Jt\x1b[Ju\x1b[Js\x1b[J\x1b[J
+:   ----------------+--------------------------------------------------------------------------------------+
+:   xont 17-1-128   | 
+:                   +--------------------------------------------------------------------------------------+
+:                   | Wan 1                     : Enable      
+:                   | Connection Type           : IPoE        
+:                   | Status                    : Up          
+:                   | Nat                       : Enable      
+:                   | Service                   :             
+:                   | Default Wan               : Enable      
+:                   | Vlan                      : 7           
+:                   | Priority                  : 7           
+:                   | MVLAN                     : 7           
+:                   | Auto get IP               : Enable      
+:                   | IP address                : 192.168.169.166
+:                   | IP Mask                   : 255.255.255.0
+:                   | Gateway                   : 192.168.169.254
+:                   | Primary DNS               : 168.95.1.1  
+:                   | Secondary DNS             : 8.8.8.8     
+:                   | Binding lan port          :             
+:                   | Binding wifi 2.4G ssid    :             
+:                   | Binding wifi 5G ssid      :             
+:                   +--------------------------------------------------------------------------------------+
+:                   | Wan 2                     : Disable     
+:                   | Wan 3                     : Disable     
+:                   | Wan 4                     : Disable     
+:                   | Wan 5                     : Disable     
+:                   | Wan 6                     : Disable     
+:                   | Wan 7                     : Disable     
+:                   +--------------------------------------------------------------------------------------+
+:                   | Wan 8                     : Enable      
+:                   | Connection Type           : IPoE        
+:                   | Status                    : Down        
+:                   | Nat                       : Disable     
+:                   | Service                   :             
+:                   | Default Wan               : Disable     
+:                   | Vlan                      : 1000        
+:                   | Priority                  : 1           
+:                   | MVLAN                     : 2000        
+:                   | Auto get IP               : Disable     
+:                   | IP address                : 0.0.0.0     
+:                   | IP Mask                   : 0.0.0.0     
+:                   | Gateway                   : 0.0.0.0     
+:                   | Primary DNS               : 0.0.0.0     
+:                   | Secondary DNS             : 0.0.0.0     
+:                   | Binding lan port          : 4           
+:                   | Binding wifi 2.4G ssid    :             
+:                   | Binding wifi 5G ssid      :             
+:   ----------------+--------------------------------------------------------------------------------------+
+: MSC1240XA# '

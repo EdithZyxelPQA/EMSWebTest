@@ -1,0 +1,5 @@
+b'\r\r\nIES6217 login: '
+b'admin\r\nPassword: '
+b'\r\nWarning: Please change admin default password!!\r\nMSC1240XA# '
+b'\x1b[sc\x1b[Jo\x1b[Jn\x1b[Jf\x1b[Ji\x1b[Jg\x1b[J\x1b[J\r\nMSC1240XA(config)# '
+b'location "L_Zyxel_EM_PQA_4F_IES5206_OLC3708-43A_OLC3416-42_IES4204QA_GLC1440X-55_OLC3416-42_CecilyChi_DUT_systemLocation_2023_@auto_end !"'

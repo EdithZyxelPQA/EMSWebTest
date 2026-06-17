@@ -1,0 +1,295 @@
+b'\r\r\nIES6217 login: '
+b'admin\r\nPassword: '
+b'\r\nWarning: Please change admin default password!!\r\nMSC1240XA# '
+b'\x1b[sc\x1b[Jo\x1b[Jn\x1b[Jf\x1b[Ji\x1b[Jg\x1b[J\x1b[J\r\nMSC1240XA(config)# '
+location "L_Zyxel_EM_PQA_4F_IES5206_OLC3708-43A_OLC3416-42_IES4204QA_GLC1440X-55_OLC3416-42_CecilyChi_DUT_systemLocation_2023_@auto_end !"
+: b'\x1b[sl\x1b[Jo\x1b[Jc\x1b[Ja\x1b[Jt\x1b[Ji\x1b[Jo\x1b[Jn\x1b[J \x1b[J"\x1b[JL\x1b[J_\x1b[JZ\x1b[Jy\x1b[Jx\x1b[Je\x1b[Jl\x1b[J_\x1b[JE\x1b[JM\x1b[J_\x1b[JP\x1b[JQ\x1b[JA\x1b[J_\x1b[J4\x1b[JF\x1b[J_\x1b[JI\x1b[JE\x1b[JS\x1b[J5\x1b[J2\x1b[J0\x1b[J6\x1b[J_\x1b[JO\x1b[JL\x1b[JC\x1b[J3\x1b[J7\x1b[J0\x1b[J8\x1b[J-\x1b[J4\x1b[J3\x1b[JA\x1b[J_\x1b[JO\x1b[JL\x1b[JC\x1b[J3\x1b[J4\x1b[J1\x1b[J6\x1b[J-\x1b[J4\x1b[J2\x1b[J_\x1b[JI\x1b[JE\x1b[JS\x1b[J4\x1b[J2\x1b[J0\x1b[J4\x1b[JQ\x1b[JA\x1b[J_\x1b[JG\x1b[JL\x1b[JC\x1b[J1\x1b[J4\x1b[J4\x1b[J0\x1b[JX\x1b[J-\x1b[J5\x1b[J5\x1b[J_\x1b[JO\x1b[JL\x1b[JC\x1b[J3\x1b[J4\x1b[J1\x1b[J6\x1b[J-\x1b[J4\x1b[J2\x1b[J_\x1b[JC\x1b[Je\x1b[Jc\x1b[Ji\x1b[Jl\x1b[Jy\x1b[JC\x1b[Jh\x1b[Ji\x1b[J_\x1b[JD\x1b[JU\x1b[JT\x1b[J_\x1b[Js\x1b[Jy\x1b[Js\x1b[Jt\x1b[Je\x1b[Jm\x1b[JL\x1b[Jo\x1b[Jc\x1b[Ja\x1b[Jt\x1b[Ji\x1b[Jo\x1b[Jn\x1b[J_\x1b[J2\x1b[J0\x1b[J2\x1b[J3\x1b[J_\x1b[J@\x1b[Ja\x1b[Ju\x1b[Jt\x1b[Jo\x1b[J_\x1b[Je\x1b[Jn\x1b[Jd\x1b[J \x1b[J!\x1b[J"\x1b[J\x1b[J
+: MSC1240XA(config)# '
+contact "C_Zyxel_EM_PQA_4F_IES5206_OLC3708-43A_OLC3416-42_IES4204QA_GLC1440X-55_OLC3416-42_CecilyChi_DUT_systemContact_2022_@auto_end !"
+: b'\x1b[sc\x1b[Jo\x1b[Jn\x1b[Jt\x1b[Ja\x1b[Jc\x1b[Jt\x1b[J \x1b[J"\x1b[JC\x1b[J_\x1b[JZ\x1b[Jy\x1b[Jx\x1b[Je\x1b[Jl\x1b[J_\x1b[JE\x1b[JM\x1b[J_\x1b[JP\x1b[JQ\x1b[JA\x1b[J_\x1b[J4\x1b[JF\x1b[J_\x1b[JI\x1b[JE\x1b[JS\x1b[J5\x1b[J2\x1b[J0\x1b[J6\x1b[J_\x1b[JO\x1b[JL\x1b[JC\x1b[J3\x1b[J7\x1b[J0\x1b[J8\x1b[J-\x1b[J4\x1b[J3\x1b[JA\x1b[J_\x1b[JO\x1b[JL\x1b[JC\x1b[J3\x1b[J4\x1b[J1\x1b[J6\x1b[J-\x1b[J4\x1b[J2\x1b[J_\x1b[JI\x1b[JE\x1b[JS\x1b[J4\x1b[J2\x1b[J0\x1b[J4\x1b[JQ\x1b[JA\x1b[J_\x1b[JG\x1b[JL\x1b[JC\x1b[J1\x1b[J4\x1b[J4\x1b[J0\x1b[JX\x1b[J-\x1b[J5\x1b[J5\x1b[J_\x1b[JO\x1b[JL\x1b[JC\x1b[J3\x1b[J4\x1b[J1\x1b[J6\x1b[J-\x1b[J4\x1b[J2\x1b[J_\x1b[JC\x1b[Je\x1b[Jc\x1b[Ji\x1b[Jl\x1b[Jy\x1b[JC\x1b[Jh\x1b[Ji\x1b[J_\x1b[JD\x1b[JU\x1b[JT\x1b[J_\x1b[Js\x1b[Jy\x1b[Js\x1b[Jt\x1b[Je\x1b[Jm\x1b[JC\x1b[Jo\x1b[Jn\x1b[Jt\x1b[Ja\x1b[Jc\x1b[Jt\x1b[J_\x1b[J2\x1b[J0\x1b[J2\x1b[J2\x1b[J_\x1b[J@\x1b[Ja\x1b[Ju\x1b[Jt\x1b[Jo\x1b[J_\x1b[Je\x1b[Jn\x1b[Jd\x1b[J \x1b[J!\x1b[J"\x1b[J\x1b[J
+: MSC1240XA(config)# '
+exit
+: b'\x1b[se\x1b[Jx\x1b[Ji\x1b[Jt\x1b[J\x1b[J
+: MSC1240XA# '
+
+: b'\x1b[s\x1b[J
+: MSC1240XA# '
+linux supervisor
+: b"\x1b[sl\x1b[Ji\x1b[Jn\x1b[Ju\x1b[Jx\x1b[J \x1b[Js\x1b[Ju\x1b[Jp\x1b[Je\x1b[Jr\x1b[Jv\x1b[Ji\x1b[Js\x1b[Jo\x1b[Jr\x1b[J\x1b[J
+: 
+: 
+: BusyBox v1.22.1 (2023-09-22 16:20:39 CST) built-in shell (ash)
+: Enter 'help' for a list of built-in commands.
+: 
+: /home/admin # "
+cd /tmp/emsUpload/
+: b'cd /tmp/emsUpload/
+: /tmp/emsUpload # '
+ls
+: b'ls
+: dev.log       dev.log.old   dev_data      perf.log      perf.log.old  perf_data
+: /tmp/emsUpload # '
+cat dev_data
+: b'cat dev_data
+: {
+:   "uuid": "192.168.169.86",
+:   "path": "https://192.168.128.8/RESTfulServer/Server/DevicePoller/",
+:   "interval": "120"
+: }
+: /tmp/emsUpload # '
+cat perf_data
+: b'cat perf_data
+: {
+:   "uuid": "5b4913ff-1851-4838-bf4c-b6544466cc69",
+:   "path": "https://192.168.128.8/RESTfulServer/Server/Performance/",
+:   "interval": "900"
+: }
+: /tmp/emsUpload # '
+cat dev.log
+: b'cat dev.log
+: Tue Oct  3 04:47:10 2023, 0
+: Tue Oct  3 04:49:12 2023, 0
+: Tue Oct  3 04:51:15 2023, 0
+: Tue Oct  3 04:53:17 2023, 0
+: Tue Oct  3 04:55:21 2023, 0
+: Tue Oct  3 04:57:23 2023, 0
+: Tue Oct  3 04:59:25 2023, 0
+: Tue Oct  3 05:01:27 2023, 0
+: Tue Oct  3 05:03:29 2023, 0
+: Tue Oct  3 05:05:32 2023, 0
+: Tue Oct  3 05:07:34 2023, 0
+: Tue Oct  3 05:09:37 2023, 0
+: Tue Oct  3 05:11:40 2023, 0
+: Tue Oct  3 05:13:42 2023, 0
+: Tue Oct  3 05:15:44 2023, 0
+: Tue Oct  3 05:17:46 2023, 0
+: Tue Oct  3 05:19:49 2023, 0
+: Tue Oct  3 05:21:51 2023, 0
+: Tue Oct  3 05:23:55 2023, 0
+: Tue Oct  3 05:24:51 2023, 0
+: Tue Oct  3 05:24:59 2023, 0
+: Tue Oct  3 05:27:03 2023, 0
+: Tue Oct  3 05:29:05 2023, 0
+: Tue Oct  3 05:29:13 2023, 0
+: Tue Oct  3 05:29:45 2023, 0
+: Tue Oct  3 05:29:53 2023, 0
+: Tue Oct  3 05:31:49 2023, 0
+: Tue Oct  3 05:31:57 2023, 0
+: Tue Oct  3 05:33:47 2023, 0
+: Tue Oct  3 05:33:56 2023, 0
+: Tue Oct  3 05:35:18 2023, 0
+: Tue Oct  3 05:35:26 2023, 0
+: Tue Oct  3 05:36:10 2023, 0
+: Tue Oct  3 05:36:18 2023, 0
+: Tue Oct  3 05:38:22 2023, 0
+: Tue Oct  3 05:38:41 2023, 0
+: Tue Oct  3 05:38:49 2023, 0
+: Tue Oct  3 05:40:53 2023, 0
+: Tue Oct  3 05:42:45 2023, 0
+: Tue Oct  3 05:42:53 2023, 0
+: Tue Oct  3 05:44:56 2023, 0
+: Tue Oct  3 05:45:17 2023, 0
+: Tue Oct  3 05:45:26 2023, 0
+: Tue Oct  3 05:47:30 2023, 0
+: Tue Oct  3 05:49:33 2023, 0
+: Tue Oct  3 05:50:04 2023, 0
+: Tue Oct  3 05:50:12 2023, 0
+: Tue Oct  3 05:52:13 2023, 0
+: Tue Oct  3 05:52:21 2023, 0
+: Tue Oct  3 05:54:23 2023, 0
+: Tue Oct  3 05:54:31 2023, 0
+: Tue Oct  3 05:56:35 2023, 0
+: Tue Oct  3 05:58:32 2023, 0
+: Tue Oct  3 05:58:40 2023, 0
+: Tue Oct  3 05:59:00 2023, 0
+: Tue Oct  3 05:59:09 2023, 0
+: Tue Oct  3 06:01:12 2023, 0
+: Tue Oct  3 06:02:38 2023, 0
+: Tue Oct  3 06:02:47 2023, 0
+: Tue Oct  3 06:04:50 2023, 0
+: Tue Oct  3 06:06:53 2023, 0
+: Tue Oct  3 06:08:55 2023, 0
+: Tue Oct  3 06:10:57 2023, 0
+: Tue Oct  3 06:11:30 2023, 0
+: Tue Oct  3 06:11:39 2023, 0
+: Tue Oct  3 06:13:33 2023, 0
+: Tue Oct  3 06:13:41 2023, 0
+: Tue Oct  3 06:15:45 2023, 0
+: Tue Oct  3 06:17:47 2023, 0
+: Tue Oct  3 06:19:50 2023, 0
+: Tue Oct  3 06:21:52 2023, 0
+: Tue Oct  3 06:23:54 2023, 0
+: Tue Oct  3 06:25:08 2023, 0
+: Tue Oct  3 06:25:16 2023, 0
+: Tue Oct  3 06:27:20 2023, 0
+: Tue Oct  3 06:29:23 2023, 0
+: /tmp/emsUpload # '
+exit
+: b'exit
+: MSC1240XA# '
+linux supervisor
+: b"\x1b[sl\x1b[Ji\x1b[Jn\x1b[Ju\x1b[Jx\x1b[J \x1b[Js\x1b[Ju\x1b[Jp\x1b[Je\x1b[Jr\x1b[Jv\x1b[Ji\x1b[Js\x1b[Jo\x1b[Jr\x1b[J\x1b[J
+: 
+: 
+: BusyBox v1.22.1 (2023-09-22 16:20:39 CST) built-in shell (ash)
+: Enter 'help' for a list of built-in commands.
+: 
+: /home/admin # "
+cd /home/admin
+: b'cd /home/admin
+: /home/admin # '
+snmpset -v 2c -c public 192.168.169.86 1.3.6.1.4.1.890.1.5.13.13.16.21.1.0 s "192.168.169.86"
+: b'snmpset -v 2c -c public 192.168.169.86 1.3.6.1.4.1.890.1.5.13.13.1\r
+: 6.21.1.0 s "192.168.169.86"
+: iso.3.6.1.4.1.890.1.5.13.13.16.21.1.0 = STRING: "192.168.169.86"
+: /home/admin # '
+snmpset -v 2c -c public 192.168.169.86 1.3.6.1.4.1.890.1.5.13.13.16.21.2.0 s "https://192.168.128.8/RESTfulServer/Server/DevicePollerDebug/"
+: b'snmpset -v 2c -c public 192.168.169.86 1.3.6.1.4.1.890.1.5.13.13.1\r
+: 6.21.2.0 s "https://192.168.128.8/RESTfulServer/Server/DevicePollerDebug/"
+: iso.3.6.1.4.1.890.1.5.13.13.16.21.2.0 = STRING: "https://192.168.128.8/RESTfulServer/Server/DevicePollerDebug/"
+: /home/admin # '
+snmpset -v 2c -c public 192.168.169.86 1.3.6.1.4.1.890.1.5.13.13.16.21.2.0 s "https://192.168.128.8/RESTfulServer/Server/DevicePoller/"
+: b'snmpset -v 2c -c public 192.168.169.86 1.3.6.1.4.1.890.1.5.13.13.1\r
+: 6.21.2.0 s "https://192.168.128.8/RESTfulServer/Server/DevicePoller/"
+: iso.3.6.1.4.1.890.1.5.13.13.16.21.2.0 = STRING: "https://192.168.128.8/RESTfulServer/Server/DevicePoller/"
+: /home/admin # '
+exit
+: b'exit
+: MSC1240XA# '
+
+SSH
+
+
+FTP
+
+b'\r\r\nIES6217 login: '
+b'admin\r\nPassword: '
+b'\r\nWarning: Please change admin default password!!\r\nMSC1240XA# '
+show version
+: b'\x1b[ss\x1b[Jh\x1b[Jo\x1b[Jw\x1b[J \x1b[Jv\x1b[Je\x1b[Jr\x1b[Js\x1b[Ji\x1b[Jo\x1b[Jn\x1b[J\x1b[J
+: running image : V2.03(AAWC.2)
+: MSC1240XA# '
+show lc status < MSC >
+: b'\x1b[ss\x1b[Jh\x1b[Jo\x1b[Jw\x1b[J \x1b[Jl\x1b[Jc\x1b[J \x1b[Js\x1b[Jt\x1b[Ja\x1b[Jt\x1b[Ju\x1b[Js\x1b[J \x1b[J<\x1b[J \x1b[JM\x1b[JS\x1b[JC\x1b[J \x1b[J>\x1b[J\x1b[J
+:   Too many arguments "show lcman status <slot>"
+: MSC1240XA# '
+show system
+: b'\x1b[ss\x1b[Jh\x1b[Jo\x1b[Jw\x1b[J \x1b[Js\x1b[Jy\x1b[Js\x1b[Jt\x1b[Je\x1b[Jm\x1b[J\x1b[J
+:            Hostname: MSC1240XA
+:            Location: L_Zyxel_EM_PQA_4F_IES5206_OLC3708-43A_OLC3416-42_IES4204QA_GLC1440X-55_OLC3416-42_CecilyChi_DUT_systemLocation_2023_@auto_end !
+:             Contact: C_Zyxel_EM_PQA_4F_IES5206_OLC3708-43A_OLC3416-42_IES4204QA_GLC1440X-55_OLC3416-42_CecilyChi_DUT_systemContact_2022_@auto_end !
+:               Model: MSC1240XA
+:         F/W version: V2.03(AAWC.2)
+:            F/W date: 09/22/2023
+:         Kernel size: 53793552
+:         MAC address: 00:AC:AB:BC:BD:01
+:      System up time:   6(days) :   22:21:40
+:      U-boot version: V1.0.1 (Nov 04 2015 - 13:46:41)
+:   U-bootext version: V2.03(AAWC.2) (Sep 22 2023 - 16:17:58)
+:      F/W build date: Fri Sep 22 08:21:54 2023
+:    Hardware version: ABB
+:       Serial number: S150Z51001427
+:  Manufacturing date: 2015/11/30
+:    Console baudrate: 115200 bps
+:      Chassis serial: 
+:       running image: image-2 (V2.03(AAWC.2))
+:     next boot image: image-2 (V2.03(AAWC.2))
+:      startup config: config-1
+:    next boot config: config-1
+: MSC1240XA# '
+show snmp
+: b'\x1b[ss\x1b[Jh\x1b[Jo\x1b[Jw\x1b[J \x1b[Js\x1b[Jn\x1b[Jm\x1b[Jp\x1b[J\x1b[J
+: [general settings]
+: get community : public
+: set community : public
+: trap community: public
+: version       : v2c
+: 
+: [trap destination]
+: index ver ip                              port user            
+: ----- --- ------------------------------ ----- ----------------
+:     1 v2c 192.168.128.8                    162 -               
+:     2 v2c 0.0.0.0                          162 -               
+:     3 v2c 0.0.0.0                          162 -               
+:     4 v2c 0.0.0.0                          162 -               
+: 
+: [user]
+: index name                             level  auth priv   
+: ----- -------------------------------- ------ ---- -------
+:     1 admin                            auth   md5  des    
+: MSC1240XA# '
+show ip
+: b'\x1b[ss\x1b[Jh\x1b[Jo\x1b[Jw\x1b[J \x1b[Ji\x1b[Jp\x1b[J\x1b[J
+: Static IP
+:   interface ip              netmask         gateway         vid  pbit
+:   --------- --------------- --------------- --------------- ---- ----
+:   inband    192.168.169.86  255.255.255.0   192.168.169.254 7    7   
+:   outband   192.168.0.1     255.255.255.0   0.0.0.0         0    0   
+:   default gateway : 192.168.169.254 (inband)
+: 
+: Dynamic IP
+:   interface ip              netmask         gateway        
+:   --------- --------------- --------------- ---------------
+:   inband    0.0.0.0         0.0.0.0         0.0.0.0         
+:   outband   0.0.0.0         0.0.0.0         0.0.0.0         
+: MSC1240XA# '
+show lc st 17
+: b"\x1b[ss\x1b[Jh\x1b[Jo\x1b[Jw\x1b[J \x1b[Jl\x1b[Jc\x1b[J \x1b[Js\x1b[Jt\x1b[J \x1b[J1\x1b[J7\x1b[J\x1b[J
+: slot17:
+:  name  : OLC3416B-IA
+:  uptime:    6 days,22:19:45
+:  status:
+:    hardware sensor: ok
+:    temperature    : ok
+:    voltage        : ok
+:    module exist   : ok
+:    module status  : ok
+:  firmware information :
+:    image 1 version: V2.03(ACCH.2)
+:    image 2 version: V2.03(ACCH.2)
+:    running image  : 2
+:    next boot image: 2
+:    upgrade status : idle
+:    config load status : idle
+:  inventory information:
+:    hardware version        : ABC
+:    hardware serial number  : S210Z50005807
+:    firmware version        : V2.03(ACCH.2)
+:    mac address             : 5C:F4:AB:70:80:90
+: 
+:  current voltage level:   current temperature:
+:     +3.3V:  3.291            PON  : 53.000        
+:     +12V : 12.000            SWITCH: 53.000       
+:     +0.87V_CPU:  0.873       CPU  : 56.000        
+:     +0.9V_SW:  0.904                              
+:     +1VAVS_PON:  0.885                            
+: 
+: '*' indicates a current alarm
+: 
+: MSC1240XA# "
+show lc status < MSC >
+: b'\x1b[ss\x1b[Jh\x1b[Jo\x1b[Jw\x1b[J \x1b[Jl\x1b[Jc\x1b[J \x1b[Js\x1b[Jt\x1b[Ja\x1b[Jt\x1b[Ju\x1b[Js\x1b[J \x1b[J<\x1b[J \x1b[JM\x1b[JS\x1b[JC\x1b[J \x1b[J>\x1b[J\x1b[J
+:   Too many arguments "show lcman status <slot>"
+: MSC1240XA# '
+show interface genni 1 status
+: b'\x1b[ss\x1b[Jh\x1b[Jo\x1b[Jw\x1b[J \x1b[Ji\x1b[Jn\x1b[Jt\x1b[Je\x1b[Jr\x1b[Jf\x1b[Ja\x1b[Jc\x1b[Je\x1b[J \x1b[Jg\x1b[Je\x1b[Jn\x1b[Jn\x1b[Ji\x1b[J \x1b[J1\x1b[J \x1b[Js\x1b[Jt\x1b[Ja\x1b[Jt\x1b[Ju\x1b[Js\x1b[J\x1b[J
+:   ------+-------------------------------------------------------------------------------------
+:    Port |    Status             Mode                 Up-Time    TX Power(dBm)    RX Power(dBm)
+:   ------+-------------------------------------------------------------------------------------
+:       1 |    linkup          1g-full    6(days) :   22:20:29           0.0000           0.0000
+:   ------+-------------------------------------------------------------------------------------
+: MSC1240XA# '
+show ru interface genni 1
+: b'\x1b[ss\x1b[Jh\x1b[Jo\x1b[Jw\x1b[J \x1b[Jr\x1b[Ju\x1b[J \x1b[Ji\x1b[Jn\x1b[Jt\x1b[Je\x1b[Jr\x1b[Jf\x1b[Ja\x1b[Jc\x1b[Je\x1b[J \x1b[Jg\x1b[Je\x1b[Jn\x1b[Jn\x1b[Ji\x1b[J \x1b[J1\x1b[J\x1b[J
+:   Current configuration: 
+: 
+: interface genni 1 
+: \r  enable 
+: \r  auto-negotiation enable 
+: \r  flow-control enable 
+: \r  speed 1g 
+: \r  mode uplink 
+: \r  spanning-tree protocol rstp disable 
+: \r  loopguard policy fix 
+: \rexit 
+: \rMSC1240XA# '

@@ -1,0 +1,317 @@
+b'\r\r\nIES6217 login: '
+b'admin\r\nPassword: '
+b'\r\nWarning: Please change admin default password!!\r\nMSC1240XA# '
+b'\x1b[sc\x1b[Jo\x1b[Jn\x1b[Jf\x1b[Ji\x1b[Jg\x1b[J\x1b[J\r\nMSC1240XA(config)# '
+in genni 1
+: b'\x1b[si\x1b[Jn\x1b[J \x1b[Jg\x1b[Je\x1b[Jn\x1b[Jn\x1b[Ji\x1b[J \x1b[J1\x1b[J\x1b[J
+: MSC1240XA(config-interface-genni-1)# '
+name "xxxxxxxxxxxxxxxGenni_name_31 x"
+: b'\x1b[sn\x1b[Ja\x1b[Jm\x1b[Je\x1b[J \x1b[J"\x1b[Jx\x1b[Jx\x1b[Jx\x1b[Jx\x1b[Jx\x1b[Jx\x1b[Jx\x1b[Jx\x1b[Jx\x1b[Jx\x1b[Jx\x1b[Jx\x1b[Jx\x1b[Jx\x1b[Jx\x1b[JG\x1b[Je\x1b[Jn\x1b[Jn\x1b[Ji\x1b[J_\x1b[Jn\x1b[Ja\x1b[Jm\x1b[Je\x1b[J_\x1b[J3\x1b[J1\x1b[J \x1b[Jx\x1b[J"\x1b[J\x1b[J
+: MSC1240XA(config-interface-genni-1)# '
+exit
+: b'\x1b[se\x1b[Jx\x1b[Ji\x1b[Jt\x1b[J\x1b[J
+: MSC1240XA(config)# '
+in gpon 10-16
+: b'\x1b[si\x1b[Jn\x1b[J \x1b[Jg\x1b[Jp\x1b[Jo\x1b[Jn\x1b[J \x1b[J1\x1b[J0\x1b[J-\x1b[J1\x1b[J6\x1b[J\x1b[J
+: MSC1240XA(config-interface-gpon-10-16)# '
+name "xxxxxxxxxxxxxxxxGPON_name_31 x"
+: b'\x1b[sn\x1b[Ja\x1b[Jm\x1b[Je\x1b[J \x1b[J"\x1b[Jx\x1b[Jx\x1b[Jx\x1b[Jx\x1b[Jx\x1b[Jx\x1b[Jx\x1b[Jx\x1b[Jx\x1b[Jx\x1b[Jx\x1b[Jx\x1b[Jx\x1b[Jx\x1b[Jx\x1b[Jx\x1b[JG\x1b[JP\x1b[JO\x1b[JN\x1b[J_\x1b[Jn\x1b[Ja\x1b[Jm\x1b[Je\x1b[J_\x1b[J3\x1b[J1\x1b[J \x1b[Jx\x1b[J"\x1b[J\x1b[J
+: MSC1240XA(config-interface-gpon-10-16)# '
+tel "xxxxxxxxxxxxxxxxxGPON_tel_31 x"
+: b'\x1b[st\x1b[Je\x1b[Jl\x1b[J \x1b[J"\x1b[Jx\x1b[Jx\x1b[Jx\x1b[Jx\x1b[Jx\x1b[Jx\x1b[Jx\x1b[Jx\x1b[Jx\x1b[Jx\x1b[Jx\x1b[Jx\x1b[Jx\x1b[Jx\x1b[Jx\x1b[Jx\x1b[Jx\x1b[JG\x1b[JP\x1b[JO\x1b[JN\x1b[J_\x1b[Jt\x1b[Je\x1b[Jl\x1b[J_\x1b[J3\x1b[J1\x1b[J \x1b[Jx\x1b[J"\x1b[J\x1b[J
+: MSC1240XA(config-interface-gpon-10-16)# '
+exit
+: b'\x1b[se\x1b[Jx\x1b[Ji\x1b[Jt\x1b[J\x1b[J
+: MSC1240XA(config)# '
+in ge 16-1
+: b'\x1b[si\x1b[Jn\x1b[J \x1b[Jg\x1b[Je\x1b[J \x1b[J1\x1b[J6\x1b[J-\x1b[J1\x1b[J\x1b[J
+: MSC1240XA(config-interface-ge-16-1)# '
+name "xxxxxxxxxxxxxxxxxxGe_name_31 x"
+: b'\x1b[sn\x1b[Ja\x1b[Jm\x1b[Je\x1b[J \x1b[J"\x1b[Jx\x1b[Jx\x1b[Jx\x1b[Jx\x1b[Jx\x1b[Jx\x1b[Jx\x1b[Jx\x1b[Jx\x1b[Jx\x1b[Jx\x1b[Jx\x1b[Jx\x1b[Jx\x1b[Jx\x1b[Jx\x1b[Jx\x1b[Jx\x1b[JG\x1b[Je\x1b[J_\x1b[Jn\x1b[Ja\x1b[Jm\x1b[Je\x1b[J_\x1b[J3\x1b[J1\x1b[J \x1b[Jx\x1b[J"\x1b[J\x1b[J
+: MSC1240XA(config-interface-ge-16-1)# '
+tel "xxxxxxxxxxxxxxxxxxxGe_tel_31 x"
+: b'\x1b[st\x1b[Je\x1b[Jl\x1b[J \x1b[J"\x1b[Jx\x1b[Jx\x1b[Jx\x1b[Jx\x1b[Jx\x1b[Jx\x1b[Jx\x1b[Jx\x1b[Jx\x1b[Jx\x1b[Jx\x1b[Jx\x1b[Jx\x1b[Jx\x1b[Jx\x1b[Jx\x1b[Jx\x1b[Jx\x1b[Jx\x1b[JG\x1b[Je\x1b[J_\x1b[Jt\x1b[Je\x1b[Jl\x1b[J_\x1b[J3\x1b[J1\x1b[J \x1b[Jx\x1b[J"\x1b[J\x1b[J
+: MSC1240XA(config-interface-ge-16-1)# '
+exit
+: b'\x1b[se\x1b[Jx\x1b[Ji\x1b[Jt\x1b[J\x1b[J
+: MSC1240XA(config)# '
+in xpon 17-16
+: b'\x1b[si\x1b[Jn\x1b[J \x1b[Jx\x1b[Jp\x1b[Jo\x1b[Jn\x1b[J \x1b[J1\x1b[J7\x1b[J-\x1b[J1\x1b[J6\x1b[J\x1b[J
+: MSC1240XA(config-interface-xpon-17-16)# '
+name "xxxxxxxxxxxxxxxxXPON_name_31 x"
+: b'\x1b[sn\x1b[Ja\x1b[Jm\x1b[Je\x1b[J \x1b[J"\x1b[Jx\x1b[Jx\x1b[Jx\x1b[Jx\x1b[Jx\x1b[Jx\x1b[Jx\x1b[Jx\x1b[Jx\x1b[Jx\x1b[Jx\x1b[Jx\x1b[Jx\x1b[Jx\x1b[Jx\x1b[Jx\x1b[JX\x1b[JP\x1b[JO\x1b[JN\x1b[J_\x1b[Jn\x1b[Ja\x1b[Jm\x1b[Je\x1b[J_\x1b[J3\x1b[J1\x1b[J \x1b[Jx\x1b[J"\x1b[J\x1b[J
+: MSC1240XA(config-interface-xpon-17-16)# '
+exit
+: b'\x1b[se\x1b[Jx\x1b[Ji\x1b[Jt\x1b[J\x1b[J
+: MSC1240XA(config)# '
+xpon uni-profile wanip
+: b'\x1b[sx\x1b[Jp\x1b[Jo\x1b[Jn\x1b[J \x1b[Ju\x1b[Jn\x1b[Ji\x1b[J-\x1b[Jp\x1b[Jr\x1b[Jo\x1b[Jf\x1b[Ji\x1b[Jl\x1b[Je\x1b[J \x1b[Jw\x1b[Ja\x1b[Jn\x1b[Ji\x1b[Jp\x1b[J\x1b[J
+: MSC1240XA(config-xpon-uni-profile)# '
+  port veip tag-oper-id 1
+: b'\x1b[s \x1b[J \x1b[Jp\x1b[Jo\x1b[Jr\x1b[Jt\x1b[J \x1b[Jv\x1b[Je\x1b[Ji\x1b[Jp\x1b[J \x1b[Jt\x1b[Ja\x1b[Jg\x1b[J-\x1b[Jo\x1b[Jp\x1b[Je\x1b[Jr\x1b[J-\x1b[Ji\x1b[Jd\x1b[J \x1b[J1\x1b[J\x1b[J
+: MSC1240XA(config-uni-profile-tag-oper-id)# '
+    uniport-list 1
+: b'\x1b[s \x1b[J \x1b[J \x1b[J \x1b[Ju\x1b[Jn\x1b[Ji\x1b[Jp\x1b[Jo\x1b[Jr\x1b[Jt\x1b[J-\x1b[Jl\x1b[Ji\x1b[Js\x1b[Jt\x1b[J \x1b[J1\x1b[J\x1b[J
+: MSC1240XA(config-uni-profile-tag-oper-id)# '
+    filter uni-vlan 7
+: b'\x1b[s \x1b[J \x1b[J \x1b[J \x1b[Jf\x1b[Ji\x1b[Jl\x1b[Jt\x1b[Je\x1b[Jr\x1b[J \x1b[Ju\x1b[Jn\x1b[Ji\x1b[J-\x1b[Jv\x1b[Jl\x1b[Ja\x1b[Jn\x1b[J \x1b[J7\x1b[J\x1b[J
+: MSC1240XA(config-uni-profile-tag-oper-id)# '
+    vlan 7
+: b'\x1b[s \x1b[J \x1b[J \x1b[J \x1b[Jv\x1b[Jl\x1b[Ja\x1b[Jn\x1b[J \x1b[J7\x1b[J\x1b[J
+: MSC1240XA(config-uni-profile-tag-oper-id)# '
+  exit
+: b'\x1b[s \x1b[J \x1b[Je\x1b[Jx\x1b[Ji\x1b[Jt\x1b[J\x1b[J
+: MSC1240XA(config-uni-profile)# '
+exit
+: b'\x1b[se\x1b[Jx\x1b[Ji\x1b[Jt\x1b[J\x1b[J
+: MSC1240XA(config)# '
+xpon ont-profile wanip
+: b'\x1b[sx\x1b[Jp\x1b[Jo\x1b[Jn\x1b[J \x1b[Jo\x1b[Jn\x1b[Jt\x1b[J-\x1b[Jp\x1b[Jr\x1b[Jo\x1b[Jf\x1b[Ji\x1b[Jl\x1b[Je\x1b[J \x1b[Jw\x1b[Ja\x1b[Jn\x1b[Ji\x1b[Jp\x1b[J\x1b[J
+: MSC1240XA(config-ont-profile)# '
+  ontServiceControl http enable ALL
+: b'\x1b[s \x1b[J \x1b[Jo\x1b[Jn\x1b[Jt\x1b[JS\x1b[Je\x1b[Jr\x1b[Jv\x1b[Ji\x1b[Jc\x1b[Je\x1b[JC\x1b[Jo\x1b[Jn\x1b[Jt\x1b[Jr\x1b[Jo\x1b[Jl\x1b[J \x1b[Jh\x1b[Jt\x1b[Jt\x1b[Jp\x1b[J \x1b[Je\x1b[Jn\x1b[Ja\x1b[Jb\x1b[Jl\x1b[Je\x1b[J \x1b[JA\x1b[JL\x1b[JL\x1b[J\x1b[J
+: MSC1240XA(config-ont-profile)# '
+  ontWan 1
+: b'\x1b[s \x1b[J \x1b[Jo\x1b[Jn\x1b[Jt\x1b[JW\x1b[Ja\x1b[Jn\x1b[J \x1b[J1\x1b[J\x1b[J
+: MSC1240XA(config-ont-profile-wan-1)# '
+    default
+: b'\x1b[s \x1b[J \x1b[J \x1b[J \x1b[Jd\x1b[Je\x1b[Jf\x1b[Ja\x1b[Ju\x1b[Jl\x1b[Jt\x1b[J\x1b[J
+: MSC1240XA(config-ont-profile-wan-1)# '
+    enable
+: b'\x1b[s \x1b[J \x1b[J \x1b[J \x1b[Je\x1b[Jn\x1b[Ja\x1b[Jb\x1b[Jl\x1b[Je\x1b[J\x1b[J
+: MSC1240XA(config-ont-profile-wan-1)# '
+    ip nat
+: b'\x1b[s \x1b[J \x1b[J \x1b[J \x1b[Ji\x1b[Jp\x1b[J \x1b[Jn\x1b[Ja\x1b[Jt\x1b[J\x1b[J
+: MSC1240XA(config-ont-profile-wan-1)# '
+    ip dynamic
+: b'\x1b[s \x1b[J \x1b[J \x1b[J \x1b[Ji\x1b[Jp\x1b[J \x1b[Jd\x1b[Jy\x1b[Jn\x1b[Ja\x1b[Jm\x1b[Ji\x1b[Jc\x1b[J\x1b[J
+: MSC1240XA(config-ont-profile-wan-1)# '
+    vlan 7 priority 7 mvlan 7
+: b'\x1b[s \x1b[J \x1b[J \x1b[J \x1b[Jv\x1b[Jl\x1b[Ja\x1b[Jn\x1b[J \x1b[J7\x1b[J \x1b[Jp\x1b[Jr\x1b[Ji\x1b[Jo\x1b[Jr\x1b[Ji\x1b[Jt\x1b[Jy\x1b[J \x1b[J7\x1b[J \x1b[Jm\x1b[Jv\x1b[Jl\x1b[Ja\x1b[Jn\x1b[J \x1b[J7\x1b[J\x1b[J
+: MSC1240XA(config-ont-profile-wan-1)# '
+  exit
+: b'\x1b[s \x1b[J \x1b[Je\x1b[Jx\x1b[Ji\x1b[Jt\x1b[J\x1b[J
+: MSC1240XA(config-ont-profile)# '
+exit
+: b'\x1b[se\x1b[Jx\x1b[Ji\x1b[Jt\x1b[J\x1b[J
+: MSC1240XA(config)# '
+xpon qos bwprof 1G
+: b'\x1b[sx\x1b[Jp\x1b[Jo\x1b[Jn\x1b[J \x1b[Jq\x1b[Jo\x1b[Js\x1b[J \x1b[Jb\x1b[Jw\x1b[Jp\x1b[Jr\x1b[Jo\x1b[Jf\x1b[J \x1b[J1\x1b[JG\x1b[J\x1b[J
+: MSC1240XA(config-xpon-bwprof)# '
+  sir 0 air 0 pir 1000000 
+: b'\x1b[s \x1b[J \x1b[Js\x1b[Ji\x1b[Jr\x1b[J \x1b[J0\x1b[J \x1b[Ja\x1b[Ji\x1b[Jr\x1b[J \x1b[J0\x1b[J \x1b[Jp\x1b[Ji\x1b[Jr\x1b[J \x1b[J1\x1b[J0\x1b[J0\x1b[J0\x1b[J0\x1b[J0\x1b[J0\x1b[J \x1b[J\x1b[J
+: MSC1240XA(config-xpon-bwprof)# '
+exit
+: b'\x1b[se\x1b[Jx\x1b[Ji\x1b[Jt\x1b[J\x1b[J
+: MSC1240XA(config)# '
+xpon service-profile wanip
+: b'\x1b[sx\x1b[Jp\x1b[Jo\x1b[Jn\x1b[J \x1b[Js\x1b[Je\x1b[Jr\x1b[Jv\x1b[Ji\x1b[Jc\x1b[Je\x1b[J-\x1b[Jp\x1b[Jr\x1b[Jo\x1b[Jf\x1b[Ji\x1b[Jl\x1b[Je\x1b[J \x1b[Jw\x1b[Ja\x1b[Jn\x1b[Ji\x1b[Jp\x1b[J\x1b[J
+: MSC1240XA(config-xpon-service-profile)# '
+  mode veip
+: b'\x1b[s \x1b[J \x1b[Jm\x1b[Jo\x1b[Jd\x1b[Je\x1b[J \x1b[Jv\x1b[Je\x1b[Ji\x1b[Jp\x1b[J\x1b[J
+: MSC1240XA(config-xpon-service-profile)# '
+  port lan 1
+: b'\x1b[s \x1b[J \x1b[Jp\x1b[Jo\x1b[Jr\x1b[Jt\x1b[J \x1b[Jl\x1b[Ja\x1b[Jn\x1b[J \x1b[J1\x1b[J\x1b[J
+: MSC1240XA(config-xpon-service-profile)# '
+  vlan 7
+: b'\x1b[s \x1b[J \x1b[Jv\x1b[Jl\x1b[Ja\x1b[Jn\x1b[J \x1b[J7\x1b[J\x1b[J
+: MSC1240XA(config-xpon-service-profile)# '
+  mapper-pbit 0,1,2,3,4,5,6,7
+: b'\x1b[s \x1b[J \x1b[Jm\x1b[Ja\x1b[Jp\x1b[Jp\x1b[Je\x1b[Jr\x1b[J-\x1b[Jp\x1b[Jb\x1b[Ji\x1b[Jt\x1b[J \x1b[J0\x1b[J,\x1b[J1\x1b[J,\x1b[J2\x1b[J,\x1b[J3\x1b[J,\x1b[J4\x1b[J,\x1b[J5\x1b[J,\x1b[J6\x1b[J,\x1b[J7\x1b[J\x1b[J
+: MSC1240XA(config-xpon-service-profile)# '
+exit
+: b'\x1b[se\x1b[Jx\x1b[Ji\x1b[Jt\x1b[J\x1b[J
+: MSC1240XA(config)# '
+xpon template wanip
+: b'\x1b[sx\x1b[Jp\x1b[Jo\x1b[Jn\x1b[J \x1b[Jt\x1b[Je\x1b[Jm\x1b[Jp\x1b[Jl\x1b[Ja\x1b[Jt\x1b[Je\x1b[J \x1b[Jw\x1b[Ja\x1b[Jn\x1b[Ji\x1b[Jp\x1b[J\x1b[J
+: MSC1240XA(config-xpon-template)# '
+  service 1 service-profile wanip shared-priority 7 usbwprof 1G dsbwprof 1G
+: b'\x1b[s \x1b[J \x1b[Js\x1b[Je\x1b[Jr\x1b[Jv\x1b[Ji\x1b[Jc\x1b[Je\x1b[J \x1b[J1\x1b[J \x1b[Js\x1b[Je\x1b[Jr\x1b[Jv\x1b[Ji\x1b[Jc\x1b[Je\x1b[J-\x1b[Jp\x1b[Jr\x1b[Jo\x1b[Jf\x1b[Ji\x1b[Jl\x1b[Je\x1b[J \x1b[Jw\x1b[Ja\x1b[Jn\x1b[Ji\x1b[Jp\x1b[J \x1b[Js\x1b[Jh\x1b[Ja\x1b[Jr\x1b[Je\x1b[Jd\x1b[J-\x1b[Jp\x1b[Jr\x1b[Ji\x1b[Jo\x1b[Jr\x1b[Ji\x1b[Jt\x1b[Jy\x1b[J \x1b[J7\x1b[J \x1b[Ju\x1b[Js\x1b[Jb\x1b[Jw\x1b[Jp\x1b[Jr\x1b[Jo\x1b[Jf\x1b[J \x1b[J1\x1b[JG\x1b[J \x1b[Jd\x1b[Js\x1b[Jb\x1b[Jw\x1b[Jp\x1b[Jr\x1b[Jo\x1b[Jf\x1b[J \x1b[J1\x1b[JG\x1b[J\x1b[J
+: MSC1240XA(config-xpon-template)# '
+  tcont 1 services 1
+: b'\x1b[s \x1b[J \x1b[Jt\x1b[Jc\x1b[Jo\x1b[Jn\x1b[Jt\x1b[J \x1b[J1\x1b[J \x1b[Js\x1b[Je\x1b[Jr\x1b[Jv\x1b[Ji\x1b[Jc\x1b[Je\x1b[Js\x1b[J \x1b[J1\x1b[J\x1b[J
+: MSC1240XA(config-xpon-template)# '
+  uni-profile wanip
+: b'\x1b[s \x1b[J \x1b[Ju\x1b[Jn\x1b[Ji\x1b[J-\x1b[Jp\x1b[Jr\x1b[Jo\x1b[Jf\x1b[Ji\x1b[Jl\x1b[Je\x1b[J \x1b[Jw\x1b[Ja\x1b[Jn\x1b[Ji\x1b[Jp\x1b[J\x1b[J
+: MSC1240XA(config-xpon-template)# '
+  ont-profile wanip
+: b'\x1b[s \x1b[J \x1b[Jo\x1b[Jn\x1b[Jt\x1b[J-\x1b[Jp\x1b[Jr\x1b[Jo\x1b[Jf\x1b[Ji\x1b[Jl\x1b[Je\x1b[J \x1b[Jw\x1b[Ja\x1b[Jn\x1b[Ji\x1b[Jp\x1b[J\x1b[J
+: MSC1240XA(config-xpon-template)# '
+exit
+: b'\x1b[se\x1b[Jx\x1b[Ji\x1b[Jt\x1b[J\x1b[J
+: MSC1240XA(config)# '
+in remote x 17-1-128
+: b'\x1b[si\x1b[Jn\x1b[J \x1b[Jr\x1b[Je\x1b[Jm\x1b[Jo\x1b[Jt\x1b[Je\x1b[J \x1b[Jx\x1b[J \x1b[J1\x1b[J7\x1b[J-\x1b[J1\x1b[J-\x1b[J1\x1b[J2\x1b[J8\x1b[J\x1b[J
+: MSC1240XA(config-interface-xont-17-1-128)# '
+sn ZYYG4B5DB78F
+: b'\x1b[ss\x1b[Jn\x1b[J \x1b[JZ\x1b[JY\x1b[JY\x1b[JG\x1b[J4\x1b[JB\x1b[J5\x1b[JD\x1b[JB\x1b[J7\x1b[J8\x1b[JF\x1b[J\x1b[J
+: MSC1240XA(config-interface-xont-17-1-128)# '
+reg DEFAULT
+: b'\x1b[sr\x1b[Je\x1b[Jg\x1b[J \x1b[JD\x1b[JE\x1b[JF\x1b[JA\x1b[JU\x1b[JL\x1b[JT\x1b[J\x1b[J
+: MSC1240XA(config-interface-xont-17-1-128)# '
+des "xxxxxxxxxxxxxxxxxXONT_des_31 x"
+: b'\x1b[sd\x1b[Je\x1b[Js\x1b[J \x1b[J"\x1b[Jx\x1b[Jx\x1b[Jx\x1b[Jx\x1b[Jx\x1b[Jx\x1b[Jx\x1b[Jx\x1b[Jx\x1b[Jx\x1b[Jx\x1b[Jx\x1b[Jx\x1b[Jx\x1b[Jx\x1b[Jx\x1b[Jx\x1b[JX\x1b[JO\x1b[JN\x1b[JT\x1b[J_\x1b[Jd\x1b[Je\x1b[Js\x1b[J_\x1b[J3\x1b[J1\x1b[J \x1b[Jx\x1b[J"\x1b[J\x1b[J
+: MSC1240XA(config-interface-xont-17-1-128)# '
+temp wanip
+: b'\x1b[st\x1b[Je\x1b[Jm\x1b[Jp\x1b[J \x1b[Jw\x1b[Ja\x1b[Jn\x1b[Ji\x1b[Jp\x1b[J\x1b[J
+: MSC1240XA(config-interface-xont-17-1-128)# '
+no inac
+: b'\x1b[sn\x1b[Jo\x1b[J \x1b[Ji\x1b[Jn\x1b[Ja\x1b[Jc\x1b[J\x1b[J
+: MSC1240XA(config-interface-xont-17-1-128)# '
+exit
+: b'\x1b[se\x1b[Jx\x1b[Ji\x1b[Jt\x1b[J\x1b[J
+: MSC1240XA(config)# '
+ 
+: b'\x1b[s \x1b[J\x1b[J
+: MSC1240XA(config)# '
+ 
+: b'\x1b[s \x1b[J\x1b[J
+: MSC1240XA(config)# '
+linux supervisor
+: b"\x1b[sl\x1b[Ji\x1b[Jn\x1b[Ju\x1b[Jx\x1b[J \x1b[Js\x1b[Ju\x1b[Jp\x1b[Je\x1b[Jr\x1b[Jv\x1b[Ji\x1b[Js\x1b[Jo\x1b[Jr\x1b[J\x1b[J
+: 
+: 
+: BusyBox v1.22.1 (2023-09-22 16:20:39 CST) built-in shell (ash)
+: Enter 'help' for a list of built-in commands.
+: 
+: /home/admin # "
+cd /tmp/emsUpload/
+: b'cd /tmp/emsUpload/
+: /tmp/emsUpload # '
+ls
+: b'ls
+: dev.log       dev.log.old   dev_data      perf.log      perf.log.old  perf_data
+: /tmp/emsUpload # '
+cat dev_data
+: b'cat dev_data
+: {
+:   "uuid": "5b4913ff-1851-4838-bf4c-b6544466cc69",
+:   "path": "https://192.168.128.8/RESTfulServer/Server/DevicePoller/",
+:   "interval": "120"
+: }
+: /tmp/emsUpload # '
+cat perf_data
+: b'cat perf_data
+: {
+:   "uuid": "5b4913ff-1851-4838-bf4c-b6544466cc69",
+:   "path": "https://192.168.128.8/RESTfulServer/Server/Performance/",
+:   "interval": "900"
+: }
+: /tmp/emsUpload # '
+cat dev.log
+: b'cat dev.log
+: Mon Oct 23 01:37:30 2023, 0
+: Mon Oct 23 01:39:32 2023, 0
+: Mon Oct 23 01:41:34 2023, 0
+: Mon Oct 23 01:43:38 2023, 0
+: Mon Oct 23 01:45:41 2023, 0
+: Mon Oct 23 01:47:43 2023, 0
+: Mon Oct 23 01:49:46 2023, 0
+: Mon Oct 23 01:51:48 2023, 0
+: Mon Oct 23 01:53:51 2023, 0
+: Mon Oct 23 01:55:53 2023, 0
+: Mon Oct 23 01:57:55 2023, 0
+: Mon Oct 23 01:59:59 2023, 0
+: Mon Oct 23 02:02:01 2023, 0
+: Mon Oct 23 02:04:04 2023, 0
+: Mon Oct 23 02:06:06 2023, 0
+: Mon Oct 23 02:08:08 2023, 0
+: Mon Oct 23 02:10:11 2023, 0
+: Mon Oct 23 02:12:14 2023, 0
+: Mon Oct 23 02:14:17 2023, 0
+: Mon Oct 23 02:16:20 2023, 0
+: Mon Oct 23 02:18:22 2023, 0
+: Mon Oct 23 02:20:25 2023, 0
+: Mon Oct 23 02:22:27 2023, 0
+: Mon Oct 23 02:24:29 2023, 0
+: Mon Oct 23 02:26:31 2023, 0
+: Mon Oct 23 02:28:35 2023, 0
+: Mon Oct 23 02:30:37 2023, 0
+: Mon Oct 23 02:32:39 2023, 0
+: Mon Oct 23 02:34:42 2023, 0
+: Mon Oct 23 02:36:44 2023, 0
+: Mon Oct 23 02:38:47 2023, 0
+: Mon Oct 23 02:40:49 2023, 0
+: Mon Oct 23 02:42:52 2023, 0
+: Mon Oct 23 02:44:56 2023, 0
+: Mon Oct 23 02:44:58 2023, 0
+: Mon Oct 23 02:45:06 2023, 0
+: Mon Oct 23 02:45:30 2023, 0
+: Mon Oct 23 02:45:40 2023, 0
+: Mon Oct 23 02:47:38 2023, 0
+: Mon Oct 23 02:49:40 2023, 0
+: Mon Oct 23 02:51:43 2023, 0
+: Mon Oct 23 02:53:15 2023, 0
+: Mon Oct 23 02:53:24 2023, 0
+: Mon Oct 23 02:53:32 2023, 0
+: Mon Oct 23 02:55:36 2023, 0
+: Mon Oct 23 02:57:44 2023, 0
+: Mon Oct 23 02:59:42 2023, 0
+: Mon Oct 23 03:01:44 2023, 0
+: Mon Oct 23 03:03:47 2023, 0
+: Mon Oct 23 03:05:50 2023, 0
+: Mon Oct 23 03:07:52 2023, 0
+: Mon Oct 23 03:08:53 2023, 0
+: Mon Oct 23 03:09:01 2023, 0
+: Mon Oct 23 03:10:09 2023, 0
+: Mon Oct 23 03:10:17 2023, 0
+: Mon Oct 23 03:12:21 2023, 0
+: Mon Oct 23 03:14:23 2023, 0
+: Mon Oct 23 03:15:59 2023, 0
+: Mon Oct 23 03:16:08 2023, 0
+: Mon Oct 23 03:16:42 2023, 0
+: Mon Oct 23 03:16:50 2023, 0
+: Mon Oct 23 03:18:53 2023, 0
+: Mon Oct 23 03:20:57 2023, 0
+: Mon Oct 23 03:21:53 2023, 0
+: Mon Oct 23 03:22:01 2023, 0
+: Mon Oct 23 03:22:58 2023, 0
+: Mon Oct 23 03:23:06 2023, 0
+: Mon Oct 23 03:25:10 2023, 0
+: Mon Oct 23 03:27:12 2023, 0
+: Mon Oct 23 03:29:15 2023, 0
+: Mon Oct 23 03:31:17 2023, 0
+: Mon Oct 23 03:33:19 2023, 0
+: Mon Oct 23 03:33:27 2023, 0
+: Mon Oct 23 03:33:32 2023, 0
+: Mon Oct 23 03:33:40 2023, 0
+: Mon Oct 23 03:34:40 2023, 0
+: Mon Oct 23 03:34:48 2023, 0
+: Mon Oct 23 03:35:19 2023, 0
+: Mon Oct 23 03:35:28 2023, 0
+: /tmp/emsUpload # '
+exit
+: b'exit
+: MSC1240XA(config)# '
+linux supervisor
+: b"\x1b[sl\x1b[Ji\x1b[Jn\x1b[Ju\x1b[Jx\x1b[J \x1b[Js\x1b[Ju\x1b[Jp\x1b[Je\x1b[Jr\x1b[Jv\x1b[Ji\x1b[Js\x1b[Jo\x1b[Jr\x1b[J\x1b[J
+: 
+: 
+: BusyBox v1.22.1 (2023-09-22 16:20:39 CST) built-in shell (ash)
+: Enter 'help' for a list of built-in commands.
+: 
+: /home/admin # "
+cd /home/admin
+: b'cd /home/admin
+: /home/admin # '
+snmpset -v 2c -c public 192.168.169.86 1.3.6.1.4.1.890.1.5.13.13.16.21.1.0 s "192.168.169.86"
+: b'snmpset -v 2c -c public 192.168.169.86 1.3.6.1.4.1.890.1.5.13.13.1\r
+: 6.21.1.0 s "192.168.169.86"
+: iso.3.6.1.4.1.890.1.5.13.13.16.21.1.0 = STRING: "192.168.169.86"
+: /home/admin # '
+snmpset -v 2c -c public 192.168.169.86 1.3.6.1.4.1.890.1.5.13.13.16.21.2.0 s "https://192.168.128.8/RESTfulServer/Server/DevicePollerDebug/"
+: b'snmpset -v 2c -c public 192.168.169.86 1.3.6.1.4.1.890.1.5.13.13.1\r
+: 6.21.2.0 s "https://192.168.128.8/RESTfulServer/Server/DevicePollerDebug/"
+: iso.3.6.1.4.1.890.1.5.13.13.16.21.2.0 = STRING: "https://192.168.128.8/RESTfulServer/Server/DevicePollerDebug/"
+: /home/admin # '
+snmpset -v 2c -c public 192.168.169.86 1.3.6.1.4.1.890.1.5.13.13.16.21.2.0 s "https://192.168.128.8/RESTfulServer/Server/DevicePoller/"
+: b'snmpset -v 2c -c public 192.168.169.86 1.3.6.1.4.1.890.1.5.13.13.1\r
+: 6.21.2.0 s "https://192.168.128.8/RESTfulServer/Server/DevicePoller/"
+: iso.3.6.1.4.1.890.1.5.13.13.16.21.2.0 = STRING: "https://192.168.128.8/RESTfulServer/Server/DevicePoller/"
+: /home/admin # '
+
+SSH
+
+
+FTP
+

@@ -1,0 +1,83 @@
+======== ONT Alarm Profile ========
+[EMS1-5708]ONT Alarm Profile - Apply to Device
+[EMS1-5713]ONT Alarm Profile - Modify to Device
+
+======== ONT ACL Profile ========
+[EMS1-5698]ONT ACL Profile - Apply to Device
+[EMS1-5703]ONT ACL Profile - Modify to Device
+
+======== ONT VoIP SIP Profile ========
+[EMS1-5668]ONT VoIP SIP Profile - Apply to Device
+[EMS1-5673]ONT VoIP SIP Profile - Modify to Device
+
+======== ONT VoIP Common Profile ========
+[EMS1-5678]ONT VoIP Common Profile - Apply to Device
+[EMS1-5683]ONT VoIP Common Profile - Modify to Device
+
+======== ONT VoIP Dial Profile ========
+[EMS1-5688]ONT VoIP Dial Plan Profile - Apply to Device
+[EMS1-5693]ONT VoIP Dial Plan Profile - Modify to Device
+
+======== ONT ONT Profile ========
+[EMS1-5658]ONT ONT Profile - Apply to Device
+[EMS1-5663]ONT ONT Profile - Modify to Device
+
+======== ONT Security Profile ========
+[EMS1-5648]ONT Security Profile - Apply to Device
+[EMS1-5653]ONT Security Profile - Modify to Device
+
+======== ONT UNI Profile ========
+[EMS1-5638]ONT UNI Profile - Apply to Device
+[EMS1-5643]ONT UNI Profile - Modify to Device
+
+======== ONT QoS Bandwidth Profile ========
+[EMS1-5618]ONT QoS Bandwidth Profile - Apply to Device - Xpon
+[EMS1-5623]ONT QoS Bandwidth Profile - Modify to Device - Xpon
+[EMS1-6994]ONT QoS Bandwidth Profile - Modify to Device - Gpon
+
+======== ONT Service Profile ========
+[EMS1-5608]ONT Service Profile - Apply to Device
+[EMS1-5613]ONT Service Profile - Modify to Device
+
+======== IGMP Group Privilege Profile ========
+[EMS1-5753]IGMP Group Privilege Profile - Apply to Device
+[EMS1-5759]IGMP Group Privilege Profile - Modify to Device - IES52xx
+[EMS1-6995]IGMP Group Privilege Profile - Apply to Device - Ge
+[EMS1-6996]IGMP Group Privilege Profile - Modify to Device - Ge
+
+======== ONT Multicast Profile ========
+[EMS1-5628]ONT Multicast Profile - Apply to Device
+[EMS1-5633]ONT Multicast Profile - Modify to Device - Xpon
+
+======== ONT Template Profile ========
+[EMS1-3633]ONT Template - Apply to Device
+[EMS1-5603]ONT Template - Modify to Device
+[EMS1-3631]ONT Template - Delete
+
+======== Rate limit Profile ========
+[EMS1-5764]Rate Limit Profile - Apply to Device
+[EMS1-5770]Rate Limit Profile - Modify to Device
+
+======== Shaping Profile ========
+[EMS1-5775]Shaping Profile - Apply to Device
+[EMS1-5781]Shaping Profile - Modify to Device
+
+======== Weight Profile ========
+[EMS1-5786]Weight Profile - Apply to Device
+[EMS1-5792]Weight Profile - Modify to Device
+
+======== GE Template Profile ========
+[EMS1-5742]GE Template - Apply to Device
+[EMS1-5748]GE Template - Modify to Device
+[EMS1-5740]GE Template - Delete
+
+======== ONT Service ========
+[EMS1-6264]ONT Service Edit Config - Add - Gpon
+[EMS1-6998]ONT Service Edit Config - Modify - Gpon
+[EMS1-6990]ONT Service Edit Config - Delete - Gpon
+[EMS1-6279]ONT Service Edit Config - Add - Xpon
+[EMS1-6882]ONT Service Edit Config - Modify - Xpon
+[EMS1-6883]ONT Service Edit Config - Delete - Xpon
+[EMS1-6646]Add - IP-Host
+[EMS1-6880]Modify - IP-Host
+[EMS1-6881]Delete - IP-Host

@@ -1,0 +1,628 @@
+{
+  "ELEMENT": {
+    "wait_time": "3"
+  },
+  "AUTO_SITE": {
+    "pc_ip": "192.168.168.81",
+    "upload_path": "D:\\Auto\\EMS\\Pytest\\EMSWebICAT\\ForUpload\\",
+    "report_path": "./reports/",
+    "download_path": "./download/",
+    "browser": "chrome"
+  },
+  "EMS": {
+    "report_title": "Web_EMS_Restful",
+    "url": "https://192.168.128.8:9116/netatlasems/index",
+    "ip": "192.168.128.8",
+    "version": "03.00.08(AAVV.221)b1",
+    "login_username": "admin",
+    "login_password": "Pqa1234!!",
+    "server_username": "admin",
+    "server_password": "netatlas123",
+    "sudo_password": "netatlas123",
+    "db_username": "root",
+    "db_password": "netatlas123"
+  },
+  "PM": {
+    "PM1": {
+      "page": "Current",
+      "pmtype": "Interface(Rate)",
+      "ip": "192.168.168.87",
+      "interface": "1-1"
+    },
+    "PM2": {
+      "page": "Current",
+      "pmtype": "Interface(Rate)",
+      "ip": "192.168.168.87",
+      "interface": "1-2"
+    },
+    "PM3": {
+      "page": "Current",
+      "pmtype": "Interface(Rate)",
+      "ip": "192.168.168.87",
+      "interface": "1-3"
+    },
+    "PM4": {
+      "page": "Current",
+      "pmtype": "Interface(Rate)",
+      "ip": "192.168.168.87",
+      "interface": "1-4"
+    },
+    "PM5": {
+      "page": "Current",
+      "pmtype": "Interface(Rate)",
+      "ip": "192.168.168.87",
+      "interface": "1-5"
+    },
+    "PM6": {
+      "page": "Current",
+      "pmtype": "Interface(Rate)",
+      "ip": "192.168.168.87",
+      "interface": "1-6"
+    },
+    "PM7": {
+      "page": "Current",
+      "pmtype": "Interface(Rate)",
+      "ip": "192.168.168.87",
+      "interface": "1-7"
+    },
+    "PM8": {
+      "page": "Current",
+      "pmtype": "Interface(Rate)",
+      "ip": "192.168.168.87",
+      "interface": "1-8"
+    },
+    "PM9": {
+      "page": "Current",
+      "pmtype": "Interface(Rate)",
+      "ip": "192.168.168.87",
+      "interface": "1-9"
+    },
+    "PM10": {
+      "page": "Current",
+      "pmtype": "Interface(Rate)",
+      "ip": "192.168.168.87",
+      "interface": "1-10"
+    },
+    "PM11": {
+      "page": "Current",
+      "pmtype": "Interface(Rate)",
+      "ip": "192.168.168.87",
+      "interface": "1-11"
+    },
+    "PM12": {
+      "page": "Current",
+      "pmtype": "Interface(Rate)",
+      "ip": "192.168.168.87",
+      "interface": "1-12"
+    },
+    "PM13": {
+      "page": "Current",
+      "pmtype": "Interface(Rate)",
+      "ip": "192.168.168.87",
+      "interface": "1-13"
+    },
+    "PM14": {
+      "page": "Current",
+      "pmtype": "Interface(Rate)",
+      "ip": "192.168.168.87",
+      "interface": "1-14"
+    },
+    "PM15": {
+      "page": "Current",
+      "pmtype": "Interface(Rate)",
+      "ip": "192.168.168.87",
+      "interface": "1-15"
+    },
+    "PM16": {
+      "page": "Current",
+      "pmtype": "Interface(Rate)",
+      "ip": "192.168.168.87",
+      "interface": "1-16"
+    },
+    "PM17": {
+      "page": "Current",
+      "pmtype": "Interface(Rate)",
+      "ip": "192.168.168.87",
+      "interface": "2-1"
+    },
+    "PM18": {
+      "page": "Current",
+      "pmtype": "Interface(Rate)",
+      "ip": "192.168.168.87",
+      "interface": "2-2"
+    },
+    "PM19": {
+      "page": "Current",
+      "pmtype": "Interface(Rate)",
+      "ip": "192.168.168.87",
+      "interface": "2-3"
+    },
+    "PM20": {
+      "page": "Current",
+      "pmtype": "Interface(Rate)",
+      "ip": "192.168.168.87",
+      "interface": "2-4"
+    },
+    "PM21": {
+      "page": "Current",
+      "pmtype": "Interface(Rate)",
+      "ip": "192.168.168.87",
+      "interface": "2-5"
+    },
+    "PM22": {
+      "page": "Current",
+      "pmtype": "Interface(Rate)",
+      "ip": "192.168.168.87",
+      "interface": "2-6"
+    },
+    "PM23": {
+      "page": "Current",
+      "pmtype": "Interface(Rate)",
+      "ip": "192.168.168.87",
+      "interface": "2-7"
+    },
+    "PM24": {
+      "page": "Current",
+      "pmtype": "Interface(Rate)",
+      "ip": "192.168.168.87",
+      "interface": "2-8"
+    },
+    "PM25": {
+      "page": "Current",
+      "pmtype": "Interface(Rate)",
+      "ip": "192.168.168.87",
+      "interface": "2-9"
+    },
+    "PM26": {
+      "page": "Current",
+      "pmtype": "Interface(Rate)",
+      "ip": "192.168.168.87",
+      "interface": "2-10"
+    },
+    "PM27": {
+      "page": "Current",
+      "pmtype": "Interface(Rate)",
+      "ip": "192.168.168.87",
+      "interface": "2-11"
+    },
+    "PM28": {
+      "page": "Current",
+      "pmtype": "Interface(Rate)",
+      "ip": "192.168.168.87",
+      "interface": "2-12"
+    },
+    "PM29": {
+      "page": "Current",
+      "pmtype": "Interface(Rate)",
+      "ip": "192.168.168.87",
+      "interface": "2-13"
+    },
+    "PM30": {
+      "page": "Current",
+      "pmtype": "Interface(Rate)",
+      "ip": "192.168.168.87",
+      "interface": "2-14"
+    },
+    "PM31": {
+      "page": "Current",
+      "pmtype": "Interface(Rate)",
+      "ip": "192.168.168.87",
+      "interface": "2-15"
+    },
+    "PM32": {
+      "page": "Current",
+      "pmtype": "Interface(Rate)",
+      "ip": "192.168.168.87",
+      "interface": "2-16"
+    },
+    "PM33": {
+      "page": "Current",
+      "pmtype": "Interface(Rate)",
+      "ip": "192.168.168.87",
+      "interface": "2-17"
+    },
+    "PM34": {
+      "page": "Current",
+      "pmtype": "Interface(Rate)",
+      "ip": "192.168.168.87",
+      "interface": "2-18"
+    },
+    "PM35": {
+      "page": "Current",
+      "pmtype": "Interface(Rate)",
+      "ip": "192.168.168.87",
+      "interface": "2-19"
+    },
+    "PM36": {
+      "page": "Current",
+      "pmtype": "Interface(Rate)",
+      "ip": "192.168.168.87",
+      "interface": "2-20"
+    },
+    "PM37": {
+      "page": "Current",
+      "pmtype": "Interface(Rate)",
+      "ip": "192.168.168.87",
+      "interface": "2-21"
+    },
+    "PM38": {
+      "page": "Current",
+      "pmtype": "Interface(Rate)",
+      "ip": "192.168.168.87",
+      "interface": "2-22"
+    },
+    "PM39": {
+      "page": "Current",
+      "pmtype": "Interface(Rate)",
+      "ip": "192.168.168.87",
+      "interface": "2-23"
+    },
+    "PM40": {
+      "page": "Current",
+      "pmtype": "Interface(Rate)",
+      "ip": "192.168.168.87",
+      "interface": "2-24"
+    },
+    "PM41": {
+      "page": "Current",
+      "pmtype": "Interface(Rate)",
+      "ip": "192.168.168.87",
+      "interface": "2-25"
+    },
+    "PM42": {
+      "page": "Current",
+      "pmtype": "Interface(Rate)",
+      "ip": "192.168.168.87",
+      "interface": "2-26"
+    },
+    "PM43": {
+      "page": "Current",
+      "pmtype": "Interface(Rate)",
+      "ip": "192.168.168.87",
+      "interface": "2-27"
+    },
+    "PM44": {
+      "page": "Current",
+      "pmtype": "Interface(Rate)",
+      "ip": "192.168.168.87",
+      "interface": "2-28"
+    },
+    "PM45": {
+      "page": "Current",
+      "pmtype": "Interface(Rate)",
+      "ip": "192.168.168.87",
+      "interface": "2-29"
+    },
+    "PM46": {
+      "page": "Current",
+      "pmtype": "Interface(Rate)",
+      "ip": "192.168.168.87",
+      "interface": "2-30"
+    },
+    "PM47": {
+      "page": "Current",
+      "pmtype": "Interface(Rate)",
+      "ip": "192.168.168.87",
+      "interface": "2-31"
+    },
+    "PM48": {
+      "page": "Current",
+      "pmtype": "Interface(Rate)",
+      "ip": "192.168.168.87",
+      "interface": "2-32"
+    },
+    "PM49": {
+      "page": "Current",
+      "pmtype": "Interface(Rate)",
+      "ip": "192.168.168.87",
+      "interface": "2-33"
+    },
+    "PM50": {
+      "page": "Current",
+      "pmtype": "Interface(Rate)",
+      "ip": "192.168.168.87",
+      "interface": "2-34"
+    },
+
+    "PM51": {
+      "page": "Current",
+      "pmtype": "Interface(Rate)",
+      "ip": "192.168.168.87",
+      "interface": "2-35"
+    },
+    "PM52": {
+      "page": "Current",
+      "pmtype": "Interface(Rate)",
+      "ip": "192.168.168.87",
+      "interface": "2-36"
+    },
+    "PM53": {
+      "page": "Current",
+      "pmtype": "Interface(Rate)",
+      "ip": "192.168.168.87",
+      "interface": "2-37"
+    },
+    "PM54": {
+      "page": "Current",
+      "pmtype": "Interface(Rate)",
+      "ip": "192.168.168.87",
+      "interface": "2-38"
+    },
+    "PM55": {
+      "page": "Current",
+      "pmtype": "Interface(Rate)",
+      "ip": "192.168.168.87",
+      "interface": "2-39"
+    },
+    "PM56": {
+      "page": "Current",
+      "pmtype": "Interface(Rate)",
+      "ip": "192.168.168.87",
+      "interface": "2-40"
+    },
+    "PM57": {
+      "page": "Current",
+      "pmtype": "Interface(Rate)",
+      "ip": "192.168.168.87",
+      "interface": "3-1"
+    },
+    "PM58": {
+      "page": "Current",
+      "pmtype": "Interface(Rate)",
+      "ip": "192.168.168.87",
+      "interface": "3-2"
+    },
+    "PM59": {
+      "page": "Current",
+      "pmtype": "Interface(Rate)",
+      "ip": "192.168.168.87",
+      "interface": "3-3"
+    },
+    "PM60": {
+      "page": "Current",
+      "pmtype": "Interface(Rate)",
+      "ip": "192.168.168.87",
+      "interface": "3-4"
+    },
+    "PM61": {
+      "page": "Current",
+      "pmtype": "Interface(Rate)",
+      "ip": "192.168.168.87",
+      "interface": "6-1"
+    },
+    "PM62": {
+      "page": "Current",
+      "pmtype": "Interface(Rate)",
+      "ip": "192.168.168.87",
+      "interface": "6-2"
+    },
+    "PM63": {
+      "page": "Current",
+      "pmtype": "Interface(Rate)",
+      "ip": "192.168.168.87",
+      "interface": "6-3"
+    },
+    "PM64": {
+      "page": "Current",
+      "pmtype": "Interface(Rate)",
+      "ip": "192.168.168.87",
+      "interface": "6-4"
+    },
+    "PM65": {
+      "page": "Current",
+      "pmtype": "Interface(Rate)",
+      "ip": "192.168.168.87",
+      "interface": "6-5"
+    },
+    "PM66": {
+      "page": "Current",
+      "pmtype": "Interface(Rate)",
+      "ip": "192.168.168.87",
+      "interface": "6-6"
+    },
+    "PM67": {
+      "page": "Current",
+      "pmtype": "Interface(Rate)",
+      "ip": "192.168.168.87",
+      "interface": "6-7"
+    },
+    "PM68": {
+      "page": "Current",
+      "pmtype": "Interface(Rate)",
+      "ip": "192.168.168.87",
+      "interface": "6-8"
+    },
+    "PM69": {
+      "page": "Current",
+      "pmtype": "Interface(Rate)",
+      "ip": "192.168.168.87",
+      "interface": "6-9"
+    },
+    "PM70": {
+      "page": "Current",
+      "pmtype": "Interface(Rate)",
+      "ip": "192.168.168.87",
+      "interface": "6-10"
+    },
+    "PM71": {
+      "page": "Current",
+      "pmtype": "Interface(Rate)",
+      "ip": "192.168.168.87",
+      "interface": "6-11"
+    },
+    "PM72": {
+      "page": "Current",
+      "pmtype": "Interface(Rate)",
+      "ip": "192.168.168.87",
+      "interface": "6-12"
+    },
+    "PM73": {
+      "page": "Current",
+      "pmtype": "Interface(Rate)",
+      "ip": "192.168.168.87",
+      "interface": "6-13"
+    },
+    "PM74": {
+      "page": "Current",
+      "pmtype": "Interface(Rate)",
+      "ip": "192.168.168.87",
+      "interface": "6-14"
+    },
+    "PM75": {
+      "page": "Current",
+      "pmtype": "Interface(Rate)",
+      "ip": "192.168.168.87",
+      "interface": "6-15"
+    },
+    "PM76": {
+      "page": "Current",
+      "pmtype": "Interface(Rate)",
+      "ip": "192.168.168.87",
+      "interface": "6-16"
+    },
+    "PM77": {
+      "page": "Current",
+      "pmtype": "Interface(Accumulation)",
+      "ip": "192.168.168.87",
+      "interface": "1-1"
+    },
+    "PM78": {
+      "page": "Current",
+      "pmtype": "Interface(Accumulation)",
+      "ip": "192.168.168.87",
+      "interface": "1-2"
+    },
+    "PM79": {
+      "page": "Current",
+      "pmtype": "Interface(Accumulation)",
+      "ip": "192.168.168.87",
+      "interface": "1-3"
+    },
+    "PM80": {
+      "page": "Current",
+      "pmtype": "Interface(Accumulation)",
+      "ip": "192.168.168.87",
+      "interface": "1-4"
+    },
+    "PM81": {
+      "page": "Current",
+      "pmtype": "Interface(Accumulation)",
+      "ip": "192.168.168.87",
+      "interface": "1-5"
+    },
+    "PM82": {
+      "page": "Current",
+      "pmtype": "Interface(Accumulation)",
+      "ip": "192.168.168.87",
+      "interface": "1-6"
+    },
+    "PM83": {
+      "page": "Current",
+      "pmtype": "Interface(Accumulation)",
+      "ip": "192.168.168.87",
+      "interface": "1-7"
+    },
+    "PM84": {
+      "page": "Current",
+      "pmtype": "Interface(Accumulation)",
+      "ip": "192.168.168.87",
+      "interface": "1-8"
+    },
+    "PM85": {
+      "page": "Current",
+      "pmtype": "Interface(Accumulation)",
+      "ip": "192.168.168.87",
+      "interface": "1-9"
+    },
+    "PM86": {
+      "page": "Current",
+      "pmtype": "Interface(Accumulation)",
+      "ip": "192.168.168.87",
+      "interface": "1-10"
+    },
+    "PM87": {
+      "page": "Current",
+      "pmtype": "Interface(Accumulation)",
+      "ip": "192.168.168.87",
+      "interface": "1-11"
+    },
+    "PM88": {
+      "page": "Current",
+      "pmtype": "Interface(Accumulation)",
+      "ip": "192.168.168.87",
+      "interface": "1-12"
+    },
+    "PM89": {
+      "page": "Current",
+      "pmtype": "Interface(Accumulation)",
+      "ip": "192.168.168.87",
+      "interface": "1-13"
+    },
+    "PM90": {
+      "page": "Current",
+      "pmtype": "Interface(Accumulation)",
+      "ip": "192.168.168.87",
+      "interface": "1-14"
+    },
+    "PM91": {
+      "page": "Current",
+      "pmtype": "Interface(Accumulation)",
+      "ip": "192.168.168.87",
+      "interface": "1-15"
+    },
+    "PM92": {
+      "page": "Current",
+      "pmtype": "Interface(Accumulation)",
+      "ip": "192.168.168.87",
+      "interface": "1-16"
+    },
+    "PM93": {
+      "page": "Current",
+      "pmtype": "Interface(Accumulation)",
+      "ip": "192.168.168.87",
+      "interface": "2-1"
+    },
+    "PM94": {
+      "page": "Current",
+      "pmtype": "Interface(Accumulation)",
+      "ip": "192.168.168.87",
+      "interface": "2-2"
+    },
+    "PM95": {
+      "page": "Current",
+      "pmtype": "Interface(Accumulation)",
+      "ip": "192.168.168.87",
+      "interface": "2-3"
+    },
+    "PM96": {
+      "page": "Current",
+      "pmtype": "Interface(Accumulation)",
+      "ip": "192.168.168.87",
+      "interface": "2-4"
+    },
+    "PM97": {
+      "page": "Current",
+      "pmtype": "Interface(Accumulation)",
+      "ip": "192.168.168.87",
+      "interface": "2-5"
+    },
+    "PM98": {
+      "page": "Current",
+      "pmtype": "Interface(Accumulation)",
+      "ip": "192.168.168.87",
+      "interface": "2-6"
+    },
+    "PM99": {
+      "page": "Current",
+      "pmtype": "Interface(Accumulation)",
+      "ip": "192.168.168.87",
+      "interface": "2-7"
+    },
+    "PM100": {
+      "page": "Current",
+      "pmtype": "Interface(Accumulation)",
+      "ip": "192.168.168.87",
+      "interface": "2-8"
+    }
+  }
+}

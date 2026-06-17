@@ -1,0 +1,14 @@
+bootfwversion Test Pass
+Not Found "1version"
+fwimage1version Test Fail None
+Not Found "2version"
+fwimage2version Test Fail None
+location Test Pass
+contact Test Pass
+MAC address Test Pass
+trap community Test Pass (public)
+interface Test Pass (inband)
+ip Test Pass (192.168.169.86)
+mask Test Pass (255.255.255.0)
+gateway Test Pass (192.168.169.254)
+vid Test Fail (7!=7)

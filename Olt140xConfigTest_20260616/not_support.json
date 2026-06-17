@@ -1,0 +1,195 @@
+{    
+    "List":[
+        {
+            "p":"ACL - Anti MAC Spoof",
+            "id":"sw_ouifilter_slot_combobox"
+        },
+        {
+          "p":"ACL - MAC Count",
+          "id":"sw_ouifilter_slot_combobox"
+        },
+        {
+            "p":"ACL - MAC Filter",
+            "id":"sw_macfilter_slot_combobox"
+        },
+        {
+            "p":"ACL - OUI Filter",
+            "id":"sw_ouifilter_slot_combobox"
+        },
+        {
+            "p":"ACL - 802.1x - Port Setting",
+            "id":""
+        },
+        {
+            "p":"ACL - Packet Filter",
+            "id":"sw_ouifilter_slot_combobox"
+        },
+        {
+            "p":"ACL - ACL Egress Rule",
+            "id":"sw_aclrule_slot_combobox"
+        },
+        {
+            "p":"ACL - MACFF - Apply Table",
+            "id":"sw_ouifilter_slot_combobox"
+        },
+        {
+            "p":"ACL - MACFF - Arp Proxy",
+            "id":"sw_ouifilter_slot_combobox"
+        },
+        
+        {
+            "p":"Diagnostic - Line Diagnostic - DELT",
+            "id":""
+        },
+        {
+            "p":"Diagnostic - Line Diagnostic - SELT",
+            "id":""
+        },
+        {
+            "p":"Diagnostic - OAM Loopback",
+            "id":""
+        },
+
+        {
+            "p":"Line Card - G.vector",
+            "id":""
+        },
+        {
+            "p":"Line Card - PIN",
+            "id":""
+        },
+
+        {
+            "p":"Multicast - IGMP - Port MVLAN Setup",
+            "id":""
+        },
+        {
+            "p":"Multicast - Port Mode",
+            "id":"multicast_portmode_card_combobox"
+        },
+        {
+            "p":"Multicast - Multicast IP",
+            "id":"multcast_mcastip_card_combobox"
+        },
+        
+        {
+            "p":"Port - DHCP",
+            "id":"port_dhcp_slot_combobox"
+        },
+        {
+            "p":"Port - DSL",
+            "id":""
+        },
+        {
+            "p":"Port - GENNI",
+            "id":"port_genni_slot_combobox"
+        },
+        {
+            "p":"Port - GE",
+            "id":"port_ge_slot_combobox"
+        },
+        {
+            "p":"Port - FDB",
+            "id":""
+        },
+        {
+            "p":"Port - G.bond",
+            "id":""
+        },
+        {
+            "p":"Port - PPPoE",
+            "id":""
+        },
+        {
+            "p":"Port - PVC",
+            "id":""
+        },
+        {
+            "p":"Port - Power-saving",
+            "id":""
+        },
+
+        {
+            "p":"Statistics - DSL Status",
+            "id":""
+        },
+        {
+            "p":"Statistics - MACFF - Statistic",
+            "id":""
+        },
+        {
+            "p":"Statistics - MACFF - Status",
+            "id":""
+        },
+        {
+            "p":"Statistics - G.bond",
+            "id":""
+        },
+        {
+            "p":"Statistics - DSL Status",
+            "id":""
+        },
+        {
+            "p":"Statistics - OAM",
+            "id":""
+        },
+        {
+            "p":"Statistics - PPPoE",
+            "id":""
+        },
+        {
+            "p":"Statistics - 802.1x Port Status",
+            "id":""
+        },
+        {
+            "p":"Statistics - LLDP Status - Local Status",
+            "id":""
+        },
+        {
+            "p":"Statistics - LLDP Status - Remote Status",
+            "id":""
+        },
+        {
+            "p":"Statistics - LLDP Status - Statistic",
+            "id":""
+        },
+
+        {
+            "p":"Switch - DSCP",
+            "id":"sw_dscp_slot_combobox"
+        },
+        {
+            "p":"Switch - LLDP - Configuration",
+            "id":""
+        },
+        {
+            "p":"Switch - LLDP - Basic TLV Setting",
+            "id":""
+        },
+        {
+            "p":"Switch - LLDP - Org-specific TLV Setting",
+            "id":""
+        },
+
+        {
+            "p":"VLAN - VLAN Table",
+            "id":""
+        },
+        {
+            "p":"VLAN - VLAN Untag and Copy-cpbit",
+            "id":"vlan_vlanuntagcpbit_card_combobox"
+        },
+        {
+            "p":"VLAN - Port VLAN TLS",
+            "id":""
+        },
+        {
+            "p":"VLAN - Port VLAN Trunk",
+            "id":""
+        },
+        {
+            "p":"VLAN - Port VLAN Translation",
+            "id":""
+        }
+    ]
+}

@@ -1,0 +1,104 @@
+
+====================== START ======================
+
+### telnet 192.168.169.88
+b'\r\r\nNXC400 login: '
+b'admin\r\nPassword: '
+b'\r\nWarning: Password has expired. Please change password!!\r\nWarning: Please change admin default password!!\r\nNXC400# '
+b'li supervisor'
+:
+:
+:BusyBox v1.36.1 (2025-10-28 16:40:11 CST) built-in shell (ash)
+:Enter 'help' for a list of built-in commands.
+:
+:~ # "
+- - - - - - - - - - - - - - - - - - - - - - - - - -
+b'lcman debug 3'
+:argc:3,cmds:lcman debug 3, tty:/dev/ttyp0
+:doLCManDebug: argc:1, argv:3
+:Connected to 10.255.255.4
+:\r
+:Entering character mode\r
+:Escape character is '^]'.\r
+:
+:\r
+:NXA340 login: "
+- - - - - - - - - - - - - - - - - - - - - - - - - -
+b'admin'
+:Password: '
+- - - - - - - - - - - - - - - - - - - - - - - - - -
+b'1234'
+:NXA340# '
+- - - - - - - - - - - - - - - - - - - - - - - - - -
+b'show qos shaping'
+:shaping profile: 1232
+:      cosq   MaxRate   MinRate
+:         0         11952539749
+:         1         11600061537
+:         2         01601401698
+:         3         01918989427
+:         4         03331758864
+:         5         0     65535
+:         6         02826764708
+:         7         0     65535
+:
+:shaping profile: 1233
+:      cosq   MaxRate   MinRate
+:         0         1         0
+:         1         1         0
+:         2         0         0
+:         3         0         0
+:         4         0         0
+:         5         0         0
+:         6         0         0
+:         7         0         0
+:
+:shaping profile: 12345
+:      cosq   MaxRate   MinRate
+:         0         11952539749
+:         1         11600061537
+:         2         11601401698
+:         3         11918989427
+:         4         13331758864
+:         5         1     65535
+:         6         12826764708
+:         7         1     65535
+:
+:shaping profile: 123456
+:      cosq   MaxRate   MinRate
+:         0         11952539749
+:         1         11600061537
+:         2         11601401698
+:         3         11918989427
+:         4         13331758864
+:         5         1     65535
+:         6         12826764708
+:         7         1     65535
+:
+:shaping profile: 1234567
+:      cosq   MaxRate   MinRate
+:         0         11952539749
+:         1         11600061537
+:         2         11601401698
+:         3         11918989427
+:         4         03331758864
+:         5         0     65535
+:         6         02826764708
+:         7         0     65535
+:
+:shaping profile: DEFVAL
+:      cosq   MaxRate   MinRate
+:         0         0         0
+:         1         0         0
+:         2         0         0
+:         3         0         0
+:         4         0         0
+:         5         0         0
+:         6         0         0
+:         7         0         0
+:
+:NXA340# '
+- - - - - - - - - - - - - - - - - - - - - - - - - -
+
+====================== DONE. ======================
+

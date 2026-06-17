@@ -1,0 +1,60 @@
+Web_EMS_Provision Report
+2024-07-18_17-29-41
+EMS URL : https://192.168.128.8:9116/netatlasems/index
+EMS Ver : 03.00.06(AAVV.221)b13
+
+======================================================================================
+[EMS1-5528][onlineUsr] Result passed
+Details: None
+[EMS1-5527][regionUsr] Result passed
+Details: None
+[EMS1-5504][alarmHistory] Result passed
+Details: None
+[EMS1-5503][alarmActive] Result passed
+Details: None
+[EMS1-5496][ontMap] Result passed
+[EMS1-5497][ontMap] Result passed
+Details: None
+[EMS1-5494][cardMap] Result passed
+[EMS1-5495][cardMap] Result passed
+Details: None
+[EMS1-5493][deviceMap] Result passed
+[EMS1-5498][deviceMap] Result passed
+Details: None
+[EMS1-5502][ontInfo] Result passed
+Details: None
+[EMS1-5501][portInfo] Result passed
+Details: None
+[EMS1-5500][cardInfo] Result passed
+Details: None
+[EMS1-5499][deviceInfo] Result passed
+Details: None
+[EMS1-5491][alarmStatus] Result passed
+Details: None
+[EMS1-5490][ontStatus] Result passed
+Details: None
+[EMS1-5489][deviceStatus] Result passed
+Details: None
+[EMS1-5519][ontReboot] Result passed
+Details: None
+[EMS1-5514][ontUpgrade] Result passed
+[EMS1-5515][ontUpgrade] Result passed
+[EMS1-5516][ontUpgrade] Result passed
+[EMS1-5517][ontUpgrade] Result passed
+[EMS1-5518][ontUpgrade] Result passed
+[EMS1-5511][configRestore] Result passed
+Details: None
+[EMS1-5513][Reboot] Result passed
+Details: None
+[EMS1-5510][configBackup] Result passed
+Details: None
+[EMS1-5512][fwUpgrade] Result passed
+Details: None
+[EMS1-5487][node] Result passed
+Details: None
+
+
+
+
+
+

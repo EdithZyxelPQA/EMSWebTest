@@ -1,0 +1,136 @@
+======== ONT QoS Bandwidth Profile ========
+[EMS1-5571]ONT QoS Bandwidth Profile - New
+[EMS1-5614]ONT QoS Bandwidth Profile - Profile info
+[EMS1-5615]ONT QoS Bandwidth Profile - Modify
+[EMS1-5617]ONT QoS Bandwidth Profile - Refresh
+[EMS1-5622]ONT QoS Bandwidth Profile - Page
+[EMS1-5616]ONT QoS Bandwidth Profile - Delete
+[EMS1-5620]ONT QoS Bandwidth Profile - Sort
+======== ONT Security Profile ========
+[EMS1-5574]ONT Security Profile - New
+[EMS1-5644]ONT Security Profile - Profile info
+[EMS1-5645]ONT Security Profile - Modify
+[EMS1-5647]ONT Security Profile - Refresh
+[EMS1-5652]ONT Security Profile - Page
+[EMS1-5646]ONT Security Profile - Delete
+[EMS1-5650]ONT Security Profile - Sort
+======== Rate limit Profile ========
+[EMS1-5769]Rate Limit Profile - New
+[EMS1-5760]Rate Limit Profile - Profile info
+[EMS1-5761]Rate Limit Profile - Modify
+[EMS1-5763]Rate Limit Profile - Refresh
+[EMS1-5768]Rate Limit Profile - Page
+[EMS1-5762]Rate Limit Profile - Delete
+[EMS1-5766]Rate Limit Profile - Sort
+======== Shaping Profile ========
+[EMS1-5780]Shaping Profile - New
+[EMS1-5771]Shaping Profile - Profile info
+[EMS1-5772]Shaping Profile - Modify
+[EMS1-5774]Shaping Profile - Refresh
+[EMS1-5779]Shaping Profile - Page
+[EMS1-5773]Shaping Profile - Delete
+[EMS1-5777]Shaping Profile - Sort
+======== IGMP Group Privilege Profile ========
+[EMS1-5758]IGMP Group Privilege Profile - New
+[EMS1-5749]IGMP Group Privilege Profile - Profile info
+[EMS1-5750]IGMP Group Privilege Profile - Modify
+[EMS1-5752]IGMP Group Privilege Profile - Refresh
+[EMS1-5757]IGMP Group Privilege Profile - Page
+[EMS1-5751]IGMP Group Privilege Profile - Delete
+[EMS1-5755]IGMP Group Privilege Profile - Sort
+======== ONT Service Profile ========
+[EMS1-5570]ONT Service Profile - New
+[EMS1-5604]ONT Service Profile - Profile info
+[EMS1-5605]ONT Service Profile - Modify
+[EMS1-5607]ONT Service Profile - Refresh
+[EMS1-5612]ONT Service Profile - Page
+[EMS1-5606]ONT Service Profile - Delete
+[EMS1-5601]ONT Service Profile - Sort
+======== ONT Multicast Profile ========
+[EMS1-5572]ONT Multicast Profile - New
+[EMS1-5624]ONT Multicast Profile - Profile info
+[EMS1-5625]ONT Multicast Profile - Modify
+[EMS1-5627]ONT Multicast Profile - Refresh
+[EMS1-5632]ONT Multicast Profile - Page
+[EMS1-5626]ONT Multicast Profile - Delete
+[EMS1-5630]ONT Multicast Profile - Sort
+======== ONT UNI Profile ========
+[EMS1-5573]ONT UNI Profile - New
+[EMS1-5634]ONT UNI Profile - Profile info
+[EMS1-5635]ONT UNI Profile - Modify
+[EMS1-5637]ONT UNI Profile - Refresh
+[EMS1-5642]ONT UNI Profile - Page
+[EMS1-5636]ONT UNI Profile - Delete
+[EMS1-5640]ONT UNI Profile - Sort
+======== ONT ONT Profile ========
+[EMS1-5575]ONT ONT Profile - New
+[EMS1-5654]ONT ONT Profile - Profile info
+[EMS1-5655]ONT ONT Profile - Modify
+[EMS1-5657]ONT ONT Profile - Refresh
+[EMS1-5662]ONT ONT Profile - Page
+[EMS1-5656]ONT ONT Profile - Delete
+[EMS1-5660]ONT ONT Profile - Sort
+======== ONT VoIP SIP Profile ========
+[EMS1-4340]ONT VoIP SIP Profile - New
+[EMS1-5664]ONT VoIP SIP Profile - Profile info
+[EMS1-5665]ONT VoIP SIP Profile - Modify
+[EMS1-5667]ONT VoIP SIP Profile - Refresh
+[EMS1-5672]ONT VoIP SIP Profile - Page
+[EMS1-5666]ONT VoIP SIP Profile - Delete
+[EMS1-5670]ONT VoIP SIP Profile - Sort
+======== ONT VoIP Common Profile ========
+[EMS1-3629]ONT VoIP Common Profile - New
+[EMS1-5674]ONT VoIP Common Profile - Profile info
+[EMS1-5675]ONT VoIP Common Profile - Modify
+[EMS1-5677]ONT VoIP Common Profile - Refresh
+[EMS1-5682]ONT VoIP Common Profile - Page
+[EMS1-5676]ONT VoIP Common Profile - Delete
+[EMS1-5680]ONT VoIP Common Profile - Sort
+======== ONT VoIP Dial Profile ========
+[EMS1-4341]ONT VoIP Dial Plan Profile - New
+[EMS1-5684]ONT VoIP Dial Plan Profile - Profile info
+[EMS1-5685]ONT VoIP Dial Plan Profile - Modify
+[EMS1-5687]ONT VoIP Dial Plan Profile - Refresh
+[EMS1-5692]ONT VoIP Dial Plan Profile - Page
+[EMS1-5686]ONT VoIP Dial Plan Profile - Delete
+[EMS1-5690]ONT VoIP Dial Plan Profile - Sort
+======== ONT ACL Profile ========
+[EMS1-4336]ONT ACL Profile - New
+[EMS1-5694]ONT ACL Profile - Profile info
+[EMS1-5695]ONT ACL Profile - Modify
+[EMS1-5697]ONT ACL Profile - Refresh
+[EMS1-5702]ONT ACL Profile - Page
+[EMS1-5696]ONT ACL Profile - Delete
+[EMS1-5700]ONT ACL Profile - Sort
+======== ONT Alarm Profile ========
+[EMS1-5568]ONT Alarm Profile - New
+[EMS1-5704]ONT Alarm Profile - Profile info
+[EMS1-5705]ONT Alarm Profile - Modify
+[EMS1-5707]ONT Alarm Profile - Refresh
+[EMS1-5712]ONT Alarm Profile - Page
+[EMS1-5706]ONT Alarm Profile - Delete
+[EMS1-5710]ONT Alarm Profile - Sort
+======== ONT Template Profile ========
+[EMS1-5569]ONT Template - New
+[EMS1-3622]ONT Template - Profile info
+[EMS1-3630]ONT Template - Modify
+[EMS1-3632]ONT Template - Refresh
+[EMS1-3635]ONT Template - Page
+[EMS1-3631]ONT Template - Delete
+[EMS1-3636]ONT Template - Sort
+======== ONT Weight Profile ========
+[EMS1-5791]Weight Profile - New
+[EMS1-5782]Weight Profile - Profile info
+[EMS1-5783]Weight Profile - Modify
+[EMS1-5785]Weight Profile - Refresh
+[EMS1-5790]Weight Profile - Page
+[EMS1-5784]Weight Profile - Delete
+[EMS1-5788]Weight Profile - Sort
+======== GE Template Profile ========
+[EMS1-5747]GE Template - New
+[EMS1-5738]GE Template - Profile info
+[EMS1-5739]GE Template - Modify
+[EMS1-5741]GE Template - Refresh
+[EMS1-5746]GE Template - Page
+[EMS1-5740]GE Template - Delete
+[EMS1-5744]GE Template - Sort

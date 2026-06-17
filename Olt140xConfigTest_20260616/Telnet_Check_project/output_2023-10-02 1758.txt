@@ -1,0 +1,489 @@
+b'\r\r\nIES6217 login: '
+b'admin\r\nPassword: '
+b'\r\nWarning: Please change admin default password!!\r\nMSC1240XA# '
+b'\x1b[sc\x1b[Jo\x1b[Jn\x1b[Jf\x1b[Ji\x1b[Jg\x1b[J\x1b[J\r\nMSC1240XA(config)# '
+b'location "L_Zyxel_EM_PQA_4F_IES5206_OLC3708-43A_OLC3416-42_IES4204QA_GLC1440X-55_OLC3416-42_CecilyChi_DUT_systemLocation_2023_@auto_end !"'
+: b'\x1b[sl\x1b[Jo\x1b[Jc\x1b[Ja\x1b[Jt\x1b[Ji\x1b[Jo\x1b[Jn\x1b[J \x1b[J"\x1b[JL\x1b[J_\x1b[JZ\x1b[Jy\x1b[Jx\x1b[Je\x1b[Jl\x1b[J_\x1b[JE\x1b[JM\x1b[J_\x1b[JP\x1b[JQ\x1b[JA\x1b[J_\x1b[J4\x1b[JF\x1b[J_\x1b[JI\x1b[JE\x1b[JS\x1b[J5\x1b[J2\x1b[J0\x1b[J6\x1b[J_\x1b[JO\x1b[JL\x1b[JC\x1b[J3\x1b[J7\x1b[J0\x1b[J8\x1b[J-\x1b[J4\x1b[J3\x1b[JA\x1b[J_\x1b[JO\x1b[JL\x1b[JC\x1b[J3\x1b[J4\x1b[J1\x1b[J6\x1b[J-\x1b[J4\x1b[J2\x1b[J_\x1b[JI\x1b[JE\x1b[JS\x1b[J4\x1b[J2\x1b[J0\x1b[J4\x1b[JQ\x1b[JA\x1b[J_\x1b[JG\x1b[JL\x1b[JC\x1b[J1\x1b[J4\x1b[J4\x1b[J0\x1b[JX\x1b[J-\x1b[J5\x1b[J5\x1b[J_\x1b[JO\x1b[JL\x1b[JC\x1b[J3\x1b[J4\x1b[J1\x1b[J6\x1b[J-\x1b[J4\x1b[J2\x1b[J_\x1b[JC\x1b[Je\x1b[Jc\x1b[Ji\x1b[Jl\x1b[Jy\x1b[JC\x1b[Jh\x1b[Ji\x1b[J_\x1b[JD\x1b[JU\x1b[JT\x1b[J_\x1b[Js\x1b[Jy\x1b[Js\x1b[Jt\x1b[Je\x1b[Jm\x1b[JL\x1b[Jo\x1b[Jc\x1b[Ja\x1b[Jt\x1b[Ji\x1b[Jo\x1b[Jn\x1b[J_\x1b[J2\x1b[J0\x1b[J2\x1b[J3\x1b[J_\x1b[J@\x1b[Ja\x1b[Ju\x1b[Jt\x1b[Jo\x1b[J_\x1b[Je\x1b[Jn\x1b[Jd\x1b[J \x1b[J!\x1b[J"\x1b[J\x1b[J
+: MSC1240XA(config)# '
+b'contact "C_Zyxel_EM_PQA_4F_IES5206_OLC3708-43A_OLC3416-42_IES4204QA_GLC1440X-55_OLC3416-42_CecilyChi_DUT_systemContact_2022_@auto_end !"'
+: b'\x1b[sc\x1b[Jo\x1b[Jn\x1b[Jt\x1b[Ja\x1b[Jc\x1b[Jt\x1b[J \x1b[J"\x1b[JC\x1b[J_\x1b[JZ\x1b[Jy\x1b[Jx\x1b[Je\x1b[Jl\x1b[J_\x1b[JE\x1b[JM\x1b[J_\x1b[JP\x1b[JQ\x1b[JA\x1b[J_\x1b[J4\x1b[JF\x1b[J_\x1b[JI\x1b[JE\x1b[JS\x1b[J5\x1b[J2\x1b[J0\x1b[J6\x1b[J_\x1b[JO\x1b[JL\x1b[JC\x1b[J3\x1b[J7\x1b[J0\x1b[J8\x1b[J-\x1b[J4\x1b[J3\x1b[JA\x1b[J_\x1b[JO\x1b[JL\x1b[JC\x1b[J3\x1b[J4\x1b[J1\x1b[J6\x1b[J-\x1b[J4\x1b[J2\x1b[J_\x1b[JI\x1b[JE\x1b[JS\x1b[J4\x1b[J2\x1b[J0\x1b[J4\x1b[JQ\x1b[JA\x1b[J_\x1b[JG\x1b[JL\x1b[JC\x1b[J1\x1b[J4\x1b[J4\x1b[J0\x1b[JX\x1b[J-\x1b[J5\x1b[J5\x1b[J_\x1b[JO\x1b[JL\x1b[JC\x1b[J3\x1b[J4\x1b[J1\x1b[J6\x1b[J-\x1b[J4\x1b[J2\x1b[J_\x1b[JC\x1b[Je\x1b[Jc\x1b[Ji\x1b[Jl\x1b[Jy\x1b[JC\x1b[Jh\x1b[Ji\x1b[J_\x1b[JD\x1b[JU\x1b[JT\x1b[J_\x1b[Js\x1b[Jy\x1b[Js\x1b[Jt\x1b[Je\x1b[Jm\x1b[JC\x1b[Jo\x1b[Jn\x1b[Jt\x1b[Ja\x1b[Jc\x1b[Jt\x1b[J_\x1b[J2\x1b[J0\x1b[J2\x1b[J2\x1b[J_\x1b[J@\x1b[Ja\x1b[Ju\x1b[Jt\x1b[Jo\x1b[J_\x1b[Je\x1b[Jn\x1b[Jd\x1b[J \x1b[J!\x1b[J"\x1b[J\x1b[J
+: MSC1240XA(config)# '
+b'exit'
+: b'\x1b[se\x1b[Jx\x1b[Ji\x1b[Jt\x1b[J\x1b[J
+: MSC1240XA# '
+b''
+: b'\x1b[s\x1b[J
+: MSC1240XA# '
+b'linux supervisor'
+: b"\x1b[sl\x1b[Ji\x1b[Jn\x1b[Ju\x1b[Jx\x1b[J \x1b[Js\x1b[Ju\x1b[Jp\x1b[Je\x1b[Jr\x1b[Jv\x1b[Ji\x1b[Js\x1b[Jo\x1b[Jr\x1b[J\x1b[J
+: 
+: 
+: BusyBox v1.22.1 (2023-09-22 16:20:39 CST) built-in shell (ash)
+: Enter 'help' for a list of built-in commands.
+: 
+: /home/admin # "
+b'cd /tmp/emsUpload/'
+: b'cd /tmp/emsUpload/
+: /tmp/emsUpload # '
+b'ls'
+: b'ls
+: dev.log       dev.log.old   dev_data      perf.log      perf.log.old  perf_data
+: /tmp/emsUpload # '
+b'cat dev_data'
+: b'cat dev_data
+: {
+:   "uuid": "192.168.169.86",
+:   "path": "https://192.168.128.8/RESTfulServer/Server/DevicePoller/",
+:   "interval": "120"
+: }
+: /tmp/emsUpload # '
+b'cat perf_data'
+: b'cat perf_data
+: {
+:   "uuid": "5b4913ff-1851-4838-bf4c-b6544466cc69",
+:   "path": "https://192.168.128.8/RESTfulServer/Server/Performance/",
+:   "interval": "900"
+: }
+: /tmp/emsUpload # '
+b'cat dev.log'
+: b'cat dev.log
+: Mon Oct  2 03:11:08 2023, 0
+: Mon Oct  2 03:13:10 2023, 0
+: Mon Oct  2 03:13:53 2023, 0
+: Mon Oct  2 03:15:57 2023, 0
+: Mon Oct  2 03:17:45 2023, 0
+: Mon Oct  2 03:19:09 2023, 0
+: Mon Oct  2 03:19:29 2023, 0
+: Mon Oct  2 03:21:32 2023, 0
+: Mon Oct  2 03:22:18 2023, 0
+: Mon Oct  2 03:24:21 2023, 0
+: Mon Oct  2 03:26:24 2023, 0
+: Mon Oct  2 03:28:26 2023, 0
+: Mon Oct  2 03:30:28 2023, 0
+: Mon Oct  2 03:32:30 2023, 0
+: Mon Oct  2 03:34:33 2023, 0
+: Mon Oct  2 03:36:35 2023, 0
+: Mon Oct  2 03:38:39 2023, 0
+: Mon Oct  2 03:40:41 2023, 0
+: Mon Oct  2 03:41:07 2023, 0
+: Mon Oct  2 03:42:41 2023, 0
+: Mon Oct  2 03:44:45 2023, 0
+: Mon Oct  2 03:46:38 2023, 0
+: Mon Oct  2 03:48:42 2023, 0
+: Mon Oct  2 03:50:44 2023, 0
+: Mon Oct  2 03:52:47 2023, 0
+: Mon Oct  2 03:54:49 2023, 0
+: Mon Oct  2 03:56:51 2023, 0
+: Mon Oct  2 03:58:53 2023, 0
+: Mon Oct  2 04:00:56 2023, 0
+: Mon Oct  2 04:02:59 2023, 0
+: Mon Oct  2 04:05:01 2023, 0
+: Mon Oct  2 04:07:03 2023, 0
+: Mon Oct  2 04:09:06 2023, 0
+: Mon Oct  2 04:11:08 2023, 0
+: Mon Oct  2 04:13:11 2023, 0
+: Mon Oct  2 04:15:13 2023, 0
+: Mon Oct  2 04:17:17 2023, 0
+: Mon Oct  2 04:19:19 2023, 0
+: Mon Oct  2 04:21:21 2023, 0
+: Mon Oct  2 04:23:24 2023, 0
+: Mon Oct  2 04:25:26 2023, 0
+: Mon Oct  2 04:27:28 2023, 0
+: Mon Oct  2 04:29:31 2023, 0
+: Mon Oct  2 04:31:33 2023, 0
+: Mon Oct  2 04:33:37 2023, 0
+: Mon Oct  2 04:35:39 2023, 0
+: Mon Oct  2 04:37:41 2023, 0
+: Mon Oct  2 04:39:44 2023, 0
+: Mon Oct  2 04:41:46 2023, 0
+: Mon Oct  2 04:43:48 2023, 0
+: Mon Oct  2 04:44:47 2023, 0
+: Mon Oct  2 04:44:55 2023, 0
+: Mon Oct  2 04:46:59 2023, 0
+: Mon Oct  2 04:49:01 2023, 0
+: Mon Oct  2 04:51:04 2023, 0
+: Mon Oct  2 04:53:06 2023, 0
+: Mon Oct  2 04:55:08 2023, 0
+: Mon Oct  2 04:56:20 2023, 0
+: Mon Oct  2 04:56:28 2023, 0
+: Mon Oct  2 04:58:32 2023, 0
+: Mon Oct  2 05:00:34 2023, 0
+: Mon Oct  2 05:02:36 2023, 0
+: Mon Oct  2 05:02:44 2023, 0
+: Mon Oct  2 05:04:47 2023, 0
+: Mon Oct  2 05:06:50 2023, 0
+: Mon Oct  2 05:08:52 2023, 0
+: Mon Oct  2 05:10:54 2023, 0
+: Mon Oct  2 05:12:57 2023, 0
+: Mon Oct  2 05:14:59 2023, 0
+: Mon Oct  2 05:17:01 2023, 0
+: Mon Oct  2 05:19:05 2023, 0
+: Mon Oct  2 05:21:07 2023, 0
+: Mon Oct  2 05:23:09 2023, 0
+: Mon Oct  2 05:25:12 2023, 0
+: Mon Oct  2 05:27:14 2023, 0
+: Mon Oct  2 05:29:16 2023, 0
+: Mon Oct  2 05:31:19 2023, 0
+: Mon Oct  2 05:31:25 2023, 0
+: Mon Oct  2 05:32:00 2023, 0
+: Mon Oct  2 05:34:03 2023, 0
+: Mon Oct  2 05:36:06 2023, 0
+: Mon Oct  2 05:38:08 2023, 0
+: Mon Oct  2 05:38:58 2023, 0
+: Mon Oct  2 05:41:02 2023, 0
+: Mon Oct  2 05:43:04 2023, 0
+: Mon Oct  2 05:45:06 2023, 0
+: Mon Oct  2 05:47:09 2023, 0
+: Mon Oct  2 05:49:11 2023, 0
+: Mon Oct  2 05:51:14 2023, 0
+: Mon Oct  2 05:53:16 2023, 0
+: Mon Oct  2 05:55:19 2023, 0
+: Mon Oct  2 05:57:22 2023, 0
+: Mon Oct  2 05:59:24 2023, 0
+: Mon Oct  2 06:01:27 2023, 0
+: Mon Oct  2 06:03:29 2023, 0
+: Mon Oct  2 06:05:31 2023, 0
+: Mon Oct  2 06:07:33 2023, 0
+: Mon Oct  2 06:09:37 2023, 0
+: Mon Oct  2 06:11:05 2023, 0
+: Mon Oct  2 06:11:13 2023, 0
+: Mon Oct  2 06:13:17 2023, 0
+: Mon Oct  2 06:14:37 2023, 0
+: Mon Oct  2 06:14:46 2023, 0
+: Mon Oct  2 06:16:49 2023, 0
+: Mon Oct  2 06:18:51 2023, 0
+: Mon Oct  2 06:20:54 2023, 0
+: Mon Oct  2 06:22:46 2023, 0
+: Mon Oct  2 06:22:55 2023, 0
+: Mon Oct  2 06:24:58 2023, 0
+: Mon Oct  2 06:27:00 2023, 0
+: Mon Oct  2 06:29:03 2023, 0
+: Mon Oct  2 06:30:33 2023, 0
+: Mon Oct  2 06:30:41 2023, 0
+: Mon Oct  2 06:31:02 2023, 0
+: Mon Oct  2 06:31:10 2023, 0
+: Mon Oct  2 06:32:03 2023, 0
+: Mon Oct  2 06:32:12 2023, 0
+: Mon Oct  2 06:33:39 2023, 0
+: Mon Oct  2 06:33:48 2023, 0
+: Mon Oct  2 06:35:42 2023, 0
+: Mon Oct  2 06:35:50 2023, 0
+: Mon Oct  2 06:37:53 2023, 0
+: Mon Oct  2 06:39:56 2023, 0
+: Mon Oct  2 06:41:58 2023, 0
+: Mon Oct  2 06:44:00 2023, 0
+: Mon Oct  2 06:46:03 2023, 0
+: Mon Oct  2 06:48:05 2023, 0
+: Mon Oct  2 06:50:07 2023, 0
+: Mon Oct  2 06:52:11 2023, 0
+: Mon Oct  2 06:54:13 2023, 0
+: Mon Oct  2 06:54:40 2023, 0
+: Mon Oct  2 06:54:48 2023, 0
+: Mon Oct  2 06:56:52 2023, 0
+: Mon Oct  2 06:58:54 2023, 0
+: Mon Oct  2 07:00:56 2023, 0
+: Mon Oct  2 07:01:51 2023, 0
+: Mon Oct  2 07:01:59 2023, 0
+: Mon Oct  2 07:04:03 2023, 0
+: Mon Oct  2 07:06:05 2023, 0
+: Mon Oct  2 07:08:08 2023, 0
+: Mon Oct  2 07:10:10 2023, 0
+: Mon Oct  2 07:12:12 2023, 0
+: Mon Oct  2 07:14:15 2023, 0
+: Mon Oct  2 07:16:17 2023, 0
+: Mon Oct  2 07:18:20 2023, 0
+: Mon Oct  2 07:20:23 2023, 0
+: Mon Oct  2 07:22:25 2023, 0
+: Mon Oct  2 07:24:22 2023, 0
+: Mon Oct  2 07:24:30 2023, 0
+: Mon Oct  2 07:26:34 2023, 0
+: Mon Oct  2 07:28:36 2023, 0
+: Mon Oct  2 07:30:38 2023, 0
+: Mon Oct  2 07:32:41 2023, 0
+: Mon Oct  2 07:34:43 2023, 0
+: Mon Oct  2 07:35:58 2023, 0
+: Mon Oct  2 07:36:06 2023, 0
+: Mon Oct  2 07:38:09 2023, 0
+: Mon Oct  2 07:39:26 2023, 0
+: Mon Oct  2 07:39:34 2023, 0
+: Mon Oct  2 07:41:38 2023, 0
+: Mon Oct  2 07:43:05 2023, 0
+: Mon Oct  2 07:43:13 2023, 0
+: Mon Oct  2 07:45:16 2023, 0
+: Mon Oct  2 07:47:18 2023, 0
+: Mon Oct  2 07:49:21 2023, 0
+: Mon Oct  2 07:51:23 2023, 0
+: Mon Oct  2 07:53:25 2023, 0
+: Mon Oct  2 07:55:04 2023, 0
+: Mon Oct  2 07:55:12 2023, 0
+: Mon Oct  2 07:56:46 2023, 0
+: Mon Oct  2 07:56:54 2023, 0
+: Mon Oct  2 07:57:33 2023, 0
+: Mon Oct  2 07:57:42 2023, 0
+: Mon Oct  2 07:59:39 2023, 0
+: Mon Oct  2 07:59:47 2023, 0
+: Mon Oct  2 08:00:00 2023, 0
+: Mon Oct  2 08:00:08 2023, 0
+: Mon Oct  2 08:00:46 2023, 0
+: Mon Oct  2 08:00:55 2023, 0
+: Mon Oct  2 08:02:58 2023, 0
+: Mon Oct  2 08:05:00 2023, 0
+: Mon Oct  2 08:06:06 2023, 0
+: Mon Oct  2 08:06:15 2023, 0
+: Mon Oct  2 08:08:19 2023, 0
+: Mon Oct  2 08:10:21 2023, 0
+: Mon Oct  2 08:12:23 2023, 0
+: Mon Oct  2 08:14:26 2023, 0
+: Mon Oct  2 08:16:28 2023, 0
+: Mon Oct  2 08:18:31 2023, 0
+: Mon Oct  2 08:20:33 2023, 0
+: Mon Oct  2 08:22:36 2023, 0
+: Mon Oct  2 08:24:38 2023, 0
+: Mon Oct  2 08:25:17 2023, 0
+: Mon Oct  2 08:25:25 2023, 0
+: Mon Oct  2 08:27:28 2023, 0
+: Mon Oct  2 08:29:13 2023, 0
+: Mon Oct  2 08:29:21 2023, 0
+: Mon Oct  2 08:31:24 2023, 0
+: Mon Oct  2 08:33:27 2023, 0
+: Mon Oct  2 08:34:48 2023, 0
+: Mon Oct  2 08:34:56 2023, 0
+: Mon Oct  2 08:36:15 2023, 0
+: Mon Oct  2 08:36:24 2023, 0
+: Mon Oct  2 08:38:27 2023, 0
+: Mon Oct  2 08:40:29 2023, 0
+: Mon Oct  2 08:42:32 2023, 0
+: Mon Oct  2 08:42:53 2023, 0
+: Mon Oct  2 08:43:01 2023, 0
+: Mon Oct  2 08:45:05 2023, 0
+: Mon Oct  2 08:47:07 2023, 0
+: Mon Oct  2 08:48:08 2023, 0
+: Mon Oct  2 08:48:16 2023, 0
+: Mon Oct  2 08:48:40 2023, 0
+: Mon Oct  2 08:48:49 2023, 0
+: Mon Oct  2 08:50:52 2023, 0
+: Mon Oct  2 08:51:22 2023, 0
+: Mon Oct  2 08:51:31 2023, 0
+: Mon Oct  2 08:53:34 2023, 0
+: Mon Oct  2 08:54:03 2023, 0
+: Mon Oct  2 08:54:11 2023, 0
+: Mon Oct  2 08:55:44 2023, 0
+: Mon Oct  2 08:55:52 2023, 0
+: Mon Oct  2 08:56:45 2023, 0
+: Mon Oct  2 08:56:53 2023, 0
+: Mon Oct  2 08:58:57 2023, 0
+: Mon Oct  2 08:59:06 2023, 0
+: Mon Oct  2 08:59:15 2023, 0
+: Mon Oct  2 09:01:18 2023, 0
+: Mon Oct  2 09:03:21 2023, 0
+: Mon Oct  2 09:03:28 2023, 0
+: Mon Oct  2 09:03:54 2023, 0
+: Mon Oct  2 09:04:03 2023, 0
+: Mon Oct  2 09:06:06 2023, 0
+: Mon Oct  2 09:08:08 2023, 0
+: Mon Oct  2 09:10:11 2023, 0
+: Mon Oct  2 09:10:38 2023, 0
+: Mon Oct  2 09:10:47 2023, 0
+: Mon Oct  2 09:12:50 2023, 0
+: Mon Oct  2 09:14:40 2023, 0
+: Mon Oct  2 09:14:48 2023, 0
+: Mon Oct  2 09:16:52 2023, 0
+: Mon Oct  2 09:17:27 2023, 0
+: Mon Oct  2 09:17:35 2023, 0
+: Mon Oct  2 09:19:38 2023, 0
+: Mon Oct  2 09:21:40 2023, 0
+: Mon Oct  2 09:22:17 2023, 0
+: Mon Oct  2 09:22:25 2023, 0
+: Mon Oct  2 09:24:28 2023, 0
+: Mon Oct  2 09:24:36 2023, 0
+: Mon Oct  2 09:26:40 2023, 0
+: Mon Oct  2 09:28:42 2023, 0
+: Mon Oct  2 09:30:44 2023, 0
+: Mon Oct  2 09:32:47 2023, 0
+: Mon Oct  2 09:34:49 2023, 0
+: Mon Oct  2 09:36:51 2023, 0
+: Mon Oct  2 09:38:54 2023, 0
+: Mon Oct  2 09:40:57 2023, 0
+: Mon Oct  2 09:43:00 2023, 0
+: Mon Oct  2 09:43:26 2023, 0
+: Mon Oct  2 09:43:34 2023, 0
+: Mon Oct  2 09:45:28 2023, 0
+: Mon Oct  2 09:45:37 2023, 0
+: Mon Oct  2 09:46:07 2023, 0
+: Mon Oct  2 09:46:16 2023, 0
+: Mon Oct  2 09:48:19 2023, 0
+: /tmp/emsUpload # '
+b'exit'
+: b'exit
+: MSC1240XA# '
+b'linux supervisor'
+: b"\x1b[sl\x1b[Ji\x1b[Jn\x1b[Ju\x1b[Jx\x1b[J \x1b[Js\x1b[Ju\x1b[Jp\x1b[Je\x1b[Jr\x1b[Jv\x1b[Ji\x1b[Js\x1b[Jo\x1b[Jr\x1b[J\x1b[J
+: 
+: 
+: BusyBox v1.22.1 (2023-09-22 16:20:39 CST) built-in shell (ash)
+: Enter 'help' for a list of built-in commands.
+: 
+: /home/admin # "
+b'cd /home/admin'
+: b'cd /home/admin
+: /home/admin # '
+b'snmpset -v 2c -c public 192.168.169.86 1.3.6.1.4.1.890.1.5.13.13.16.21.1.0 s "192.168.169.86"'
+: b'snmpset -v 2c -c public 192.168.169.86 1.3.6.1.4.1.890.1.5.13.13.1\r
+: 6.21.1.0 s "192.168.169.86"
+: iso.3.6.1.4.1.890.1.5.13.13.16.21.1.0 = STRING: "192.168.169.86"
+: /home/admin # '
+b'snmpset -v 2c -c public 192.168.169.86 1.3.6.1.4.1.890.1.5.13.13.16.21.2.0 s "https://192.168.128.8/RESTfulServer/Server/DevicePollerDebug/"'
+: b'snmpset -v 2c -c public 192.168.169.86 1.3.6.1.4.1.890.1.5.13.13.1\r
+: 6.21.2.0 s "https://192.168.128.8/RESTfulServer/Server/DevicePollerDebug/"
+: iso.3.6.1.4.1.890.1.5.13.13.16.21.2.0 = STRING: "https://192.168.128.8/RESTfulServer/Server/DevicePollerDebug/"
+: /home/admin # '
+b'snmpset -v 2c -c public 192.168.169.86 1.3.6.1.4.1.890.1.5.13.13.16.21.2.0 s "https://192.168.128.8/RESTfulServer/Server/DevicePoller/"'
+: b'snmpset -v 2c -c public 192.168.169.86 1.3.6.1.4.1.890.1.5.13.13.1\r
+: 6.21.2.0 s "https://192.168.128.8/RESTfulServer/Server/DevicePoller/"
+: iso.3.6.1.4.1.890.1.5.13.13.16.21.2.0 = STRING: "https://192.168.128.8/RESTfulServer/Server/DevicePoller/"
+: /home/admin # '
+b'exit'
+: b'exit
+: MSC1240XA# '
+
+SSH
+
+
+FTP
+
+*** ftp Fail ***    550 Failed to change directory.
+*** ftp Fail ***    550 Failed to change directory.
+*** ftp Fail ***    550 Failed to change directory.
+*** ftp Fail ***    550 Failed to change directory.
+*** ftp Fail ***    550 Failed to change directory.
+b'\r\r\nIES6217 login: '
+b'admin\r\nPassword: '
+b'\r\nWarning: Please change admin default password!!\r\nMSC1240XA# '
+b'show version'
+: b'\x1b[ss\x1b[Jh\x1b[Jo\x1b[Jw\x1b[J \x1b[Jv\x1b[Je\x1b[Jr\x1b[Js\x1b[Ji\x1b[Jo\x1b[Jn\x1b[J\x1b[J
+: running image : V2.03(AAWC.2)
+: MSC1240XA# '
+b'show lc status < MSC >'
+: b'\x1b[ss\x1b[Jh\x1b[Jo\x1b[Jw\x1b[J \x1b[Jl\x1b[Jc\x1b[J \x1b[Js\x1b[Jt\x1b[Ja\x1b[Jt\x1b[Ju\x1b[Js\x1b[J \x1b[J<\x1b[J \x1b[JM\x1b[JS\x1b[JC\x1b[J \x1b[J>\x1b[J\x1b[J
+:   Too many arguments "show lcman status <slot>"
+: MSC1240XA# '
+b'show system'
+: b'\x1b[ss\x1b[Jh\x1b[Jo\x1b[Jw\x1b[J \x1b[Js\x1b[Jy\x1b[Js\x1b[Jt\x1b[Je\x1b[Jm\x1b[J\x1b[J
+:            Hostname: MSC1240XA
+:            Location: L_Zyxel_EM_PQA_4F_IES5206_OLC3708-43A_OLC3416-42_IES4204QA_GLC1440X-55_OLC3416-42_CecilyChi_DUT_systemLocation_2023_@auto_end !
+:             Contact: C_Zyxel_EM_PQA_4F_IES5206_OLC3708-43A_OLC3416-42_IES4204QA_GLC1440X-55_OLC3416-42_CecilyChi_DUT_systemContact_2022_@auto_end !
+:               Model: MSC1240XA
+:         F/W version: V2.03(AAWC.2)
+:            F/W date: 09/22/2023
+:         Kernel size: 53793552
+:         MAC address: 00:AC:AB:BC:BD:01
+:      System up time:   6(days) :    1:39:57
+:      U-boot version: V1.0.1 (Nov 04 2015 - 13:46:41)
+:   U-bootext version: V2.03(AAWC.2) (Sep 22 2023 - 16:17:58)
+:      F/W build date: Fri Sep 22 08:21:54 2023
+:    Hardware version: ABB
+:       Serial number: S150Z51001427
+:  Manufacturing date: 2015/11/30
+:    Console baudrate: 115200 bps
+:      Chassis serial: 
+:       running image: image-2 (V2.03(AAWC.2))
+:     next boot image: image-2 (V2.03(AAWC.2))
+:      startup config: config-1
+:    next boot config: config-1
+: MSC1240XA# '
+b'show snmp'
+: b'\x1b[ss\x1b[Jh\x1b[Jo\x1b[Jw\x1b[J \x1b[Js\x1b[Jn\x1b[Jm\x1b[Jp\x1b[J\x1b[J
+: [general settings]
+: get community : public
+: set community : public
+: trap community: public
+: version       : v2c
+: 
+: [trap destination]
+: index ver ip                              port user            
+: ----- --- ------------------------------ ----- ----------------
+:     1 v2c 192.168.128.8                    162 -               
+:     2 v2c 0.0.0.0                          162 -               
+:     3 v2c 0.0.0.0                          162 -               
+:     4 v2c 0.0.0.0                          162 -               
+: 
+: [user]
+: index name                             level  auth priv   
+: ----- -------------------------------- ------ ---- -------
+:     1 admin                            auth   md5  des    
+: MSC1240XA# '
+b'show ip'
+: b'\x1b[ss\x1b[Jh\x1b[Jo\x1b[Jw\x1b[J \x1b[Ji\x1b[Jp\x1b[J\x1b[J
+: Static IP
+:   interface ip              netmask         gateway         vid  pbit
+:   --------- --------------- --------------- --------------- ---- ----
+:   inband    192.168.169.86  255.255.255.0   192.168.169.254 7    7   
+:   outband   192.168.0.1     255.255.255.0   0.0.0.0         0    0   
+:   default gateway : 192.168.169.254 (inband)
+: 
+: Dynamic IP
+:   interface ip              netmask         gateway        
+:   --------- --------------- --------------- ---------------
+:   inband    0.0.0.0         0.0.0.0         0.0.0.0         
+:   outband   0.0.0.0         0.0.0.0         0.0.0.0         
+: MSC1240XA# '
+b'show lc st 17'
+: b"\x1b[ss\x1b[Jh\x1b[Jo\x1b[Jw\x1b[J \x1b[Jl\x1b[Jc\x1b[J \x1b[Js\x1b[Jt\x1b[J \x1b[J1\x1b[J7\x1b[J\x1b[J
+: slot17:
+:  name  : OLC3416B-IA
+:  uptime:    6 days,01:38:01
+:  status:
+:    hardware sensor: ok
+:    temperature    : ok
+:    voltage        : ok
+:    module exist   : ok
+:    module status  : ok
+:  firmware information :
+:    image 1 version: V2.03(ACCH.2)
+:    image 2 version: V2.03(ACCH.2)
+:    running image  : 2
+:    next boot image: 2
+:    upgrade status : idle
+:    config load status : idle
+:  inventory information:
+:    hardware version        : ABC
+:    hardware serial number  : S210Z50005807
+:    firmware version        : V2.03(ACCH.2)
+:    mac address             : 5C:F4:AB:70:80:90
+: 
+:  current voltage level:   current temperature:
+:     +3.3V:  3.295            PON  : 53.000        
+:     +12V : 12.000            SWITCH: 54.000       
+:     +0.87V_CPU:  0.873       CPU  : 57.000        
+:     +0.9V_SW:  0.904                              
+:     +1VAVS_PON:  0.885                            
+: 
+: '*' indicates a current alarm
+: 
+: MSC1240XA# "
+b'show lc status < MSC >'
+: b'\x1b[ss\x1b[Jh\x1b[Jo\x1b[Jw\x1b[J \x1b[Jl\x1b[Jc\x1b[J \x1b[Js\x1b[Jt\x1b[Ja\x1b[Jt\x1b[Ju\x1b[Js\x1b[J \x1b[J<\x1b[J \x1b[JM\x1b[JS\x1b[JC\x1b[J \x1b[J>\x1b[J\x1b[J
+:   Too many arguments "show lcman status <slot>"
+: MSC1240XA# '
+b'show interface genni 1 status'
+: b'\x1b[ss\x1b[Jh\x1b[Jo\x1b[Jw\x1b[J \x1b[Ji\x1b[Jn\x1b[Jt\x1b[Je\x1b[Jr\x1b[Jf\x1b[Ja\x1b[Jc\x1b[Je\x1b[J \x1b[Jg\x1b[Je\x1b[Jn\x1b[Jn\x1b[Ji\x1b[J \x1b[J1\x1b[J \x1b[Js\x1b[Jt\x1b[Ja\x1b[Jt\x1b[Ju\x1b[Js\x1b[J\x1b[J
+:   ------+-------------------------------------------------------------------------------------
+:    Port |    Status             Mode                 Up-Time    TX Power(dBm)    RX Power(dBm)
+:   ------+-------------------------------------------------------------------------------------
+:       1 |    linkup          1g-full    6(days) :    1:38:46           0.0000           0.0000
+:   ------+-------------------------------------------------------------------------------------
+: MSC1240XA# '
+b'show ru interface genni 1'
+: b'\x1b[ss\x1b[Jh\x1b[Jo\x1b[Jw\x1b[J \x1b[Jr\x1b[Ju\x1b[J \x1b[Ji\x1b[Jn\x1b[Jt\x1b[Je\x1b[Jr\x1b[Jf\x1b[Ja\x1b[Jc\x1b[Je\x1b[J \x1b[Jg\x1b[Je\x1b[Jn\x1b[Jn\x1b[Ji\x1b[J \x1b[J1\x1b[J\x1b[J
+:   Current configuration: 
+: 
+: interface genni 1 
+: \r  enable 
+: \r  auto-negotiation enable 
+: \r  flow-control enable 
+: \r  speed 1g 
+: \r  mode uplink 
+: \r  spanning-tree protocol rstp disable 
+: \r  loopguard policy fix 
+: \rexit 
+: \rMSC1240XA# '

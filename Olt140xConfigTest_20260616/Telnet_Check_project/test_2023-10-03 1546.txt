@@ -1,0 +1,4 @@
+location Test Pass ()
+contact Test Pass (!=)
+bootfwversion Test Pass
+MAC address Test Pass

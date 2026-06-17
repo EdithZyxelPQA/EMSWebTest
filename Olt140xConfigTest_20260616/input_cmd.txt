@@ -1,0 +1,71 @@
+in genni 1
+name "xxxxxxxxxxxxxxxGenni_name_31 x"
+exit
+in gpon 10-16
+name "xxxxxxxxxxxxxxxxGPON_name_31 x"
+tel "xxxxxxxxxxxxxxxxxGPON_tel_31 x"
+exit
+in ge 16-1
+name "xxxxxxxxxxxxxxxxxxGe_name_31 x"
+tel "xxxxxxxxxxxxxxxxxxxGe_tel_31 x"
+exit
+in xpon 17-16
+name "xxxxxxxxxxxxxxxxXPON_name_31 x"
+exit
+xpon uni-profile wanip
+  port veip tag-oper-id 1
+    uniport-list 1
+    filter uni-vlan 7
+    vlan 7
+  exit
+exit
+xpon ont-profile wanip
+  ontServiceControl http enable ALL
+  ontWan 1
+    default
+    enable
+    ip nat
+    ip dynamic
+    vlan 7 priority 7 mvlan 7
+  exit
+exit
+xpon qos bwprof 1G
+  sir 0 air 0 pir 1000000 
+exit
+xpon service-profile wanip
+  mode veip
+  port lan 1
+  vlan 7
+  mapper-pbit 0,1,2,3,4,5,6,7
+exit
+xpon template wanip
+  service 1 service-profile wanip shared-priority 7 usbwprof 1G dsbwprof 1G
+  tcont 1 services 1
+  uni-profile wanip
+  ont-profile wanip
+exit
+in remote x 17-1-128
+sn ZYYG4B5DB78F
+reg DEFAULT
+des "xxxxxxxxxxxxxxxxxXONT_des_31 x"
+temp wanip
+no inac
+exit
+ 
+ 
+linux supervisor
+cd /tmp/emsUpload/
+ls
+cat dev_data
+cat perf_data
+cat dev.log
+exit
+linux supervisor
+cd /home/admin
+snmpset -v 2c -c public 192.168.169.86 1.3.6.1.4.1.890.1.5.13.13.16.21.1.0 s "192.168.169.86"
+snmpset -v 2c -c public 192.168.169.86 1.3.6.1.4.1.890.1.5.13.13.16.21.2.0 s "https://192.168.128.8/RESTfulServer/Server/DevicePollerDebug/"
+snmpset -v 2c -c public 192.168.169.86 1.3.6.1.4.1.890.1.5.13.13.16.21.2.0 s "https://192.168.128.8/RESTfulServer/Server/DevicePoller/"ENDDD
+ENDDD
+ENDDD
+ENDDD
+ENDDD

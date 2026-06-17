@@ -1,0 +1,35 @@
+b'\r\r\nIES6217 login: '
+b'admin\r\nPassword: '
+b'\r\nWarning: Please change admin default password!!\r\npythontest# '
+b'\x1b[sc\x1b[Jo\x1b[Jn\x1b[Jf\x1b[Ji\x1b[Jg\x1b[J\x1b[J\r\npythontest(config)# '
+b'\x1b[sp\x1b[Ji\x1b[Jn\x1b[Jg\x1b[J \x1b[J1\x1b[J9\x1b[J2\x1b[J.\x1b[J1\x1b[J6\x1b[J8\x1b[J.\x1b[J1\x1b[J6\x1b[J9\x1b[J.\x1b[J8\x1b[J6\x1b[J\x1b[J\r\n  % Invalid command "ping"\r\npythontest(config)# '
+Command: 92
+: b'\x1b[s9\x1b[J2\x1b[J\x1b[J\r\n  % Invalid command "92"\r\npythontest(config)# '
+  (split)
+: b'\x1b[s9\x1b[J2\x1b[J\x1b[J
+:   % Invalid command "92"
+Command: 32 2 2
+: b'\x1b[s3\x1b[J2\x1b[J \x1b[J2\x1b[J \x1b[J2\x1b[J\x1b[J\r\n  % Invalid command "32"\r\npythontest(config)# '
+  (split)
+: b'\x1b[s3\x1b[J2\x1b[J \x1b[J2\x1b[J \x1b[J2\x1b[J\x1b[J
+:   % Invalid command "32"
+Command: 72
+: b'\x1b[s7\x1b[J2\x1b[J\x1b[J\r\n  % Invalid command "72"\r\npythontest(config)# '
+  (split)
+: b'\x1b[s7\x1b[J2\x1b[J\x1b[J
+:   % Invalid command "72"
+Command: 1465654654654654 1 1
+: b'\x1b[s1\x1b[J4\x1b[J6\x1b[J5\x1b[J6\x1b[J5\x1b[J4\x1b[J6\x1b[J5\x1b[J4\x1b[J6\x1b[J5\x1b[J4\x1b[J6\x1b[J5\x1b[J4\x1b[J \x1b[J1\x1b[J \x1b[J1\x1b[J\x1b[J\r\n  % Invalid command "1465654654654654"\r\npythontest(config)# '
+  (split)
+: b'\x1b[s1\x1b[J4\x1b[J6\x1b[J5\x1b[J6\x1b[J5\x1b[J4\x1b[J6\x1b[J5\x1b[J4\x1b[J6\x1b[J5\x1b[J4\x1b[J6\x1b[J5\x1b[J4\x1b[J \x1b[J1\x1b[J \x1b[J1\x1b[J\x1b[J
+:   % Invalid command "1465654654654654"
+Command: 52
+: b'\x1b[s5\x1b[J2\x1b[J\x1b[J\r\n  % Invalid command "52"\r\npythontest(config)# '
+  (split)
+: b'\x1b[s5\x1b[J2\x1b[J\x1b[J
+:   % Invalid command "52"
+Command: hostname pythontest
+: b'\x1b[sh\x1b[Jo\x1b[Js\x1b[Jt\x1b[Jn\x1b[Ja\x1b[Jm\x1b[Je\x1b[J \x1b[Jp\x1b[Jy\x1b[Jt\x1b[Jh\x1b[Jo\x1b[Jn\x1b[Jt\x1b[Je\x1b[Js\x1b[Jt\x1b[J\x1b[J\r\npythontest(config)# '
+  (split)
+: b'\x1b[sh\x1b[Jo\x1b[Js\x1b[Jt\x1b[Jn\x1b[Ja\x1b[Jm\x1b[Je\x1b[J \x1b[Jp\x1b[Jy\x1b[Jt\x1b[Jh\x1b[Jo\x1b[Jn\x1b[Jt\x1b[Je\x1b[Js\x1b[Jt\x1b[J\x1b[J
+: pythontest(config)# '

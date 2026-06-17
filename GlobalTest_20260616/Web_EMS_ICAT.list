@@ -1,0 +1,32 @@
+======== EMS ICAT ========
+[EMS1-5487] System - Add/Modify/Delete node management
+[EMS1-5489] Dashboard - Device
+[EMS1-5490] Dashboard - ONT/XONT
+[EMS1-5491] Dashboard - Alarm
+[EMS1-5493] Map - Device Status View
+[EMS1-5494] Map - Card Status View
+[EMS1-5495] Map - Tree View
+[EMS1-5496] Map - ONT Map display
+[EMS1-5497] Map - ONT/XONT Dashboard link
+[EMS1-5498] Map - Connection Test
+[EMS1-5499] Inventory - Device
+[EMS1-5500] Inventory - Card
+[EMS1-5501] Inventory - Port
+[EMS1-5502] Inventory - ONT/XONT
+[EMS1-5503] Fault - Active Alarm
+[EMS1-5504] Fault - History Alarm
+[EMS1-5510] Maintenance Schedule - Device Configuration Backup
+[EMS1-5511] Maintenance Schedule - Device Configuration Restore
+[EMS1-5512] Maintenance Schedule - FW Upgrade
+[EMS1-5513] Maintenance Schedule - Device Reboot
+[EMS1-5514] Maintenance Schedule - ONT Firmware Upgrade Gpon/OLT SFU
+[EMS1-5515] Maintenance Schedule - ONT Firmware Upgrade Gpon/OLT HGU
+[EMS1-5516] Maintenance Schedule - ONT Firmware Upgrade Xpon
+[EMS1-5517] Maintenance Schedule - ONT Firmware Upgrade Xpon combo ont
+[EMS1-5518] Maintenance Schedule - ONT Firmware Upgrade Xpon combo xont
+[EMS1-5519] Maintenance Schedule - ONT Reboot
+[EMS1-5520] Maintenance Schedule - ONT Reset
+[EMS1-5527] Security - Region Management and User Management
+[EMS1-5528] Security - Online Users
+
+

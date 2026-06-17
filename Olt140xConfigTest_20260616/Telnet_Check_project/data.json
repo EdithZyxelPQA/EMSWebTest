@@ -1,0 +1,7 @@
+{
+    "telnet_ip":"192.168.169.86",
+    "username":"admin",
+    "password":"1234",
+    "ssh_ip":"192.168.128.8",
+    "ssh_password":"netatlas123"
+}

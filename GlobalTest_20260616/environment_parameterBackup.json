@@ -1,0 +1,580 @@
+{
+  "LOOP": {
+    "count": "3"
+  },
+  "ELEMENT": {
+    "wait_time": "10"
+  },
+  "AUTO_SITE": {
+    "pc_ip": "192.168.168.81",
+    "upload_path": "D:\\Auto\\EMS\\Pytest\\EMSWebICAT\\ForUpload\\",
+    "report_path": "./reports/"
+  },
+  "EMS": {
+    "url": "https://192.168.128.8:9116/netatlasems/index",
+    "ip": "192.168.128.8",
+    "version": "03.00.05 (AAVV.221) b4",
+    "login_username": "admin",
+    "login_password": "Pqa1234!!",
+    "server_username": "adminpqa",
+    "server_password": "netatlas123",
+    "sudo_password": "netatlas123",
+    "db_username": "root",
+    "db_password": "netatlas123",
+    "USER": {
+      "USER1": {
+        "name": "admin",
+        "password": "1234",
+        "real_name": "adminuser",
+        "phone_number": "331996",
+        "email": "",
+        "expire_date": "",
+        "auto_logout": "60",
+        "memo": "",
+        "group": "",
+        "region": "Global",
+        "access_device": ""
+      },
+      "USER2": {
+        "name": "admin",
+        "password": "Pqa1234!!",
+        "real_name": "adminuser",
+        "phone_number": "1331996",
+        "email": "autoadmin@zyxel.com",
+        "expire_date": "",
+        "auto_logout": "999",
+        "memo": "zyxel_admin_memo",
+        "group": "",
+        "region": "Global",
+        "access_device": ""
+      },
+      "USER3": {
+        "name": "Musk",
+        "password": "Auto1234!!",
+        "real_name": "Muskuser",
+        "phone_number": "1331998866",
+        "email": "Msuk1314@zyxel.com.tw",
+        "expire_date": "",
+        "auto logout": "999",
+        "memo": "Musk@Memo",
+        "group": "MaskGroup",
+        "region": "MaskRegion",
+        "access_device": ""
+      }
+    },
+    "PASSWORDRULE": {
+      "force_change_password": 90,
+      "password_length_greater": 6,
+      "alpha_characters": 1,
+      "capital_alpha_characters": 1,
+      "number_characters": 1,
+      "special_characters": 1,
+      "lock_user_account": 0
+    }
+  },
+  "ZYXEL_DUT": {
+    "NODE1": {
+      "url": "http://192.168.168.208",
+      "ip": "192.168.168.208",
+      "inband_vlan": "7",
+      "login_username": "admin",
+      "login_password": "Pqa1234!!",
+      "default_username": "admin",
+      "default_password": "1234",
+      "name": "AutoDevice",
+      "description": "For ICAT Auto",
+      "name_display": "AutoDevice(192.168.168.208)",
+      "submap_name": "EMS",
+      "submap_description": "",
+      "map_name": "EMS",
+      "type": "IES5212",
+      "slot_total": "12",
+      "set_community": "Pqa1234!!set",
+      "get_community": "Pqa1234!!get",
+      "snmp_ver": "SNMP V3",
+      "snmp3_auth": "Authentication and privacy",
+      "snmp3_hash": "SHA",
+      "snmp3_encrypt": "AES",
+      "geo_position": "Chang Gung Memorial Hospital",
+      "CARDINFO": {
+        "MSC": {
+          "fw_version": "V2.03(ABXC.4)b6",
+          "slot_id": "6",
+          "type": "MSC1280XB",
+          "port_id": "1",
+          "port_type": "Network",
+          "port_speed": "1G"
+        },
+        "GLC1440X": {
+          "fw_version": "V2.03(AAWO.5)b3",
+          "slot_id": "4",
+          "type": "GLC1440X-55",
+          "port_id": "1",
+          "port_type": "Ethernet Access",
+          "port_speed": "1G"
+        },
+        "GLC1540X": {
+          "fw_version": "V2.03(ACFF.4)b3",
+          "slot_id": "10",
+          "type": "GLC1540X-55A",
+          "port_id": "15",
+          "port_type": "Ethernet Access",
+          "port_speed": "1G"
+        },
+        "OLC3416-42A": {
+          "fw_version": "V2.03(ABCH.4)b6",
+          "slot_id": "12",
+          "type": "OLC3416-42A",
+          "port_id": "1",
+          "port_type": "GPON",
+          "port_speed": "2.5G"
+        },
+        "OLC3416B": {
+          "fw_version": "V2.03(ACCH.4)b6",
+          "slot_id": "3",
+          "type": "OLC3416B-IA",
+          "port_id": "1",
+          "port_type": "xPON",
+          "port_speed": "2.5G"
+        },
+        "OLC3708": {
+          "fw_version": "V2.03(ABPW.4)b6",
+          "slot_id": "0",
+          "type": "OLC3708-43A",
+          "port_id": "8",
+          "port_type": "xPON",
+          "port_speed": "10G"
+        },
+        "OLC3816": {
+          "fw_version": "V2.03(ACHD.4)b6",
+          "slot_id": "1",
+          "type": "OLC3816-IA",
+          "port_id": "1",
+          "port_type": "xPON",
+          "port_speed": "10G"
+        },
+        "OLT140x": {
+          "fw_version": "V4.02(ABJC.6)b5",
+          "slot_id": "--",
+          "type": "OLT1408A",
+          "eth_port_id": "9",
+          "eth_port_type": "Network",
+          "eth_port_speed": "Auto",
+          "port_id": "8",
+          "port_type": "GPON",
+          "port_speed": "2.5G"
+        }
+      },
+      "ONTINFO": {
+        "GPON": {
+          "exe_ontCount": 2,
+          "exe_ont": "ONT1",
+          "exe_provision_ont": "ONT1",
+          "ONT1": {
+            "slot_id": "0",
+            "port_id": "7",
+            "ont_id": "55",
+            "sn_16": "5A5947641114FEAC",
+            "pw": "DEFAULT",
+            "ont_user": "supervisor",
+            "ont_pw": "de15cf5a",
+            "type": "ont",
+            "model": "PMG5622GA",
+            "fw_image": "V544ACJB0b3_Z0.bin"
+          },
+          "ONT2": {
+            "slot_id": "6",
+            "port_id": "16",
+            "ont_id": "1",
+            "sn_16": "5A5958458CB0091D",
+            "pw": "DEFAULT",
+            "ont_user": "supervisor",
+            "ont_pw": "de15cf5a",
+            "type": "ont",
+            "model": "PX3321-T1",
+            "fw_image": "V544ACJB0b3_Z0.bin"
+          }
+        },
+        "XPON": {
+          "exe_ontCount": 4,
+          "exe_upgrade_ont": "ONT3",
+          "exe_provision_ont": "ONT1",
+          "ONT1": {
+            "slot_id": "1",
+            "port_id": "8",
+            "ont_id": "1",
+            "sn_12": "",
+            "sn_16": "5A5958458CACE174",
+            "pw": "D41AD1009EC8",
+            "ont_user": "supervisor",
+            "ont_pw": "de15cf5a",
+            "type": "xont",
+            "model": "PM7300-T0",
+            "fw_image": "V542ABYY2Z0.bin",
+            "service_mode": "bridge"
+          },
+          "ONT2": {
+            "slot_id": "1",
+            "port_id": "8",
+            "ont_id": "2",
+            "sn_12": "",
+            "sn_16": "5A5958458CACE175",
+            "pw": "D41AD1009ED0",
+            "ont_user": "supervisor",
+            "ont_pw": "de15cf5a",
+            "type": "ont",
+            "model": "PM7300-T0",
+            "fw_image": "V542ABYY2Z0.bin",
+            "service_mode": "bridge"
+          },
+          "ONT3": {
+            "slot_id": "2",
+            "port_id": "12",
+            "ont_id": "1",
+            "sn_12": "",
+            "sn_16": "5A5958458CACDDF1",
+            "pw": "DEFAULT",
+            "ont_user": "supervisor",
+            "ont_pw": "de15cf5a",
+            "type": "xont",
+            "model": "PMG5617T20B2",
+            "fw_image": "V541ACBB1C0.bin",
+            "service_mode": "bridge"
+          },
+          "ONT4": {
+            "slot_id": "2",
+            "port_id": "12",
+            "ont_id": "2",
+            "sn_12": "",
+            "sn_16": "5A5947641114FE6C",
+            "pw": "DEFAULT",
+            "ont_user": "supervisor",
+            "ont_pw": "de15cf5a",
+            "type": "xont",
+            "model": "PMG5622GA",
+            "fw_image": "V540ABRE1C0a28.bin",
+            "service_mode": "bridge"
+          },
+          "ONT5": {
+            "slot_id": "6",
+            "port_id": "1",
+            "ont_id": "2",
+            "sn_12": "",
+            "sn_16": "5A5958458CACDE9B",
+            "pw": "DEFAULT",
+            "ont_user": "supervisor",
+            "ont_pw": "de15cf5a",
+            "type": "ont",
+            "model": "PMG5617T20B2",
+            "fw_image": "V541ACBB1C0v1.bin",
+            "service_mode": "veip"
+          },
+          "ONT6": {
+            "slot_id": "6",
+            "port_id": "16",
+            "ont_id": "3",
+            "sn_12": "",
+            "sn_16": "5A595845C601D0A6",
+            "pw": "DEFAULT",
+            "ont_user": "supervisor",
+            "ont_pw": "de15cf5a",
+            "type": "ont",
+            "model": "PMG1005-T20C",
+            "fw_image": "V100ABVO2b1.bin",
+            "service_mode": "bridge"
+          },
+          "ONT7": {
+            "slot_id": "1",
+            "port_id": "16",
+            "ont_id": "1",
+            "sn_12": "",
+            "sn_16": "5A5958458CACE176",
+            "pw": "000000000000000000000000000000000000000000000000000000000000000000000000",
+            "ont_user": "supervisor",
+            "ont_pw": "de15cf5a",
+            "type": "xont",
+            "model": "PM7300-T0",
+            "fw_image": "V542ABYY2b2_Z0.bin",
+            "service_mode": "bridge"
+          }
+        }
+      }
+    }
+  },
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  "EmsUrl": "https://192.168.168.172:9116/netatlasems/index",
+  "EmsIp": "192.168.168.172",
+  "EmsUsr": "admin",
+  "EmsPwd": "Pqa1234!!",
+  "EmsSrvUsr": "adminpqa",
+  "EmsSrvPwd": "netatlas123",
+  "EmsSuPwd": "netatlas123",
+  "DBUsr": "root",
+  "DBPwd": "mysql",
+  "UploadPath": "D:\\Auto\\EMS\\Pytest\\EMSWebICAT\\ForUpload\\",
+  "AutoPcIP": "192.168.168.81",
+  "age": 30,
+  "city": "New York",
+  "system": {
+    "find_element_time": 3
+  },
+  "Submap1": {
+    "node name": "autotestSubmap",
+    "description": "autotestDescription"
+  },
+  "Submap2": {
+    "node name": "MuskSubmap",
+    "description": "MuskDescription"
+  },
+  "Node1": {
+    "dutUrl": "https://192.168.168.87",
+    "name": "AutoDevice",
+    "description": "For ICAT Auto",
+    "ip": "192.168.168.87",
+    "nodename": "AutoDevice(192.168.168.87)",
+    "username": "admin",
+    "password": "Pqa1234!!",
+    "snmpVer": "SNMP V2C",
+    "setCommunity": "Pqa1234!!set",
+    "getCommunity": "Pqa1234!!get",
+    "snmp3Auth": "Authentication and privacy",
+    "snmp3Hash": "SHA",
+    "snmp3Encrypt": "AES",
+    "geoPosition": "Chang Gung Memorial Hospital",
+    "slotCount": 6,
+    "type": "IES5206",
+
+    "oltFwVersion": "V4.02(ABJB.5)C0",
+    "oltEthSlotID": "--",
+    "oltEthPortID": "5",
+    "oltEthPortType": "Network",
+    "oltEthPortSpeed": "Auto",
+
+    "oltPonSlotID": "--",
+    "oltPonPortID": "4",
+    "oltPonPortType": "GPON",
+    "oltPonPortSpeed": "2.5G",
+
+    "mscFwVersion": "V2.03(AAWC.3)",
+    "mscSlotID": "3",
+    "mscType": "MSC1240XA",
+    "mscPortID": "1",
+    "mscPortType": "Network",
+    "mscPortSpeed": "1G",
+
+    "glc1440FwVersion": "V2.03(AAWO.4)",
+    "glc1440SlotID": "2",
+    "glc1440Type": "GLC1440X-55A",
+    "glc1440PortID": "7",
+    "glc1440PortType": "Ethernet Access",
+    "glc1440PortSpeed": "1G",
+
+    "glc1540FwVersion": "V2.03(ACFF.3)",
+    "glc1540SlotID": "5",
+    "glc1540Type": "GLC1540X-55A",
+    "glc1540PortID": "15",
+    "glc1540PortType": "Ethernet Access",
+    "glc1540PortSpeed": "1G",
+
+    "olc3416FwVersion": "V2.03(ABCH.3)",
+    "olc3416SlotID": "6",
+    "olc3416Type": "OLC3416-42",
+    "olc3416PortID": "1",
+    "olc3416PortType": "GPON",
+    "olc3416PortSpeed": "2.5G",
+
+    "olc3708FwVersion": "V2.03(ABPW.3)b2",
+    "olc3708SlotID": "0",
+    "olc3708Type": "OLC3708-43A",
+    "olc3708PortID": "7",
+    "olc3708PortType": "xPON",
+    "olc3708PortSpeed": "10G",
+
+    "olc3416BFwVersion": "V2.03(ACCH.3)b2",
+    "olc3416BSlotID": "0",
+    "olc3416BType": "OLC3416B-IA",
+    "olc3416BPortID": "15",
+    "olc3416BPortType": "xPON",
+    "olc3416BPortSpeed": "2.5G",
+
+    "olc3816FwVersion": "V2.03(ACHD.3)",
+    "olc3816SlotID": "1",
+    "olc3816Type": "OLC3816-IA",
+    "olc3816PortID": "1",
+    "olc3816PortType": "xPON",
+    "olc3816PortSpeed": "10G",
+
+    "ontCount": 1,
+    "testUpgradeOnt": "Ont3",
+    "serviceOnt": "Ont7"
+  },
+  "Node2": {
+    "name": "AutoDevice",
+    "description": "For ICAT Auto",
+    "ip": "192.168.168.84",
+    "nodename": "AutoDevice(192.168.168.84)",
+    "username": "admin",
+    "password": "Pqa1234!!",
+    "snmpVer": "SNMP V3",
+    "_comment_snmpVer": "SNMP V2",
+    "setCommunity": "Pqa1234!!set",
+    "getCommunity": "Pqa1234!!get",
+    "snmp3Auth": "Authentication and no privacy",
+    "_comment_snmp3Auth": "No authentication and no privacy/ Authentication and no privacy/ Authentication and privacy",
+    "snmp3Hash": "MD5",
+    "_comment_snmp3Hash": "MD5/ SHA",
+    "snmp3Encrypt": "DES",
+    "_comment_snmp3Encrypt": "DES/ AES",
+    "geoPosition": "Chang Gung Memorial Hospital",
+    "slotCount": 0,
+    "type": "IES4204",
+    "mscType": "MSC1240QA",
+    "mscSlotID": "3",
+    "glc1440SlotID": "0",
+    "glc1540SlotID": "0",
+    "olc3416SlotID": "2",
+    "olc3708SlotID": "0",
+    "olc3416BSlotID": "0",
+    "olc3816SlotID": "0",
+    "ontCount": 3,
+    "testUpgradeOnt": "Ont2"
+  },
+  "Ont1": {
+    "slotID": "0",
+    "portID": "8",
+    "ontID": "1",
+    "type": "ont",
+    "model": "PMG5617T20B2",
+    "sn": "5A59424412345672",
+    "pw": "DEFAULT",
+    "upgradeFW": "V541ACBB1C0v1.bin"
+  },
+  "Ont2": {
+    "slotID": "1",
+    "portID": "1",
+    "ontID": "3",
+    "type": "ont",
+    "model": "PMG5617T20B2",
+    "sn": "5A5958458CABF617",
+    "pw": "DEFAULT",
+    "upgradeFW": "V541ACBB1C0v1.bin"
+  },
+  "Ont3": {
+    "slotID": "1",
+    "portID": "16",
+    "ontID": "1",
+    "type": "xont",
+    "model": "PM7300-T0",
+    "sn": "5A5958458CACE176",
+    "pw": "000000000000000000000000000000000000000000000000000000000000000000000000",
+    "upgradeFW": "V542ABYY2Z0.bin"
+  },
+  "Ont4": {
+    "slotID": "1",
+    "portID": "1",
+    "ontID": "6",
+    "type": "xont",
+    "model": "PX3321-T1",
+    "sn": "5A5958458CAF9F41",
+    "pw": "DEFAULT",
+    "upgradeFW": "V544ACJB0b3_Z0.bin"
+  },
+  "Ont5": {
+    "slotID": "6",
+    "portID": "16",
+    "ontID": "2",
+    "type": "ont",
+    "model": "PMG5617T20B2",
+    "sn": "5A5958458CACDDF1",
+    "pw": "DEFAULT",
+    "upgradeFW": "V541ACBB1C0v1.bin"
+  },
+  "Ont6": {
+    "slotID": "6",
+    "portID": "16",
+    "ontID": "3",
+    "type": "ont",
+    "model": "PMG1005-T20C",
+    "sn": "5A595845C601D0A6",
+    "pw": "DEFAULT",
+    "upgradeFW": "V100ABVO2b1.bin"
+  },
+  "Ont7": {
+    "slotID": "1",
+    "portID": "16",
+    "ontID": "1",
+    "type": "xont",
+    "model": "PM7300-T0",
+    "sn": "5A5958458CACE176",
+    "pw": "000000000000000000000000000000000000000000000000000000000000000000000000",
+    "upgradeFW": "V542ABYY2b2_Z0.bin"
+  },
+  "User0": {
+    "name": "admin",
+    "password": "1234",
+    "realName": "adminuser",
+    "phoneNumber": "331996",
+    "Email": "",
+    "ExpireDate": "",
+    "Auto logout": "60",
+    "Memo": "",
+    "Group": "",
+    "Region": "Global",
+    "Access Devices": ""
+  },
+  "User1": {
+    "name": "admin",
+    "password": "Pqa1234!!",
+    "realName": "adminuser",
+    "phoneNumber": "1331996",
+    "Email": "autoadmin@zyxel.com",
+    "ExpireDate": "",
+    "Auto logout": "999",
+    "Memo": "zyxel_admin_memo",
+    "Group": "",
+    "Region": "Global",
+    "Access Devices": ""
+  },
+  "User2": {
+    "name": "Musk",
+    "password": "Auto1234!!",
+    "realName": "Muskuser",
+    "phoneNumber": "1331998866",
+    "email": "Msuk1314@zyxel.com.tw",
+    "expireDate": "",
+    "auto logout": "999",
+    "memo": "Musk@Memo",
+    "group": "MaskGroup",
+    "region": "MaskRegion",
+    "access devices": ""
+  },
+  "PasswordRule1": {
+    "force to change password": 90,
+    "password length greater": 6,
+    "at least alpha characters": 1,
+    "at least capital alpha characters": 1,
+    "at least number characters": 1,
+    "at least special characters": 1,
+    "lock user account": 0
+  }
+}
+  

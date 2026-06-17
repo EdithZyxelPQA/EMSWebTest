@@ -1,0 +1,24 @@
+======== Restful on EMS Web ========
+[EMS1-6686]devDeviceInfo
+[EMS1-6687]devDeviceInfoDashboard
+[EMS1-6688]devSlotInfo
+[EMS1-6689]devPortInfoInventoryAllPort
+[EMS1-6690]devPortInfoInventoryTypePort
+[EMS1-6691]devPortInfoMapPort
+[EMS1-6692]devOntInfoInventoryAllOnt
+[EMS1-6693]devOntInfoMapDevice
+[EMS1-6694]devOntInfoMapDeviceOntDashboard
+[EMS1-6695]devOntInfoMapCardOntDashboard
+[EMS1-6696]devOntInfoMapCard
+[EMS1-6697]devOntInfoDashboard
+[EMS1-6698]devOntInfoDashboardOntDashboard
+[EMS1-6699]devXontInfoInventoryAllOnt
+[EMS1-6700]devXontInfoMapDevice
+[EMS1-6701]devXontInfoMapDeviceOntDashboard
+[EMS1-6702]devXontInfoMapCardOntDashboard
+[EMS1-6703]devXontInfoMapCard
+[EMS1-6704]devXontInfoDashboard
+[EMS1-6705]devXontInfoDashboardOntDashboard
+[EMS1-7080]devPortInfoInventoryTransceiver
+[EMS1-7091]devGePortInfoDashboard
+[EMS1-7092]devGePortInfoMapDevice
