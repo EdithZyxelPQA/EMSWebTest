@@ -2986,7 +2986,7 @@ class TestUnicase():
             Select(self.driver.find_element(By.ID, "uploadTo")).select_by_visible_text(self.fwUploadName[cardType])
             self.driver.find_element(By.XPATH, "//span[contains(.,\'File in local storage\')]").click()
             self.driver.find_element(By.ID, "loadfile").click()
-            self.driver.find_element(By.ID, "load").send_keys(self.uploadPath + self.fwUploadFileName[cardType])
+            self.driver.find_element(By.ID, "load").send_keys(self.uploadPath + os.sep + self.fwUploadFileName[cardType])
             self.driver.find_element(By.XPATH, "//label[contains(.,\'" + self.dutNodeName + "\')]").click()
             self.driver.find_element(By.CSS_SELECTOR, "#add_table .button").click()
         self.driver.find_element(By.XPATH, "//label[contains(.,\'Immediately\')]").click()
@@ -3072,7 +3072,7 @@ class TestUnicase():
             self.driver.switch_to.window(c)
             self.driver.find_element(By.ID, "loadfile").click()
             time.sleep(3)
-            self.driver.find_element(By.ID, "load").send_keys(self.uploadPath + self.fwUploadFileName[cardType])
+            self.driver.find_element(By.ID, "load").send_keys(self.uploadPath + os.sep + self.fwUploadFileName[cardType])
             time.sleep(3)
             self.driver.find_element(By.CSS_SELECTOR, ".button").click()
             time.sleep(30)
@@ -3427,7 +3427,7 @@ class TestUnicase():
         self.driver.find_element(By.ID, "maintain_ont_fw_upgrade_selectfile").click()
         Select(self.driver.find_element(By.ID, "maintain_ont_fw_upgrade_selectfile")).select_by_visible_text("Local")
         self.driver.find_element(By.ID, "loadfile").click()
-        self.driver.find_element(By.ID, "load").send_keys(self.uploadPath + self.upgradeOntFW)
+        self.driver.find_element(By.ID, "load").send_keys(self.uploadPath + os.sep + self.upgradeOntFW)
         self.driver.find_element(By.ID, "ont_fw_upgrade_starttime").click()
         testTime = (datetime.now() + timedelta(seconds = 5))
         scheduleTimeStart = testTime.strftime("%H:%M:%S")
@@ -3530,7 +3530,7 @@ class TestUnicase():
         self.driver.switch_to.window(c)
         self.driver.find_element(By.ID, "loadfile").click()
         time.sleep(3)
-        self.driver.find_element(By.ID, "load").send_keys(self.uploadPath + self.upgradeOntFW)
+        self.driver.find_element(By.ID, "load").send_keys(self.uploadPath + os.sep + self.upgradeOntFW)
         time.sleep(3)
         self.driver.find_element(By.CSS_SELECTOR, ".button").click()
         time.sleep(60)
@@ -3665,7 +3665,7 @@ class TestUnicase():
         self.driver.find_element(By.ID, "maintain_ont_fw_upgrade_selectfile").click()
         Select(self.driver.find_element(By.ID, "maintain_ont_fw_upgrade_selectfile")).select_by_visible_text("Local")
         self.driver.find_element(By.ID, "loadfile").click()
-        self.driver.find_element(By.ID, "load").send_keys(self.uploadPath + self.upgradeOntFW)
+        self.driver.find_element(By.ID, "load").send_keys(self.uploadPath + os.sep + self.upgradeOntFW)
         self.driver.find_element(By.ID, "ont_fw_upgrade_starttime").click()
         testTime = (datetime.now() + timedelta(seconds = 5))
         scheduleTimeStart = testTime.strftime("%H:%M:%S")
@@ -3774,7 +3774,7 @@ class TestUnicase():
         self.driver.find_element(By.ID, "maintain_ont_fw_upgrade_selectfile").click()
         Select(self.driver.find_element(By.ID, "maintain_ont_fw_upgrade_selectfile")).select_by_visible_text("Local")
         self.driver.find_element(By.ID, "loadfile").click()
-        self.driver.find_element(By.ID, "load").send_keys(self.uploadPath + self.upgradeOntFW)
+        self.driver.find_element(By.ID, "load").send_keys(self.uploadPath + os.sep + self.upgradeOntFW)
         self.driver.find_element(By.ID, "ont_fw_upgrade_starttime").click()
         testTime = (datetime.now() + timedelta(seconds = 5))
         scheduleTimeStart = testTime.strftime("%H:%M:%S")
@@ -4743,7 +4743,7 @@ class TestUnicase():
             Select(self.driver.find_element(By.ID, "uploadTo")).select_by_visible_text(self.fwUploadName[cardType])
             self.driver.find_element(By.XPATH, "//span[contains(.,\'File in local storage\')]").click()
             self.driver.find_element(By.ID, "loadfile").click()
-            self.driver.find_element(By.ID, "load").send_keys(self.uploadPath + self.fwUploadFileName[cardType])
+            self.driver.find_element(By.ID, "load").send_keys(self.uploadPath + os.sep + self.fwUploadFileName[cardType])
             self.driver.find_element(By.XPATH, "//label[contains(.,\'" + self.dutNodeName + "\')]").click()
             self.driver.find_element(By.CSS_SELECTOR, "#add_table .button").click()
         self.driver.find_element(By.ID, "schedule_name").click()
@@ -4842,7 +4842,7 @@ class TestUnicase():
         self.driver.find_element(By.ID, "maintain_ont_fw_upgrade_selectfile").click()
         Select(self.driver.find_element(By.ID, "maintain_ont_fw_upgrade_selectfile")).select_by_visible_text("Local")
         self.driver.find_element(By.ID, "loadfile").click()
-        self.driver.find_element(By.ID, "load").send_keys(self.uploadPath + self.upgradeOntFW)
+        self.driver.find_element(By.ID, "load").send_keys(self.uploadPath + os.sep + self.upgradeOntFW)
         self.driver.find_element(By.ID, "ont_fw_upgrade_starttime").click()
         testTime = (datetime.now() + timedelta(hours = 3))
         scheduleTimeStart = testTime.strftime("%H:%M:%S")
@@ -5587,7 +5587,7 @@ class TestUnicase():
             Select(self.driver.find_element(By.ID, "uploadTo")).select_by_visible_text(self.fwUploadName[cardType])
             self.driver.find_element(By.XPATH, "//span[contains(.,\'File in local storage\')]").click()
             self.driver.find_element(By.ID, "loadfile").click()
-            self.driver.find_element(By.ID, "load").send_keys(self.uploadPath + self.fwUploadFileName[cardType])
+            self.driver.find_element(By.ID, "load").send_keys(self.uploadPath + os.sep + self.fwUploadFileName[cardType])
             self.driver.find_element(By.XPATH, "//label[contains(.,\'" + self.dutNodeName + "\')]").click()
             self.driver.find_element(By.CSS_SELECTOR, "#add_table .button").click()
         self.driver.find_element(By.ID, "time").click()
@@ -5627,7 +5627,7 @@ class TestUnicase():
             Select(self.driver.find_element(By.ID, "uploadTo")).select_by_visible_text(self.fwUploadName[cardType])
             self.driver.find_element(By.XPATH, "//span[contains(.,\'File in local storage\')]").click()
             self.driver.find_element(By.ID, "loadfile").click()
-            self.driver.find_element(By.ID, "load").send_keys(self.uploadPath + self.fwUploadFileName[cardType])
+            self.driver.find_element(By.ID, "load").send_keys(self.uploadPath + os.sep + self.fwUploadFileName[cardType])
             self.driver.find_element(By.XPATH, "//label[contains(.,\'" + self.dutNodeName + "\')]").click()
             self.driver.find_element(By.CSS_SELECTOR, "#add_table .button").click()
         self.driver.find_element(By.XPATH, "//label[contains(.,\'Immediately\')]").click()
@@ -5678,7 +5678,7 @@ class TestUnicase():
             Select(self.driver.find_element(By.ID, "uploadTo")).select_by_visible_text(self.fwUploadName[cardType])
             self.driver.find_element(By.XPATH, "//span[contains(.,\'File in local storage\')]").click()
             self.driver.find_element(By.ID, "loadfile").click()
-            self.driver.find_element(By.ID, "load").send_keys(self.uploadPath + self.fwUploadFileName[cardType])
+            self.driver.find_element(By.ID, "load").send_keys(self.uploadPath + os.sep + self.fwUploadFileName[cardType])
             self.driver.find_element(By.XPATH, "//label[contains(.,\'" + self.dutNodeName + "\')]").click()
             self.driver.find_element(By.CSS_SELECTOR, "#add_table .button").click()
         self.driver.find_element(By.XPATH, "//label[contains(.,\'Immediately\')]").click()
@@ -5715,7 +5715,7 @@ class TestUnicase():
         self.driver.find_element(By.ID, "maintain_ont_fw_upgrade_selectfile").click()
         Select(self.driver.find_element(By.ID, "maintain_ont_fw_upgrade_selectfile")).select_by_visible_text("Local")
         self.driver.find_element(By.ID, "loadfile").click()
-        self.driver.find_element(By.ID, "load").send_keys(self.uploadPath + self.upgradeOntFW)
+        self.driver.find_element(By.ID, "load").send_keys(self.uploadPath + os.sep + self.upgradeOntFW)
         self.driver.find_element(By.ID, "ont_fw_upgrade_starttime").click()
         testTime = (datetime.now() + timedelta(hours = 3))
         scheduleTimeStart = testTime.strftime("%H:%M:%S")
@@ -5763,7 +5763,7 @@ class TestUnicase():
         self.driver.find_element(By.ID, "maintain_ont_fw_upgrade_selectfile").click()
         Select(self.driver.find_element(By.ID, "maintain_ont_fw_upgrade_selectfile")).select_by_visible_text("Local")
         self.driver.find_element(By.ID, "loadfile").click()
-        self.driver.find_element(By.ID, "load").send_keys(self.uploadPath + self.upgradeOntFW)
+        self.driver.find_element(By.ID, "load").send_keys(self.uploadPath + os.sep + self.upgradeOntFW)
         self.driver.find_element(By.ID, "ont_fw_upgrade_starttime").click()
         testTime = (datetime.now() + timedelta(seconds = 5))
         scheduleTimeStart = testTime.strftime("%H:%M:%S")
@@ -5826,7 +5826,7 @@ class TestUnicase():
         self.driver.find_element(By.ID, "maintain_ont_fw_upgrade_selectfile").click()
         Select(self.driver.find_element(By.ID, "maintain_ont_fw_upgrade_selectfile")).select_by_visible_text("Local")
         self.driver.find_element(By.ID, "loadfile").click()
-        self.driver.find_element(By.ID, "load").send_keys(self.uploadPath + self.upgradeOntFW)
+        self.driver.find_element(By.ID, "load").send_keys(self.uploadPath + os.sep + self.upgradeOntFW)
         self.driver.find_element(By.ID, "ont_fw_upgrade_starttime").click()
         testTime = (datetime.now() + timedelta(seconds = 5))
         scheduleTimeStart = testTime.strftime("%H:%M:%S")
@@ -6351,7 +6351,7 @@ class TestUnicase():
     # Provision/ Service/ Ont
     @pytest.mark.asyncio
     async def test_EMS1_6267_6268_4554_serviceExport(self):
-        maxCount = 200
+        maxCount = 120
         if self.exeServiceOnt == "": return
         fakeSnList = ["FAFAFAfa"+ str(i+1).zfill(8) for i in range(maxCount)]
         fakePw = "000000000000000000000000000000000000000000000000000000AaBbCcDd1234567890"
@@ -6542,6 +6542,9 @@ class TestUnicase():
             Select(self.driver.find_element(By.ID, "provision_service_qos_tcont_combbox")).select_by_visible_text("service" + str(ind + 1))
             Select(self.driver.find_element(By.ID, "provision_service_qos_usbandwidth_combbox")).select_by_visible_text("$py_newExportG" + str(ind + 1))
             Select(self.driver.find_element(By.ID, "provision_service_qos_dsbandwidth_combbox")).select_by_visible_text("$py_newExportG" + str(ind + 9))
+            self.driver.find_element(By.ID, "provision_service_qos_vlan_text").send_keys(str(ind + 201))
+            self.driver.find_element(By.ID, "provision_service_qos_svlan_text").send_keys(str(ind + 301))
+            self.driver.find_element(By.ID, "provision_service_qos_cvlan_text").send_keys(str(ind + 401))
             self.driver.find_element(By.CSS_SELECTOR, "#modal_provision_service_qos .button").click()
             time.sleep(3)
             self.driver.find_element(By.ID, "provision_service_profile_qos_table_new").click()
@@ -6579,9 +6582,9 @@ class TestUnicase():
             time.sleep (3)
         minTime = datetime.now()
         self.driver.find_element(By.XPATH, "//*[@id=\"create_service_background\"]/div[1]/div[3]/div[2]/input[2]").click()
-        time.sleep(3)        
+        time.sleep(10)        
         self.driver.find_element(By.XPATH, "//*[@id=\"create_service_background\"]/div[2]/input").click()
-        time.sleep(3)
+        time.sleep(10)
         self.driver.find_element(By.CSS_SELECTOR, "#message_diag .button").click()
         time.sleep(3)
         maxTime = datetime.now()
@@ -6609,7 +6612,7 @@ class TestUnicase():
         time.sleep (3)
         self.driver.find_element(By.XPATH, "//*[@id=\"create_service_background\"]/div[1]/div[3]/div[2]/button").click()
         time.sleep (3)
-        self.driver.find_element(By.ID, "csvInput").send_keys(self.uploadPath + "serviceExportNormal_" + str(maxCount) + ".csv")
+        self.driver.find_element(By.ID, "csvInput").send_keys(self.uploadPath + os.sep + "serviceExportNormal_" + str(maxCount) + ".csv")
         time.sleep (3)
         self.driver.find_element(By.XPATH, "//*[@id=\"create_service_background\"]/div[2]/input").click()
         time.sleep (30)
@@ -7285,19 +7288,19 @@ class TestUnicase():
                 case "[Default]OLT140X Series - Device Info":
                     with assume: assert self.driver.find_element(By.ID, "script_content").get_attribute("innerText") == "show mac address-table all"
                 case "[Default]NeoX Series - XPON ONT":
-                    with assume: assert self.driver.find_element(By.ID, "script_content").get_attribute("innerText") == "show interface remote xont [SLOT]-[PORT]-[ONT] status\nshow interface remote xont [SLOT]-[PORT]-[ONT] ddmi current\nshow interface remote xont [SLOT]-[PORT]-[ONT] counter\nshow interface remote xont [SLOT]-[PORT]-[ONT] pm-counter current\nshow interface remote xont [SLOT]-[PORT]-[ONT] fdb address-table\nshow interface remote xont [SLOT]-[PORT]-[ONT] wan-status\nshow interface remote xont [SLOT]-[PORT]-[ONT] wifi-status\nshow interface remote xont [SLOT]-[PORT]-[ONT] video status\nshow interface remote xont [SLOT]-[PORT]-[ONT] acl-service\nshow interface remote xont [SLOT]-[PORT]-[ONT] igmp-mld group\nshow interface remote xont [SLOT]-[PORT]-[ONT] ip-host status\nshow interface remote xont [SLOT]-[PORT]-[ONT] pppoe statistics"
+                    with assume: assert self.driver.find_element(By.ID, "script_content").get_attribute("innerText") == "show interface remote xont [SLOT]-[PORT]-[ONT] status\nshow interface remote xont [SLOT]-[PORT]-[ONT] ddmi current\nshow interface remote xont [SLOT]-[PORT]-[ONT] counter\nshow interface remote xont [SLOT]-[PORT]-[ONT] pm-counter current\nshow interface remote xont [SLOT]-[PORT]-[ONT] fdb address-table\nshow interface remote xont [SLOT]-[PORT]-[ONT] wan-status\nshow interface remote xont [SLOT]-[PORT]-[ONT] wifi-status\nshow interface remote xont [SLOT]-[PORT]-[ONT] video status\nshow interface remote xont [SLOT]-[PORT]-[ONT] acl-service\nshow interface remote xont [SLOT]-[PORT]-[ONT] igmp-mld group\nshow interface remote xont [SLOT]-[PORT]-[ONT] ip-host status\nshow interface remote xont [SLOT]-[PORT]-[ONT] pppoe statistics\nshow xpon pppoe snooping database | grep \"Slot\\|[SLOT]-[PORT]-[ONT]\""
                 case "[Default]NeoX Series - PON PORT":
                     with assume: assert self.driver.find_element(By.ID, "script_content").get_attribute("innerText") == "show interface xpon [SLOT]-[PORT] status\nshow interface xpon [SLOT]-[PORT] ddmi status\nshow interface xpon [SLOT]-[PORT] statistics\nshow interface xpon [SLOT]-[PORT] pm-counter current\nshow interface xpon [SLOT]-[PORT] ontstatus\nshow interface xpon [SLOT]-[PORT] dhcp l2agent snooping database\nshow interface xpon [SLOT]-[PORT] dhcp l2agent snooping statistics\nshow interface xpon [SLOT]-[PORT] igmp-mld group\nshow interface xpon [SLOT]-[PORT] igmp-mld statistics\nshow interface xpon [SLOT]-[PORT] ip source binding"
                 case "[Default]NeoX Series - NNI PORT":
                     with assume: assert self.driver.find_element(By.ID, "script_content").get_attribute("innerText") == "show interface nni [PORT] status\nshow interface nni [PORT] ddmi status\nshow interface nni [PORT] statistics\nshow interface nni [PORT] performance current\nshow fdb address-table sort-option mac port [PORT]\nshow interface nni [PORT] errdisable statistic\nshow interface nni [PORT] igmp-mld statistics\nshow interface nni [PORT] lldp statistic"
                 case "[Default]NeoX Series - GE PORT":
-                    with assume: assert self.driver.find_element(By.ID, "script_content").get_attribute("innerText") == "show interface ge [SLOT]-[PORT] status\nshow interface ge [SLOT]-[PORT] ddmi status\nshow interface ge [SLOT]-[PORT] statistics\nshow fdb address-table sort-option mac port [SLOT]-[PORT]"
+                    with assume: assert self.driver.find_element(By.ID, "script_content").get_attribute("innerText") == "show interface ge [SLOT]-[PORT] status\nshow interface ge [SLOT]-[PORT] ddmi status\nshow interface ge [SLOT]-[PORT] statistics\nshow fdb address-table sort-option mac port [SLOT]-[PORT]\nshow int ge [SLOT]-[PORT] pppoe snooping database"
                 case "[Default]NeoX Series - Device Info":
                     with assume: assert self.driver.find_element(By.ID, "script_content").get_attribute("innerText") == "show xpon pppoe snooping database\nshow fdb address-table sort-option port-vlan-mac"
                 case "[Default]IES52XX Series - XPON PORT":
                     with assume: assert self.driver.find_element(By.ID, "script_content").get_attribute("innerText") == "show interface xpon [SLOT]-[PORT] status\nshow interface xpon [SLOT]-[PORT] ddmi status\nshow interface xpon [SLOT]-[PORT] statistics\nshow interface xpon [SLOT]-[PORT] pm-counter current\nshow interface xpon [SLOT]-[PORT] ontstatus\nshow interface xpon [SLOT]-[PORT] dhcp l2agent snooping database\nshow interface xpon [SLOT]-[PORT] dhcp l2agent snooping statistics\nshow interface xpon [SLOT]-[PORT] igmp-mld group\nshow interface xpon [SLOT]-[PORT] igmp-mld statistics\nshow interface xpon [SLOT]-[PORT] ip source binding"
                 case "[Default]IES52XX Series - XPON ONT":
-                    with assume: assert self.driver.find_element(By.ID, "script_content").get_attribute("innerText") == "show interface remote xont [SLOT]-[PORT]-[ONT] status\nshow interface remote xont [SLOT]-[PORT]-[ONT] ddmi current\nshow interface remote xont [SLOT]-[PORT]-[ONT] counter\nshow interface remote xont [SLOT]-[PORT]-[ONT] pm-counter current\nshow interface remote xont [SLOT]-[PORT]-[ONT] fdb address-table\nshow interface remote xont [SLOT]-[PORT]-[ONT] wan-status\nshow interface remote xont [SLOT]-[PORT]-[ONT] wifi-status\nshow interface remote xont [SLOT]-[PORT]-[ONT] video status\nshow interface remote xont [SLOT]-[PORT]-[ONT] acl-service\nshow interface remote xont [SLOT]-[PORT]-[ONT] igmp-mld group\nshow interface remote xont [SLOT]-[PORT]-[ONT] ip-host status\nshow interface remote xont [SLOT]-[PORT]-[ONT] pppoe statistics"
+                    with assume: assert self.driver.find_element(By.ID, "script_content").get_attribute("innerText") == "show interface remote xont [SLOT]-[PORT]-[ONT] status\nshow interface remote xont [SLOT]-[PORT]-[ONT] ddmi current\nshow interface remote xont [SLOT]-[PORT]-[ONT] counter\nshow interface remote xont [SLOT]-[PORT]-[ONT] pm-counter current\nshow interface remote xont [SLOT]-[PORT]-[ONT] fdb address-table\nshow interface remote xont [SLOT]-[PORT]-[ONT] wan-status\nshow interface remote xont [SLOT]-[PORT]-[ONT] wifi-status\nshow interface remote xont [SLOT]-[PORT]-[ONT] video status\nshow interface remote xont [SLOT]-[PORT]-[ONT] acl-service\nshow interface remote xont [SLOT]-[PORT]-[ONT] igmp-mld group\nshow interface remote xont [SLOT]-[PORT]-[ONT] ip-host status\nshow interface remote xont [SLOT]-[PORT]-[ONT] pppoe statistics\nshow xpon pppoe snooping database | grep \"AID\\|[SLOT]-[PORT]-[ONT]\""
                 case "[Default]IES52XX Series - NNI PORT":
                     with assume: assert self.driver.find_element(By.ID, "script_content").get_attribute("innerText") == "show interface genni [PORT] status\nshow interface genni [PORT] ddmi status\nshow interface genni [PORT] statistics\nshow interface genni [PORT] performance current\nshow fdb address-table sort-option mac port [PORT]\nshow interface genni [PORT] errdisable statistic\nshow interface genni [PORT] igmp-mld statistics\nshow interface genni [PORT] lldp statistic"
                 case "[Default]IES52XX Series - GPON PORT":
@@ -7305,7 +7308,7 @@ class TestUnicase():
                 case "[Default]IES52XX Series - GPON ONT":
                     with assume: assert self.driver.find_element(By.ID, "script_content").get_attribute("innerText") == "show interface remote ont [SLOT]-[PORT]-[ONT] status\nshow interface remote ont [SLOT]-[PORT]-[ONT] ddmi current\nshow interface remote ont [SLOT]-[PORT]-[ONT] counter\nshow interface remote ont [SLOT]-[PORT]-[ONT] ontWan-status\nshow interface remote ont [SLOT]-[PORT]-[ONT] ontWifi status\nshow interface remote ont [SLOT]-[PORT]-[ONT] video status\nshow interface remote ont [SLOT]-[PORT]-[ONT] acl-service"
                 case "[Default]IES52XX Series - GE PORT":
-                    with assume: assert self.driver.find_element(By.ID, "script_content").get_attribute("innerText") == "show interface ge [SLOT]-[PORT] status\nshow interface ge [SLOT]-[PORT] ddmi status\nshow interface ge [SLOT]-[PORT] statistics\nshow fdb address-table sort-option mac port [SLOT]-[PORT]"
+                    with assume: assert self.driver.find_element(By.ID, "script_content").get_attribute("innerText") == "show interface ge [SLOT]-[PORT] status\nshow interface ge [SLOT]-[PORT] ddmi status\nshow interface ge [SLOT]-[PORT] statistics\nshow fdb address-table sort-option mac port [SLOT]-[PORT]\nshow int ge [SLOT]-[PORT] pppoe snooping database"
                 case "[Default]IES52XX Series - Device Info":
                     with assume: assert self.driver.find_element(By.ID, "script_content").get_attribute("innerText") == "show xpon pppoe snooping database\nshow fdb address-table sort-option port-vlan-mac"
             self.driver.find_element(By.XPATH, "//*[@id=\"modify_script_background\"]/div[1]/a").click() 

@@ -25,7 +25,7 @@ def run_pytest_for_node(node_info):
     cmd = [
         "pytest",
         test_case,
-        "-v",
+        "-vv",
         "-s",
         f"--html=report/report_{node_name}.html",
         f"--capture=sys",

@@ -1,0 +1,393 @@
+import re
+import time
+from dataclasses import dataclass
+
+
+DELETE_PROMPT_PATTERN = re.compile(r"(delete|sure|confirm|continue|yes/no|y/n|\[y/n\])", re.IGNORECASE)
+CLI_ERROR_PATTERN = re.compile(
+    r"(invalid|error|fail|failed|in use|being used|already|exists|not allow|not allowed|unknown|duplicate|conflict|% ?)",
+    re.IGNORECASE,
+)
+
+
+@dataclass(frozen=True)
+class RegisteredOnt:
+    aid: str
+    ont_id: str
+    transcript: str
+
+
+def unregister_ont_by_flag(host, username, password, ont_flag, sn, registration_password=None, port=22, timeout=60):
+    """Remove ONT remote interface on the DUT so EMS sees it as unregistered."""
+    import paramiko
+
+    flag = (ont_flag or "").strip().lower()
+    if flag == "xont":
+        commands = [f"no interface remote xont sn {sn}"]
+        if registration_password:
+            commands.append(f"no interface remote xont registration-id {registration_password}")
+    elif flag == "ont":
+        commands = [f"no interface remote ont sn {sn}"]
+        if registration_password:
+            commands.append(f"no interface remote ont password {registration_password}")
+    elif flag == "ont-14":
+        commands = ["configure", f"no interface remote ont sn {sn}"]
+        if registration_password:
+            commands.append(f"no interface remote ont password {registration_password}")
+    else:
+        raise ValueError(f"Unsupported ONT flag: {ont_flag!r}")
+
+    client = paramiko.SSHClient()
+    client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+    client.connect(
+        hostname=host,
+        port=port,
+        username=username,
+        password=password,
+        look_for_keys=False,
+        allow_agent=False,
+        timeout=timeout,
+    )
+
+    try:
+        shell = client.invoke_shell()
+        _drain(shell)
+        transcript = []
+        for command in commands:
+            transcript.append(_send_command(shell, command, timeout))
+            if DELETE_PROMPT_PATTERN.search(transcript[-1]):
+                transcript.append(_send_command(shell, "y", timeout))
+        return "\n".join(transcript)
+    finally:
+        client.close()
+
+
+def run_ssh_command(host, username, password, command, port=22, timeout=60):
+    """Run one command on the DUT and return its output."""
+    import paramiko
+
+    client = paramiko.SSHClient()
+    client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+    client.connect(
+        hostname=host,
+        port=port,
+        username=username,
+        password=password,
+        look_for_keys=False,
+        allow_agent=False,
+        timeout=timeout,
+    )
+
+    try:
+        stdin, stdout, stderr = client.exec_command(command, timeout=timeout)
+        output = stdout.read().decode(errors="ignore")
+        error = stderr.read().decode(errors="ignore")
+        return output + error
+    finally:
+        client.close()
+
+
+def run_ssh_commands(host, username, password, commands, port=22, timeout=60):
+    """Run commands on the DUT interactive shell and return the combined output."""
+    import paramiko
+
+    client = paramiko.SSHClient()
+    client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+    client.connect(
+        hostname=host,
+        port=port,
+        username=username,
+        password=password,
+        look_for_keys=False,
+        allow_agent=False,
+        timeout=timeout,
+    )
+
+    try:
+        shell = client.invoke_shell()
+        _drain(shell)
+        transcript = []
+        for command in commands:
+            transcript.append(_send_command(shell, command, timeout))
+        return "\n".join(transcript)
+    finally:
+        client.close()
+
+
+def run_telnet_commands(host, username, password, commands, port=23, timeout=60):
+    """Run commands on the DUT through telnet and return the combined output."""
+    import telnetlib
+
+    transcript = []
+    with telnetlib.Telnet(host, port, timeout=timeout) as telnet:
+        _telnet_login(telnet, username, password, timeout)
+        transcript.append(_telnet_read_available(telnet))
+        for command in commands:
+            transcript.append(_telnet_send_command(telnet, command, timeout))
+    return "\n".join(transcript)
+
+
+def run_console_commands(port, baudrate, username, password, commands, timeout=60):
+    """Run commands on the DUT through a serial console and return the combined output."""
+    import serial
+
+    transcript = []
+    with serial.Serial(port=port, baudrate=baudrate, timeout=0.2, write_timeout=5) as console:
+        console.write(b"\r\n")
+        time.sleep(1)
+        transcript.append(_serial_read_available(console))
+        transcript.append(_serial_login_if_needed(console, username, password, timeout))
+        for command in commands:
+            transcript.append(_serial_send_command(console, command, timeout))
+    return "\n".join(transcript)
+
+
+def register_ont_by_flag(
+    host,
+    username,
+    password,
+    ont_flag,
+    slot_id,
+    port_id,
+    ont_id,
+    sn,
+    registration_password,
+    ssh_port=22,
+    timeout=60,
+    max_ont_id_attempts=16,
+    candidate_ont_ids=None,
+):
+    """Register an ONT by CLI and return the actual AID/ONT ID used."""
+    import paramiko
+
+    flag = (ont_flag or "").strip().lower()
+    client = paramiko.SSHClient()
+    client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+    client.connect(
+        hostname=host,
+        port=ssh_port,
+        username=username,
+        password=password,
+        look_for_keys=False,
+        allow_agent=False,
+        timeout=timeout,
+    )
+
+    try:
+        shell = client.invoke_shell()
+        _drain(shell)
+        transcript = [_send_command(shell, "configure", timeout)]
+        if candidate_ont_ids is None:
+            start_ont_id = int(ont_id)
+            candidate_ont_ids = range(start_ont_id, start_ont_id + max_ont_id_attempts)
+
+        for candidate_ont_id in candidate_ont_ids:
+            aid = _build_aid(flag, slot_id, port_id, str(candidate_ont_id))
+            interface_command = _build_interface_command(flag, aid)
+            output = _send_command(shell, interface_command, timeout)
+            transcript.append(output)
+
+            if CLI_ERROR_PATTERN.search(output):
+                transcript.append(_send_command(shell, "exit", timeout))
+                continue
+
+            transcript.extend(_registration_commands(shell, flag, sn, registration_password, timeout))
+            show_output = _show_registration_config(shell, flag, aid, timeout)
+            transcript.append(show_output)
+            if _registration_is_visible(show_output, sn, registration_password):
+                return RegisteredOnt(aid=aid, ont_id=str(candidate_ont_id), transcript="\n".join(transcript))
+
+            transcript.append(f"Registration verification failed for {aid}; trying next ONT ID.\n")
+            transcript.append(_send_command(shell, "configure", timeout))
+
+        raise RuntimeError(
+            f"Could not register ONT after {max_ont_id_attempts} attempts. "
+            f"Last transcript:\n{''.join(transcript)}"
+        )
+    finally:
+        client.close()
+
+
+def _build_aid(flag, slot_id, port_id, ont_id):
+    if flag in {"xont", "ont"}:
+        return f"{slot_id}-{port_id}-{ont_id}"
+    if flag == "ont-14":
+        return f"ont-{port_id}-{ont_id}"
+    raise ValueError(f"Unsupported ONT flag: {flag!r}")
+
+
+def _build_interface_command(flag, aid):
+    if flag == "xont":
+        return f"interface remote xont {aid}"
+    if flag == "ont":
+        return f"interface remote ont {aid}"
+    if flag == "ont-14":
+        return f"remote ont {aid}"
+    raise ValueError(f"Unsupported ONT flag: {flag!r}")
+
+
+def _registration_commands(shell, flag, sn, registration_password, timeout):
+    password_keyword = "registration-id" if flag == "xont" else "password"
+    outputs = [
+        _send_command(shell, f"sn {sn}", timeout),
+        _send_command(shell, f"{password_keyword} {registration_password}", timeout),
+        _send_command(shell, "no inactive", timeout),
+        _send_command(shell, "exit", timeout),
+    ]
+    if any(CLI_ERROR_PATTERN.search(output) for output in outputs):
+        raise RuntimeError("Failed to register ONT by CLI:\n" + "\n".join(outputs))
+    return outputs
+
+
+def _show_registration_config(shell, flag, aid, timeout):
+    _send_command(shell, "exit", timeout)
+    show_outputs = []
+    for command in _show_config_commands(flag, aid):
+        output = _send_command(shell, command, timeout)
+        show_outputs.append(output)
+        if not CLI_ERROR_PATTERN.search(output):
+            return "\n".join(show_outputs)
+    return "\n".join(show_outputs)
+
+
+def _show_config_commands(flag, aid):
+    if flag == "xont":
+        return [f"show interface remote xont {aid} config", f"show in remote xont {aid} config"]
+    if flag == "ont":
+        return [f"show interface remote ont {aid} config", f"show in remote ont {aid} config"]
+    if flag == "ont-14":
+        return [f"show remote ont {aid} config"]
+    raise ValueError(f"Unsupported ONT flag: {flag!r}")
+
+
+def _registration_is_visible(output, sn, registration_password):
+    normalized = output.replace(" ", "").replace("\r", "")
+    sn_candidates = _cli_sn_candidates(sn)
+    return any(candidate in output for candidate in sn_candidates) and registration_password in normalized
+
+
+def _cli_sn_candidates(sn):
+    candidates = {sn, sn[-12:]}
+    if len(sn) >= 8:
+        try:
+            ascii_prefix = bytes.fromhex(sn[:8]).decode("ascii")
+        except (ValueError, UnicodeDecodeError):
+            ascii_prefix = ""
+        if ascii_prefix.isprintable():
+            candidates.add(ascii_prefix + sn[8:])
+    return candidates
+
+
+def _send_command(shell, command, timeout):
+    shell.send(command + "\n")
+    end_time = time.time() + timeout
+    output = []
+    while time.time() < end_time:
+        if shell.recv_ready():
+            chunk = shell.recv(65535).decode(errors="ignore")
+            output.append(chunk)
+            if DELETE_PROMPT_PATTERN.search(chunk):
+                break
+            if _looks_like_prompt("".join(output)):
+                break
+        time.sleep(0.2)
+    return "".join(output)
+
+
+def _drain(shell):
+    time.sleep(0.5)
+    while shell.recv_ready():
+        shell.recv(65535)
+
+
+def _looks_like_prompt(text):
+    tail = text.rstrip().splitlines()[-1:] or [""]
+    return bool(re.search(r"[\w()./-]+[>#]\s*$", tail[0]))
+
+
+def _telnet_login(telnet, username, password, timeout):
+    output = telnet.read_until(b"ogin:", timeout)
+    if b"ogin:" in output:
+        telnet.write(username.encode() + b"\n")
+        telnet.read_until(b"assword:", timeout)
+        telnet.write(password.encode() + b"\n")
+        return
+    if b"sername:" in output:
+        telnet.write(username.encode() + b"\n")
+        telnet.read_until(b"assword:", timeout)
+        telnet.write(password.encode() + b"\n")
+
+
+def _telnet_send_command(telnet, command, timeout):
+    telnet.write(command.encode() + b"\n")
+    end_time = time.time() + timeout
+    output = []
+    while time.time() < end_time:
+        chunk = telnet.read_very_eager().decode(errors="ignore")
+        if chunk:
+            output.append(chunk)
+            if _looks_like_prompt("".join(output)):
+                break
+        time.sleep(0.2)
+    return "".join(output)
+
+
+def _telnet_read_available(telnet):
+    time.sleep(0.5)
+    return telnet.read_very_eager().decode(errors="ignore")
+
+
+def _serial_login_if_needed(console, username, password, timeout):
+    console.write(b"\r\n")
+    end_time = time.time() + timeout
+    output = []
+    logged_in = False
+    while time.time() < end_time:
+        text = _serial_read_available(console)
+        if text:
+            output.append(text)
+            joined = "".join(output)
+            lowered = joined.lower()
+            current = text.lower()
+            if "password:" in current or re.search(r"password:\s*$", lowered):
+                console.write(password.encode() + b"\r\n")
+                time.sleep(0.5)
+            elif "login:" in current or "username:" in current or re.search(r"(login|username):\s*$", lowered):
+                console.write(username.encode() + b"\r\n")
+                time.sleep(0.5)
+            elif _looks_like_prompt(joined):
+                logged_in = True
+                break
+        else:
+            console.write(b"\r\n")
+            time.sleep(0.5)
+        if _looks_like_prompt("".join(output)):
+            logged_in = True
+            break
+    if not logged_in:
+        raise RuntimeError("Serial console login did not reach CLI prompt:\n" + "".join(output))
+    return "".join(output)
+
+
+def _serial_send_command(console, command, timeout):
+    console.write(command.encode() + b"\r\n")
+    end_time = time.time() + timeout
+    output = []
+    while time.time() < end_time:
+        text = _serial_read_available(console)
+        if text:
+            output.append(text)
+            joined = "".join(output)
+            if _looks_like_prompt(joined):
+                break
+        time.sleep(0.2)
+    return "".join(output)
+
+
+def _serial_read_available(console, max_seconds=2):
+    chunks = []
+    end_time = time.time() + max_seconds
+    while console.in_waiting and time.time() < end_time:
+        chunks.append(console.read(console.in_waiting).decode(errors="ignore"))
+        time.sleep(0.1)
+    return "".join(chunks)

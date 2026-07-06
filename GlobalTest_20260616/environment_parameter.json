@@ -7,16 +7,16 @@
   },
   "AUTO_SITE": {
     "pc_ip": "192.168.168.81",
-    "upload_path": "D:\\Auto\\EMS\\Pytest\\EMSWebICAT\\ForUpload\\",
+    "upload_path": "./ForUpload/",
     "report_path": "./reports/",
     "download_path": "./download/",
     "browser": "chrome"
   },
   "EMS": {
-    "report_title": "Web_EMS_Restful",
+    "report_title": "Web_EMS_Unicase",
     "url": "https://192.168.128.100:9116/netatlasems/index",
-    "ip": "192.168.128.100",
-    "version": "03.00.11(AAVV.221)b5",
+    "ip": "192.168.128.25",
+    "version": "03.00.11(AAVV.221)b9",
     "login_username": "admin",
     "login_password": "Pqa1234!!",
     "server_username": "admin",
@@ -419,7 +419,7 @@
           "type": "GPON",
           "flag": "xont",
           "model": "PX5302-00",
-          "fw_image": "V544ACNM11C0.bin",
+          "fw_image": "V544ACNM1b1.bin",
           "service_mode": "veip",
           "service_prf": "Edith_HGU"
         }

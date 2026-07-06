@@ -37,6 +37,10 @@ class TestProvision():
         # 取得本次 Pytest 總共要執行的 Case 數量（用來判斷是不是只單跑一個 Case）
         total_cases_to_run = request.session.testscollected
         is_single_case_run = (total_cases_to_run == 1)
+        is_last_selected_case = (
+            bool(request.session.items)
+            and request.node.nodeid == request.session.items[-1].nodeid
+        )
 
         # 如果前一個 Case 是無痕，或者是其他原因導致 driver 沒清乾淨，先重置
         if is_incognito_case and cls.driver is not None:
@@ -99,15 +103,19 @@ class TestProvision():
         # 核心判斷：測試結束後的關閉時機
         # 情況 A：如果是特定無痕 Case，跑完立刻關閉，免得污染後面
         # 情況 B：如果使用者在 RUN.py 只單獨點名跑「這一個 Case」，跑完立刻關閉
-        if is_incognito_case or is_single_case_run:
+        if is_incognito_case or is_single_case_run or is_last_selected_case:
             if is_incognito_case:
                 print(f"\n特定無痕 Case [{current_test}] 執行完畢，關閉瀏覽器。")
             elif is_single_case_run:
                 print(f"\n單一 Case [{current_test}] 獨立執行完畢，關閉瀏覽器。")
                 
             if cls.driver:
-                cls.driver.quit()
-                cls.driver = None
+                try:
+                    cls.driver.quit()
+                except Exception as e:
+                    print(f"Failed to close browser: {e}")
+                finally:
+                    cls.driver = None
 
     @pytest.mark.asyncio
     async def test_EMS1_5708_ontAlarmPrfAdd(self):
@@ -462,7 +470,10 @@ class TestProvision():
         self.driver.find_element(By.ID, "ont_voip_common_pstn_text").send_keys(Keys.CONTROL + "a")
         self.driver.find_element(By.ID, "ont_voip_common_pstn_text").send_keys(Keys.DELETE)
         self.driver.find_element(By.ID, "ont_voip_common_pstn_text").send_keys("999")
-        Select(self.driver.find_element(By.ID, "ont_voip_common_announce_combobox")).select_by_visible_text("Voice announcement")
+        announce_combobox = self.driver.find_element(By.ID, "ont_voip_common_announce_combobox")
+        elementScrolledIntoView(self, announce_combobox)
+        time.sleep(1)
+        Select(announce_combobox).select_by_visible_text("Voice announcement")
         self.driver.find_element(By.CSS_SELECTOR, ".zy_input_box:nth-child(12) label").click()
         Select(self.driver.find_element(By.ID, "ont_voip_common_faxmode_combobox")).select_by_visible_text("T38")
         Select(self.driver.find_element(By.ID, "ont_voip_common_1stcodec_combobox")).select_by_visible_text("G729")
@@ -4700,6 +4711,7 @@ class TestProvision():
         time.sleep (3)
         #getElementByPositionCol(self, "ont_inventory_div", entryPosition , "sn").click()
         time.sleep(3)
+        main_window = self.driver.current_window_handle
         c = self.driver.window_handles[1]
         self.driver.switch_to.window(c)
         #Check the ip host config in result
@@ -4727,6 +4739,8 @@ class TestProvision():
             with assume: assert "#" in consolePList[-1] 
             self.driver.find_element(By.ID, "popupCallBack").click()
             time.sleep(3)
+            self.driver.close()
+            self.driver.switch_to.window(main_window)
         #Check in CLI
         checkValue = []
         #Check ont or ont-14 config
@@ -4798,6 +4812,7 @@ class TestProvision():
         action = ActionChains(self.driver)
         action.double_click(getElementByPositionCol(self, "ont_inventory_div", entryPosition , "sn")).perform()
         time.sleep (3)
+        main_window = self.driver.current_window_handle
         c = self.driver.window_handles[1]
         self.driver.switch_to.window(c)
         #Check the ip host config in result
@@ -4824,6 +4839,8 @@ class TestProvision():
         with assume: assert "#" in consolePList[-1] 
         self.driver.find_element(By.ID, "popupCallBack").click()
         time.sleep(3)
+        self.driver.close()
+        self.driver.switch_to.window(main_window)
         #Check in CLI
         checkValue = []
         #Check ont or ont-14 config
@@ -4892,6 +4909,7 @@ class TestProvision():
         action = ActionChains(self.driver)
         action.double_click(getElementByPositionCol(self, "ont_inventory_div", entryPosition , "sn")).perform()
         time.sleep(3)
+        main_window = self.driver.current_window_handle
         c = self.driver.window_handles[1]
         self.driver.switch_to.window(c)
         #Check the ip host config in result
@@ -4918,6 +4936,8 @@ class TestProvision():
         with assume: assert "#" in consolePList[-1] 
         self.driver.find_element(By.ID, "popupCallBack").click()
         time.sleep(3)
+        self.driver.close()
+        self.driver.switch_to.window(main_window)
         #Check in CLI
         checkValue = []
         #Check ont or ont-14 config

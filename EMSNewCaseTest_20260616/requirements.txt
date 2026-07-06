@@ -7,4 +7,5 @@ python-dateutil
 requests
 pandas
 openpyxl
-
+paramiko
+pyserial

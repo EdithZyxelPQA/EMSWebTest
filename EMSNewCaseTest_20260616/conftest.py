@@ -52,6 +52,9 @@ def build_config_object(node_name, env_file):
         )
 
     dut_data = dut_table[node_name]
+    ont_table = dut_data.get("ONT", {})
+    exe_service_ont = ont_table.get("exe_provision_ont", "")
+    service_ont_data = ont_table.get(exe_service_ont, {}) if exe_service_ont else {}
     upload_path = auto_site.get("upload_path", str(PROJECT_ROOT / "ForUpload"))
     download_path = auto_site.get("download_path", str(PROJECT_ROOT / "download"))
     report_path = auto_site.get("report_path", str(PROJECT_ROOT / "report"))
@@ -78,8 +81,23 @@ def build_config_object(node_name, env_file):
         "dutDesc": dut_data.get("description", ""),
         "dutAdminName": dut_data.get("login_username", ""),
         "dutAdminPwd": dut_data.get("login_password", ""),
+        "dutConsolePort": dut_data.get("console_port", ""),
+        "dutConsoleBaudrate": int(dut_data.get("console_baudrate", 115200)),
+        "dutConsoleName": dut_data.get("console_username", dut_data.get("login_username", "")),
+        "dutConsolePwd": dut_data.get("console_password", dut_data.get("login_password", "")),
         "dutType": dut_data.get("type", ""),
         "dutSlotCount": dut_data.get("slot_total", ""),
+        "dutCardInfo": dut_data.get("CARDINFO", {}),
+        "dutGeInfo": dut_data.get("GE", {}),
+        "exeServiceOnt": exe_service_ont,
+        "serviceOntSN": service_ont_data.get("sn_16", ""),
+        "serviceOntPW": service_ont_data.get("pw", ""),
+        "serviceOntFlag": service_ont_data.get("flag", ""),
+        "serviceOntType": service_ont_data.get("type", ""),
+        "serviceOntProfile": service_ont_data.get("service_prf", ""),
+        "serviceOntSlotID": service_ont_data.get("slot_id", ""),
+        "serviceOntPortID": service_ont_data.get("port_id", ""),
+        "serviceOntID": service_ont_data.get("ont_id", ""),
         "raw": _as_namespace(data),
         "dut": _as_namespace(dut_data),
     }
@@ -106,4 +124,3 @@ def inject_test_config(request, test_config):
 def create_runtime_dirs(test_config):
     Path(test_config.downloadpath).mkdir(parents=True, exist_ok=True)
     Path(test_config.reportPath).mkdir(parents=True, exist_ok=True)
-

@@ -28,7 +28,7 @@ def build_config_object(node_name):
     config = {
         "reportTitle": data["EMS"]["report_title"],
         "waitTime": data["ELEMENT"]["wait_time"],
-        "uploadPath": data["AUTO_SITE"]["upload_path"],
+        "uploadPath": os.path.abspath(data["AUTO_SITE"]["upload_path"]),
         "downloadpath": os.path.abspath(data["AUTO_SITE"]["download_path"]),
         "browser": data["AUTO_SITE"]["browser"],
         "emsIp": data["EMS"]["ip"],
