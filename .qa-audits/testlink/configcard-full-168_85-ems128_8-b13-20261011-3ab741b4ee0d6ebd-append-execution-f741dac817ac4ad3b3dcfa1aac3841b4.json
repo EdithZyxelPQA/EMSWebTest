@@ -1,0 +1,20 @@
+{
+  "schema_version": "1.0",
+  "operation_id": "configcard-full-168_85-ems128_8-b13-20261011-3ab741b4ee0d6ebd",
+  "environment": "corp",
+  "action": "append-execution",
+  "status": "success",
+  "preview_digest": "4e910d41ebf98de389978c47c2736258b86861e7f61b74cdf3661293260140bc",
+  "testcase_external_id": "EMS1-6195",
+  "execution_id": "3168024",
+  "response": [
+    {
+      "status": true,
+      "operation": "reportTCResult",
+      "overwrite": false,
+      "message": "Success!",
+      "id": 3168024
+    }
+  ],
+  "finished_at": "2026-10-11T01:06:46+00:00"
+}

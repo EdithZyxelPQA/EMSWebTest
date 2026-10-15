@@ -1,0 +1,2190 @@
+{
+  "schema_version": "1.0",
+  "artifact_type": "qa-preview-plan",
+  "operation_id": "ems-icat-20260806-100423-olt1408b-ia",
+  "preview_digest": "b4e31ab55ae2eb32855f969cfd65334096b35e75727dc6b06211c27b1fcae160",
+  "plan": {
+    "schema_version": "1.0",
+    "operation_id": "ems-icat-20260806-100423-olt1408b-ia",
+    "correlation_id": "ems-icat-20260806-100423-olt1408b-ia",
+    "environment": "corp",
+    "input_digest": "6f68dddbc6cf605a9866bf3e93ab2355f60957c10b1102691068cb5663ded811",
+    "report": "D:\\Auto\\EMS\\Agent\\EMSWeb\\qa_normalized_icat_olt1408b_ia_20260806_100423.txt",
+    "report_schema": "legacy-web-ems-report-v1",
+    "target": {
+      "project": "NetAtlasEMS",
+      "plan": "NetAtlas EMS",
+      "platform": "NetAtlas EMS",
+      "build": "03.00.11(AAVV.221)b10_ubuntu"
+    },
+    "redmine_create_bugs": false,
+    "items": [
+      {
+        "result": {
+          "external_id": "EMS1-5487",
+          "testcase_id": null,
+          "version": null,
+          "test_name": "node",
+          "testlink_name": null,
+          "raw_status": "Pass",
+          "status": "p",
+          "duration": "0s"
+        },
+        "dedupe_marker": null,
+        "dedupe_digest": null,
+        "redmine_request": null,
+        "redmine_preview": null,
+        "testlink_request": {
+          "operation_id": "ems-icat-20260806-100423-olt1408b-ia-8dd31f4d03a2a352",
+          "environment": "corp",
+          "project": "NetAtlasEMS",
+          "plan": "NetAtlas EMS",
+          "platform": "NetAtlas EMS",
+          "build": "03.00.11(AAVV.221)b10_ubuntu",
+          "testcase_external_id": "EMS1-5487",
+          "status": "p",
+          "notes": "Operation ID: ems-icat-20260806-100423-olt1408b-ia\nReport Schema: legacy-web-ems-report-v1\nReport File: qa_normalized_icat_olt1408b_ia_20260806_100423.txt\nTestLink Project: NetAtlasEMS\nTest Plan: NetAtlas EMS\nPlatform: NetAtlas EMS\nBuild: 03.00.11(AAVV.221)b10_ubuntu\nTest Case: EMS1-5487\nAutomation Test Function: node\nResult: Pass",
+          "execution_duration": null
+        },
+        "testlink_preview": {
+          "schema_version": "1.0",
+          "operation_id": "ems-icat-20260806-100423-olt1408b-ia-8dd31f4d03a2a352",
+          "environment": "corp",
+          "mode": "preview",
+          "preview_digest": "bdc7709cff0b3691a48cdd186d98b87bd216019742e0d6c61bec367a92a712de",
+          "planned_write": true,
+          "target": {
+            "project": {
+              "id": "67654",
+              "name": "NetAtlasEMS"
+            },
+            "plan": {
+              "id": "260150",
+              "name": "NetAtlas EMS"
+            },
+            "platform": {
+              "id": "49",
+              "name": "NetAtlas EMS"
+            },
+            "build": {
+              "id": "19926",
+              "name": "03.00.11(AAVV.221)b10_ubuntu"
+            }
+          },
+          "execution": {
+            "testcase_external_id": "EMS1-5487",
+            "status": "p",
+            "notes_digest": "eb2fd8cb04136d38c4ba353aac4958a2d5115799d2d0d5f1ab9da04ebe7492a6"
+          },
+          "warnings": []
+        }
+      },
+      {
+        "result": {
+          "external_id": "EMS1-5512",
+          "testcase_id": null,
+          "version": null,
+          "test_name": "fwUpgrade",
+          "testlink_name": null,
+          "raw_status": "Fail",
+          "status": "f",
+          "duration": "0s"
+        },
+        "dedupe_marker": null,
+        "dedupe_digest": null,
+        "redmine_request": null,
+        "redmine_preview": null,
+        "testlink_request": {
+          "operation_id": "ems-icat-20260806-100423-olt1408b-ia-48096e988ebd8023",
+          "environment": "corp",
+          "project": "NetAtlasEMS",
+          "plan": "NetAtlas EMS",
+          "platform": "NetAtlas EMS",
+          "build": "03.00.11(AAVV.221)b10_ubuntu",
+          "testcase_external_id": "EMS1-5512",
+          "status": "f",
+          "notes": "Operation ID: ems-icat-20260806-100423-olt1408b-ia\nReport Schema: legacy-web-ems-report-v1\nReport File: qa_normalized_icat_olt1408b_ia_20260806_100423.txt\nTestLink Project: NetAtlasEMS\nTest Plan: NetAtlas EMS\nPlatform: NetAtlas EMS\nBuild: 03.00.11(AAVV.221)b10_ubuntu\nTest Case: EMS1-5512\nAutomation Test Function: fwUpgrade\nResult: Fail",
+          "execution_duration": null
+        },
+        "testlink_preview": {
+          "schema_version": "1.0",
+          "operation_id": "ems-icat-20260806-100423-olt1408b-ia-48096e988ebd8023",
+          "environment": "corp",
+          "mode": "preview",
+          "preview_digest": "8fcc7bb62cb66b012286b2849d5c362c3c447429d1cc94a6252d0c0a89cbaecb",
+          "planned_write": true,
+          "target": {
+            "project": {
+              "id": "67654",
+              "name": "NetAtlasEMS"
+            },
+            "plan": {
+              "id": "260150",
+              "name": "NetAtlas EMS"
+            },
+            "platform": {
+              "id": "49",
+              "name": "NetAtlas EMS"
+            },
+            "build": {
+              "id": "19926",
+              "name": "03.00.11(AAVV.221)b10_ubuntu"
+            }
+          },
+          "execution": {
+            "testcase_external_id": "EMS1-5512",
+            "status": "f",
+            "notes_digest": "67010bc4d76be0e6ee8bec756c13a21761558cbf96c606d69933a2a71564be8a"
+          },
+          "warnings": []
+        }
+      },
+      {
+        "result": {
+          "external_id": "EMS1-5510",
+          "testcase_id": null,
+          "version": null,
+          "test_name": "configBackup",
+          "testlink_name": null,
+          "raw_status": "Fail",
+          "status": "f",
+          "duration": "0s"
+        },
+        "dedupe_marker": null,
+        "dedupe_digest": null,
+        "redmine_request": null,
+        "redmine_preview": null,
+        "testlink_request": {
+          "operation_id": "ems-icat-20260806-100423-olt1408b-ia-1028cac22fd7845d",
+          "environment": "corp",
+          "project": "NetAtlasEMS",
+          "plan": "NetAtlas EMS",
+          "platform": "NetAtlas EMS",
+          "build": "03.00.11(AAVV.221)b10_ubuntu",
+          "testcase_external_id": "EMS1-5510",
+          "status": "f",
+          "notes": "Operation ID: ems-icat-20260806-100423-olt1408b-ia\nReport Schema: legacy-web-ems-report-v1\nReport File: qa_normalized_icat_olt1408b_ia_20260806_100423.txt\nTestLink Project: NetAtlasEMS\nTest Plan: NetAtlas EMS\nPlatform: NetAtlas EMS\nBuild: 03.00.11(AAVV.221)b10_ubuntu\nTest Case: EMS1-5510\nAutomation Test Function: configBackup\nResult: Fail",
+          "execution_duration": null
+        },
+        "testlink_preview": {
+          "schema_version": "1.0",
+          "operation_id": "ems-icat-20260806-100423-olt1408b-ia-1028cac22fd7845d",
+          "environment": "corp",
+          "mode": "preview",
+          "preview_digest": "600a58fe208ea62f24c83a656f3dfec2486d87fe7d2983eb164f856afd7ab8e5",
+          "planned_write": true,
+          "target": {
+            "project": {
+              "id": "67654",
+              "name": "NetAtlasEMS"
+            },
+            "plan": {
+              "id": "260150",
+              "name": "NetAtlas EMS"
+            },
+            "platform": {
+              "id": "49",
+              "name": "NetAtlas EMS"
+            },
+            "build": {
+              "id": "19926",
+              "name": "03.00.11(AAVV.221)b10_ubuntu"
+            }
+          },
+          "execution": {
+            "testcase_external_id": "EMS1-5510",
+            "status": "f",
+            "notes_digest": "2d1a08b801d72bcf8488565632c0a3987071a815e247362212500a5babe16815"
+          },
+          "warnings": []
+        }
+      },
+      {
+        "result": {
+          "external_id": "EMS1-5513",
+          "testcase_id": null,
+          "version": null,
+          "test_name": "Reboot",
+          "testlink_name": null,
+          "raw_status": "Pass",
+          "status": "p",
+          "duration": "0s"
+        },
+        "dedupe_marker": null,
+        "dedupe_digest": null,
+        "redmine_request": null,
+        "redmine_preview": null,
+        "testlink_request": {
+          "operation_id": "ems-icat-20260806-100423-olt1408b-ia-af0f37d59294f7a2",
+          "environment": "corp",
+          "project": "NetAtlasEMS",
+          "plan": "NetAtlas EMS",
+          "platform": "NetAtlas EMS",
+          "build": "03.00.11(AAVV.221)b10_ubuntu",
+          "testcase_external_id": "EMS1-5513",
+          "status": "p",
+          "notes": "Operation ID: ems-icat-20260806-100423-olt1408b-ia\nReport Schema: legacy-web-ems-report-v1\nReport File: qa_normalized_icat_olt1408b_ia_20260806_100423.txt\nTestLink Project: NetAtlasEMS\nTest Plan: NetAtlas EMS\nPlatform: NetAtlas EMS\nBuild: 03.00.11(AAVV.221)b10_ubuntu\nTest Case: EMS1-5513\nAutomation Test Function: Reboot\nResult: Pass",
+          "execution_duration": null
+        },
+        "testlink_preview": {
+          "schema_version": "1.0",
+          "operation_id": "ems-icat-20260806-100423-olt1408b-ia-af0f37d59294f7a2",
+          "environment": "corp",
+          "mode": "preview",
+          "preview_digest": "a563b94a56401b1030465f98a017c8a05c65ba38998c7a81d7821ba9cd2259a8",
+          "planned_write": true,
+          "target": {
+            "project": {
+              "id": "67654",
+              "name": "NetAtlasEMS"
+            },
+            "plan": {
+              "id": "260150",
+              "name": "NetAtlas EMS"
+            },
+            "platform": {
+              "id": "49",
+              "name": "NetAtlas EMS"
+            },
+            "build": {
+              "id": "19926",
+              "name": "03.00.11(AAVV.221)b10_ubuntu"
+            }
+          },
+          "execution": {
+            "testcase_external_id": "EMS1-5513",
+            "status": "p",
+            "notes_digest": "2d2b78a1885728dbba1fb979b2adf88c2a3b31f41a74b2237746c3567dea0a84"
+          },
+          "warnings": []
+        }
+      },
+      {
+        "result": {
+          "external_id": "EMS1-5511",
+          "testcase_id": null,
+          "version": null,
+          "test_name": "configRestore",
+          "testlink_name": null,
+          "raw_status": "Fail",
+          "status": "f",
+          "duration": "0s"
+        },
+        "dedupe_marker": null,
+        "dedupe_digest": null,
+        "redmine_request": null,
+        "redmine_preview": null,
+        "testlink_request": {
+          "operation_id": "ems-icat-20260806-100423-olt1408b-ia-34508780198b452e",
+          "environment": "corp",
+          "project": "NetAtlasEMS",
+          "plan": "NetAtlas EMS",
+          "platform": "NetAtlas EMS",
+          "build": "03.00.11(AAVV.221)b10_ubuntu",
+          "testcase_external_id": "EMS1-5511",
+          "status": "f",
+          "notes": "Operation ID: ems-icat-20260806-100423-olt1408b-ia\nReport Schema: legacy-web-ems-report-v1\nReport File: qa_normalized_icat_olt1408b_ia_20260806_100423.txt\nTestLink Project: NetAtlasEMS\nTest Plan: NetAtlas EMS\nPlatform: NetAtlas EMS\nBuild: 03.00.11(AAVV.221)b10_ubuntu\nTest Case: EMS1-5511\nAutomation Test Function: configRestore\nResult: Fail",
+          "execution_duration": null
+        },
+        "testlink_preview": {
+          "schema_version": "1.0",
+          "operation_id": "ems-icat-20260806-100423-olt1408b-ia-34508780198b452e",
+          "environment": "corp",
+          "mode": "preview",
+          "preview_digest": "40731afb144e5a1afef1aead38ab3bfb5a5602b08d2d14046baeeb8b5ef78a31",
+          "planned_write": true,
+          "target": {
+            "project": {
+              "id": "67654",
+              "name": "NetAtlasEMS"
+            },
+            "plan": {
+              "id": "260150",
+              "name": "NetAtlas EMS"
+            },
+            "platform": {
+              "id": "49",
+              "name": "NetAtlas EMS"
+            },
+            "build": {
+              "id": "19926",
+              "name": "03.00.11(AAVV.221)b10_ubuntu"
+            }
+          },
+          "execution": {
+            "testcase_external_id": "EMS1-5511",
+            "status": "f",
+            "notes_digest": "aabcb52c210adf837fd8ba2c1d3493485b30f274e377aca50b043d017fa1e598"
+          },
+          "warnings": []
+        }
+      },
+      {
+        "result": {
+          "external_id": "EMS1-5514",
+          "testcase_id": null,
+          "version": null,
+          "test_name": "ontUpgrade",
+          "testlink_name": null,
+          "raw_status": "Fail",
+          "status": "f",
+          "duration": "0s"
+        },
+        "dedupe_marker": null,
+        "dedupe_digest": null,
+        "redmine_request": null,
+        "redmine_preview": null,
+        "testlink_request": {
+          "operation_id": "ems-icat-20260806-100423-olt1408b-ia-a237030c8cf158ab",
+          "environment": "corp",
+          "project": "NetAtlasEMS",
+          "plan": "NetAtlas EMS",
+          "platform": "NetAtlas EMS",
+          "build": "03.00.11(AAVV.221)b10_ubuntu",
+          "testcase_external_id": "EMS1-5514",
+          "status": "f",
+          "notes": "Operation ID: ems-icat-20260806-100423-olt1408b-ia\nReport Schema: legacy-web-ems-report-v1\nReport File: qa_normalized_icat_olt1408b_ia_20260806_100423.txt\nTestLink Project: NetAtlasEMS\nTest Plan: NetAtlas EMS\nPlatform: NetAtlas EMS\nBuild: 03.00.11(AAVV.221)b10_ubuntu\nTest Case: EMS1-5514\nAutomation Test Function: ontUpgrade\nResult: Fail",
+          "execution_duration": null
+        },
+        "testlink_preview": {
+          "schema_version": "1.0",
+          "operation_id": "ems-icat-20260806-100423-olt1408b-ia-a237030c8cf158ab",
+          "environment": "corp",
+          "mode": "preview",
+          "preview_digest": "cc65ae115c52e10690ea880b3f6054dedadf13e635cffd817f89db93a410cc3e",
+          "planned_write": true,
+          "target": {
+            "project": {
+              "id": "67654",
+              "name": "NetAtlasEMS"
+            },
+            "plan": {
+              "id": "260150",
+              "name": "NetAtlas EMS"
+            },
+            "platform": {
+              "id": "49",
+              "name": "NetAtlas EMS"
+            },
+            "build": {
+              "id": "19926",
+              "name": "03.00.11(AAVV.221)b10_ubuntu"
+            }
+          },
+          "execution": {
+            "testcase_external_id": "EMS1-5514",
+            "status": "f",
+            "notes_digest": "af350f309b7fafc92588602054b98fb87d48bea58d7b20ee994cec44e8abac4f"
+          },
+          "warnings": []
+        }
+      },
+      {
+        "result": {
+          "external_id": "EMS1-5515",
+          "testcase_id": null,
+          "version": null,
+          "test_name": "ontUpgrade",
+          "testlink_name": null,
+          "raw_status": "Fail",
+          "status": "f",
+          "duration": "0s"
+        },
+        "dedupe_marker": null,
+        "dedupe_digest": null,
+        "redmine_request": null,
+        "redmine_preview": null,
+        "testlink_request": {
+          "operation_id": "ems-icat-20260806-100423-olt1408b-ia-7bd9eca839225079",
+          "environment": "corp",
+          "project": "NetAtlasEMS",
+          "plan": "NetAtlas EMS",
+          "platform": "NetAtlas EMS",
+          "build": "03.00.11(AAVV.221)b10_ubuntu",
+          "testcase_external_id": "EMS1-5515",
+          "status": "f",
+          "notes": "Operation ID: ems-icat-20260806-100423-olt1408b-ia\nReport Schema: legacy-web-ems-report-v1\nReport File: qa_normalized_icat_olt1408b_ia_20260806_100423.txt\nTestLink Project: NetAtlasEMS\nTest Plan: NetAtlas EMS\nPlatform: NetAtlas EMS\nBuild: 03.00.11(AAVV.221)b10_ubuntu\nTest Case: EMS1-5515\nAutomation Test Function: ontUpgrade\nResult: Fail",
+          "execution_duration": null
+        },
+        "testlink_preview": {
+          "schema_version": "1.0",
+          "operation_id": "ems-icat-20260806-100423-olt1408b-ia-7bd9eca839225079",
+          "environment": "corp",
+          "mode": "preview",
+          "preview_digest": "c03e4ba1530a6bb17b6cf7fd82155541bf6a3962d99a1956500a0a361b2e618b",
+          "planned_write": true,
+          "target": {
+            "project": {
+              "id": "67654",
+              "name": "NetAtlasEMS"
+            },
+            "plan": {
+              "id": "260150",
+              "name": "NetAtlas EMS"
+            },
+            "platform": {
+              "id": "49",
+              "name": "NetAtlas EMS"
+            },
+            "build": {
+              "id": "19926",
+              "name": "03.00.11(AAVV.221)b10_ubuntu"
+            }
+          },
+          "execution": {
+            "testcase_external_id": "EMS1-5515",
+            "status": "f",
+            "notes_digest": "4ac660c012e02a89b7273866c846f06f75419c08e12557cc18435cf29a7f1644"
+          },
+          "warnings": []
+        }
+      },
+      {
+        "result": {
+          "external_id": "EMS1-5516",
+          "testcase_id": null,
+          "version": null,
+          "test_name": "ontUpgrade",
+          "testlink_name": null,
+          "raw_status": "Fail",
+          "status": "f",
+          "duration": "0s"
+        },
+        "dedupe_marker": null,
+        "dedupe_digest": null,
+        "redmine_request": null,
+        "redmine_preview": null,
+        "testlink_request": {
+          "operation_id": "ems-icat-20260806-100423-olt1408b-ia-118dde96afa10fca",
+          "environment": "corp",
+          "project": "NetAtlasEMS",
+          "plan": "NetAtlas EMS",
+          "platform": "NetAtlas EMS",
+          "build": "03.00.11(AAVV.221)b10_ubuntu",
+          "testcase_external_id": "EMS1-5516",
+          "status": "f",
+          "notes": "Operation ID: ems-icat-20260806-100423-olt1408b-ia\nReport Schema: legacy-web-ems-report-v1\nReport File: qa_normalized_icat_olt1408b_ia_20260806_100423.txt\nTestLink Project: NetAtlasEMS\nTest Plan: NetAtlas EMS\nPlatform: NetAtlas EMS\nBuild: 03.00.11(AAVV.221)b10_ubuntu\nTest Case: EMS1-5516\nAutomation Test Function: ontUpgrade\nResult: Fail",
+          "execution_duration": null
+        },
+        "testlink_preview": {
+          "schema_version": "1.0",
+          "operation_id": "ems-icat-20260806-100423-olt1408b-ia-118dde96afa10fca",
+          "environment": "corp",
+          "mode": "preview",
+          "preview_digest": "558a420cfe892be3b410342aa73b9c8aab0288f4fb4bc3fff8d9e0dd4294f94c",
+          "planned_write": true,
+          "target": {
+            "project": {
+              "id": "67654",
+              "name": "NetAtlasEMS"
+            },
+            "plan": {
+              "id": "260150",
+              "name": "NetAtlas EMS"
+            },
+            "platform": {
+              "id": "49",
+              "name": "NetAtlas EMS"
+            },
+            "build": {
+              "id": "19926",
+              "name": "03.00.11(AAVV.221)b10_ubuntu"
+            }
+          },
+          "execution": {
+            "testcase_external_id": "EMS1-5516",
+            "status": "f",
+            "notes_digest": "f046dbf6dccc5f45aeb5a9d9e7ea2c5437a3d1862439f0afbaaa719075945e89"
+          },
+          "warnings": []
+        }
+      },
+      {
+        "result": {
+          "external_id": "EMS1-5517",
+          "testcase_id": null,
+          "version": null,
+          "test_name": "ontUpgrade",
+          "testlink_name": null,
+          "raw_status": "Fail",
+          "status": "f",
+          "duration": "0s"
+        },
+        "dedupe_marker": null,
+        "dedupe_digest": null,
+        "redmine_request": null,
+        "redmine_preview": null,
+        "testlink_request": {
+          "operation_id": "ems-icat-20260806-100423-olt1408b-ia-a89c6990b703a84a",
+          "environment": "corp",
+          "project": "NetAtlasEMS",
+          "plan": "NetAtlas EMS",
+          "platform": "NetAtlas EMS",
+          "build": "03.00.11(AAVV.221)b10_ubuntu",
+          "testcase_external_id": "EMS1-5517",
+          "status": "f",
+          "notes": "Operation ID: ems-icat-20260806-100423-olt1408b-ia\nReport Schema: legacy-web-ems-report-v1\nReport File: qa_normalized_icat_olt1408b_ia_20260806_100423.txt\nTestLink Project: NetAtlasEMS\nTest Plan: NetAtlas EMS\nPlatform: NetAtlas EMS\nBuild: 03.00.11(AAVV.221)b10_ubuntu\nTest Case: EMS1-5517\nAutomation Test Function: ontUpgrade\nResult: Fail",
+          "execution_duration": null
+        },
+        "testlink_preview": {
+          "schema_version": "1.0",
+          "operation_id": "ems-icat-20260806-100423-olt1408b-ia-a89c6990b703a84a",
+          "environment": "corp",
+          "mode": "preview",
+          "preview_digest": "fe7b1e14bfa2f61d944b814c9eaf51126c893c07c1bbfb05c5222fef2d400f97",
+          "planned_write": true,
+          "target": {
+            "project": {
+              "id": "67654",
+              "name": "NetAtlasEMS"
+            },
+            "plan": {
+              "id": "260150",
+              "name": "NetAtlas EMS"
+            },
+            "platform": {
+              "id": "49",
+              "name": "NetAtlas EMS"
+            },
+            "build": {
+              "id": "19926",
+              "name": "03.00.11(AAVV.221)b10_ubuntu"
+            }
+          },
+          "execution": {
+            "testcase_external_id": "EMS1-5517",
+            "status": "f",
+            "notes_digest": "99665911b8d28b83c6c4eba31e5f4c1c5f29443a3e290f6b6871365a77e9f079"
+          },
+          "warnings": []
+        }
+      },
+      {
+        "result": {
+          "external_id": "EMS1-5518",
+          "testcase_id": null,
+          "version": null,
+          "test_name": "ontUpgrade",
+          "testlink_name": null,
+          "raw_status": "Fail",
+          "status": "f",
+          "duration": "0s"
+        },
+        "dedupe_marker": null,
+        "dedupe_digest": null,
+        "redmine_request": null,
+        "redmine_preview": null,
+        "testlink_request": {
+          "operation_id": "ems-icat-20260806-100423-olt1408b-ia-751e9b86df2c932b",
+          "environment": "corp",
+          "project": "NetAtlasEMS",
+          "plan": "NetAtlas EMS",
+          "platform": "NetAtlas EMS",
+          "build": "03.00.11(AAVV.221)b10_ubuntu",
+          "testcase_external_id": "EMS1-5518",
+          "status": "f",
+          "notes": "Operation ID: ems-icat-20260806-100423-olt1408b-ia\nReport Schema: legacy-web-ems-report-v1\nReport File: qa_normalized_icat_olt1408b_ia_20260806_100423.txt\nTestLink Project: NetAtlasEMS\nTest Plan: NetAtlas EMS\nPlatform: NetAtlas EMS\nBuild: 03.00.11(AAVV.221)b10_ubuntu\nTest Case: EMS1-5518\nAutomation Test Function: ontUpgrade\nResult: Fail",
+          "execution_duration": null
+        },
+        "testlink_preview": {
+          "schema_version": "1.0",
+          "operation_id": "ems-icat-20260806-100423-olt1408b-ia-751e9b86df2c932b",
+          "environment": "corp",
+          "mode": "preview",
+          "preview_digest": "084847c6bf0d038a2a4ca4935b6463e42f23fb7601dc2f21fafc037faf9962fc",
+          "planned_write": true,
+          "target": {
+            "project": {
+              "id": "67654",
+              "name": "NetAtlasEMS"
+            },
+            "plan": {
+              "id": "260150",
+              "name": "NetAtlas EMS"
+            },
+            "platform": {
+              "id": "49",
+              "name": "NetAtlas EMS"
+            },
+            "build": {
+              "id": "19926",
+              "name": "03.00.11(AAVV.221)b10_ubuntu"
+            }
+          },
+          "execution": {
+            "testcase_external_id": "EMS1-5518",
+            "status": "f",
+            "notes_digest": "bb699f077d6fd5debd497deb922139cf9c735efc459511d97966f1bbe8d05e17"
+          },
+          "warnings": []
+        }
+      },
+      {
+        "result": {
+          "external_id": "EMS1-5519",
+          "testcase_id": null,
+          "version": null,
+          "test_name": "ontReboot",
+          "testlink_name": null,
+          "raw_status": "Pass",
+          "status": "p",
+          "duration": "0s"
+        },
+        "dedupe_marker": null,
+        "dedupe_digest": null,
+        "redmine_request": null,
+        "redmine_preview": null,
+        "testlink_request": {
+          "operation_id": "ems-icat-20260806-100423-olt1408b-ia-e37ca3eeb843b63d",
+          "environment": "corp",
+          "project": "NetAtlasEMS",
+          "plan": "NetAtlas EMS",
+          "platform": "NetAtlas EMS",
+          "build": "03.00.11(AAVV.221)b10_ubuntu",
+          "testcase_external_id": "EMS1-5519",
+          "status": "p",
+          "notes": "Operation ID: ems-icat-20260806-100423-olt1408b-ia\nReport Schema: legacy-web-ems-report-v1\nReport File: qa_normalized_icat_olt1408b_ia_20260806_100423.txt\nTestLink Project: NetAtlasEMS\nTest Plan: NetAtlas EMS\nPlatform: NetAtlas EMS\nBuild: 03.00.11(AAVV.221)b10_ubuntu\nTest Case: EMS1-5519\nAutomation Test Function: ontReboot\nResult: Pass",
+          "execution_duration": null
+        },
+        "testlink_preview": {
+          "schema_version": "1.0",
+          "operation_id": "ems-icat-20260806-100423-olt1408b-ia-e37ca3eeb843b63d",
+          "environment": "corp",
+          "mode": "preview",
+          "preview_digest": "3a19c75a44aa5442535f912267d34e9673585efb5bf816b6036931c26357a2da",
+          "planned_write": true,
+          "target": {
+            "project": {
+              "id": "67654",
+              "name": "NetAtlasEMS"
+            },
+            "plan": {
+              "id": "260150",
+              "name": "NetAtlas EMS"
+            },
+            "platform": {
+              "id": "49",
+              "name": "NetAtlas EMS"
+            },
+            "build": {
+              "id": "19926",
+              "name": "03.00.11(AAVV.221)b10_ubuntu"
+            }
+          },
+          "execution": {
+            "testcase_external_id": "EMS1-5519",
+            "status": "p",
+            "notes_digest": "ce19fa88e99ae8510f3e15696415d635b3e4a0694d67eff87dbef8423630c062"
+          },
+          "warnings": []
+        }
+      },
+      {
+        "result": {
+          "external_id": "EMS1-5520",
+          "testcase_id": null,
+          "version": null,
+          "test_name": "ontReset",
+          "testlink_name": null,
+          "raw_status": "Pass",
+          "status": "p",
+          "duration": "0s"
+        },
+        "dedupe_marker": null,
+        "dedupe_digest": null,
+        "redmine_request": null,
+        "redmine_preview": null,
+        "testlink_request": {
+          "operation_id": "ems-icat-20260806-100423-olt1408b-ia-007c3994483bffd4",
+          "environment": "corp",
+          "project": "NetAtlasEMS",
+          "plan": "NetAtlas EMS",
+          "platform": "NetAtlas EMS",
+          "build": "03.00.11(AAVV.221)b10_ubuntu",
+          "testcase_external_id": "EMS1-5520",
+          "status": "p",
+          "notes": "Operation ID: ems-icat-20260806-100423-olt1408b-ia\nReport Schema: legacy-web-ems-report-v1\nReport File: qa_normalized_icat_olt1408b_ia_20260806_100423.txt\nTestLink Project: NetAtlasEMS\nTest Plan: NetAtlas EMS\nPlatform: NetAtlas EMS\nBuild: 03.00.11(AAVV.221)b10_ubuntu\nTest Case: EMS1-5520\nAutomation Test Function: ontReset\nResult: Pass",
+          "execution_duration": null
+        },
+        "testlink_preview": {
+          "schema_version": "1.0",
+          "operation_id": "ems-icat-20260806-100423-olt1408b-ia-007c3994483bffd4",
+          "environment": "corp",
+          "mode": "preview",
+          "preview_digest": "082d0fbd0fbe5fbdb8ed0b788a48211edf6bf2f80f8003a43fcee01c73905068",
+          "planned_write": true,
+          "target": {
+            "project": {
+              "id": "67654",
+              "name": "NetAtlasEMS"
+            },
+            "plan": {
+              "id": "260150",
+              "name": "NetAtlas EMS"
+            },
+            "platform": {
+              "id": "49",
+              "name": "NetAtlas EMS"
+            },
+            "build": {
+              "id": "19926",
+              "name": "03.00.11(AAVV.221)b10_ubuntu"
+            }
+          },
+          "execution": {
+            "testcase_external_id": "EMS1-5520",
+            "status": "p",
+            "notes_digest": "9b7abbfe094f5cbbdecba47c375325240883441d09fc51bf07ec41b46f8d4ab2"
+          },
+          "warnings": []
+        }
+      },
+      {
+        "result": {
+          "external_id": "EMS1-5489",
+          "testcase_id": null,
+          "version": null,
+          "test_name": "deviceStatus",
+          "testlink_name": null,
+          "raw_status": "Pass",
+          "status": "p",
+          "duration": "0s"
+        },
+        "dedupe_marker": null,
+        "dedupe_digest": null,
+        "redmine_request": null,
+        "redmine_preview": null,
+        "testlink_request": {
+          "operation_id": "ems-icat-20260806-100423-olt1408b-ia-54112f2f021e49eb",
+          "environment": "corp",
+          "project": "NetAtlasEMS",
+          "plan": "NetAtlas EMS",
+          "platform": "NetAtlas EMS",
+          "build": "03.00.11(AAVV.221)b10_ubuntu",
+          "testcase_external_id": "EMS1-5489",
+          "status": "p",
+          "notes": "Operation ID: ems-icat-20260806-100423-olt1408b-ia\nReport Schema: legacy-web-ems-report-v1\nReport File: qa_normalized_icat_olt1408b_ia_20260806_100423.txt\nTestLink Project: NetAtlasEMS\nTest Plan: NetAtlas EMS\nPlatform: NetAtlas EMS\nBuild: 03.00.11(AAVV.221)b10_ubuntu\nTest Case: EMS1-5489\nAutomation Test Function: deviceStatus\nResult: Pass",
+          "execution_duration": null
+        },
+        "testlink_preview": {
+          "schema_version": "1.0",
+          "operation_id": "ems-icat-20260806-100423-olt1408b-ia-54112f2f021e49eb",
+          "environment": "corp",
+          "mode": "preview",
+          "preview_digest": "f8f343168eaf0135189c2ddd1e8f8cb6ee729f2a9daf38483a6c46de6cee2c0b",
+          "planned_write": true,
+          "target": {
+            "project": {
+              "id": "67654",
+              "name": "NetAtlasEMS"
+            },
+            "plan": {
+              "id": "260150",
+              "name": "NetAtlas EMS"
+            },
+            "platform": {
+              "id": "49",
+              "name": "NetAtlas EMS"
+            },
+            "build": {
+              "id": "19926",
+              "name": "03.00.11(AAVV.221)b10_ubuntu"
+            }
+          },
+          "execution": {
+            "testcase_external_id": "EMS1-5489",
+            "status": "p",
+            "notes_digest": "b53d90209d80494b1862c3635e5b66502335d89848fa4f5b70c05444793c86e3"
+          },
+          "warnings": []
+        }
+      },
+      {
+        "result": {
+          "external_id": "EMS1-5490",
+          "testcase_id": null,
+          "version": null,
+          "test_name": "ontStatus",
+          "testlink_name": null,
+          "raw_status": "Pass",
+          "status": "p",
+          "duration": "0s"
+        },
+        "dedupe_marker": null,
+        "dedupe_digest": null,
+        "redmine_request": null,
+        "redmine_preview": null,
+        "testlink_request": {
+          "operation_id": "ems-icat-20260806-100423-olt1408b-ia-c08bf4c64a998374",
+          "environment": "corp",
+          "project": "NetAtlasEMS",
+          "plan": "NetAtlas EMS",
+          "platform": "NetAtlas EMS",
+          "build": "03.00.11(AAVV.221)b10_ubuntu",
+          "testcase_external_id": "EMS1-5490",
+          "status": "p",
+          "notes": "Operation ID: ems-icat-20260806-100423-olt1408b-ia\nReport Schema: legacy-web-ems-report-v1\nReport File: qa_normalized_icat_olt1408b_ia_20260806_100423.txt\nTestLink Project: NetAtlasEMS\nTest Plan: NetAtlas EMS\nPlatform: NetAtlas EMS\nBuild: 03.00.11(AAVV.221)b10_ubuntu\nTest Case: EMS1-5490\nAutomation Test Function: ontStatus\nResult: Pass",
+          "execution_duration": null
+        },
+        "testlink_preview": {
+          "schema_version": "1.0",
+          "operation_id": "ems-icat-20260806-100423-olt1408b-ia-c08bf4c64a998374",
+          "environment": "corp",
+          "mode": "preview",
+          "preview_digest": "fb8d8932ebdeea20bb7620d6d33d85846d1a63c02d023cf37494b80605d5db7d",
+          "planned_write": true,
+          "target": {
+            "project": {
+              "id": "67654",
+              "name": "NetAtlasEMS"
+            },
+            "plan": {
+              "id": "260150",
+              "name": "NetAtlas EMS"
+            },
+            "platform": {
+              "id": "49",
+              "name": "NetAtlas EMS"
+            },
+            "build": {
+              "id": "19926",
+              "name": "03.00.11(AAVV.221)b10_ubuntu"
+            }
+          },
+          "execution": {
+            "testcase_external_id": "EMS1-5490",
+            "status": "p",
+            "notes_digest": "073eab1354051a63cdf199b87e2b42e8e95270437b913745deef8dfa6c8de579"
+          },
+          "warnings": []
+        }
+      },
+      {
+        "result": {
+          "external_id": "EMS1-5491",
+          "testcase_id": null,
+          "version": null,
+          "test_name": "alarmStatus",
+          "testlink_name": null,
+          "raw_status": "Pass",
+          "status": "p",
+          "duration": "0s"
+        },
+        "dedupe_marker": null,
+        "dedupe_digest": null,
+        "redmine_request": null,
+        "redmine_preview": null,
+        "testlink_request": {
+          "operation_id": "ems-icat-20260806-100423-olt1408b-ia-7adebb1a0613bae8",
+          "environment": "corp",
+          "project": "NetAtlasEMS",
+          "plan": "NetAtlas EMS",
+          "platform": "NetAtlas EMS",
+          "build": "03.00.11(AAVV.221)b10_ubuntu",
+          "testcase_external_id": "EMS1-5491",
+          "status": "p",
+          "notes": "Operation ID: ems-icat-20260806-100423-olt1408b-ia\nReport Schema: legacy-web-ems-report-v1\nReport File: qa_normalized_icat_olt1408b_ia_20260806_100423.txt\nTestLink Project: NetAtlasEMS\nTest Plan: NetAtlas EMS\nPlatform: NetAtlas EMS\nBuild: 03.00.11(AAVV.221)b10_ubuntu\nTest Case: EMS1-5491\nAutomation Test Function: alarmStatus\nResult: Pass",
+          "execution_duration": null
+        },
+        "testlink_preview": {
+          "schema_version": "1.0",
+          "operation_id": "ems-icat-20260806-100423-olt1408b-ia-7adebb1a0613bae8",
+          "environment": "corp",
+          "mode": "preview",
+          "preview_digest": "22ae88e07197f271a7b9a91cf661676cb02872890eefbc35afd00214d82fe49a",
+          "planned_write": true,
+          "target": {
+            "project": {
+              "id": "67654",
+              "name": "NetAtlasEMS"
+            },
+            "plan": {
+              "id": "260150",
+              "name": "NetAtlas EMS"
+            },
+            "platform": {
+              "id": "49",
+              "name": "NetAtlas EMS"
+            },
+            "build": {
+              "id": "19926",
+              "name": "03.00.11(AAVV.221)b10_ubuntu"
+            }
+          },
+          "execution": {
+            "testcase_external_id": "EMS1-5491",
+            "status": "p",
+            "notes_digest": "ab5c0bc31b9fbec7c9ef7b0e4870c094245d0e8070b9118319cd837803f6b69b"
+          },
+          "warnings": []
+        }
+      },
+      {
+        "result": {
+          "external_id": "EMS1-5499",
+          "testcase_id": null,
+          "version": null,
+          "test_name": "deviceInfo",
+          "testlink_name": null,
+          "raw_status": "Pass",
+          "status": "p",
+          "duration": "0s"
+        },
+        "dedupe_marker": null,
+        "dedupe_digest": null,
+        "redmine_request": null,
+        "redmine_preview": null,
+        "testlink_request": {
+          "operation_id": "ems-icat-20260806-100423-olt1408b-ia-fac1dc5d77ec2bde",
+          "environment": "corp",
+          "project": "NetAtlasEMS",
+          "plan": "NetAtlas EMS",
+          "platform": "NetAtlas EMS",
+          "build": "03.00.11(AAVV.221)b10_ubuntu",
+          "testcase_external_id": "EMS1-5499",
+          "status": "p",
+          "notes": "Operation ID: ems-icat-20260806-100423-olt1408b-ia\nReport Schema: legacy-web-ems-report-v1\nReport File: qa_normalized_icat_olt1408b_ia_20260806_100423.txt\nTestLink Project: NetAtlasEMS\nTest Plan: NetAtlas EMS\nPlatform: NetAtlas EMS\nBuild: 03.00.11(AAVV.221)b10_ubuntu\nTest Case: EMS1-5499\nAutomation Test Function: deviceInfo\nResult: Pass",
+          "execution_duration": null
+        },
+        "testlink_preview": {
+          "schema_version": "1.0",
+          "operation_id": "ems-icat-20260806-100423-olt1408b-ia-fac1dc5d77ec2bde",
+          "environment": "corp",
+          "mode": "preview",
+          "preview_digest": "db3fa9ea4a6432b95fa229e861b0a290436d6204d94e546d4c610fb5c4bf424f",
+          "planned_write": true,
+          "target": {
+            "project": {
+              "id": "67654",
+              "name": "NetAtlasEMS"
+            },
+            "plan": {
+              "id": "260150",
+              "name": "NetAtlas EMS"
+            },
+            "platform": {
+              "id": "49",
+              "name": "NetAtlas EMS"
+            },
+            "build": {
+              "id": "19926",
+              "name": "03.00.11(AAVV.221)b10_ubuntu"
+            }
+          },
+          "execution": {
+            "testcase_external_id": "EMS1-5499",
+            "status": "p",
+            "notes_digest": "4c40b969f5850b38e7fe5e352c46a1cc222f7eecd896eb6fb9f1a4d93ca7a666"
+          },
+          "warnings": []
+        }
+      },
+      {
+        "result": {
+          "external_id": "EMS1-5500",
+          "testcase_id": null,
+          "version": null,
+          "test_name": "cardInfo",
+          "testlink_name": null,
+          "raw_status": "Pass",
+          "status": "p",
+          "duration": "0s"
+        },
+        "dedupe_marker": null,
+        "dedupe_digest": null,
+        "redmine_request": null,
+        "redmine_preview": null,
+        "testlink_request": {
+          "operation_id": "ems-icat-20260806-100423-olt1408b-ia-09c9f2270f8200ae",
+          "environment": "corp",
+          "project": "NetAtlasEMS",
+          "plan": "NetAtlas EMS",
+          "platform": "NetAtlas EMS",
+          "build": "03.00.11(AAVV.221)b10_ubuntu",
+          "testcase_external_id": "EMS1-5500",
+          "status": "p",
+          "notes": "Operation ID: ems-icat-20260806-100423-olt1408b-ia\nReport Schema: legacy-web-ems-report-v1\nReport File: qa_normalized_icat_olt1408b_ia_20260806_100423.txt\nTestLink Project: NetAtlasEMS\nTest Plan: NetAtlas EMS\nPlatform: NetAtlas EMS\nBuild: 03.00.11(AAVV.221)b10_ubuntu\nTest Case: EMS1-5500\nAutomation Test Function: cardInfo\nResult: Pass",
+          "execution_duration": null
+        },
+        "testlink_preview": {
+          "schema_version": "1.0",
+          "operation_id": "ems-icat-20260806-100423-olt1408b-ia-09c9f2270f8200ae",
+          "environment": "corp",
+          "mode": "preview",
+          "preview_digest": "190bcbf72028588eff7ffc812fa8c0008350fe74fd3adf940a518c5c2a1e0149",
+          "planned_write": true,
+          "target": {
+            "project": {
+              "id": "67654",
+              "name": "NetAtlasEMS"
+            },
+            "plan": {
+              "id": "260150",
+              "name": "NetAtlas EMS"
+            },
+            "platform": {
+              "id": "49",
+              "name": "NetAtlas EMS"
+            },
+            "build": {
+              "id": "19926",
+              "name": "03.00.11(AAVV.221)b10_ubuntu"
+            }
+          },
+          "execution": {
+            "testcase_external_id": "EMS1-5500",
+            "status": "p",
+            "notes_digest": "abff1a7d0104efeab0bd072af0638ccf43a9290b70a303da72921b074a1120a1"
+          },
+          "warnings": []
+        }
+      },
+      {
+        "result": {
+          "external_id": "EMS1-5501",
+          "testcase_id": null,
+          "version": null,
+          "test_name": "portInfo",
+          "testlink_name": null,
+          "raw_status": "Pass",
+          "status": "p",
+          "duration": "0s"
+        },
+        "dedupe_marker": null,
+        "dedupe_digest": null,
+        "redmine_request": null,
+        "redmine_preview": null,
+        "testlink_request": {
+          "operation_id": "ems-icat-20260806-100423-olt1408b-ia-51ea8047d118f994",
+          "environment": "corp",
+          "project": "NetAtlasEMS",
+          "plan": "NetAtlas EMS",
+          "platform": "NetAtlas EMS",
+          "build": "03.00.11(AAVV.221)b10_ubuntu",
+          "testcase_external_id": "EMS1-5501",
+          "status": "p",
+          "notes": "Operation ID: ems-icat-20260806-100423-olt1408b-ia\nReport Schema: legacy-web-ems-report-v1\nReport File: qa_normalized_icat_olt1408b_ia_20260806_100423.txt\nTestLink Project: NetAtlasEMS\nTest Plan: NetAtlas EMS\nPlatform: NetAtlas EMS\nBuild: 03.00.11(AAVV.221)b10_ubuntu\nTest Case: EMS1-5501\nAutomation Test Function: portInfo\nResult: Pass",
+          "execution_duration": null
+        },
+        "testlink_preview": {
+          "schema_version": "1.0",
+          "operation_id": "ems-icat-20260806-100423-olt1408b-ia-51ea8047d118f994",
+          "environment": "corp",
+          "mode": "preview",
+          "preview_digest": "3a5c23af70a002890918f6f63b078c0a7dbc2a57fb7b2657d322b4f9be4128d8",
+          "planned_write": true,
+          "target": {
+            "project": {
+              "id": "67654",
+              "name": "NetAtlasEMS"
+            },
+            "plan": {
+              "id": "260150",
+              "name": "NetAtlas EMS"
+            },
+            "platform": {
+              "id": "49",
+              "name": "NetAtlas EMS"
+            },
+            "build": {
+              "id": "19926",
+              "name": "03.00.11(AAVV.221)b10_ubuntu"
+            }
+          },
+          "execution": {
+            "testcase_external_id": "EMS1-5501",
+            "status": "p",
+            "notes_digest": "6d015e45b68e83a65bf4b1a8538b5182c20a8194bf419d400be1f97c9c85a55e"
+          },
+          "warnings": []
+        }
+      },
+      {
+        "result": {
+          "external_id": "EMS1-5502",
+          "testcase_id": null,
+          "version": null,
+          "test_name": "ontInfo",
+          "testlink_name": null,
+          "raw_status": "Pass",
+          "status": "p",
+          "duration": "0s"
+        },
+        "dedupe_marker": null,
+        "dedupe_digest": null,
+        "redmine_request": null,
+        "redmine_preview": null,
+        "testlink_request": {
+          "operation_id": "ems-icat-20260806-100423-olt1408b-ia-8cbc51609735a8c3",
+          "environment": "corp",
+          "project": "NetAtlasEMS",
+          "plan": "NetAtlas EMS",
+          "platform": "NetAtlas EMS",
+          "build": "03.00.11(AAVV.221)b10_ubuntu",
+          "testcase_external_id": "EMS1-5502",
+          "status": "p",
+          "notes": "Operation ID: ems-icat-20260806-100423-olt1408b-ia\nReport Schema: legacy-web-ems-report-v1\nReport File: qa_normalized_icat_olt1408b_ia_20260806_100423.txt\nTestLink Project: NetAtlasEMS\nTest Plan: NetAtlas EMS\nPlatform: NetAtlas EMS\nBuild: 03.00.11(AAVV.221)b10_ubuntu\nTest Case: EMS1-5502\nAutomation Test Function: ontInfo\nResult: Pass",
+          "execution_duration": null
+        },
+        "testlink_preview": {
+          "schema_version": "1.0",
+          "operation_id": "ems-icat-20260806-100423-olt1408b-ia-8cbc51609735a8c3",
+          "environment": "corp",
+          "mode": "preview",
+          "preview_digest": "a142e099358506c9488314927589fd6741e341dee1a32aecb15e7bdf89a5d73a",
+          "planned_write": true,
+          "target": {
+            "project": {
+              "id": "67654",
+              "name": "NetAtlasEMS"
+            },
+            "plan": {
+              "id": "260150",
+              "name": "NetAtlas EMS"
+            },
+            "platform": {
+              "id": "49",
+              "name": "NetAtlas EMS"
+            },
+            "build": {
+              "id": "19926",
+              "name": "03.00.11(AAVV.221)b10_ubuntu"
+            }
+          },
+          "execution": {
+            "testcase_external_id": "EMS1-5502",
+            "status": "p",
+            "notes_digest": "eadb4857095faacfd737abfef4828f8f56f43018d174e49c6297dfa121a0c289"
+          },
+          "warnings": []
+        }
+      },
+      {
+        "result": {
+          "external_id": "EMS1-5493",
+          "testcase_id": null,
+          "version": null,
+          "test_name": "deviceMap",
+          "testlink_name": null,
+          "raw_status": "Pass",
+          "status": "p",
+          "duration": "0s"
+        },
+        "dedupe_marker": null,
+        "dedupe_digest": null,
+        "redmine_request": null,
+        "redmine_preview": null,
+        "testlink_request": {
+          "operation_id": "ems-icat-20260806-100423-olt1408b-ia-90e5b2304eb43d46",
+          "environment": "corp",
+          "project": "NetAtlasEMS",
+          "plan": "NetAtlas EMS",
+          "platform": "NetAtlas EMS",
+          "build": "03.00.11(AAVV.221)b10_ubuntu",
+          "testcase_external_id": "EMS1-5493",
+          "status": "p",
+          "notes": "Operation ID: ems-icat-20260806-100423-olt1408b-ia\nReport Schema: legacy-web-ems-report-v1\nReport File: qa_normalized_icat_olt1408b_ia_20260806_100423.txt\nTestLink Project: NetAtlasEMS\nTest Plan: NetAtlas EMS\nPlatform: NetAtlas EMS\nBuild: 03.00.11(AAVV.221)b10_ubuntu\nTest Case: EMS1-5493\nAutomation Test Function: deviceMap\nResult: Pass",
+          "execution_duration": null
+        },
+        "testlink_preview": {
+          "schema_version": "1.0",
+          "operation_id": "ems-icat-20260806-100423-olt1408b-ia-90e5b2304eb43d46",
+          "environment": "corp",
+          "mode": "preview",
+          "preview_digest": "016062c6bdff8036362a9a9cf5e8d7e11a34010f3f4b5c9227b7b48b56a62fd4",
+          "planned_write": true,
+          "target": {
+            "project": {
+              "id": "67654",
+              "name": "NetAtlasEMS"
+            },
+            "plan": {
+              "id": "260150",
+              "name": "NetAtlas EMS"
+            },
+            "platform": {
+              "id": "49",
+              "name": "NetAtlas EMS"
+            },
+            "build": {
+              "id": "19926",
+              "name": "03.00.11(AAVV.221)b10_ubuntu"
+            }
+          },
+          "execution": {
+            "testcase_external_id": "EMS1-5493",
+            "status": "p",
+            "notes_digest": "74d14de7c05497f90208b3beaca05dba66739299d84d9e1586b3527d84f8f9a5"
+          },
+          "warnings": []
+        }
+      },
+      {
+        "result": {
+          "external_id": "EMS1-5498",
+          "testcase_id": null,
+          "version": null,
+          "test_name": "deviceMap",
+          "testlink_name": null,
+          "raw_status": "Pass",
+          "status": "p",
+          "duration": "0s"
+        },
+        "dedupe_marker": null,
+        "dedupe_digest": null,
+        "redmine_request": null,
+        "redmine_preview": null,
+        "testlink_request": {
+          "operation_id": "ems-icat-20260806-100423-olt1408b-ia-a606f093b5ee220f",
+          "environment": "corp",
+          "project": "NetAtlasEMS",
+          "plan": "NetAtlas EMS",
+          "platform": "NetAtlas EMS",
+          "build": "03.00.11(AAVV.221)b10_ubuntu",
+          "testcase_external_id": "EMS1-5498",
+          "status": "p",
+          "notes": "Operation ID: ems-icat-20260806-100423-olt1408b-ia\nReport Schema: legacy-web-ems-report-v1\nReport File: qa_normalized_icat_olt1408b_ia_20260806_100423.txt\nTestLink Project: NetAtlasEMS\nTest Plan: NetAtlas EMS\nPlatform: NetAtlas EMS\nBuild: 03.00.11(AAVV.221)b10_ubuntu\nTest Case: EMS1-5498\nAutomation Test Function: deviceMap\nResult: Pass",
+          "execution_duration": null
+        },
+        "testlink_preview": {
+          "schema_version": "1.0",
+          "operation_id": "ems-icat-20260806-100423-olt1408b-ia-a606f093b5ee220f",
+          "environment": "corp",
+          "mode": "preview",
+          "preview_digest": "4a7df01b52a379a83d2f0c8274b63ae0bef15d418d69b662b7cfd0079f8ae981",
+          "planned_write": true,
+          "target": {
+            "project": {
+              "id": "67654",
+              "name": "NetAtlasEMS"
+            },
+            "plan": {
+              "id": "260150",
+              "name": "NetAtlas EMS"
+            },
+            "platform": {
+              "id": "49",
+              "name": "NetAtlas EMS"
+            },
+            "build": {
+              "id": "19926",
+              "name": "03.00.11(AAVV.221)b10_ubuntu"
+            }
+          },
+          "execution": {
+            "testcase_external_id": "EMS1-5498",
+            "status": "p",
+            "notes_digest": "32cf798ae98086ae7d9803c7dadcf8e8391c3a4d2db3a1d615af5253cf19b7fa"
+          },
+          "warnings": []
+        }
+      },
+      {
+        "result": {
+          "external_id": "EMS1-5494",
+          "testcase_id": null,
+          "version": null,
+          "test_name": "cardMap",
+          "testlink_name": null,
+          "raw_status": "Pass",
+          "status": "p",
+          "duration": "0s"
+        },
+        "dedupe_marker": null,
+        "dedupe_digest": null,
+        "redmine_request": null,
+        "redmine_preview": null,
+        "testlink_request": {
+          "operation_id": "ems-icat-20260806-100423-olt1408b-ia-823d1e80cbc2c7b8",
+          "environment": "corp",
+          "project": "NetAtlasEMS",
+          "plan": "NetAtlas EMS",
+          "platform": "NetAtlas EMS",
+          "build": "03.00.11(AAVV.221)b10_ubuntu",
+          "testcase_external_id": "EMS1-5494",
+          "status": "p",
+          "notes": "Operation ID: ems-icat-20260806-100423-olt1408b-ia\nReport Schema: legacy-web-ems-report-v1\nReport File: qa_normalized_icat_olt1408b_ia_20260806_100423.txt\nTestLink Project: NetAtlasEMS\nTest Plan: NetAtlas EMS\nPlatform: NetAtlas EMS\nBuild: 03.00.11(AAVV.221)b10_ubuntu\nTest Case: EMS1-5494\nAutomation Test Function: cardMap\nResult: Pass",
+          "execution_duration": null
+        },
+        "testlink_preview": {
+          "schema_version": "1.0",
+          "operation_id": "ems-icat-20260806-100423-olt1408b-ia-823d1e80cbc2c7b8",
+          "environment": "corp",
+          "mode": "preview",
+          "preview_digest": "ff9c4378b9c04fc1c0d90d150f36ca66e669afa4ac7559fde3e17338978c2ed9",
+          "planned_write": true,
+          "target": {
+            "project": {
+              "id": "67654",
+              "name": "NetAtlasEMS"
+            },
+            "plan": {
+              "id": "260150",
+              "name": "NetAtlas EMS"
+            },
+            "platform": {
+              "id": "49",
+              "name": "NetAtlas EMS"
+            },
+            "build": {
+              "id": "19926",
+              "name": "03.00.11(AAVV.221)b10_ubuntu"
+            }
+          },
+          "execution": {
+            "testcase_external_id": "EMS1-5494",
+            "status": "p",
+            "notes_digest": "177d84c45517b86ace46e408a0be2f46324e760a9fceae05b96c3b601c8ce17b"
+          },
+          "warnings": []
+        }
+      },
+      {
+        "result": {
+          "external_id": "EMS1-5495",
+          "testcase_id": null,
+          "version": null,
+          "test_name": "cardMap",
+          "testlink_name": null,
+          "raw_status": "Pass",
+          "status": "p",
+          "duration": "0s"
+        },
+        "dedupe_marker": null,
+        "dedupe_digest": null,
+        "redmine_request": null,
+        "redmine_preview": null,
+        "testlink_request": {
+          "operation_id": "ems-icat-20260806-100423-olt1408b-ia-abe414c21234b382",
+          "environment": "corp",
+          "project": "NetAtlasEMS",
+          "plan": "NetAtlas EMS",
+          "platform": "NetAtlas EMS",
+          "build": "03.00.11(AAVV.221)b10_ubuntu",
+          "testcase_external_id": "EMS1-5495",
+          "status": "p",
+          "notes": "Operation ID: ems-icat-20260806-100423-olt1408b-ia\nReport Schema: legacy-web-ems-report-v1\nReport File: qa_normalized_icat_olt1408b_ia_20260806_100423.txt\nTestLink Project: NetAtlasEMS\nTest Plan: NetAtlas EMS\nPlatform: NetAtlas EMS\nBuild: 03.00.11(AAVV.221)b10_ubuntu\nTest Case: EMS1-5495\nAutomation Test Function: cardMap\nResult: Pass",
+          "execution_duration": null
+        },
+        "testlink_preview": {
+          "schema_version": "1.0",
+          "operation_id": "ems-icat-20260806-100423-olt1408b-ia-abe414c21234b382",
+          "environment": "corp",
+          "mode": "preview",
+          "preview_digest": "b26c9b15b388234b5ea5727ec273c3aed040517fbb9da6b6d97714d5adfa6293",
+          "planned_write": true,
+          "target": {
+            "project": {
+              "id": "67654",
+              "name": "NetAtlasEMS"
+            },
+            "plan": {
+              "id": "260150",
+              "name": "NetAtlas EMS"
+            },
+            "platform": {
+              "id": "49",
+              "name": "NetAtlas EMS"
+            },
+            "build": {
+              "id": "19926",
+              "name": "03.00.11(AAVV.221)b10_ubuntu"
+            }
+          },
+          "execution": {
+            "testcase_external_id": "EMS1-5495",
+            "status": "p",
+            "notes_digest": "9bc895ce524632104927654281a92e37cf5cf746e89c21aa2539513b86c83a00"
+          },
+          "warnings": []
+        }
+      },
+      {
+        "result": {
+          "external_id": "EMS1-5496",
+          "testcase_id": null,
+          "version": null,
+          "test_name": "ontMap",
+          "testlink_name": null,
+          "raw_status": "Pass",
+          "status": "p",
+          "duration": "0s"
+        },
+        "dedupe_marker": null,
+        "dedupe_digest": null,
+        "redmine_request": null,
+        "redmine_preview": null,
+        "testlink_request": {
+          "operation_id": "ems-icat-20260806-100423-olt1408b-ia-61fc2497347cd4ac",
+          "environment": "corp",
+          "project": "NetAtlasEMS",
+          "plan": "NetAtlas EMS",
+          "platform": "NetAtlas EMS",
+          "build": "03.00.11(AAVV.221)b10_ubuntu",
+          "testcase_external_id": "EMS1-5496",
+          "status": "p",
+          "notes": "Operation ID: ems-icat-20260806-100423-olt1408b-ia\nReport Schema: legacy-web-ems-report-v1\nReport File: qa_normalized_icat_olt1408b_ia_20260806_100423.txt\nTestLink Project: NetAtlasEMS\nTest Plan: NetAtlas EMS\nPlatform: NetAtlas EMS\nBuild: 03.00.11(AAVV.221)b10_ubuntu\nTest Case: EMS1-5496\nAutomation Test Function: ontMap\nResult: Pass",
+          "execution_duration": null
+        },
+        "testlink_preview": {
+          "schema_version": "1.0",
+          "operation_id": "ems-icat-20260806-100423-olt1408b-ia-61fc2497347cd4ac",
+          "environment": "corp",
+          "mode": "preview",
+          "preview_digest": "b5a440cc008d7c50e32f3d7e68887e1d7de5b1a7e71b298286a3be786347ee40",
+          "planned_write": true,
+          "target": {
+            "project": {
+              "id": "67654",
+              "name": "NetAtlasEMS"
+            },
+            "plan": {
+              "id": "260150",
+              "name": "NetAtlas EMS"
+            },
+            "platform": {
+              "id": "49",
+              "name": "NetAtlas EMS"
+            },
+            "build": {
+              "id": "19926",
+              "name": "03.00.11(AAVV.221)b10_ubuntu"
+            }
+          },
+          "execution": {
+            "testcase_external_id": "EMS1-5496",
+            "status": "p",
+            "notes_digest": "a5f6abbe1ed3b12995dcf6eccf023932cfd1489516f075577911bef1420318fe"
+          },
+          "warnings": []
+        }
+      },
+      {
+        "result": {
+          "external_id": "EMS1-5497",
+          "testcase_id": null,
+          "version": null,
+          "test_name": "ontMap",
+          "testlink_name": null,
+          "raw_status": "Pass",
+          "status": "p",
+          "duration": "0s"
+        },
+        "dedupe_marker": null,
+        "dedupe_digest": null,
+        "redmine_request": null,
+        "redmine_preview": null,
+        "testlink_request": {
+          "operation_id": "ems-icat-20260806-100423-olt1408b-ia-03299503b2c14e3f",
+          "environment": "corp",
+          "project": "NetAtlasEMS",
+          "plan": "NetAtlas EMS",
+          "platform": "NetAtlas EMS",
+          "build": "03.00.11(AAVV.221)b10_ubuntu",
+          "testcase_external_id": "EMS1-5497",
+          "status": "p",
+          "notes": "Operation ID: ems-icat-20260806-100423-olt1408b-ia\nReport Schema: legacy-web-ems-report-v1\nReport File: qa_normalized_icat_olt1408b_ia_20260806_100423.txt\nTestLink Project: NetAtlasEMS\nTest Plan: NetAtlas EMS\nPlatform: NetAtlas EMS\nBuild: 03.00.11(AAVV.221)b10_ubuntu\nTest Case: EMS1-5497\nAutomation Test Function: ontMap\nResult: Pass",
+          "execution_duration": null
+        },
+        "testlink_preview": {
+          "schema_version": "1.0",
+          "operation_id": "ems-icat-20260806-100423-olt1408b-ia-03299503b2c14e3f",
+          "environment": "corp",
+          "mode": "preview",
+          "preview_digest": "998349bd2afacc753b8dc455424744300b4e1e78d626d29c00504e0348465a25",
+          "planned_write": true,
+          "target": {
+            "project": {
+              "id": "67654",
+              "name": "NetAtlasEMS"
+            },
+            "plan": {
+              "id": "260150",
+              "name": "NetAtlas EMS"
+            },
+            "platform": {
+              "id": "49",
+              "name": "NetAtlas EMS"
+            },
+            "build": {
+              "id": "19926",
+              "name": "03.00.11(AAVV.221)b10_ubuntu"
+            }
+          },
+          "execution": {
+            "testcase_external_id": "EMS1-5497",
+            "status": "p",
+            "notes_digest": "080c49f765ebc1fcc144d7ffc622a4f56c42212050ab55259b03ec1dc9cc926c"
+          },
+          "warnings": []
+        }
+      },
+      {
+        "result": {
+          "external_id": "EMS1-5503",
+          "testcase_id": null,
+          "version": null,
+          "test_name": "alarmActive",
+          "testlink_name": null,
+          "raw_status": "Pass",
+          "status": "p",
+          "duration": "0s"
+        },
+        "dedupe_marker": null,
+        "dedupe_digest": null,
+        "redmine_request": null,
+        "redmine_preview": null,
+        "testlink_request": {
+          "operation_id": "ems-icat-20260806-100423-olt1408b-ia-04be81dd7e37efdb",
+          "environment": "corp",
+          "project": "NetAtlasEMS",
+          "plan": "NetAtlas EMS",
+          "platform": "NetAtlas EMS",
+          "build": "03.00.11(AAVV.221)b10_ubuntu",
+          "testcase_external_id": "EMS1-5503",
+          "status": "p",
+          "notes": "Operation ID: ems-icat-20260806-100423-olt1408b-ia\nReport Schema: legacy-web-ems-report-v1\nReport File: qa_normalized_icat_olt1408b_ia_20260806_100423.txt\nTestLink Project: NetAtlasEMS\nTest Plan: NetAtlas EMS\nPlatform: NetAtlas EMS\nBuild: 03.00.11(AAVV.221)b10_ubuntu\nTest Case: EMS1-5503\nAutomation Test Function: alarmActive\nResult: Pass",
+          "execution_duration": null
+        },
+        "testlink_preview": {
+          "schema_version": "1.0",
+          "operation_id": "ems-icat-20260806-100423-olt1408b-ia-04be81dd7e37efdb",
+          "environment": "corp",
+          "mode": "preview",
+          "preview_digest": "da621f975a80c62e34d95863ae09f51c032f20de36abead2d94df989f121c4db",
+          "planned_write": true,
+          "target": {
+            "project": {
+              "id": "67654",
+              "name": "NetAtlasEMS"
+            },
+            "plan": {
+              "id": "260150",
+              "name": "NetAtlas EMS"
+            },
+            "platform": {
+              "id": "49",
+              "name": "NetAtlas EMS"
+            },
+            "build": {
+              "id": "19926",
+              "name": "03.00.11(AAVV.221)b10_ubuntu"
+            }
+          },
+          "execution": {
+            "testcase_external_id": "EMS1-5503",
+            "status": "p",
+            "notes_digest": "bfe975ee92c5750e2faccfaec2cf4255dd97d00fd94b334865a88038e6ef43db"
+          },
+          "warnings": []
+        }
+      },
+      {
+        "result": {
+          "external_id": "EMS1-5504",
+          "testcase_id": null,
+          "version": null,
+          "test_name": "alarmHistory",
+          "testlink_name": null,
+          "raw_status": "Pass",
+          "status": "p",
+          "duration": "0s"
+        },
+        "dedupe_marker": null,
+        "dedupe_digest": null,
+        "redmine_request": null,
+        "redmine_preview": null,
+        "testlink_request": {
+          "operation_id": "ems-icat-20260806-100423-olt1408b-ia-353cc52c0669df5d",
+          "environment": "corp",
+          "project": "NetAtlasEMS",
+          "plan": "NetAtlas EMS",
+          "platform": "NetAtlas EMS",
+          "build": "03.00.11(AAVV.221)b10_ubuntu",
+          "testcase_external_id": "EMS1-5504",
+          "status": "p",
+          "notes": "Operation ID: ems-icat-20260806-100423-olt1408b-ia\nReport Schema: legacy-web-ems-report-v1\nReport File: qa_normalized_icat_olt1408b_ia_20260806_100423.txt\nTestLink Project: NetAtlasEMS\nTest Plan: NetAtlas EMS\nPlatform: NetAtlas EMS\nBuild: 03.00.11(AAVV.221)b10_ubuntu\nTest Case: EMS1-5504\nAutomation Test Function: alarmHistory\nResult: Pass",
+          "execution_duration": null
+        },
+        "testlink_preview": {
+          "schema_version": "1.0",
+          "operation_id": "ems-icat-20260806-100423-olt1408b-ia-353cc52c0669df5d",
+          "environment": "corp",
+          "mode": "preview",
+          "preview_digest": "5460e7cfcdfa5082a44dfe651115f22b8e58fec1ec8432ca13a29d64480d0ab6",
+          "planned_write": true,
+          "target": {
+            "project": {
+              "id": "67654",
+              "name": "NetAtlasEMS"
+            },
+            "plan": {
+              "id": "260150",
+              "name": "NetAtlas EMS"
+            },
+            "platform": {
+              "id": "49",
+              "name": "NetAtlas EMS"
+            },
+            "build": {
+              "id": "19926",
+              "name": "03.00.11(AAVV.221)b10_ubuntu"
+            }
+          },
+          "execution": {
+            "testcase_external_id": "EMS1-5504",
+            "status": "p",
+            "notes_digest": "72546d93fe614cc3efd792ca25d96dbe1489949105e5e248753dce4dda10e369"
+          },
+          "warnings": []
+        }
+      },
+      {
+        "result": {
+          "external_id": "EMS1-5527",
+          "testcase_id": null,
+          "version": null,
+          "test_name": "regionUsr",
+          "testlink_name": null,
+          "raw_status": "Pass",
+          "status": "p",
+          "duration": "0s"
+        },
+        "dedupe_marker": null,
+        "dedupe_digest": null,
+        "redmine_request": null,
+        "redmine_preview": null,
+        "testlink_request": {
+          "operation_id": "ems-icat-20260806-100423-olt1408b-ia-99f91ae67fa6b4d3",
+          "environment": "corp",
+          "project": "NetAtlasEMS",
+          "plan": "NetAtlas EMS",
+          "platform": "NetAtlas EMS",
+          "build": "03.00.11(AAVV.221)b10_ubuntu",
+          "testcase_external_id": "EMS1-5527",
+          "status": "p",
+          "notes": "Operation ID: ems-icat-20260806-100423-olt1408b-ia\nReport Schema: legacy-web-ems-report-v1\nReport File: qa_normalized_icat_olt1408b_ia_20260806_100423.txt\nTestLink Project: NetAtlasEMS\nTest Plan: NetAtlas EMS\nPlatform: NetAtlas EMS\nBuild: 03.00.11(AAVV.221)b10_ubuntu\nTest Case: EMS1-5527\nAutomation Test Function: regionUsr\nResult: Pass",
+          "execution_duration": null
+        },
+        "testlink_preview": {
+          "schema_version": "1.0",
+          "operation_id": "ems-icat-20260806-100423-olt1408b-ia-99f91ae67fa6b4d3",
+          "environment": "corp",
+          "mode": "preview",
+          "preview_digest": "3a7aa71d7bcd47fcfcf883503a7ea064b7243bfab83c7e1222b789a981c64fcc",
+          "planned_write": true,
+          "target": {
+            "project": {
+              "id": "67654",
+              "name": "NetAtlasEMS"
+            },
+            "plan": {
+              "id": "260150",
+              "name": "NetAtlas EMS"
+            },
+            "platform": {
+              "id": "49",
+              "name": "NetAtlas EMS"
+            },
+            "build": {
+              "id": "19926",
+              "name": "03.00.11(AAVV.221)b10_ubuntu"
+            }
+          },
+          "execution": {
+            "testcase_external_id": "EMS1-5527",
+            "status": "p",
+            "notes_digest": "791a0a60d0964534f6a30e3ca31297a5fc96ff1e0359bff1e935178c4191ccbb"
+          },
+          "warnings": []
+        }
+      },
+      {
+        "result": {
+          "external_id": "EMS1-5528",
+          "testcase_id": null,
+          "version": null,
+          "test_name": "onlineUsr",
+          "testlink_name": null,
+          "raw_status": "Pass",
+          "status": "p",
+          "duration": "0s"
+        },
+        "dedupe_marker": null,
+        "dedupe_digest": null,
+        "redmine_request": null,
+        "redmine_preview": null,
+        "testlink_request": {
+          "operation_id": "ems-icat-20260806-100423-olt1408b-ia-ba80ca02855f46f7",
+          "environment": "corp",
+          "project": "NetAtlasEMS",
+          "plan": "NetAtlas EMS",
+          "platform": "NetAtlas EMS",
+          "build": "03.00.11(AAVV.221)b10_ubuntu",
+          "testcase_external_id": "EMS1-5528",
+          "status": "p",
+          "notes": "Operation ID: ems-icat-20260806-100423-olt1408b-ia\nReport Schema: legacy-web-ems-report-v1\nReport File: qa_normalized_icat_olt1408b_ia_20260806_100423.txt\nTestLink Project: NetAtlasEMS\nTest Plan: NetAtlas EMS\nPlatform: NetAtlas EMS\nBuild: 03.00.11(AAVV.221)b10_ubuntu\nTest Case: EMS1-5528\nAutomation Test Function: onlineUsr\nResult: Pass",
+          "execution_duration": null
+        },
+        "testlink_preview": {
+          "schema_version": "1.0",
+          "operation_id": "ems-icat-20260806-100423-olt1408b-ia-ba80ca02855f46f7",
+          "environment": "corp",
+          "mode": "preview",
+          "preview_digest": "fd27267cdd7384b582d78cfc7bfe68be50cab9234321271bf76976c43c4ba9ad",
+          "planned_write": true,
+          "target": {
+            "project": {
+              "id": "67654",
+              "name": "NetAtlasEMS"
+            },
+            "plan": {
+              "id": "260150",
+              "name": "NetAtlas EMS"
+            },
+            "platform": {
+              "id": "49",
+              "name": "NetAtlas EMS"
+            },
+            "build": {
+              "id": "19926",
+              "name": "03.00.11(AAVV.221)b10_ubuntu"
+            }
+          },
+          "execution": {
+            "testcase_external_id": "EMS1-5528",
+            "status": "p",
+            "notes_digest": "b1db43c41eeb18a74d9536d47fee35b5f590abd47d7693732499b6fc8941912b"
+          },
+          "warnings": []
+        }
+      }
+    ],
+    "ignored": [],
+    "warnings": [],
+    "preview_digest": "b4e31ab55ae2eb32855f969cfd65334096b35e75727dc6b06211c27b1fcae160"
+  },
+  "review": {
+    "schema_version": "1.0",
+    "operation_id": "ems-icat-20260806-100423-olt1408b-ia",
+    "correlation_id": "ems-icat-20260806-100423-olt1408b-ia",
+    "environment": "corp",
+    "mode": "preview",
+    "preview_digest": "b4e31ab55ae2eb32855f969cfd65334096b35e75727dc6b06211c27b1fcae160",
+    "planned_write": true,
+    "input_digest": "6f68dddbc6cf605a9866bf3e93ab2355f60957c10b1102691068cb5663ded811",
+    "report_schema": "legacy-web-ems-report-v1",
+    "target": {
+      "project": "NetAtlasEMS",
+      "plan": "NetAtlas EMS",
+      "platform": "NetAtlas EMS",
+      "build": "03.00.11(AAVV.221)b10_ubuntu"
+    },
+    "parsed_count": 29,
+    "write_count": 29,
+    "ignored_count": 0,
+    "warnings": [],
+    "warning_count": 0,
+    "warnings_truncated": false,
+    "summary": {
+      "status_counts": {
+        "f": 8,
+        "p": 21
+      },
+      "redmine_action_counts": {
+        "none": 29
+      },
+      "sample_testcase_external_ids": [
+        "EMS1-5487",
+        "EMS1-5512",
+        "EMS1-5510",
+        "EMS1-5513",
+        "EMS1-5511",
+        "EMS1-5514",
+        "EMS1-5515",
+        "EMS1-5516",
+        "EMS1-5517",
+        "EMS1-5518"
+      ]
+    },
+    "items": [
+      {
+        "testcase_external_id": "EMS1-5487",
+        "test_name": "node",
+        "raw_status": "Pass",
+        "status": "p",
+        "testlink_planned_write": true,
+        "testlink_preview_digest": "bdc7709cff0b3691a48cdd186d98b87bd216019742e0d6c61bec367a92a712de",
+        "redmine_action": "none",
+        "redmine_preview_digest": null,
+        "redmine_issue_fields": null,
+        "redmine_issue_payload": null,
+        "dedupe_digest": null
+      },
+      {
+        "testcase_external_id": "EMS1-5512",
+        "test_name": "fwUpgrade",
+        "raw_status": "Fail",
+        "status": "f",
+        "testlink_planned_write": true,
+        "testlink_preview_digest": "8fcc7bb62cb66b012286b2849d5c362c3c447429d1cc94a6252d0c0a89cbaecb",
+        "redmine_action": "none",
+        "redmine_preview_digest": null,
+        "redmine_issue_fields": null,
+        "redmine_issue_payload": null,
+        "dedupe_digest": null
+      },
+      {
+        "testcase_external_id": "EMS1-5510",
+        "test_name": "configBackup",
+        "raw_status": "Fail",
+        "status": "f",
+        "testlink_planned_write": true,
+        "testlink_preview_digest": "600a58fe208ea62f24c83a656f3dfec2486d87fe7d2983eb164f856afd7ab8e5",
+        "redmine_action": "none",
+        "redmine_preview_digest": null,
+        "redmine_issue_fields": null,
+        "redmine_issue_payload": null,
+        "dedupe_digest": null
+      },
+      {
+        "testcase_external_id": "EMS1-5513",
+        "test_name": "Reboot",
+        "raw_status": "Pass",
+        "status": "p",
+        "testlink_planned_write": true,
+        "testlink_preview_digest": "a563b94a56401b1030465f98a017c8a05c65ba38998c7a81d7821ba9cd2259a8",
+        "redmine_action": "none",
+        "redmine_preview_digest": null,
+        "redmine_issue_fields": null,
+        "redmine_issue_payload": null,
+        "dedupe_digest": null
+      },
+      {
+        "testcase_external_id": "EMS1-5511",
+        "test_name": "configRestore",
+        "raw_status": "Fail",
+        "status": "f",
+        "testlink_planned_write": true,
+        "testlink_preview_digest": "40731afb144e5a1afef1aead38ab3bfb5a5602b08d2d14046baeeb8b5ef78a31",
+        "redmine_action": "none",
+        "redmine_preview_digest": null,
+        "redmine_issue_fields": null,
+        "redmine_issue_payload": null,
+        "dedupe_digest": null
+      },
+      {
+        "testcase_external_id": "EMS1-5514",
+        "test_name": "ontUpgrade",
+        "raw_status": "Fail",
+        "status": "f",
+        "testlink_planned_write": true,
+        "testlink_preview_digest": "cc65ae115c52e10690ea880b3f6054dedadf13e635cffd817f89db93a410cc3e",
+        "redmine_action": "none",
+        "redmine_preview_digest": null,
+        "redmine_issue_fields": null,
+        "redmine_issue_payload": null,
+        "dedupe_digest": null
+      },
+      {
+        "testcase_external_id": "EMS1-5515",
+        "test_name": "ontUpgrade",
+        "raw_status": "Fail",
+        "status": "f",
+        "testlink_planned_write": true,
+        "testlink_preview_digest": "c03e4ba1530a6bb17b6cf7fd82155541bf6a3962d99a1956500a0a361b2e618b",
+        "redmine_action": "none",
+        "redmine_preview_digest": null,
+        "redmine_issue_fields": null,
+        "redmine_issue_payload": null,
+        "dedupe_digest": null
+      },
+      {
+        "testcase_external_id": "EMS1-5516",
+        "test_name": "ontUpgrade",
+        "raw_status": "Fail",
+        "status": "f",
+        "testlink_planned_write": true,
+        "testlink_preview_digest": "558a420cfe892be3b410342aa73b9c8aab0288f4fb4bc3fff8d9e0dd4294f94c",
+        "redmine_action": "none",
+        "redmine_preview_digest": null,
+        "redmine_issue_fields": null,
+        "redmine_issue_payload": null,
+        "dedupe_digest": null
+      },
+      {
+        "testcase_external_id": "EMS1-5517",
+        "test_name": "ontUpgrade",
+        "raw_status": "Fail",
+        "status": "f",
+        "testlink_planned_write": true,
+        "testlink_preview_digest": "fe7b1e14bfa2f61d944b814c9eaf51126c893c07c1bbfb05c5222fef2d400f97",
+        "redmine_action": "none",
+        "redmine_preview_digest": null,
+        "redmine_issue_fields": null,
+        "redmine_issue_payload": null,
+        "dedupe_digest": null
+      },
+      {
+        "testcase_external_id": "EMS1-5518",
+        "test_name": "ontUpgrade",
+        "raw_status": "Fail",
+        "status": "f",
+        "testlink_planned_write": true,
+        "testlink_preview_digest": "084847c6bf0d038a2a4ca4935b6463e42f23fb7601dc2f21fafc037faf9962fc",
+        "redmine_action": "none",
+        "redmine_preview_digest": null,
+        "redmine_issue_fields": null,
+        "redmine_issue_payload": null,
+        "dedupe_digest": null
+      },
+      {
+        "testcase_external_id": "EMS1-5519",
+        "test_name": "ontReboot",
+        "raw_status": "Pass",
+        "status": "p",
+        "testlink_planned_write": true,
+        "testlink_preview_digest": "3a19c75a44aa5442535f912267d34e9673585efb5bf816b6036931c26357a2da",
+        "redmine_action": "none",
+        "redmine_preview_digest": null,
+        "redmine_issue_fields": null,
+        "redmine_issue_payload": null,
+        "dedupe_digest": null
+      },
+      {
+        "testcase_external_id": "EMS1-5520",
+        "test_name": "ontReset",
+        "raw_status": "Pass",
+        "status": "p",
+        "testlink_planned_write": true,
+        "testlink_preview_digest": "082d0fbd0fbe5fbdb8ed0b788a48211edf6bf2f80f8003a43fcee01c73905068",
+        "redmine_action": "none",
+        "redmine_preview_digest": null,
+        "redmine_issue_fields": null,
+        "redmine_issue_payload": null,
+        "dedupe_digest": null
+      },
+      {
+        "testcase_external_id": "EMS1-5489",
+        "test_name": "deviceStatus",
+        "raw_status": "Pass",
+        "status": "p",
+        "testlink_planned_write": true,
+        "testlink_preview_digest": "f8f343168eaf0135189c2ddd1e8f8cb6ee729f2a9daf38483a6c46de6cee2c0b",
+        "redmine_action": "none",
+        "redmine_preview_digest": null,
+        "redmine_issue_fields": null,
+        "redmine_issue_payload": null,
+        "dedupe_digest": null
+      },
+      {
+        "testcase_external_id": "EMS1-5490",
+        "test_name": "ontStatus",
+        "raw_status": "Pass",
+        "status": "p",
+        "testlink_planned_write": true,
+        "testlink_preview_digest": "fb8d8932ebdeea20bb7620d6d33d85846d1a63c02d023cf37494b80605d5db7d",
+        "redmine_action": "none",
+        "redmine_preview_digest": null,
+        "redmine_issue_fields": null,
+        "redmine_issue_payload": null,
+        "dedupe_digest": null
+      },
+      {
+        "testcase_external_id": "EMS1-5491",
+        "test_name": "alarmStatus",
+        "raw_status": "Pass",
+        "status": "p",
+        "testlink_planned_write": true,
+        "testlink_preview_digest": "22ae88e07197f271a7b9a91cf661676cb02872890eefbc35afd00214d82fe49a",
+        "redmine_action": "none",
+        "redmine_preview_digest": null,
+        "redmine_issue_fields": null,
+        "redmine_issue_payload": null,
+        "dedupe_digest": null
+      },
+      {
+        "testcase_external_id": "EMS1-5499",
+        "test_name": "deviceInfo",
+        "raw_status": "Pass",
+        "status": "p",
+        "testlink_planned_write": true,
+        "testlink_preview_digest": "db3fa9ea4a6432b95fa229e861b0a290436d6204d94e546d4c610fb5c4bf424f",
+        "redmine_action": "none",
+        "redmine_preview_digest": null,
+        "redmine_issue_fields": null,
+        "redmine_issue_payload": null,
+        "dedupe_digest": null
+      },
+      {
+        "testcase_external_id": "EMS1-5500",
+        "test_name": "cardInfo",
+        "raw_status": "Pass",
+        "status": "p",
+        "testlink_planned_write": true,
+        "testlink_preview_digest": "190bcbf72028588eff7ffc812fa8c0008350fe74fd3adf940a518c5c2a1e0149",
+        "redmine_action": "none",
+        "redmine_preview_digest": null,
+        "redmine_issue_fields": null,
+        "redmine_issue_payload": null,
+        "dedupe_digest": null
+      },
+      {
+        "testcase_external_id": "EMS1-5501",
+        "test_name": "portInfo",
+        "raw_status": "Pass",
+        "status": "p",
+        "testlink_planned_write": true,
+        "testlink_preview_digest": "3a5c23af70a002890918f6f63b078c0a7dbc2a57fb7b2657d322b4f9be4128d8",
+        "redmine_action": "none",
+        "redmine_preview_digest": null,
+        "redmine_issue_fields": null,
+        "redmine_issue_payload": null,
+        "dedupe_digest": null
+      },
+      {
+        "testcase_external_id": "EMS1-5502",
+        "test_name": "ontInfo",
+        "raw_status": "Pass",
+        "status": "p",
+        "testlink_planned_write": true,
+        "testlink_preview_digest": "a142e099358506c9488314927589fd6741e341dee1a32aecb15e7bdf89a5d73a",
+        "redmine_action": "none",
+        "redmine_preview_digest": null,
+        "redmine_issue_fields": null,
+        "redmine_issue_payload": null,
+        "dedupe_digest": null
+      },
+      {
+        "testcase_external_id": "EMS1-5493",
+        "test_name": "deviceMap",
+        "raw_status": "Pass",
+        "status": "p",
+        "testlink_planned_write": true,
+        "testlink_preview_digest": "016062c6bdff8036362a9a9cf5e8d7e11a34010f3f4b5c9227b7b48b56a62fd4",
+        "redmine_action": "none",
+        "redmine_preview_digest": null,
+        "redmine_issue_fields": null,
+        "redmine_issue_payload": null,
+        "dedupe_digest": null
+      },
+      {
+        "testcase_external_id": "EMS1-5498",
+        "test_name": "deviceMap",
+        "raw_status": "Pass",
+        "status": "p",
+        "testlink_planned_write": true,
+        "testlink_preview_digest": "4a7df01b52a379a83d2f0c8274b63ae0bef15d418d69b662b7cfd0079f8ae981",
+        "redmine_action": "none",
+        "redmine_preview_digest": null,
+        "redmine_issue_fields": null,
+        "redmine_issue_payload": null,
+        "dedupe_digest": null
+      },
+      {
+        "testcase_external_id": "EMS1-5494",
+        "test_name": "cardMap",
+        "raw_status": "Pass",
+        "status": "p",
+        "testlink_planned_write": true,
+        "testlink_preview_digest": "ff9c4378b9c04fc1c0d90d150f36ca66e669afa4ac7559fde3e17338978c2ed9",
+        "redmine_action": "none",
+        "redmine_preview_digest": null,
+        "redmine_issue_fields": null,
+        "redmine_issue_payload": null,
+        "dedupe_digest": null
+      },
+      {
+        "testcase_external_id": "EMS1-5495",
+        "test_name": "cardMap",
+        "raw_status": "Pass",
+        "status": "p",
+        "testlink_planned_write": true,
+        "testlink_preview_digest": "b26c9b15b388234b5ea5727ec273c3aed040517fbb9da6b6d97714d5adfa6293",
+        "redmine_action": "none",
+        "redmine_preview_digest": null,
+        "redmine_issue_fields": null,
+        "redmine_issue_payload": null,
+        "dedupe_digest": null
+      },
+      {
+        "testcase_external_id": "EMS1-5496",
+        "test_name": "ontMap",
+        "raw_status": "Pass",
+        "status": "p",
+        "testlink_planned_write": true,
+        "testlink_preview_digest": "b5a440cc008d7c50e32f3d7e68887e1d7de5b1a7e71b298286a3be786347ee40",
+        "redmine_action": "none",
+        "redmine_preview_digest": null,
+        "redmine_issue_fields": null,
+        "redmine_issue_payload": null,
+        "dedupe_digest": null
+      },
+      {
+        "testcase_external_id": "EMS1-5497",
+        "test_name": "ontMap",
+        "raw_status": "Pass",
+        "status": "p",
+        "testlink_planned_write": true,
+        "testlink_preview_digest": "998349bd2afacc753b8dc455424744300b4e1e78d626d29c00504e0348465a25",
+        "redmine_action": "none",
+        "redmine_preview_digest": null,
+        "redmine_issue_fields": null,
+        "redmine_issue_payload": null,
+        "dedupe_digest": null
+      },
+      {
+        "testcase_external_id": "EMS1-5503",
+        "test_name": "alarmActive",
+        "raw_status": "Pass",
+        "status": "p",
+        "testlink_planned_write": true,
+        "testlink_preview_digest": "da621f975a80c62e34d95863ae09f51c032f20de36abead2d94df989f121c4db",
+        "redmine_action": "none",
+        "redmine_preview_digest": null,
+        "redmine_issue_fields": null,
+        "redmine_issue_payload": null,
+        "dedupe_digest": null
+      },
+      {
+        "testcase_external_id": "EMS1-5504",
+        "test_name": "alarmHistory",
+        "raw_status": "Pass",
+        "status": "p",
+        "testlink_planned_write": true,
+        "testlink_preview_digest": "5460e7cfcdfa5082a44dfe651115f22b8e58fec1ec8432ca13a29d64480d0ab6",
+        "redmine_action": "none",
+        "redmine_preview_digest": null,
+        "redmine_issue_fields": null,
+        "redmine_issue_payload": null,
+        "dedupe_digest": null
+      },
+      {
+        "testcase_external_id": "EMS1-5527",
+        "test_name": "regionUsr",
+        "raw_status": "Pass",
+        "status": "p",
+        "testlink_planned_write": true,
+        "testlink_preview_digest": "3a7aa71d7bcd47fcfcf883503a7ea064b7243bfab83c7e1222b789a981c64fcc",
+        "redmine_action": "none",
+        "redmine_preview_digest": null,
+        "redmine_issue_fields": null,
+        "redmine_issue_payload": null,
+        "dedupe_digest": null
+      },
+      {
+        "testcase_external_id": "EMS1-5528",
+        "test_name": "onlineUsr",
+        "raw_status": "Pass",
+        "status": "p",
+        "testlink_planned_write": true,
+        "testlink_preview_digest": "fd27267cdd7384b582d78cfc7bfe68be50cab9234321271bf76976c43c4ba9ad",
+        "redmine_action": "none",
+        "redmine_preview_digest": null,
+        "redmine_issue_fields": null,
+        "redmine_issue_payload": null,
+        "dedupe_digest": null
+      }
+    ]
+  }
+}

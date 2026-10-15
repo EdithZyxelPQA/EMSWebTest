@@ -1,0 +1,35 @@
+Report generated on: 2026-10-01_17-15-23
+EMS Version: 03.00.11(AAVV.221)b12
+Device: NeoX-06 / NXC400
+Firmware: NXC400 V1.02(ACKG.1)_260604c
+
+Test Results:
+[EMS1-5487][node] Result Pass (0s)
+[EMS1-5512][fwUpgrade] Result Pass (0s)
+[EMS1-5510][configBackup] Result Pass (0s)
+[EMS1-5513][Reboot] Result Pass (0s)
+[EMS1-5511][configRestore] Result Pass (0s)
+[EMS1-5514][ontUpgrade] Result Pass (0s)
+[EMS1-5515][ontUpgrade] Result Pass (0s)
+[EMS1-5516][ontUpgrade] Result Pass (0s)
+[EMS1-5517][ontUpgrade] Result Pass (0s)
+[EMS1-5518][ontUpgrade] Result Pass (0s)
+[EMS1-5519][ontReboot] Result Pass (0s)
+[EMS1-5520][ontReset] Result Pass (0s)
+[EMS1-5489][deviceStatus] Result Pass (0s)
+[EMS1-5490][ontStatus] Result Pass (0s)
+[EMS1-5491][alarmStatus] Result Pass (0s)
+[EMS1-5499][deviceInfo] Result Pass (0s)
+[EMS1-5500][cardInfo] Result Pass (0s)
+[EMS1-5501][portInfo] Result Pass (0s)
+[EMS1-5502][ontInfo] Result Pass (0s)
+[EMS1-5493][deviceMap] Result Pass (0s)
+[EMS1-5498][deviceMap] Result Pass (0s)
+[EMS1-5494][cardMap] Result Pass (0s)
+[EMS1-5495][cardMap] Result Pass (0s)
+[EMS1-5496][ontMap] Result Pass (0s)
+[EMS1-5497][ontMap] Result Pass (0s)
+[EMS1-5503][alarmActive] Result Pass (0s)
+[EMS1-5504][alarmHistory] Result Pass (0s)
+[EMS1-5527][regionUsr] Result Pass (0s)
+[EMS1-5528][onlineUsr] Result Pass (0s)

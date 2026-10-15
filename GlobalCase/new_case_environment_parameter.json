@@ -1,0 +1,114 @@
+{
+  "LOOP": {
+    "count": "1"
+  },
+  "ELEMENT": {
+    "wait_time": "3"
+  },
+  "AUTO_SITE": {
+    "pc_ip": "",
+    "upload_path": "./ForUpload/",
+    "report_path": "./report/",
+    "download_path": "./download/",
+    "browser": "chrome"
+  },
+  "EMS": {
+    "report_title": "Web_EMS_NewCase",
+    "url": "https://192.168.128.8:9116/netatlasems/index",
+    "ip": "192.168.128.8",
+    "version": "",
+    "login_username": "admin",
+    "login_password": "Pqa1234!!",
+    "server_username": "admin",
+    "server_password": "<PASSWORD>",
+    "sudo_password": "<PASSWORD>",
+    "db_username": "root",
+    "db_password": "<PASSWORD>",
+    "ftp_username": "admin",
+    "ftp_password": "<PASSWORD>",
+    "executeNode": [
+      "192.168.168.85"
+    ]
+  },
+  "ZYXEL_DUT": {
+    "192.168.168.85": {
+      "url": "http://192.168.168.85",
+      "ip": "192.168.168.85",
+      "inband_vlan": "4093",
+      "login_username": "admin",
+      "login_password": "Pqa1234!!",
+      "console_port": "COM7",
+      "console_baudrate": 115200,
+      "console_username": "admin",
+      "console_password": "Pqa1234!!",
+      "default_username": "admin",
+      "default_password": "1234",
+      "name": "NeoX_168.85",
+      "description": "For ICAT Auto",
+      "name_display": "NeoX_168.85(192.168.168.85)",
+      "submap_name": "EMS",
+      "submap_description": "",
+      "map_name": "EMS",
+      "type": "NeoX-06",
+      "slot_total": "8",
+      "set_community": "Pqa1234!!set",
+      "get_community": "Pqa1234!!get",
+      "snmp_ver": "SNMP V3",
+      "snmp3_auth": "Authentication and privacy",
+      "snmp3_hash": "SHA",
+      "snmp3_encrypt": "AES",
+      "geo_position": "Chang Gung Memorial Hospital",
+      "CARDINFO": {
+        "NXC": {
+          "fw_version": "V1.02(ACKG.1)",
+          "slot_id": "5",
+          "type": "NXC400",
+          "port_id": "13",
+          "port_type": "Network",
+          "port_speed": "100G"
+        },
+        "NXP316": {
+          "fw_version": "V1.02(ACKI.1)",
+          "slot_id": "8",
+          "type": "NXP316",
+          "port_id": "16",
+          "port_type": "xPON",
+          "port_speed": "10G"
+        },
+        "NXA340": {
+          "fw_version": "V1.02(ACQE.1)",
+          "slot_id": "1",
+          "type": "NXA340",
+          "port_id": "39",
+          "port_type": "Ethernet Access",
+          "port_speed": "10G"
+        }
+      },
+      "ONT": {
+        "exe_ontCount": 1,
+        "exe_upgrade_ont": "",
+        "exe_provision_ont": "ONT1",
+        "ONT1": {
+          "slot_id": "8",
+          "port_id": "16",
+          "ont_id": "2",
+          "sn_12": "",
+          "sn_16": "5A5958458CACE174",
+          "pw": "D41AD1009EC8",
+          "ont_user": "supervisor",
+          "ont_pw": "de15cf5a",
+          "type": "XGSPON",
+          "flag": "xont",
+          "model": "PM7300-T0",
+          "fw_image": "V542ABYY2Z0.bin",
+          "service_mode": "bridge",
+          "service_prf": "Edith_SFU_X"
+        }
+      },
+      "GE": {
+        "exe_geCount": 0,
+        "exe_provision_ge": ""
+      }
+    }
+  }
+}

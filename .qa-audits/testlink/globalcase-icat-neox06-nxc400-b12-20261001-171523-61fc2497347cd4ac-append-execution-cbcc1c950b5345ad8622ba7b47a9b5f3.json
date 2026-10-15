@@ -1,0 +1,20 @@
+{
+  "schema_version": "1.0",
+  "operation_id": "globalcase-icat-neox06-nxc400-b12-20261001-171523-61fc2497347cd4ac",
+  "environment": "corp",
+  "action": "append-execution",
+  "status": "success",
+  "preview_digest": "636c56bf4f13c54bab8412c9f20ddb81827f322ed9d25c4ee93ec115615c295a",
+  "testcase_external_id": "EMS1-5496",
+  "execution_id": "3158607",
+  "response": [
+    {
+      "status": true,
+      "operation": "reportTCResult",
+      "overwrite": false,
+      "message": "Success!",
+      "id": 3158607
+    }
+  ],
+  "finished_at": "2026-10-05T01:09:59+00:00"
+}

@@ -1,0 +1,20 @@
+{
+  "schema_version": "1.0",
+  "operation_id": "globalcase-neox06-nxc400-b12-20261001-115504-4217f4197a2c1025",
+  "environment": "corp",
+  "action": "append-execution",
+  "status": "success",
+  "preview_digest": "3c0d6fdaf2a698382c18a3b8bdd44dd8ace2805a9f4084c8f8d0f7a17889d6dd",
+  "testcase_external_id": "EMS1-6998",
+  "execution_id": "3158536",
+  "response": [
+    {
+      "status": true,
+      "operation": "reportTCResult",
+      "overwrite": false,
+      "message": "Success!",
+      "id": 3158536
+    }
+  ],
+  "finished_at": "2026-10-05T00:44:23+00:00"
+}

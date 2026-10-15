@@ -1,0 +1,9 @@
+Report generated on: 2026-10-07_18-42-00
+EMS Version: 03.00.11(AAVV.221)b12
+Device: NeoX-06 / NXC400 (192.168.168.85, cards NXA340 slot1, NXC400 slot5, NXP316 slot8)
+Firmware: NXC400 V1.02(ACKG.1)_260604c
+
+Test Results:
+[EMS1-6136][ACL - ACL Rule - Apply with Profile] Result Pass (0s)
+[EMS1-6137][ACL - ACL Rule - Apply with Priority] Result Pass (0s)
+[EMS1-6138][ACL - ACL Rule - Delete] Result Pass (0s)

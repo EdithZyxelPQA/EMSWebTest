@@ -1,0 +1,1647 @@
+import re
+import time
+
+from selenium.common.exceptions import (
+    ElementClickInterceptedException,
+    ElementNotInteractableException,
+    NoSuchElementException,
+    StaleElementReferenceException,
+    TimeoutException,
+)
+from selenium.webdriver import ActionChains
+from selenium.webdriver.common.by import By
+from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.support.select import Select
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.support.wait import WebDriverWait
+
+
+def navigate_to(driver, first_menu, second_menu=None, tab_id=None):
+    _click_menu_if_inactive(driver, By.LINK_TEXT, first_menu)
+    if second_menu:
+        _click_menu_if_inactive(driver, By.LINK_TEXT, second_menu)
+        if (first_menu, second_menu) == ("Inventory", "ONT"):
+            # Provision > Service also has an active "ONT" tab; make sure the
+            # Inventory ONT table itself is shown.
+            _wait_page_shown(driver, "ont_inventory_div", By.LINK_TEXT, "ONT")
+    if tab_id:
+        _click_menu_if_inactive(driver, By.ID, tab_id)
+
+
+def _wait_page_shown(driver, probe_id, by, value, timeout=60):
+    last_click = [0.0]
+
+    def shown(_):
+        if _is_loading(driver):
+            return False
+        if _first_usable(driver, By.ID, probe_id) is not None:
+            return True
+        if time.time() - last_click[0] >= 3:
+            for link in driver.find_elements(by, value):
+                try:
+                    if link.is_displayed() and link.get_attribute("className") == "":
+                        link.click()
+                        last_click[0] = time.time()
+                        break
+                except _RETRY_EXCEPTIONS:
+                    continue
+        return False
+
+    WebDriverWait(driver, timeout, poll_frequency=0.5, ignored_exceptions=_RETRY_EXCEPTIONS).until(shown)
+    _wait_idle(driver)
+
+
+def _open_filter_panel(driver, toggle_css, probe_id):
+    # The filter toggle opens/closes the panel; only click it when it is closed.
+    for _attempt in range(3):
+        if _first_usable(driver, By.ID, probe_id) is not None:
+            return
+        _click(driver, By.CSS_SELECTOR, toggle_css)
+        try:
+            WebDriverWait(driver, 10, poll_frequency=0.5, ignored_exceptions=_RETRY_EXCEPTIONS).until(
+                lambda _: _first_usable(driver, By.ID, probe_id) is not None
+            )
+            return
+        except TimeoutException:
+            continue
+    WebDriverWait(driver, 30, poll_frequency=0.5, ignored_exceptions=_RETRY_EXCEPTIONS).until(
+        lambda _: _first_usable(driver, By.ID, probe_id) is not None
+    )
+
+
+def filter_inventory_ont_by_sn(driver, sn):
+    navigate_to(driver, "Inventory", "ONT")
+    _open_filter_panel(driver, "#i_action_filter > a", "inventory_allont_clear_btn")
+    _click(driver, By.ID, "inventory_allont_clear_btn")
+    _type(driver, By.ID, "serial_Allont", sn)
+    _click(driver, By.ID, "inventory_allont_btn")
+    _wait_for_table(driver, "ont_inventory_div")
+
+
+def filter_inventory_ont_by_slot_port(driver, slot_id, port_id, dut_ip=None):
+    navigate_to(driver, "Inventory", "ONT")
+    _open_filter_panel(driver, "#i_action_filter > a", "inventory_allont_clear_btn")
+    _click(driver, By.ID, "inventory_allont_clear_btn")
+    if dut_ip:
+        _type(driver, By.ID, "ip_Allont", str(dut_ip))
+    _type(driver, By.ID, "slot_Allont", str(slot_id))
+    _type(driver, By.ID, "port_Allont", str(port_id))
+    _click(driver, By.ID, "inventory_allont_btn")
+    _wait_for_table(driver, "ont_inventory_div")
+
+
+def available_ont_ids_from_inventory(
+    driver,
+    slot_id,
+    port_id,
+    preferred_ont_id,
+    dut_ip=None,
+    max_ont_id_attempts=16,
+):
+    preferred_ont_id = int(preferred_ont_id)
+    candidate_ids = [str(index) for index in range(preferred_ont_id, preferred_ont_id + max_ont_id_attempts)]
+    filter_inventory_ont_by_slot_port(driver, slot_id, port_id, dut_ip=dut_ip)
+    occupied_ids = set()
+    for row in table_rows(driver, "ont_inventory_div"):
+        row_ip = row.get("IPAddress", row.get("IP Address", ""))
+        if dut_ip and row_ip != str(dut_ip):
+            continue
+        if not _inventory_ont_slot_matches(row.get("Slot", ""), slot_id):
+            continue
+        if str(row.get("Port", "")).strip() != str(port_id).strip():
+            continue
+        ont_id = row.get("ONT", "")
+        if ont_id and ont_id not in {"--", "Unregistered"}:
+            occupied_ids.add(ont_id)
+    available_ids = [ont_id for ont_id in candidate_ids if ont_id not in occupied_ids]
+    if not available_ids:
+        raise RuntimeError(
+            f"No available ONT ID in Inventory/ONT for IP={dut_ip}, "
+            f"slot={slot_id}, port={port_id}. "
+            f"Checked={candidate_ids}, occupied={sorted(occupied_ids)}"
+        )
+    return available_ids
+
+
+def _inventory_ont_slot_matches(row_slot, configured_slot):
+    row_slot = str(row_slot or "").strip()
+    configured_slot = str(configured_slot or "").strip()
+    if configured_slot == "0":
+        return row_slot in {"", "0", "-", "--"}
+    return row_slot == configured_slot
+
+
+def close_inventory_status_dialog(driver, timeout=15):
+    message = WebDriverWait(driver, timeout).until(
+        EC.visibility_of_element_located((By.ID, "inventory_status_message"))
+    )
+    dialogs = message.find_elements(
+        By.XPATH,
+        "./ancestor::*["
+        "@role='dialog' or "
+        "contains(concat(' ', normalize-space(@class), ' '), ' ui-dialog ') or "
+        "contains(concat(' ', normalize-space(@class), ' '), ' modal ')"
+        "][1]",
+    )
+    dialog = dialogs[0] if dialogs else None
+    close_locators = [
+        (By.CSS_SELECTOR, "button.ui-dialog-titlebar-close"),
+        (By.XPATH, ".//button[contains(concat(' ', normalize-space(@class), ' '), ' close ')]"),
+        (By.XPATH, ".//*[@data-dismiss='modal']"),
+        (By.XPATH, ".//*[self::button or self::input or self::a][normalize-space()='Close' or @value='Close']"),
+        (By.XPATH, ".//button[.//span]"),
+    ]
+
+    close_button = None
+    search_roots = [dialog] if dialog is not None else []
+    if not search_roots:
+        # Some EMS versions do not give this popup a dialog/modal class. Walk
+        # outward from the message and use the nearest container that owns a
+        # visible Close control instead of depending on an absolute body XPath.
+        search_roots = list(reversed(message.find_elements(By.XPATH, "./ancestor::*")))
+
+    for root in search_roots:
+        for by, value in close_locators:
+            visible_buttons = [
+                element for element in root.find_elements(by, value)
+                if element.is_displayed() and element.is_enabled()
+            ]
+            if visible_buttons:
+                close_button = visible_buttons[0]
+                dialog = root
+                break
+        if close_button is not None:
+            break
+    if close_button is None:
+        raise NoSuchElementException("Cannot find Close button in Inventory Status dialog.")
+
+    driver.execute_script("arguments[0].scrollIntoView({block:'center'});", close_button)
+    try:
+        close_button.click()
+    except ElementClickInterceptedException:
+        driver.execute_script("arguments[0].click();", close_button)
+    WebDriverWait(driver, timeout, poll_frequency=0.2).until(
+        EC.invisibility_of_element(message)
+    )
+
+
+def wait_inventory_ont_id(driver, sn, predicate, timeout=300):
+    sn_candidates = {sn, sn[-12:]}
+    end_time = time.time() + timeout
+    last_state = ""
+    filter_inventory_ont_by_sn(driver, sn)
+    while time.time() < end_time:
+        rows = table_rows(driver, "ont_inventory_div")
+        matched_rows = [row for row in rows if row.get("sn") in sn_candidates]
+        if len(matched_rows) == 1:
+            ont_id = matched_rows[0].get("ONT", "")
+            last_state = f"ONT ID={ont_id}, row={matched_rows[0]}"
+            if _call_inventory_predicate(predicate, ont_id, matched_rows[0]):
+                return matched_rows[0]
+        else:
+            last_state = f"matched rows={len(matched_rows)}, rows={rows}"
+        _safe_click(driver, By.ID, "i_action_refresh")
+        time.sleep(3)
+    raise TimeoutError(f"ONT inventory state did not match before timeout. SN={sn}, last_state={last_state}")
+
+
+def wait_inventory_description(driver, sn, expected_description, timeout=300):
+    return wait_inventory_ont_id(
+        driver,
+        sn,
+        lambda _ont_id, row: row.get("description") == expected_description,
+        timeout,
+    )
+
+
+def wait_inventory_ont_absent(driver, sn, timeout=300):
+    candidates = [sn, sn[-12:]]
+    end_time = time.time() + timeout
+    last_state = ""
+    while time.time() < end_time:
+        all_absent = True
+        states = []
+        for candidate in candidates:
+            filter_inventory_ont_by_sn(driver, candidate)
+            rows = table_rows(driver, "ont_inventory_div")
+            matched_rows = [row for row in rows if row.get("sn") in {sn, sn[-12:]}]
+            states.append(f"{candidate}: matched={len(matched_rows)}, rows={rows}")
+            if matched_rows:
+                all_absent = False
+                _safe_click(driver, By.ID, "i_action_refresh")
+                time.sleep(3)
+                break
+        last_state = " | ".join(states)
+        if all_absent:
+            return True
+    raise TimeoutError(f"ONT inventory still exists before timeout. SN={sn}, last_state={last_state}")
+
+
+_CLOSE_CANNOT_DELETE_JS = r"""
+// "<SN> : this ONT can not delete." - EMS refuses to delete a service that is still Processing.
+// Close that dialog (its OK button) and return its text; null when it is not shown.
+for (const box of document.querySelectorAll('.modal, [id*=diag], [role=dialog]')) {
+  if (!box.offsetWidth || !/can not delete/i.test(box.innerText || '')) continue;
+  const ok = [...box.querySelectorAll('button, input[type=button], .button')]
+    .find(b => b.offsetWidth && /^\s*ok\s*$/i.test(b.value || b.innerText || ''));
+  if (ok) ok.click();
+  return (box.innerText || '').trim();
+}
+return null;
+"""
+
+
+def _delete_selected_ont_services(driver, candidate, timeout=300):
+    # Delete the services shown for this SN; while EMS answers "this ONT can not delete"
+    # (service still Processing), close the message, wait and try again.
+    end_time = time.time() + timeout
+    while True:
+        _click(driver, By.XPATH, "//label[@for='myCheckbox_title_provision_service_table']")
+        _click(driver, By.CSS_SELECTOR, "#provision_service_delete > a")
+        try:
+            _confirm_message(driver)
+            return
+        except TimeoutException:
+            refused = driver.execute_script(_CLOSE_CANNOT_DELETE_JS)
+            if not refused or time.time() >= end_time:
+                raise
+            print(f"delete ONT service: {refused!r}; wait for the service to finish processing", flush=True)
+            time.sleep(15)
+            filter_ont_service_by_sn(driver, candidate)
+            if total_data(driver, "provision_service_table") < 1:
+                return
+
+
+def delete_ont_service_if_exists(driver, sn):
+    deleted = False
+    for candidate in _sn_candidates(sn):
+        filter_ont_service_by_sn(driver, candidate)
+        found = total_data(driver, "provision_service_table")
+        print(f"delete ONT service: filter {candidate!r} found={found}", flush=True)
+        if found < 1:
+            continue
+        _delete_selected_ont_services(driver, candidate)
+        deleted = True
+        # EMS removes the service asynchronously; wait until it is really gone,
+        # otherwise creating it again reports "<SN> is already exist."
+        end_time = time.time() + 120
+        while time.time() < end_time:
+            filter_ont_service_by_sn(driver, candidate)
+            if total_data(driver, "provision_service_table") < 1:
+                break
+            time.sleep(3)
+        print(f"delete ONT service: after delete {candidate!r} remaining={total_data(driver, 'provision_service_table')}", flush=True)
+    return deleted
+
+
+def delete_ont_service_by_template_if_exists(driver, template_name):
+    filter_ont_service_by_template(driver, template_name)
+    if total_data(driver, "provision_service_table") < 1:
+        return False
+    _click(driver, By.XPATH, "//label[@for='myCheckbox_title_provision_service_table']")
+    _click(driver, By.CSS_SELECTOR, "#provision_service_delete > a")
+    _confirm_message(driver)
+    return True
+
+
+def filter_ont_service_by_sn(driver, sn):
+    navigate_to(driver, "Provision", "Service", "service_tab_ont")
+    _open_filter_panel(driver, "#provision_service_filter > a", "provision_service_filter_reset_btn")
+    _click(driver, By.ID, "provision_service_filter_reset_btn")
+    _click(driver, By.XPATH, "//label[@for='provision_filter_ont_sn_checkbox']")
+    _type(driver, By.ID, "provision_filter_ont_sn_text", sn)
+    _click(driver, By.ID, "provision_service_filter_query_btn")
+    _wait_for_table(driver, "provision_service_table")
+
+
+def filter_ont_service_by_template(driver, template_name):
+    navigate_to(driver, "Provision", "Service", "service_tab_ont")
+    _open_filter_panel(driver, "#provision_service_filter > a", "provision_service_filter_reset_btn")
+    _click(driver, By.ID, "provision_service_filter_reset_btn")
+    _click(driver, By.XPATH, "//label[@for='provision_filter_ont_template_checkbox']")
+    _type(driver, By.ID, "provision_filter_ont_template_text", template_name)
+    _click(driver, By.ID, "provision_service_filter_query_btn")
+    _wait_for_table(driver, "provision_service_table")
+
+
+def reset_ont_service_filter(driver):
+    navigate_to(driver, "Provision", "Service", "service_tab_ont")
+    _open_filter_panel(driver, "#provision_service_filter > a", "provision_service_filter_reset_btn")
+    _click(driver, By.ID, "provision_service_filter_reset_btn")
+    _wait_for_table(driver, "provision_service_table")
+    return total_data(driver, "provision_service_table")
+
+
+def filter_ont_service(driver, field, value):
+    filter_map = {
+        "Device Name": ("provision_filter_ont_devname_checkbox", "provision_filter_ont_devname_text"),
+        "Device IP": ("provision_filter_ont_ip_checkbox", "provision_filter_ont_ip_text"),
+        "SN": ("provision_filter_ont_sn_checkbox", "provision_filter_ont_sn_text"),
+        "Slot": ("provision_filter_ont_slot_checkbox", "provision_filter_ont_slot_text"),
+        "Port": ("provision_filter_ont_port_checkbox", "provision_filter_ont_port_text"),
+        "ONT": ("provision_filter_ont_ont_checkbox", "provision_filter_ont_ont_text"),
+        "ONT Description": ("provision_filter_ont_description_checkbox", "provision_filter_ont_description_text"),
+        "Template": ("provision_filter_ont_template_checkbox", "provision_filter_ont_template_text"),
+    }
+    navigate_to(driver, "Provision", "Service", "service_tab_ont")
+    _open_filter_panel(driver, "#provision_service_filter > a", "provision_service_filter_reset_btn")
+    _click(driver, By.ID, "provision_service_filter_reset_btn")
+    if field == "Status":
+        _click(driver, By.XPATH, "//label[@for='provision_filter_ont_status_checkbox']")
+        _select_filter_option(driver, "provision_filter_ont_status_select", value)
+    else:
+        checkbox_id, input_id = filter_map[field]
+        _click(driver, By.XPATH, f"//label[@for='{checkbox_id}']")
+        _type(driver, By.ID, input_id, value)
+    _click(driver, By.ID, "provision_service_filter_query_btn")
+    _wait_for_table(driver, "provision_service_table")
+    return table_rows_all_pages(driver, "provision_service_table")
+
+
+def create_ont_service_by_select_sn(driver, sn, dut_ip=None, password=None, description=None, template_name=None):
+    navigate_to(driver, "Provision", "Service", "service_tab_ont")
+    _click(driver, By.CSS_SELECTOR, "#provision_service_create > a")
+    _click(driver, By.XPATH, "//input[@value='Select ONT']")
+    search_select_ont_dialog(driver, sn, dut_ip, password)
+    _click(driver, By.CSS_SELECTOR, "#modal_select_ont .modal-footer > .button")
+    edit_new_ont_service_row(driver)
+    _ensure_checked(driver, By.XPATH, "//label[@for='provision_service_active_checkbox']")
+    if description:
+        _type(driver, By.ID, "provision_service_desc_text", description)
+    if template_name:
+        _select(driver, By.ID, "provision_service_onttemplate_combbox", template_name)
+    _click(driver, By.ID, "provision_save_service_btn")
+    _click_first_present(
+        driver,
+        [
+            (By.XPATH, "//*[@id='create_service_background']//input[@value='Save']"),
+            (By.XPATH, "//input[@value='Save']"),
+        ],
+        timeout=30,
+    )
+    _confirm_message(driver)
+
+
+def create_ont_service_by_manual_sn(driver, sn, password, description=None):
+    navigate_to(driver, "Provision", "Service", "service_tab_ont")
+    _click(driver, By.CSS_SELECTOR, "#provision_service_create > a")
+    _edit_create_service_cell(driver, 1, 2, sn)
+    _edit_create_service_cell(driver, 1, 3, password)
+    _close_service_profile_info_if_present(driver)
+    edit_new_ont_service_row_by_double_click(driver)
+    _ensure_checked(driver, By.XPATH, "//label[@for='provision_service_active_checkbox']")
+    if description:
+        _type(driver, By.ID, "provision_service_desc_text", description)
+    _click(driver, By.ID, "provision_save_service_btn")
+    _click_first_present(
+        driver,
+        [
+            (By.XPATH, "//*[@id='create_service_background']//input[@value='Save']"),
+            (By.XPATH, "//input[@value='Save']"),
+        ],
+        timeout=30,
+    )
+    message = _confirm_message(driver, require_success=True)
+
+    filter_ont_service_by_sn(driver, sn)
+    end_time = time.time() + 30
+    last_rows = []
+    while time.time() < end_time:
+        last_rows = table_rows(driver, "provision_service_table")
+        matched_rows = [
+            row for row in last_rows
+            if row.get("sn", "") in set(_sn_candidates(sn))
+            or sn in row.get("sn", "")
+        ]
+        if matched_rows:
+            return matched_rows[0]
+        _safe_click(driver, By.ID, "provision_service_refresh")
+        time.sleep(1)
+    raise AssertionError(
+        f"EMS reported ONT service creation success but the service row did not "
+        f"appear within 30 seconds. SN={sn}, message={message!r}, rows={last_rows}"
+    )
+
+
+def create_ont_service_with_qos_vlan_translation(driver, sn, dut_ip=None, password=None, qos_count=32, template_name=None):
+    navigate_to(driver, "Provision", "Service", "service_tab_ont")
+    _click(driver, By.CSS_SELECTOR, "#provision_service_create > a")
+    _click(driver, By.XPATH, "//input[@value='Select ONT']")
+    search_select_ont_dialog(driver, sn, dut_ip, password)
+    _click(driver, By.CSS_SELECTOR, "#modal_select_ont .modal-footer > .button")
+    edit_new_ont_service_row(driver)
+    _ensure_checked(driver, By.XPATH, "//label[@for='provision_service_active_checkbox']")
+    if template_name:
+        _select(driver, By.ID, "provision_service_onttemplate_combbox", template_name)
+    add_service_qos_vlan_translation_rows(driver, qos_count)
+    _click(driver, By.ID, "provision_save_service_btn")
+    _click_first_present(
+        driver,
+        [
+            (By.XPATH, "//*[@id='create_service_background']//input[@value='Save']"),
+            (By.XPATH, "//input[@value='Save']"),
+        ],
+        timeout=30,
+    )
+    _confirm_message(driver)
+
+
+def add_service_qos_vlan_translation_rows(driver, qos_count=32):
+    for index in range(1, qos_count + 1):
+        _click(driver, By.ID, "provision_service_profile_qos_table_new")
+        _select(driver, By.ID, "provision_service_qos_tcont_combbox", f"service{index}")
+        _type(driver, By.ID, "provision_service_qos_vlan_text", str(200 + index))
+        _type(driver, By.ID, "provision_service_qos_svlan_text", str(300 + index))
+        _type(driver, By.ID, "provision_service_qos_cvlan_text", str(400 + index))
+        _click_until_hidden(driver, (By.CSS_SELECTOR, "#modal_provision_service_qos .button"), (By.ID, "modal_provision_service_qos"))
+
+
+def wait_ont_service_success(driver, sn, timeout=300):
+    end_time = time.time() + timeout
+    last_state = ""
+    filter_ont_service_by_sn(driver, sn)
+    while time.time() < end_time:
+        rows = table_rows(driver, "provision_service_table")
+        if not rows:
+            rows = _filter_ont_service_by_sn_candidates(driver, sn)
+        if len(rows) == 1:
+            status = rows[0].get("state", "")
+            last_state = f"state={status}, row={rows[0]}"
+            if status == "Success":
+                return rows[0]
+        else:
+            last_state = f"rows={rows}"
+        _safe_click(driver, By.ID, "provision_service_refresh")
+        time.sleep(3)
+    raise TimeoutError(f"ONT service did not become Success before timeout. SN={sn}, last_state={last_state}")
+
+
+def wait_ont_service_status(driver, sn, expected_status, timeout=300):
+    end_time = time.time() + timeout
+    last_state = ""
+    filter_ont_service_by_sn(driver, sn)
+    while time.time() < end_time:
+        rows = table_rows(driver, "provision_service_table")
+        if not rows:
+            rows = _filter_ont_service_by_sn_candidates(driver, sn)
+        if len(rows) == 1:
+            status = rows[0].get("state", "")
+            last_state = f"state={status}, row={rows[0]}"
+            if status == expected_status:
+                return rows[0]
+        else:
+            last_state = f"rows={rows}"
+        _safe_click(driver, By.ID, "provision_service_refresh")
+        time.sleep(3)
+    raise TimeoutError(
+        f"ONT service did not become {expected_status} before timeout. SN={sn}, last_state={last_state}"
+    )
+
+
+def assert_ont_service_wait_for_duration(driver, sn, duration=180):
+    end_time = time.time() + duration
+    last_state = ""
+    filter_ont_service_by_sn(driver, sn)
+    while time.time() < end_time:
+        rows = table_rows(driver, "provision_service_table")
+        if not rows:
+            rows = _filter_ont_service_by_sn_candidates(driver, sn)
+        if len(rows) != 1:
+            raise AssertionError(f"Expected one ONT service row while waiting. rows={rows}")
+        status = rows[0].get("state", "")
+        last_state = f"state={status}, row={rows[0]}"
+        if status != "Wait":
+            raise AssertionError(f"ONT service should stay Wait for {duration}s. {last_state}")
+        _safe_click(driver, By.ID, "provision_service_refresh")
+        time.sleep(5)
+    return last_state
+
+
+def get_ont_service_success_detail(driver, sn):
+    row = wait_ont_service_success(driver, sn)
+    state_cell = _service_cell_by_row_and_name(driver, 1, "state")
+    state_cell.click()
+    # The field exists in the DOM all the time; wait until the dialog is really shown
+    WebDriverWait(driver, 30).until(EC.visibility_of_element_located((By.ID, "provision_service_result_slot")))
+    time.sleep(1)
+    detail = dict(row)
+    detail.update(
+        {
+            "DevName": _value_if_present(driver, "provision_service_result_devName") or row.get("DevName", ""),
+            "IPAddress": _value_if_present(driver, "provision_service_result_ip") or row.get("IPAddress", ""),
+            "Slot": _value_if_present(driver, "provision_service_result_slot") or row.get("Slot", ""),
+            "Port": _value_if_present(driver, "provision_service_result_port") or row.get("Port", ""),
+            "ONT": _value_if_present(driver, "provision_service_result_ont") or row.get("ONT", ""),
+            "sn": _value_if_present(driver, "provision_service_result_sn") or row.get("sn", ""),
+            "password": _value_if_present(driver, "provision_service_result_password") or row.get("password", ""),
+            "ontTemplate": _value_if_present(driver, "provision_service_result_template") or row.get("ontTemplate", ""),
+            "state": _value_if_present(driver, "provision_service_result_status") or row.get("state", ""),
+        }
+    )
+    # Close the "Service Result Detail" dialog with its own close button
+    close_button_locator = (By.ID, "alarm_detail_close_btn")
+    _click_until_hidden(driver, close_button_locator, (By.ID, "provision_service_result_slot"))
+    modal_locator = (By.ID, "provision_service_result_modal")
+    close_locators = [
+        (By.XPATH, "//*[@id='provision_service_result_modal']//*[self::button or self::input][normalize-space()='Close' or @value='Close']"),
+        (By.CSS_SELECTOR, "#provision_service_result_modal [data-dismiss='modal']"),
+        (By.CSS_SELECTOR, "#provision_service_result_modal .close"),
+        (By.CSS_SELECTOR, "#provision_service_result_modal .button"),
+    ]
+
+    for _ in range(3):
+        if EC.invisibility_of_element_located(modal_locator)(driver):
+            break
+        for by, value in close_locators:
+            visible_elements = [
+                element
+                for element in driver.find_elements(by, value)
+                if element.is_displayed() and element.is_enabled()
+            ]
+            for element in visible_elements:
+                try:
+                    driver.execute_script("arguments[0].scrollIntoView({block: 'center'});", element)
+                    element.click()
+                except (ElementClickInterceptedException, StaleElementReferenceException):
+                    try:
+                        driver.execute_script("arguments[0].click();", element)
+                    except StaleElementReferenceException:
+                        continue
+                try:
+                    WebDriverWait(driver, 5).until(
+                        EC.invisibility_of_element_located(modal_locator)
+                    )
+                    break
+                except TimeoutException:
+                    continue
+            if EC.invisibility_of_element_located(modal_locator)(driver):
+                break
+        if not EC.invisibility_of_element_located(modal_locator)(driver):
+            ActionChains(driver).send_keys(Keys.ESCAPE).perform()
+            time.sleep(1)
+
+    assert EC.invisibility_of_element_located(modal_locator)(driver), (
+        "#provision_service_result_modal remained visible after Close retries"
+    )
+    return detail
+
+
+def inventory_ont_aid(driver, sn, timeout=300):
+    row = wait_inventory_ont_id(driver, sn, lambda ont_id: ont_id != "Unregistered", timeout)
+    return {
+        "Slot": row.get("Slot", ""),
+        "Port": row.get("Port", ""),
+        "ONT": row.get("ONT", ""),
+        "aid": f"{row.get('Slot', '')}-{row.get('Port', '')}-{row.get('ONT', '')}",
+    }
+
+
+def edit_ont_service_description(driver, sn, description):
+    rows = _filter_ont_service_by_sn_candidates(driver, sn)
+    if len(rows) != 1:
+        raise AssertionError(f"Expected one ONT service row to edit. SN={sn}, rows={rows}")
+    _service_cell_by_row_and_name(driver, 1, "Modify").click()
+    WebDriverWait(driver, 30).until(EC.presence_of_element_located((By.ID, "provision_service_desc_text")))
+    _type(driver, By.ID, "provision_service_desc_text", description)
+    _click(driver, By.ID, "provision_save_service_btn")
+    _confirm_message(driver)
+    _close_service_profile_info_if_present(driver)
+
+
+def _filter_ont_service_by_sn_candidates(driver, sn):
+    last_rows = []
+    for candidate in _sn_candidates(sn):
+        filter_ont_service_by_sn(driver, candidate)
+        rows = table_rows(driver, "provision_service_table")
+        matched_rows = [
+            row for row in rows
+            if row.get("sn", "") in set(_sn_candidates(sn)) or candidate in row.get("sn", "")
+        ]
+        if matched_rows:
+            return matched_rows
+        last_rows = rows
+    return last_rows
+
+
+def _call_inventory_predicate(predicate, ont_id, row):
+    try:
+        return predicate(ont_id, row)
+    except TypeError:
+        return predicate(ont_id)
+
+
+def _sn_candidates(sn):
+    candidates = [sn]
+    if sn and len(sn) > 12:
+        candidates.append(sn[-12:])
+    return list(dict.fromkeys(candidates))
+
+
+def search_select_ont_dialog(driver, sn, dut_ip=None, password=None):
+    _click(driver, By.XPATH, "//label[@for='provision_select_ont_sn_checkbox']")
+    for candidate_sn in [sn, sn[-12:]]:
+        _type(driver, By.ID, "provision_select_ont_sn_text", candidate_sn)
+        if _search_and_select_ont(driver, sn, password):
+            return
+
+    if dut_ip:
+        _click(driver, By.XPATH, "//label[@for='provision_select_ont_ip_checkbox']")
+        _type(driver, By.ID, "provision_select_ont_ip_text", dut_ip)
+        if _search_and_select_ont(driver, sn, password):
+            return
+
+    select_ont_from_select_dialog(driver, sn, password, raise_on_missing=True)
+
+
+def _search_and_select_ont(driver, sn, password=None, timeout=180):
+    end_time = time.time() + timeout
+    while time.time() < end_time:
+        _click_select_ont_search(driver)
+        time.sleep(5)
+        if select_ont_from_select_dialog(driver, sn, password, raise_on_missing=False):
+            return True
+    return False
+
+
+def _click_select_ont_search(driver):
+    search_locators = [
+        (By.ID, "provision_select_ont_search_btn"),
+        (By.ID, "provision_select_ont_search_ont_btn"),
+        (By.ID, "provision_select_ont_search_registered_ont_btn"),
+        (By.XPATH, "//div[@id='modal_select_ont']//input[@value='Search']"),
+        (By.XPATH, "//div[@id='modal_select_ont']//input[@value='Search ONT']"),
+        (By.XPATH, "//div[@id='modal_select_ont']//button[normalize-space()='Search']"),
+        (By.XPATH, "//div[@id='modal_select_ont']//a[normalize-space()='Search']"),
+    ]
+    for by, value in search_locators:
+        try:
+            _click(driver, by, value)
+            return
+        except TimeoutException:
+            continue
+    raise NoSuchElementException("Cannot find Select ONT Search button")
+
+
+def _service_cell_by_row_and_name(driver, row_index, column_name):
+    headers = _table_headers(driver, "provision_service_table")
+    column_index = headers.index(column_name) + 1
+    return WebDriverWait(driver, 30).until(
+        EC.element_to_be_clickable(
+            (By.XPATH, f"//table[@id='provision_service_table_body']/tbody/tr[{row_index}]/td[{column_index}]")
+        )
+    )
+
+
+def select_ont_from_select_dialog(driver, sn, password=None, raise_on_missing=True):
+    table_id = "provision_select_ont_table"
+    WebDriverWait(driver, 30).until(EC.presence_of_element_located((By.ID, table_id)))
+    rows = driver.find_elements(By.XPATH, f"//div[@id='{table_id}']/div")
+    header = rows[0].find_elements(By.XPATH, "./div")
+    sn_col = _div_col_index(header, "SN")
+    password_col = _div_col_index(header, "Password") if password else None
+    seen_rows = []
+    for index, row in enumerate(rows[1:], start=1):
+        cols = row.find_elements(By.XPATH, "./div")
+        values = [col.text.strip() for col in cols]
+        seen_rows.append(values)
+        sn_matched = len(cols) >= sn_col and cols[sn_col - 1].text.strip() in {sn, sn[-12:]}
+        password_matched = password_col is None or (
+            len(cols) >= password_col and cols[password_col - 1].text.strip() == password
+        )
+        if sn_matched and password_matched:
+            _click(driver, By.XPATH, f"//label[@for='provision_select_ont_table_checkbox{index}']")
+            return True
+    if raise_on_missing:
+        raise NoSuchElementException(f"Cannot find ONT SN in Select ONT dialog: {sn}; rows={seen_rows}")
+    return False
+
+
+def edit_new_ont_service_row(driver):
+    cell = WebDriverWait(driver, 30).until(
+        EC.element_to_be_clickable((By.XPATH, "//td[contains(., '{}')]"))
+    )
+    cell.click()
+    time.sleep(2)
+    highlighted = WebDriverWait(driver, 30).until(
+        EC.element_to_be_clickable((By.CSS_SELECTOR, ".highlight-selected"))
+    )
+    highlighted.click()
+    time.sleep(2)
+    highlighted.click()
+    WebDriverWait(driver, 30).until(
+        EC.presence_of_element_located((By.ID, "provision_service_active_checkbox"))
+    )
+
+
+def edit_new_ont_service_row_by_double_click(driver):
+    cell = WebDriverWait(driver, 30).until(
+        EC.element_to_be_clickable((By.XPATH, "//td[contains(., '{}')]"))
+    )
+    ActionChains(driver).double_click(cell).perform()
+    WebDriverWait(driver, 30).until(
+        EC.presence_of_element_located((By.ID, "provision_service_active_checkbox"))
+    )
+
+
+def _edit_create_service_cell(driver, row_index, column_index, value):
+    cell = WebDriverWait(driver, 30).until(
+        EC.element_to_be_clickable(
+            (By.XPATH, f"//*[@id='EditTable']/div[2]/table/tbody/tr[{row_index}]/td[{column_index}]")
+        )
+    )
+    ActionChains(driver).double_click(cell).send_keys(str(value)).perform()
+    time.sleep(1)
+
+
+def _close_service_profile_info_if_present(driver):
+    modal_locator = (By.ID, "modal_service_profile_info")
+    visible_modals = [
+        modal for modal in driver.find_elements(*modal_locator)
+        if modal.is_displayed()
+    ]
+    if not visible_modals:
+        return
+
+    close_locators = [
+        (By.CSS_SELECTOR, "#modal_service_profile_info button.close"),
+        (By.CSS_SELECTOR, "#modal_service_profile_info .modal-header [data-dismiss='modal']"),
+        (By.XPATH, "//*[@id='modal_service_profile_info']//button/span/.."),
+        (By.CSS_SELECTOR, "#modal_service_profile_info .modal-footer [data-dismiss='modal']"),
+        (By.CSS_SELECTOR, "#modal_service_profile_info .modal-footer .button"),
+    ]
+    clicked = _click_first_present(driver, close_locators, timeout=5)
+    if not clicked:
+        raise TimeoutException("Cannot find the Close button for ONT Service Profile dialog.")
+
+    try:
+        WebDriverWait(driver, 15, poll_frequency=0.2).until(
+            EC.invisibility_of_element_located(modal_locator)
+        )
+        WebDriverWait(driver, 15, poll_frequency=0.2).until(
+            lambda d: not any(
+                backdrop.is_displayed()
+                for backdrop in d.find_elements(By.CSS_SELECTOR, ".modal-backdrop")
+            )
+        )
+    except TimeoutException as error:
+        raise TimeoutException(
+            "ONT Service Profile dialog or its backdrop did not disappear after Close."
+        ) from error
+
+
+def table_rows(driver, table_id):
+    _wait_for_table(driver, table_id)
+    headers = _table_headers(driver, table_id)
+    rows = []
+    for tr in driver.find_elements(By.XPATH, f"//table[@id='{table_id}_body']/tbody/tr"):
+        cells = tr.find_elements(By.XPATH, "./td")
+        if not cells:
+            continue
+        rows.append({headers[index]: cell.text.strip() for index, cell in enumerate(cells[: len(headers)])})
+    return rows
+
+
+def table_rows_all_pages(driver, table_id):
+    _go_first_page_by_prev(driver, table_id)
+    page_total = page_count(driver, table_id)
+    rows = []
+    for page_index in range(1, page_total + 1):
+        rows.extend(table_rows(driver, table_id))
+        if page_index < page_total:
+            _go_next_page(driver, table_id, page_index + 1)
+    return rows
+
+
+def table_column_values_all_pages(driver, table_id, column_name):
+    _go_first_page_by_prev(driver, table_id)
+    page_total = page_count(driver, table_id)
+    values = []
+    for page_index in range(1, page_total + 1):
+        values.extend([row.get(column_name, "") for row in table_rows(driver, table_id)])
+        if page_index < page_total:
+            _go_next_page(driver, table_id, page_index + 1)
+    _go_first_page_by_prev(driver, table_id)
+    return values
+
+
+def column_value_group_order(driver, table_id, column_name):
+    # Distinct values of a column in the order they appear over all pages
+    order = []
+    for value in table_column_values_all_pages(driver, table_id, column_name):
+        value = _normalize_sort_text(value)
+        if not order or order[-1] != value:
+            order.append(value)
+    return order
+
+
+def assert_column_sorted_each_page(driver, table_id, column_name, descending=False, context="", page_scope="all", **sort_rule):
+    # sort_rule: text_case="insensitive"|"sensitive", numeric_natural=bool, empty_first=bool
+    # (defaults keep the original behaviour; see _first_sort_violation_index)
+    # page_scope: "all" = every page (original), "first_last" = first and last page,
+    #             "first" = first page only (use assert_sort_direction_extremes for the whole table)
+    failures = _sorted_failures_each_page(driver, table_id, column_name, descending, context, page_scope=page_scope, **sort_rule)
+    assert not failures, failures[0]
+
+
+def click_table_sort_until(driver, table_id, column_index, column_name, descending=False, context="", max_clicks=2, page_scope="all", **sort_rule):
+    last_failures = []
+    for _ in range(max_clicks):
+        _go_first_page_by_prev(driver, table_id)
+        click_table_sort(driver, table_id, column_index)
+        last_failures = _sorted_failures_each_page(driver, table_id, column_name, descending, context, page_scope=page_scope, **sort_rule)
+        if not last_failures:
+            return
+    assert not last_failures, last_failures[0]
+
+
+def _sorted_failures_each_page(driver, table_id, column_name, descending=False, context="", page_scope="all", **sort_rule):
+    if page_scope in ("first", "first_last"):
+        return _sorted_failures_first_last_page(driver, table_id, column_name, descending, context,
+                                                last_page=(page_scope == "first_last"), **sort_rule)
+    _go_first_page_by_prev(driver, table_id)
+    page_total = page_count(driver, table_id)
+    failures = []
+    for page_index in range(1, page_total + 1):
+        _wait_current_page_table_ready(driver, table_id)
+        values = [row.get(column_name, "") for row in table_rows(driver, table_id)]
+        try:
+            assert_values_sorted(
+                values,
+                descending=descending,
+                context=f"{context}/page {page_index} of {page_total}",
+                column_name=column_name,
+                driver=driver,
+                **sort_rule,
+            )
+        except AssertionError as exc:
+            failures.append(str(exc))
+        if page_index < page_total:
+            _go_next_page(driver, table_id, page_index + 1)
+    _go_first_page_by_prev(driver, table_id)
+    return failures
+
+
+def _column_values_pages(driver, table_id, column_name):
+    _go_first_page_by_prev(driver, table_id)
+    page_total = page_count(driver, table_id)
+    pages = []
+    for page_index in range(1, page_total + 1):
+        pages.append([row.get(column_name, "") for row in table_rows(driver, table_id)])
+        if page_index < page_total:
+            _go_next_page(driver, table_id, page_index + 1)
+    _go_first_page_by_prev(driver, table_id)
+    return pages
+
+
+def _sorted_failures_for_pages(pages, descending=False, context="", column_name=None):
+    failures = []
+    page_total = len(pages)
+    for page_index, values in enumerate(pages, start=1):
+        try:
+            assert_values_sorted(
+                values,
+                descending=descending,
+                context=f"{context}/page {page_index} of {page_total}",
+                column_name=column_name,
+            )
+        except AssertionError as exc:
+            failures.append(str(exc))
+    return failures
+
+
+def sortable_table_columns(driver, table_id):
+    columns = []
+    for index, th in enumerate(driver.find_elements(By.XPATH, f"//table[@id='{table_id}_head']/thead/tr/th"), start=1):
+        name = (th.get_attribute("name") or th.text or "").strip()
+        label = (th.text or name).strip()
+        if not name:
+            continue
+        if "display: none" in (th.get_attribute("style") or "").lower():
+            continue
+        if name.lower() in {"checkbox", "select", "action", "operation"}:
+            continue
+        _scroll_once_into_view(th)
+        if not th.is_displayed():
+            continue
+        columns.append({"index": index, "name": name, "label": label})
+    return columns
+
+
+def click_table_sort_direction(driver, table_id, column_index, column_name, descending=False):
+    expected_type_after_click = "hide" if descending else "extend"
+    max_clicks = 4
+    for _ in range(max_clicks):
+        click_table_sort(driver, table_id, column_index, column_name)
+        sort_icon = _visible_sort_icon(driver, table_id, column_index, column_name)
+        current_type = (sort_icon.get_attribute("date-type") or sort_icon.get_attribute("data-type") or "").strip()
+        if current_type == expected_type_after_click:
+            return
+    raise AssertionError(
+        f"Cannot set sort direction for {table_id}/{column_name}. "
+        f"Need date-type={expected_type_after_click} after click."
+    )
+
+
+def click_table_sort(driver, table_id, column_index, column_name=None):
+    header_cell = _visible_header_cell(driver, table_id, column_index)
+    _scroll_once_into_view(header_cell)
+    before_state = _table_state(driver, table_id)
+    sort_icon = _visible_sort_icon(driver, table_id, column_index, column_name)
+    before_type = sort_icon.get_attribute("date-type") or sort_icon.get_attribute("data-type") or ""
+    ActionChains(driver).move_to_element(header_cell).pause(0.2).click(header_cell).perform()
+    _wait_sort_click_effect(driver, table_id, column_index, column_name, before_state, before_type)
+
+
+def _visible_header_cell(driver, table_id, column_index):
+    header_xpath = f"//*[@id='{table_id}_head']/thead/tr/th[{column_index}]"
+    header_cell = WebDriverWait(driver, 30).until(EC.presence_of_element_located((By.XPATH, header_xpath)))
+    _scroll_once_into_view(header_cell)
+
+    def visible_header(_):
+        size = header_cell.size or {}
+        return header_cell if header_cell.is_displayed() and size.get("width", 0) > 0 and size.get("height", 0) > 0 else False
+
+    return WebDriverWait(driver, 30).until(visible_header)
+
+
+def _scroll_once_into_view(element):
+    _ = element.location_once_scrolled_into_view
+    time.sleep(0.3)
+
+
+def _visible_sort_icon(driver, table_id, column_index, column_name=None):
+    icon_xpaths = []
+    if column_name:
+        icon_xpaths.append(f"//*[@id='{table_id}_head']/thead/tr/th[{column_index}]/img[@date-value='{column_name}']")
+        icon_xpaths.append(f"//*[@id='{table_id}_head']/thead/tr/th[{column_index}]/img[@data-value='{column_name}']")
+    icon_xpaths.append(f"//*[@id='{table_id}_head']/thead/tr/th[{column_index}]/img")
+
+    def visible_icon(_):
+        for xpath in icon_xpaths:
+            for icon in driver.find_elements(By.XPATH, xpath):
+                size = icon.size or {}
+                if icon.is_displayed() and size.get("width", 0) > 0 and size.get("height", 0) > 0:
+                    return icon
+        return False
+
+    return WebDriverWait(driver, 30).until(visible_icon)
+
+
+def _wait_sort_click_effect(driver, table_id, column_index, column_name, before_state, before_type):
+    def sort_changed(_):
+        try:
+            icon = _visible_sort_icon(driver, table_id, column_index, column_name)
+            current_type = icon.get_attribute("date-type") or icon.get_attribute("data-type") or ""
+            return current_type != before_type or _table_state(driver, table_id) != before_state
+        except (NoSuchElementException, TimeoutException):
+            return False
+
+    try:
+        WebDriverWait(driver, 10).until(sort_changed)
+    except TimeoutException:
+        time.sleep(2)
+
+
+def _sorted_failures_first_last_page(driver, table_id, column_name, descending=False, context="", last_page=True, **sort_rule):
+    # Check only the first and the last page: large tables keep changing while hundreds of
+    # pages are read, and reading every page takes too long.
+    _go_to_page(driver, table_id, 1)
+    _wait_current_page_table_ready(driver, table_id)
+    page_total = page_count(driver, table_id)
+    failures = []
+    for page_index in ([1, page_total] if (last_page and page_total > 1) else [1]):
+        _go_to_page(driver, table_id, page_index)
+        values = [row.get(column_name, "") for row in table_rows(driver, table_id)]
+        try:
+            assert_values_sorted(
+                values,
+                descending=descending,
+                context=f"{context}/page {page_index} of {page_total}",
+                column_name=column_name,
+                driver=driver,
+                **sort_rule,
+            )
+        except AssertionError as exc:
+            failures.append(str(exc))
+    _go_to_page(driver, table_id, 1)
+    return failures
+
+
+def first_page_column_values(driver, table_id, column_name):
+    _go_to_page(driver, table_id, 1)
+    _wait_current_page_table_ready(driver, table_id)
+    return [row.get(column_name, "") for row in table_rows(driver, table_id)]
+
+
+def assert_sort_direction_extremes(ascending_values, descending_values, column_name=None, context="", **sort_rule):
+    # Whole-table sort check that only needs the first page of each direction:
+    # the first ascending value is the minimum of the table, so it must not be greater than
+    # any value on the first descending page, and the first descending value (the maximum)
+    # must not be smaller than any value on the first ascending page.  Rows added while the
+    # test runs only affect the last pages, so this stays reliable on large, changing tables.
+    if not ascending_values or not descending_values:
+        return
+    if sort_rule.get("grouped_only"):
+        # Grouped columns only promise that equal values stay together.  The first group of the
+        # ascending order is the last group of the descending order, so the descending page may
+        # start with the same value only when the column has a single value.
+        groups = {_normalize_sort_text(v) for v in ascending_values + descending_values}
+        if len(groups) > 1 and _normalize_sort_text(ascending_values[0]) == _normalize_sort_text(descending_values[0]):
+            raise AssertionError(
+                f"{context}: ascending and descending both start with {ascending_values[0]!r}; "
+                f"ascending page={ascending_values}, descending page={descending_values}"
+            )
+        return
+    rule = {k: v for k, v in sort_rule.items() if k != "grouped_only"}
+    minimum, maximum = ascending_values[0], descending_values[0]
+    for value in descending_values:
+        if _first_sort_violation_index([minimum, value], column_name, False, None, **rule) is not None:
+            raise AssertionError(
+                f"{context}: first ascending value {minimum!r} is greater than {value!r} on the first descending page; "
+                f"ascending page={ascending_values}, descending page={descending_values}"
+            )
+    for value in ascending_values:
+        if _first_sort_violation_index([maximum, value], column_name, True, None, **rule) is not None:
+            raise AssertionError(
+                f"{context}: first descending value {maximum!r} is smaller than {value!r} on the first ascending page; "
+                f"ascending page={ascending_values}, descending page={descending_values}"
+            )
+
+
+def assert_values_sorted(values, descending=False, context="", column_name=None, driver=None, **sort_rule):
+    bad_index = _first_sort_violation_index(values, column_name, descending, driver, **sort_rule)
+    if bad_index is not None:
+        raise AssertionError(
+            f"{context} values are not sorted. descending={descending}, "
+            f"first bad pair row {bad_index + 1}->{bad_index + 2}: "
+            f"{values[bad_index]!r} then {values[bad_index + 1]!r}; values={values}"
+        )
+
+
+def _first_sort_violation_index(values, column_name=None, descending=False, driver=None,
+                                text_case="insensitive", numeric_natural=False, empty_first=False,
+                                empty_values=(), empty_always_first=False, _empty_on_top=None,
+                                grouped_only=False):
+    if grouped_only:
+        seen = set()
+        for index in range(len(values) - 1):
+            current = _normalize_sort_text(values[index])
+            following = _normalize_sort_text(values[index + 1])
+            seen.add(current)
+            if following != current and following in seen:
+                return index
+        return None
+    if descending and empty_always_first and _empty_on_top is None:
+        rule = dict(text_case=text_case, numeric_natural=numeric_natural, empty_first=empty_first,
+                    empty_values=empty_values, empty_always_first=True)
+        on_top = _first_sort_violation_index(values, column_name, descending, driver, _empty_on_top=True, **rule)
+        if on_top is None:
+            return None
+        return _first_sort_violation_index(values, column_name, descending, driver, _empty_on_top=False, **rule)
+    # Different EMS tables sort differently, so each case chooses its rule:
+    #   text_case       "insensitive": compare lower-cased text (original behaviour)
+    #                   "sensitive"  : compare text as-is (upper case before lower case)
+    #   numeric_natural True: a column whose values are all numbers is compared by value (9 < 10)
+    #   empty_first     True: empty values ("--" / blank) are the smallest value
+    #   empty_values    extra values that mean "empty" for this column (e.g. Slot "0" = no slot)
+    #   empty_always_first True: in descending order empty values may also stay on top
+    #                   (either on top or at the bottom is accepted)
+    #   grouped_only    True: only check that equal values are next to each other (columns
+    #                   EMS sorts by an internal code, e.g. Enable/Disable); compare the
+    #                   ascending/descending group order with column_value_group_order()
+    if column_name in {"IPAddress", "DevType", "DevAlarmStatus"}:
+        keys = [_sort_key(value, column_name=column_name) for value in values]
+    else:
+        empties = {"--", *(str(value) for value in empty_values)}
+        normalized = [_normalize_sort_text(value) for value in values]
+        filled = [value for value in normalized if value not in empties]
+        all_numeric = numeric_natural and filled and all(re.fullmatch(r"-?\d+(\.\d+)?", value) for value in filled)
+
+        def key(value):
+            text = _normalize_sort_text(value)
+            if empty_first and text in empties:
+                # _empty_on_top in descending order: empty is the largest key so it comes first
+                return (2, 0, "") if (descending and _empty_on_top) else (0, 0, "")
+            if all_numeric and text not in empties:
+                return (1, float(text), "")
+            if text_case == "sensitive":
+                return (1, 0, text)
+            return (1, 0, _ems_text_sort_key(text))
+
+        keys = [key(value) for value in values]
+
+    for index in range(len(keys) - 1):
+        current_key = keys[index]
+        next_key = keys[index + 1]
+        if (not descending and current_key > next_key) or (descending and current_key < next_key):
+            return index
+    return None
+
+
+def page_count(driver, table_id):
+    try:
+        page_input = driver.find_element(By.CSS_SELECTOR, f"#{table_id} .pagination > input")
+    except NoSuchElementException:
+        return 1
+    match = re.search(r"Page\s+\d+\s+of\s+(\d+)", page_input.get_attribute("value") or "")
+    return int(match.group(1)) if match else 1
+
+
+def page_current(driver, table_id):
+    try:
+        page_input = driver.find_element(By.CSS_SELECTOR, f"#{table_id} .pagination > input")
+    except NoSuchElementException:
+        return 1
+    match = re.search(r"Page\s+(\d+)\s+of\s+\d+", page_input.get_attribute("value") or "")
+    return int(match.group(1)) if match else 1
+
+
+def total_data(driver, table_id):
+    try:
+        text = driver.find_element(By.ID, f"table_total_data_{table_id}").text
+    except NoSuchElementException:
+        return len(table_rows(driver, table_id))
+    match = re.search(r"(\d+)", text)
+    return int(match.group(1)) if match else 0
+
+
+def _table_headers(driver, table_id):
+    headers = []
+    for th in driver.find_elements(By.XPATH, f"//table[@id='{table_id}_head']/thead/tr/th"):
+        headers.append(th.get_attribute("name") or th.text.strip())
+    return headers
+
+
+def _sort_key(value, column_name=None):
+    if column_name == "IPAddress":
+        return _ip_sort_key(value)
+    if column_name == "DevType":
+        return _device_type_sort_key(value)
+    if column_name == "DevAlarmStatus":
+        return _alarm_status_sort_key(value)
+    return _normalize_sort_text(value)
+
+
+DEVICE_TYPE_SORT_ORDER = {
+    "unknown": 0,
+    "IES6000": 8,
+    "IES5206": 12,
+    "IES4204": 19,
+    "IES5212": 22,
+    "IES6217": 23,
+    "OLT1404": 25,
+    "OLT1408": 27,
+    "OLT1408A-C": 28,
+    "OLT1404B-IA": 31,
+    "OLT1408B-IA": 32,
+    "NeoX-06": 33,
+    "NeoX-03": 34,
+}
+
+
+def _device_type_sort_key(value):
+    text = _normalize_sort_text(value)
+    return (DEVICE_TYPE_SORT_ORDER.get(text, 999), text)
+
+
+ALARM_STATUS_SORT_ORDER = {
+    "None": 0,
+    "Critical": 1,
+    "Major": 2,
+    "Minor": 3,
+    "Info": 4,
+}
+
+
+def _alarm_status_sort_key(value):
+    text = _normalize_sort_text(value)
+    return (ALARM_STATUS_SORT_ORDER.get(text, 999), text)
+
+
+def _ip_sort_key(value):
+    text = _normalize_sort_text(value)
+    parts = text.split(".")
+    if len(parts) == 4 and all(part.isdigit() for part in parts):
+        return tuple(int(part) for part in parts)
+    return (999, 999, 999, 999, text)
+
+
+def _normalize_sort_text(value):
+    text = " ".join(str(value or "").split())
+    return text if text else "--"
+
+
+def _ems_text_sort_key(value):
+    text = _normalize_sort_text(value)
+    return text.lower().replace("_", "{")
+
+def _div_col_index(header_cells, title):
+    for index, cell in enumerate(header_cells, start=1):
+        if cell.text.strip() == title:
+            return index
+    raise NoSuchElementException(f"Cannot find column title: {title}")
+
+
+_LOADING_OVERLAY_JS = """
+return Array.from(document.querySelectorAll("[id^='loadind'], [id^='configure_loader']")).some(function (e) {
+    var s = window.getComputedStyle(e);
+    return s.display !== 'none' && s.visibility !== 'hidden' && e.getClientRects().length > 0;
+});
+"""
+
+_RETRY_EXCEPTIONS = (
+    NoSuchElementException,
+    ElementClickInterceptedException,
+    ElementNotInteractableException,
+    StaleElementReferenceException,
+)
+
+
+def _is_loading(driver):
+    try:
+        return bool(driver.execute_script(_LOADING_OVERLAY_JS))
+    except Exception:
+        return False
+
+
+def _wait_idle(driver, timeout=120):
+    try:
+        WebDriverWait(driver, timeout, poll_frequency=0.5).until(lambda _: not _is_loading(driver))
+    except TimeoutException:
+        pass
+
+
+def _first_usable(driver, by, value):
+    # Same ids exist on several (hidden) pages; use the first visible one.
+    for element in driver.find_elements(by, value):
+        try:
+            if element.is_displayed() and element.is_enabled():
+                return element
+        except StaleElementReferenceException:
+            continue
+    return None
+
+
+def _click_menu_if_inactive(driver, by, value, timeout=60):
+    def open_when_ready(_):
+        if _is_loading(driver):
+            return False
+        element = _first_usable(driver, by, value)
+        if element is None:
+            return False
+        if element.get_attribute("className") == "":
+            element.click()
+            return "clicked"
+        return "active"
+
+    result = WebDriverWait(driver, timeout, poll_frequency=0.5, ignored_exceptions=_RETRY_EXCEPTIONS).until(open_when_ready)
+    if result == "clicked":
+        time.sleep(1)
+        _wait_idle(driver)
+
+
+def _type(driver, by, value, text, timeout=60):
+    def type_when_ready(_):
+        if _is_loading(driver):
+            return False
+        element = _first_usable(driver, by, value)
+        if element is None:
+            return False
+        element.send_keys(Keys.CONTROL + "a")
+        element.send_keys(Keys.DELETE)
+        element.send_keys(text)
+        return True
+
+    WebDriverWait(driver, timeout, poll_frequency=0.5, ignored_exceptions=_RETRY_EXCEPTIONS).until(type_when_ready)
+
+
+def _click(driver, by, value, timeout=60):
+    def click_when_ready(_):
+        if _is_loading(driver):
+            return False
+        element = _first_usable(driver, by, value)
+        if element is None:
+            return False
+        driver.execute_script("arguments[0].scrollIntoView({block: 'center'});", element)
+        element.click()
+        return True
+
+    try:
+        WebDriverWait(driver, timeout, poll_frequency=0.5, ignored_exceptions=_RETRY_EXCEPTIONS).until(click_when_ready)
+    except TimeoutException:
+        # Still covered (e.g. by a leftover backdrop): fall back to a JS click on the visible element
+        element = _first_usable(driver, by, value)
+        if element is None:
+            raise
+        print(f"ems_tables: normal click kept failing, use JS click: {by}={value}", flush=True)
+        driver.execute_script("arguments[0].click();", element)
+    time.sleep(1)
+
+
+def _select(driver, by, value, text, timeout=60):
+    def select_when_ready(_):
+        if _is_loading(driver):
+            return False
+        element = _first_usable(driver, by, value)
+        if element is None:
+            return False
+        Select(element).select_by_visible_text(text)
+        selected = driver.execute_script(
+            "var s = arguments[0]; return s.selectedIndex < 0 ? null : s.options[s.selectedIndex].text;",
+            element,
+        )
+        return selected is not None and selected.strip() == text.strip()
+
+    WebDriverWait(driver, timeout, poll_frequency=0.5, ignored_exceptions=_RETRY_EXCEPTIONS).until(select_when_ready)
+
+
+def _click_until_hidden(driver, button_locator, hidden_locator, timeout=60):
+    _click(driver, *button_locator, timeout=timeout)
+    for attempt in range(3):
+        try:
+            WebDriverWait(driver, 15, poll_frequency=0.5, ignored_exceptions=(StaleElementReferenceException,)).until(
+                lambda _: not any(e.is_displayed() for e in driver.find_elements(*hidden_locator))
+            )
+            return
+        except TimeoutException:
+            button = _first_usable(driver, *button_locator)
+            if button is None:
+                continue
+            try:
+                if attempt < 2:
+                    button.click()
+                else:
+                    driver.execute_script("arguments[0].click();", button)
+            except _RETRY_EXCEPTIONS:
+                pass
+    WebDriverWait(driver, 30, poll_frequency=0.5, ignored_exceptions=(StaleElementReferenceException,)).until(
+        lambda _: not any(e.is_displayed() for e in driver.find_elements(*hidden_locator))
+    )
+
+
+def _safe_click(driver, by, value):
+    try:
+        driver.find_element(by, value).click()
+    except NoSuchElementException:
+        pass
+
+
+def _go_first_page(driver, table_id):
+    if page_count(driver, table_id) <= 1 or page_current(driver, table_id) == 1:
+        return
+    _click_page_button(driver, table_id, "first")
+    WebDriverWait(driver, 30).until(lambda _: page_current(driver, table_id) == 1)
+
+
+def _go_to_page(driver, table_id, target_page):
+    # Jump straight to a page (type the page number into the pagination box)
+    # instead of clicking previous/next page by page.
+    target_page = max(1, int(target_page))
+    if page_current(driver, table_id) == target_page:
+        return
+    before_body = _table_body_text(driver, table_id)
+    box = driver.find_element(By.CSS_SELECTOR, f"#{table_id} .pagination > input")
+    driver.execute_script("arguments[0].scrollIntoView({block:'center', inline:'nearest'});", box)
+    box.click()
+    box.send_keys(Keys.CONTROL + "a")
+    box.send_keys(str(target_page))
+    box.send_keys(Keys.ENTER)
+    try:
+        WebDriverWait(driver, 60).until(lambda _: page_current(driver, table_id) == target_page)
+    except TimeoutException:
+        # the table was refreshed while jumping (page box reset); try once more
+        box = driver.find_element(By.CSS_SELECTOR, f"#{table_id} .pagination > input")
+        box.click()
+        box.send_keys(Keys.CONTROL + "a")
+        box.send_keys(str(min(target_page, page_count(driver, table_id))))
+        box.send_keys(Keys.ENTER)
+        target_page = min(target_page, page_count(driver, table_id))
+        WebDriverWait(driver, 60).until(lambda _: page_current(driver, table_id) == target_page)
+    _wait_current_page_table_ready(driver, table_id, previous_body=before_body)
+
+
+def wait_table_total_stable(driver, table_id, quiet_seconds=8, timeout=180):
+    # The table keeps loading rows in chunks after it is shown (Total data grows step by step),
+    # so wait until Total data stops changing before reading counts or jumping to pages.
+    end = time.time() + timeout
+    last, since = None, time.time()
+    while time.time() < end:
+        try:
+            current = (total_data(driver, table_id), page_count(driver, table_id))
+        except Exception:
+            current = None
+        if current != last:
+            last, since = current, time.time()
+        elif time.time() - since >= quiet_seconds:
+            return last[0] if last else None
+        time.sleep(2)
+    return last[0] if last else None
+
+
+def table_rows_first_last_pages(driver, table_id):
+    # Rows of the first and the last page only (large tables have hundreds of pages)
+    _go_to_page(driver, table_id, 1)
+    _wait_current_page_table_ready(driver, table_id)
+    page_total = page_count(driver, table_id)
+    first_rows = table_rows(driver, table_id)
+    last_rows = first_rows
+    if page_total > 1:
+        _go_to_page(driver, table_id, page_total)
+        last_rows = table_rows(driver, table_id)
+        _go_to_page(driver, table_id, 1)
+    return first_rows, last_rows, page_total
+
+
+def _go_first_page_by_prev(driver, table_id):
+    while page_count(driver, table_id) > 1 and page_current(driver, table_id) > 1:
+        target_page = page_current(driver, table_id) - 1
+        _click_page_button(driver, table_id, "previous")
+        WebDriverWait(driver, 30).until(lambda _: page_current(driver, table_id) == target_page)
+
+
+def _click_page_button(driver, table_id, class_name):
+    button = _page_button(driver, table_id, class_name, timeout=30)
+    driver.execute_script("arguments[0].scrollIntoView({block:'center', inline:'nearest'});", button)
+    ActionChains(driver).move_to_element(button).pause(0.1).click(button).perform()
+    time.sleep(1)
+
+
+def _go_next_page(driver, table_id, target_page):
+    before_body = _table_body_text(driver, table_id)
+    _click_page_button(driver, table_id, "next")
+    WebDriverWait(driver, 30).until(lambda _: page_current(driver, table_id) == target_page)
+    _wait_current_page_table_ready(driver, table_id, previous_body=before_body)
+
+
+def _page_button(driver, table_id, class_name, timeout=10):
+    def visible_enabled_button(_):
+        buttons = driver.find_elements(
+            By.XPATH,
+            f"//*[@id='{table_id}']//*[contains(concat(' ', normalize-space(@class), ' '), ' {class_name} ')]",
+        )
+        for button in buttons:
+            classes = (button.get_attribute("class") or "").lower()
+            if button.is_displayed() and button.is_enabled() and "disabled" not in classes:
+                return button
+        return False
+
+    return WebDriverWait(driver, timeout).until(visible_enabled_button)
+
+
+def _table_state(driver, table_id):
+    try:
+        return (
+            page_current(driver, table_id),
+            driver.find_element(By.ID, f"{table_id}_body").text,
+        )
+    except NoSuchElementException:
+        return (page_current(driver, table_id), "")
+
+
+def _wait_table_state_change(driver, table_id, before_state, timeout=10):
+    try:
+        WebDriverWait(driver, timeout).until(lambda _: _table_state(driver, table_id) != before_state)
+    except TimeoutException:
+        time.sleep(2)
+
+
+def _wait_current_page_table_ready(driver, table_id, previous_body=None):
+    try:
+        WebDriverWait(driver, 30).until(lambda _: _table_has_rows(driver, table_id, previous_body))
+    except TimeoutException as exc:
+        try:
+            body_text = driver.find_element(By.ID, f"{table_id}_body").text[:500]
+        except NoSuchElementException:
+            body_text = "<missing body>"
+        raise TimeoutException(
+            f"Timed out waiting for table rows. table={table_id}, "
+            f"page={page_current(driver, table_id)} of {page_count(driver, table_id)}, body={body_text!r}"
+        ) from exc
+
+
+def _table_has_rows(driver, table_id, previous_body=None):
+    cells = driver.find_elements(By.XPATH, f"//table[@id='{table_id}_body']/tbody/tr/td")
+    if not cells:
+        return False
+    body_text = _table_body_text(driver, table_id)
+    if not body_text:
+        return False
+    if previous_body is not None and body_text == previous_body:
+        return False
+    time.sleep(0.5)
+    return bool(driver.find_elements(By.XPATH, f"//table[@id='{table_id}_body']/tbody/tr/td")) and bool(
+        _table_body_text(driver, table_id)
+    )
+
+
+def _table_body_text(driver, table_id):
+    try:
+        return driver.find_element(By.ID, f"{table_id}_body").text
+    except NoSuchElementException:
+        return ""
+
+
+def _ensure_checked(driver, by, value):
+    _click(driver, by, value)
+
+
+def _confirm_message(driver, require_success=False):
+    locators = [
+        (By.CSS_SELECTOR, "#modal_provision_service_message .button"),
+        (By.CSS_SELECTOR, "#modal_provision_service_message button"),
+        (By.CSS_SELECTOR, "#message_diag .button"),
+        (By.CSS_SELECTOR, "#message_diag button"),
+    ]
+    message_locators = [
+        (By.CSS_SELECTOR, "#modal_provision_service_message .modal-body"),
+        (By.ID, "message_text"),
+        (By.CSS_SELECTOR, "#message_diag .modal-body"),
+    ]
+
+    def visible_message_text():
+        texts = []
+        for by, value in message_locators:
+            for element in driver.find_elements(by, value):
+                if element.is_displayed() and element.text.strip():
+                    texts.append(element.text.strip())
+        return "\n".join(dict.fromkeys(texts))
+
+    WebDriverWait(driver, 30, poll_frequency=0.2).until(
+        lambda _: visible_message_text()
+        or any(
+            element.is_displayed()
+            for by, value in locators
+            for element in driver.find_elements(by, value)
+        )
+    )
+    message = visible_message_text()
+    clicked = _click_first_present(
+        driver,
+        locators,
+        timeout=3,
+    )
+    if not clicked:
+        raise TimeoutException("Cannot close EMS message dialog.")
+    try:
+        WebDriverWait(driver, 10, poll_frequency=0.2).until(
+            lambda _: not any(
+                element.is_displayed()
+                for by, value in locators
+                for element in driver.find_elements(by, value)
+            )
+        )
+    except TimeoutException:
+        pass
+    if require_success and "success" not in message.casefold():
+        raise AssertionError(
+            f"EMS ONT service operation did not report success: {message!r}"
+        )
+    return message
+
+
+def _wait_for_table(driver, table_id):
+    time.sleep(1)
+    _wait_idle(driver)
+    WebDriverWait(driver, 60).until(EC.presence_of_element_located((By.ID, f"{table_id}_body")))
+
+
+def _select_filter_option(driver, select_id, expected_text):
+    element = WebDriverWait(driver, 30).until(EC.presence_of_element_located((By.ID, select_id)))
+    selector = Select(element)
+    for option in selector.options:
+        if option.text.strip() == str(expected_text).strip():
+            selector.select_by_visible_text(option.text)
+            return
+    for option in selector.options:
+        if str(expected_text).strip() in option.text.strip():
+            selector.select_by_visible_text(option.text)
+            return
+    available = [option.text for option in selector.options]
+    raise NoSuchElementException(f"Cannot select {expected_text!r} from {select_id}; available={available}")
+
+
+def _value_if_present(driver, element_id):
+    try:
+        return driver.find_element(By.ID, element_id).get_attribute("value").strip()
+    except NoSuchElementException:
+        return ""
+
+
+def _click_first_present(driver, locators, timeout=5):
+    def click_first_clickable(_):
+        for by, value in locators:
+            for element in driver.find_elements(by, value):
+                try:
+                    if element.is_displayed() and element.is_enabled():
+                        element.click()
+                        return True
+                except (StaleElementReferenceException, ElementClickInterceptedException):
+                    continue
+        return False
+
+    try:
+        return bool(
+            WebDriverWait(driver, timeout, poll_frequency=0.2).until(click_first_clickable)
+        )
+    except TimeoutException:
+        return False

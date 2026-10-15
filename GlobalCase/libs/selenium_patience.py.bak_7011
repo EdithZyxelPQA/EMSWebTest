@@ -1,0 +1,139 @@
+"""Make basic Selenium actions tolerate a slow EMS web UI.
+
+The EMS pages draw asynchronously and show a loading overlay ("loadind_*",
+"configure_loader*") while busy.  Many cases call
+``driver.find_element(...).click()`` right after a fixed ``time.sleep``, which
+fails whenever the screen is slower than expected.  ``install()`` patches the
+Selenium classes once so that:
+
+* click / send_keys / clear first wait for the loading overlay to disappear
+  and retry for a while when the element is covered or not interactable yet;
+* find_element keeps looking for a while for menu links (LINK_TEXT) or while
+  the page is still loading.
+
+Other lookups keep their original behaviour so "element absent" checks are not
+slowed down.
+"""
+
+import time
+
+from selenium.common.exceptions import (
+    ElementClickInterceptedException,
+    ElementNotInteractableException,
+    InvalidElementStateException,
+    NoSuchElementException,
+    StaleElementReferenceException,
+)
+from selenium.webdriver.common.by import By
+from selenium.webdriver.remote.webdriver import WebDriver
+from selenium.webdriver.remote.webelement import WebElement
+
+ACTION_RETRY_SECONDS = 30
+FIND_RETRY_SECONDS = 15
+SHORT_FIND_RETRY_SECONDS = 6
+OVERLAY_WAIT_SECONDS = 120
+
+_LOADING_OVERLAY_JS = """
+return Array.from(document.querySelectorAll("[id^='loadind'], [id^='configure_loader']")).some(function (e) {
+    var s = window.getComputedStyle(e);
+    return s.display !== 'none' && s.visibility !== 'hidden' && e.getClientRects().length > 0;
+});
+"""
+
+_installed = False
+_originalClick = WebElement.click
+_originalSendKeys = WebElement.send_keys
+_originalClear = WebElement.clear
+_originalFindElement = WebDriver.find_element
+
+
+def _isLoading(driver):
+    try:
+        return bool(_originalExecuteScript(driver, _LOADING_OVERLAY_JS))
+    except Exception:
+        return False
+
+
+def _originalExecuteScript(driver, script, *args):
+    return WebDriver.execute_script(driver, script, *args)
+
+
+def _waitIdle(driver, timeout=OVERLAY_WAIT_SECONDS):
+    endTime = time.monotonic() + timeout
+    while _isLoading(driver) and time.monotonic() < endTime:
+        time.sleep(0.5)
+
+
+def _retryAction(element, action, *args):
+    driver = element._parent
+    _waitIdle(driver)
+    endTime = time.monotonic() + ACTION_RETRY_SECONDS
+    while True:
+        try:
+            return action(element, *args)
+        except (ElementClickInterceptedException, ElementNotInteractableException, InvalidElementStateException):
+            if time.monotonic() >= endTime:
+                raise
+            time.sleep(0.5)
+            _waitIdle(driver)
+        except StaleElementReferenceException:
+            # The page was redrawn after the element was found: look it up again
+            locator = getattr(element, "_patienceLocator", None)
+            if locator is None or time.monotonic() >= endTime:
+                raise
+            time.sleep(0.5)
+            _waitIdle(driver)
+            try:
+                element = _findElement(driver, *locator)
+            except NoSuchElementException:
+                raise
+
+
+def _click(self):
+    return _retryAction(self, _originalClick)
+
+
+def _sendKeys(self, *value):
+    return _retryAction(self, _originalSendKeys, *value)
+
+
+def _clear(self):
+    return _retryAction(self, _originalClear)
+
+
+def _remember(element, by, value):
+    try:
+        element._patienceLocator = (by, value)
+    except Exception:
+        pass
+    return element
+
+
+def _findElement(self, by=By.ID, value=None):
+    try:
+        return _remember(_originalFindElement(self, by, value), by, value)
+    except NoSuchElementException:
+        pass
+    # Menu links and lookups during loading get the long retry; other lookups a
+    # short one so that "element is absent" checks are not slowed down much.
+    longRetry = by in (By.LINK_TEXT, By.PARTIAL_LINK_TEXT) or _isLoading(self)
+    endTime = time.monotonic() + (FIND_RETRY_SECONDS if longRetry else SHORT_FIND_RETRY_SECONDS)
+    while True:
+        _waitIdle(self)
+        try:
+            return _remember(_originalFindElement(self, by, value), by, value)
+        except NoSuchElementException:
+            if time.monotonic() >= endTime:
+                raise
+            time.sleep(0.5)
+
+
+def install():
+    global _installed
+    if _installed:
+        return
+    WebElement.click = _click
+    WebElement.send_keys = _sendKeys
+    WebElement.clear = _clear
+    WebDriver.find_element = _findElement
+    _installed = True

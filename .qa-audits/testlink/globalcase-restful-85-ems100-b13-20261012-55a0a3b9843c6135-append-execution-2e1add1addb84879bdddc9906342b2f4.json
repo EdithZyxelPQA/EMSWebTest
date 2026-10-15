@@ -1,0 +1,20 @@
+{
+  "schema_version": "1.0",
+  "operation_id": "globalcase-restful-85-ems100-b13-20261012-55a0a3b9843c6135",
+  "environment": "corp",
+  "action": "append-execution",
+  "status": "success",
+  "preview_digest": "ac6b33bf26f34bb560bc7e7f92201a0fb3d38bb6658183b9e8ed7f3602a7aa45",
+  "testcase_external_id": "EMS1-6692",
+  "execution_id": "3169659",
+  "response": [
+    {
+      "status": true,
+      "operation": "reportTCResult",
+      "overwrite": false,
+      "message": "Success!",
+      "id": 3169659
+    }
+  ],
+  "finished_at": "2026-10-12T06:54:21+00:00"
+}

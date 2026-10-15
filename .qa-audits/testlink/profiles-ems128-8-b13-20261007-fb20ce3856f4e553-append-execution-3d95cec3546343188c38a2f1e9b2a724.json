@@ -1,0 +1,20 @@
+{
+  "schema_version": "1.0",
+  "operation_id": "profiles-ems128-8-b13-20261007-fb20ce3856f4e553",
+  "environment": "corp",
+  "action": "append-execution",
+  "status": "success",
+  "preview_digest": "62d82ada34149becbf5595141780d5950ce77a80fbd0d563cdd7f274e2a8ce9e",
+  "testcase_external_id": "EMS1-5757",
+  "execution_id": "3162299",
+  "response": [
+    {
+      "status": true,
+      "operation": "reportTCResult",
+      "overwrite": false,
+      "message": "Success!",
+      "id": 3162299
+    }
+  ],
+  "finished_at": "2026-10-07T00:18:25+00:00"
+}

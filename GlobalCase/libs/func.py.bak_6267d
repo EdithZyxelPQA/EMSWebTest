@@ -1,0 +1,3759 @@
+
+from datetime import datetime, timedelta
+
+from selenium.webdriver.support.ui import Select
+from selenium.webdriver.support.wait import WebDriverWait
+from selenium.webdriver.common.by import By
+from selenium.webdriver.common.keys import Keys
+from selenium.common.exceptions import NoSuchElementException
+from selenium.common.exceptions import ElementClickInterceptedException
+from selenium.common.exceptions import ElementNotInteractableException
+from selenium.common.exceptions import StaleElementReferenceException
+from selenium.common.exceptions import TimeoutException
+from selenium.webdriver.common.action_chains import ActionChains
+from selenium.webdriver.support import expected_conditions as EC
+import pytest, random, re, telnetlib3, socket, time, asyncio
+
+retryCount = 2
+
+# ---------------------------------------------------------------------------
+# Generic wait helpers: the EMS web UI draws pages/modals asynchronously and
+# shows a "loadind_*" overlay while loading.  These helpers poll until the
+# element is really usable instead of relying on fixed time.sleep().
+# ---------------------------------------------------------------------------
+_LOADING_OVERLAY_JS = """
+return Array.from(document.querySelectorAll("[id^='loadind'], [id^='configure_loader']")).some(function (e) {
+    var s = window.getComputedStyle(e);
+    return s.display !== 'none' && s.visibility !== 'hidden' && e.getClientRects().length > 0;
+});
+"""
+
+_RETRY_EXCEPTIONS = (
+    NoSuchElementException,
+    ElementClickInterceptedException,
+    ElementNotInteractableException,
+    StaleElementReferenceException,
+)
+
+def isPageLoading (self):
+    try:
+        return bool(self.driver.execute_script(_LOADING_OVERLAY_JS))
+    except Exception:
+        return False
+
+def waitPageIdle (self, timeout=120):
+    # Wait until the loading overlay disappears; do not fail here, the next
+    # action will raise a clear error if the page is still blocked.
+    try:
+        WebDriverWait(self.driver, timeout, poll_frequency=0.5).until(
+            lambda driver: not isPageLoading(self)
+        )
+    except TimeoutException:
+        print(f"Loading overlay still visible after {timeout}s", flush=True)
+
+def _firstUsable (driver, locator):
+    for element in driver.find_elements(*locator):
+        if element.is_displayed() and element.is_enabled():
+            return element
+    return None
+
+def waitUsable (self, locator, timeout=60):
+    def usable(driver):
+        try:
+            if isPageLoading(self):
+                return False
+            return _firstUsable(driver, locator) or False
+        except StaleElementReferenceException:
+            return False
+    try:
+        return WebDriverWait(self.driver, timeout, poll_frequency=0.5).until(usable)
+    except TimeoutException as exc:
+        raise AssertionError(f"Element not visible/enabled after {timeout}s: {locator}") from exc
+
+def waitHidden (self, locator, timeout=60):
+    def hidden(driver):
+        try:
+            return not any(element.is_displayed() for element in driver.find_elements(*locator))
+        except StaleElementReferenceException:
+            return False
+    try:
+        WebDriverWait(self.driver, timeout, poll_frequency=0.5).until(hidden)
+    except TimeoutException as exc:
+        raise AssertionError(f"Element still visible after {timeout}s: {locator}") from exc
+
+def clickUntilHidden (self, buttonLocator, hiddenLocator=None, timeout=60):
+    # Click a dialog button and make sure the dialog really closes; the first
+    # click is sometimes ignored while the dialog is still opening.
+    hiddenLocator = hiddenLocator or buttonLocator
+    waitClick(self, buttonLocator, timeout)
+    for attempt in range(3):
+        try:
+            waitHidden(self, hiddenLocator, 15)
+            return
+        except AssertionError:
+            print(f"Dialog still visible, click again: {buttonLocator} attempt={attempt + 1}", flush=True)
+        button = _firstUsable(self.driver, buttonLocator)
+        if button is None:
+            continue
+        try:
+            if attempt < 2:
+                clickElementWhenReady(self, button)
+            else:
+                self.driver.execute_script("arguments[0].click();", button)
+        except StaleElementReferenceException:
+            pass
+    waitHidden(self, hiddenLocator, 30)
+
+def clickElementWhenReady (self, element):
+    # Click an element that was already located; retry while the page is busy.
+    self.driver.execute_script("arguments[0].scrollIntoView({block: 'center'});", element)
+    def tryClick(driver):
+        if isPageLoading(self):
+            return False
+        try:
+            element.click()
+            return True
+        except (ElementClickInterceptedException, ElementNotInteractableException):
+            return False
+    try:
+        WebDriverWait(self.driver, 60, poll_frequency=0.5).until(tryClick)
+    except TimeoutException:
+        self.driver.execute_script("arguments[0].click();", element)
+
+def waitClick (self, locator, timeout=60):
+    lastError = {"error": None}
+    def tryClick(driver):
+        if isPageLoading(self):
+            return False
+        try:
+            element = _firstUsable(driver, locator)
+            if element is None:
+                return False
+            driver.execute_script("arguments[0].scrollIntoView({block: 'center'});", element)
+            element.click()
+            return True
+        except _RETRY_EXCEPTIONS as exc:
+            lastError["error"] = exc
+            return False
+    try:
+        WebDriverWait(self.driver, timeout, poll_frequency=0.5).until(tryClick)
+    except TimeoutException as exc:
+        raise AssertionError(
+            f"Element not clickable after {timeout}s: {locator}; last error={lastError['error']!r}"
+        ) from exc
+
+def waitInput (self, locator, text, timeout=60):
+    # Clear the field (Ctrl+A, Delete) and type text, like the original test steps.
+    lastError = {"error": None}
+    def tryInput(driver):
+        if isPageLoading(self):
+            return False
+        try:
+            element = _firstUsable(driver, locator)
+            if element is None:
+                return False
+            element.send_keys(Keys.CONTROL + "a")
+            element.send_keys(Keys.DELETE)
+            element.send_keys(str(text))
+            return True
+        except _RETRY_EXCEPTIONS as exc:
+            lastError["error"] = exc
+            return False
+    try:
+        WebDriverWait(self.driver, timeout, poll_frequency=0.5).until(tryInput)
+    except TimeoutException as exc:
+        raise AssertionError(
+            f"Cannot input {text!r} after {timeout}s: {locator}; last error={lastError['error']!r}"
+        ) from exc
+
+def waitSelect (self, locator, text, timeout=60):
+    # Wait until the <select> is usable and contains the option, then select it.
+    lastError = {"error": None}
+    def trySelect(driver):
+        if isPageLoading(self):
+            return False
+        try:
+            for element in driver.find_elements(*locator):
+                if not element.is_displayed():
+                    continue
+                Select(element).select_by_visible_text(text)
+                selectedText = driver.execute_script(
+                    "var s = arguments[0]; return s.selectedIndex < 0 ? null : s.options[s.selectedIndex].text;",
+                    element,
+                )
+                if selectedText is not None and selectedText.strip() == text.strip():
+                    return True
+            return False
+        except _RETRY_EXCEPTIONS as exc:
+            lastError["error"] = exc
+            return False
+    try:
+        WebDriverWait(self.driver, timeout, poll_frequency=0.5).until(trySelect)
+    except TimeoutException as exc:
+        raise AssertionError(
+            f"Cannot select {text!r} after {timeout}s: {locator}; last error={lastError['error']!r}"
+        ) from exc
+
+def openTab (self, locator, timeout=60):
+    # Click a menu/tab only when it is not active yet (className == "").
+    def openWhenReady(driver):
+        if isPageLoading(self):
+            return False
+        try:
+            element = _firstUsable(driver, locator)
+            if element is None:
+                return False
+            if element.get_attribute("className") == "":
+                element.click()
+                return "clicked"
+            return "active"
+        except _RETRY_EXCEPTIONS:
+            return False
+    try:
+        result = WebDriverWait(self.driver, timeout, poll_frequency=0.5).until(openWhenReady)
+    except TimeoutException as exc:
+        raise AssertionError(f"Cannot open menu/tab after {timeout}s: {locator}") from exc
+    if result == "clicked":
+        time.sleep(1)
+        waitPageIdle(self)
+
+def openMenu (self, linkText, timeout=60):
+    openTab(self, (By.LINK_TEXT, linkText), timeout)
+
+def openGeServicePage (self):
+    openMenu(self, "Provision")
+    openMenu(self, "Service")
+    openTab(self, (By.ID, "service_tab_ge"))
+
+def openGeServiceFilter (self):
+    # "#provision_service_filter > a" toggles the filter panel; only click it when closed.
+    for attempt in range(3):
+        if _firstUsable(self.driver, (By.ID, "provision_geservice_filter_reset_btn")) is not None:
+            return
+        waitClick(self, (By.CSS_SELECTOR, "#provision_service_filter > a"))
+        try:
+            waitUsable(self, (By.ID, "provision_geservice_filter_reset_btn"), 10)
+            return
+        except AssertionError:
+            print(f"Open GE service filter panel retry: attempt={attempt + 1}", flush=True)
+    waitUsable(self, (By.ID, "provision_geservice_filter_reset_btn"), 30)
+
+def queryGeServiceBy (self, conditions):
+    # conditions: [(checkboxFor, textId, value), ...]
+    openGeServicePage(self)
+    openGeServiceFilter(self)
+    waitClick(self, (By.ID, "provision_geservice_filter_reset_btn"))
+    for checkboxFor, textId, value in conditions:
+        waitClick(self, (By.XPATH, "//label[@for=\"" + checkboxFor + "\"]"))
+        waitInput(self, (By.ID, textId), value)
+    waitClick(self, (By.ID, "provision_geservice_filter_query_btn"))
+    time.sleep(2)
+    waitPageIdle(self)
+    time.sleep(1)
+
+def geServicePortConditions (dutIp, geInfo):
+    return [
+        ("provision_filter_ge_ip_checkbox", "provision_filter_ge_ip_text", dutIp),
+        ("provision_filter_ge_slot_checkbox", "provision_filter_ge_slot_text", geInfo[0]),
+        ("provision_filter_ge_port_checkbox", "provision_filter_ge_port_text", geInfo[1]),
+    ]
+
+def openOntServicePage (self):
+    openMenu(self, "Provision")
+    openMenu(self, "Service")
+    openTab(self, (By.ID, "service_tab_ont"))
+
+def openOntInventoryPage (self, timeout=60):
+    # Other pages (e.g. Provision > Service) also have an active "ONT" link, so
+    # only stop when the Inventory ONT table itself is shown.
+    openMenu(self, "Inventory")
+    lastClick = {"time": 0.0}
+    def onOntInventory(driver):
+        if isPageLoading(self):
+            return False
+        try:
+            if _firstUsable(driver, (By.ID, "ont_inventory_div")) is not None:
+                return True
+            if time.monotonic() - lastClick["time"] < 3:
+                return False
+            for link in driver.find_elements(By.LINK_TEXT, "ONT"):
+                if link.is_displayed() and link.is_enabled() and link.get_attribute("className") == "":
+                    link.click()
+                    lastClick["time"] = time.monotonic()
+                    break
+            return False
+        except _RETRY_EXCEPTIONS:
+            return False
+    try:
+        WebDriverWait(self.driver, timeout, poll_frequency=0.5).until(onOntInventory)
+    except TimeoutException as exc:
+        raise AssertionError(f"Inventory > ONT page did not open after {timeout}s") from exc
+    waitPageIdle(self)
+
+def closeServiceResultDialog (self):
+    # The close click is sometimes ignored while the dialog is still fading in; retry it.
+    closeLocator = (By.ID, "alarm_detail_close_btn")
+    for attempt in range(3):
+        closeButton = _firstUsable(self.driver, closeLocator)
+        if closeButton is None:
+            return
+        try:
+            if attempt < 2:
+                clickElementWhenReady(self, closeButton)
+            else:
+                self.driver.execute_script("arguments[0].click();", closeButton)
+            waitHidden(self, closeLocator, 15)
+            return
+        except (AssertionError, StaleElementReferenceException):
+            print(f"Close service result dialog retry: attempt={attempt + 1}", flush=True)
+    waitHidden(self, closeLocator, 15)
+
+def ensureDeviceManaged (self):
+    # Restore the DUT to "managed" if a case left it Unmanaged; an Unmanaged
+    # device stops EMS inventory sync and breaks every later ONT case.
+    try:
+        self.driver.switch_to.default_content()
+    except Exception:
+        pass
+    openMenu(self, "Inventory")
+    openMenu(self, "Device")
+    time.sleep(2)
+    entryPosition = getPositionByColNext(self, "dev_inventory_div", "IPAddress", self.dutIp)
+    if entryPosition != [-1, -1] and getElementByPositionCol(self, "dev_inventory_div", entryPosition, "DevStatus").text != "Unmanaged":
+        return
+    print(f"Device {self.dutIp} is Unmanaged; Force Manage it", flush=True)
+    openMenu(self, "System")
+    openMenu(self, "Security")
+    openMenu(self, "Map Management")
+    nodeLocator = (By.XPATH, "//small[contains(.,\'(" + self.dutIp + ")\')]")
+    waitClick(self, nodeLocator)
+    waitClick(self, (By.XPATH, "//*[@id=\"tab_content_tool\"]/div/div/div[2]/div[2]/input[@value=\"Edit\"]"))
+    time.sleep(3)
+    waitClick(self, (By.XPATH, "//*[@id=\"tab_content_tool\"]/div/div/div[2]/div[2]/input[@value=\"Force Manage\"]"))
+    clickUntilHidden(self, (By.CSS_SELECTOR, "#message_diag .button"), None, 120)
+    openMenu(self, "Inventory")
+    openMenu(self, "Device")
+    entryPosition = getPositionByColNext(self, "dev_inventory_div", "IPAddress", self.dutIp)
+    waitFiledUpdate(self, "dev_inventory_div", entryPosition, "DevStatus", "Up", waitUsable(self, (By.ID, "i_action_refresh")))
+
+def openProfilePage (self, prfType):
+    openMenu(self, "Provision")
+    openMenu(self, "Profile")
+    waitSelect(self, (By.ID, "profile_filtertype"), prfType)
+    time.sleep(1)
+    waitPageIdle(self)
+
+def openOntServiceFilter (self):
+    # "#provision_service_filter > a" toggles the filter panel; only click it when closed.
+    for attempt in range(3):
+        resetButton = _firstUsable(self.driver, (By.ID, "provision_service_filter_reset_btn"))
+        if resetButton is not None:
+            return
+        waitClick(self, (By.CSS_SELECTOR, "#provision_service_filter > a"))
+        try:
+            waitUsable(self, (By.ID, "provision_service_filter_reset_btn"), 10)
+            return
+        except AssertionError:
+            print(f"Open service filter panel retry: attempt={attempt + 1}", flush=True)
+    waitUsable(self, (By.ID, "provision_service_filter_reset_btn"), 30)
+
+def queryOntServiceBy (self, checkboxFor, textId, value):
+    openOntServicePage(self)
+    openOntServiceFilter(self)
+    waitClick(self, (By.ID, "provision_service_filter_reset_btn"))
+    waitClick(self, (By.XPATH, "//label[@for=\"" + checkboxFor + "\"]"))
+    waitInput(self, (By.ID, textId), value)
+    waitClick(self, (By.ID, "provision_service_filter_query_btn"))
+    time.sleep(2)
+    waitPageIdle(self)
+    time.sleep(1)
+
+def deleteAllQueriedOntService (self):
+    pageTotal = pageCount (self, "provision_service_table")
+    while pageTotal >= 1:
+        waitClick(self, (By.XPATH, "//label[@for=\'myCheckbox_title_provision_service_table\']"))
+        waitClick(self, (By.CSS_SELECTOR, "#provision_service_delete > a"))
+        clickUntilHidden(self, (By.CSS_SELECTOR, "#message_diag .button"))
+        time.sleep(2)
+        waitPageIdle(self)
+        pageTotal -= 1
+
+def fillOntQosBandwidthProfile (self, xponPir, gponPir):
+    # SIR/AIR are 0, PIR is given, for both XPON and GPON sections.
+    waitInput(self, (By.NAME, "bwprofile_sir"), "0")
+    waitInput(self, (By.NAME, "bwprofile_air"), "0")
+    waitInput(self, (By.NAME, "bwprofile_pir"), xponPir)
+    waitInput(self, (By.NAME, "bwprofile_gpon_sir"), "0")
+    waitInput(self, (By.NAME, "bwprofile_gpon_air"), "0")
+    waitInput(self, (By.NAME, "bwprofile_gpon_pir"), gponPir)
+
+def tableIsEmpty (self, tableId):
+    try:
+        self.driver.find_element(By.XPATH,"//table[@id=\'" + tableId + "_body\']/tbody/tr")
+    except NoSuchElementException:
+        return True
+    return False
+
+def pageCount (self, tableId):
+    #pageInputStr = self.driver.find_element(By.CSS_SELECTOR, "#" + tableId + " .pagination > input").get_attribute("value")
+    # Wait until the table and its pagination are rendered (page may still be loading)
+    pageInputLocator = (By.XPATH, "//*[@id=\'" + tableId + "\']/div[@class=\'pagination\']/input")
+    try:
+        WebDriverWait(self.driver, 60, poll_frequency=0.5).until(
+            lambda driver: not isPageLoading(self)
+            and re.search(r"of \d+", driver.find_element(*pageInputLocator).get_attribute("value") or "")
+        )
+    except TimeoutException:
+        pass
+    pageInputStr = self.driver.find_element(*pageInputLocator).get_attribute("value")
+    pageCountStr = re.sub(r"^Page \d+ of ", "",pageInputStr,flags = re.DOTALL)
+    pageCount = int(pageCountStr)
+    return pageCount
+
+def pageCurrent (self, tableId):
+    pageInputStr = self.driver.find_element(By.CSS_SELECTOR, "#" + tableId + " .pagination > input").get_attribute("value")
+    pageCountStr = re.sub(r"^Page ", "",pageInputStr,flags = re.DOTALL)
+    pageCountStr = re.sub(r" of \d+", "",pageCountStr,flags = re.DOTALL)
+    pageCount = int(pageCountStr)
+    return pageCount
+
+def getPositionByCols (self, tableId, colDic):
+    if pageCount (self, tableId) > 1:
+        self.driver.find_element(By.CSS_SELECTOR, "#" + tableId + " .first").click()
+    tableCols = self.driver.find_elements(By.XPATH,"//table[@id=\'" + tableId + "_head\']/thead/tr/th")
+    tableColsCount = len(tableCols)
+    rowIndex = 0
+    colMatchIndexList = []
+    testColMatchElementTextList = []
+    for tableCol in range(tableColsCount):
+        testCol = tableCols[tableCol].get_attribute("name")
+        if testCol in colDic.keys():
+            colMatchIndexList.append(tableCol + 1)
+    for pageIndex in range(1,pageCount(self,tableId)+1):
+        tableRows = self.driver.find_elements(By.XPATH,"//table[@id=\'" + tableId + "_body\']/tbody/tr")
+        tableRowsCount = len(tableRows)
+        for tableRow in range(tableRowsCount):
+            rowIndex = tableRow + 1
+            testColMatchElementTextList = []
+            for colMatchIndex in colMatchIndexList:
+                testColMatchElement = self.driver.find_element(By.XPATH, "//table[@id=\'" + tableId + "_body\']/tbody/tr[" + str(rowIndex) + "]/td[" + str(colMatchIndex) + "]/a")
+                testColMatchElementText = testColMatchElement.text
+                testColMatchElementTextList.append(testColMatchElementText)
+            if testColMatchElementTextList == list(colDic.values()):
+                return [pageIndex, rowIndex]
+        self.driver.find_element(By.CSS_SELECTOR, "#" + tableId + " .next").click()
+    return [-1, -1]
+
+def getPositionByColsNext (self, tableId, colDic):
+    pageTotal = pageCount (self, tableId)
+    tableCols = self.driver.find_elements(By.XPATH,"//table[@id=\'" + tableId + "_head\']/thead/tr/th")
+    tableColsCount = len(tableCols)
+    rowIndex = 0
+    colMatchIndexList = []
+    testColMatchElementTextList = []
+    for tableCol in range(tableColsCount):
+        testCol = tableCols[tableCol].get_attribute("name")
+        if testCol in colDic.keys():
+            colMatchIndexList.append(tableCol + 1)
+    for pageIndex in range(1, pageTotal + 1):
+        tableRows = self.driver.find_elements(By.XPATH,"//table[@id=\'" + tableId + "_body\']/tbody/tr")
+        tableRowsCount = len(tableRows)
+        for tableRow in range(tableRowsCount):
+            rowIndex = tableRow + 1
+            testColMatchElementTextList = []
+            for colMatchIndex in colMatchIndexList:
+                testColMatchElement = self.driver.find_element(By.XPATH, "//table[@id=\'" + tableId + "_body\']/tbody/tr[" + str(rowIndex) + "]/td[" + str(colMatchIndex) + "]/a")
+                testColMatchElementText = testColMatchElement.text
+                testColMatchElementTextList.append(testColMatchElementText)
+            if testColMatchElementTextList == list(colDic.values()):
+                return [pageCurrent (self, tableId), rowIndex]
+        if (pageCurrent (self, tableId) == pageTotal) and pageTotal > 1:
+            self.driver.find_element(By.CSS_SELECTOR, "#" + tableId + " .first").click()
+        elif (pageCurrent (self, tableId) != pageTotal) and pageTotal > 1:
+            self.driver.find_element(By.CSS_SELECTOR, "#" + tableId + " .next").click()
+    return [-1, -1]
+
+def getPositionsByColsNext (self, tableId, colDic):
+    pageTotal = pageCount (self, tableId)
+    tableCols = self.driver.find_elements(By.XPATH,"//table[@id=\'" + tableId + "_head\']/thead/tr/th")
+    tableColsCount = len(tableCols)
+    rowIndex = 0
+    colMatchIndexList = []
+    testColMatchElementTextList = []
+    positionList = []
+    for tableCol in range(tableColsCount):
+        testCol = tableCols[tableCol].get_attribute("name")
+        if testCol in colDic.keys():
+            colMatchIndexList.append(tableCol + 1)
+    for pageIndex in range(1, pageTotal + 1):
+        tableRows = self.driver.find_elements(By.XPATH,"//table[@id=\'" + tableId + "_body\']/tbody/tr")
+        tableRowsCount = len(tableRows)
+        for tableRow in range(tableRowsCount):
+            rowIndex = tableRow + 1
+            testColMatchElementTextList = []
+            for colMatchIndex in colMatchIndexList:
+                testColMatchElement = self.driver.find_element(By.XPATH, "//table[@id=\'" + tableId + "_body\']/tbody/tr[" + str(rowIndex) + "]/td[" + str(colMatchIndex) + "]/a")
+                testColMatchElementText = testColMatchElement.text
+                testColMatchElementTextList.append(testColMatchElementText)
+            if testColMatchElementTextList == list(colDic.values()):
+                positionList.append([pageCurrent (self, tableId), rowIndex])
+        if (pageCurrent (self, tableId) == pageTotal) and pageTotal > 1:
+            self.driver.find_element(By.CSS_SELECTOR, "#" + tableId + " .first").click()
+        elif (pageCurrent (self, tableId) != pageTotal) and pageTotal > 1:
+            self.driver.find_element(By.CSS_SELECTOR, "#" + tableId + " .next").click()
+    return positionList
+
+def getPositionByColsAndClick (self, tableId, colDic):
+    if pageCount (self, tableId) > 1:
+        self.driver.find_element(By.CSS_SELECTOR, "#" + tableId + " .first").click()
+    tableCols = self.driver.find_elements(By.XPATH,"//table[@id=\'" + tableId + "_head\']/thead/tr/th")
+    tableColsCount = len(tableCols)
+    rowIndex = 0
+    colMatchIndexList = []
+    testColMatchElementTextList = []
+    for tableCol in range(tableColsCount):
+        testCol = tableCols[tableCol].get_attribute("name")
+        if testCol in colDic.keys():
+            colMatchIndexList.append(tableCol + 1)
+    for pageIndex in range(1,pageCount(self,tableId)+1):
+        tableRows = self.driver.find_elements(By.XPATH,"//table[@id=\'" + tableId + "_body\']/tbody/tr")
+        tableRowsCount = len(tableRows)
+        for tableRow in range(tableRowsCount):
+            rowIndex = tableRow + 1
+            testColMatchElementTextList = []
+            for colMatchIndex in colMatchIndexList:
+                testColMatchElement = self.driver.find_element(By.XPATH, "//table[@id=\'" + tableId + "_body\']/tbody/tr[" + str(rowIndex) + "]/td[" + str(colMatchIndex) + "]/a")
+                testColMatchElementText = testColMatchElement.text
+                testColMatchElementTextList.append(testColMatchElementText)
+            if testColMatchElementTextList == list(colDic.values()):
+                testColMatchElement.click()
+                return [pageIndex, rowIndex]
+        self.driver.find_element(By.CSS_SELECTOR, "#" + tableId + " .next").click()
+    return [-1, -1]
+
+def getPositionByColsAndClickNext (self, tableId, colDic):
+    pageTotal = pageCount (self, tableId)
+    tableCols = self.driver.find_elements(By.XPATH,"//table[@id=\'" + tableId + "_head\']/thead/tr/th")
+    tableColsCount = len(tableCols)
+    rowIndex = 0
+    colMatchIndexList = []
+    testColMatchElementTextList = []
+    for tableCol in range(tableColsCount):
+        testCol = tableCols[tableCol].get_attribute("name")
+        if testCol in colDic.keys():
+            colMatchIndexList.append(tableCol + 1)
+    for pageIndex in range(1,pageCount(self,tableId)+1):
+        tableRows = self.driver.find_elements(By.XPATH,"//table[@id=\'" + tableId + "_body\']/tbody/tr")
+        tableRowsCount = len(tableRows)
+        for tableRow in range(tableRowsCount):
+            rowIndex = tableRow + 1
+            testColMatchElementTextList = []
+            for colMatchIndex in colMatchIndexList:
+                testColMatchElement = self.driver.find_element(By.XPATH, "//table[@id=\'" + tableId + "_body\']/tbody/tr[" + str(rowIndex) + "]/td[" + str(colMatchIndex) + "]/a")
+                testColMatchElementText = testColMatchElement.text
+                testColMatchElementTextList.append(testColMatchElementText)
+            if testColMatchElementTextList == list(colDic.values()):
+                testColMatchElement.location_once_scrolled_into_view
+                time.sleep(1)
+                #print(str(pageIndex) + "," + str(rowIndex) + "," + str(colMatchIndex))
+                element = testColMatchElement
+                actions = ActionChains(self.driver)
+                actions.double_click(element).perform()
+                #testColMatchElement.click()
+                #print ("pageIndex" + str(pageIndex) + "rowIndex" + str(pageIndex))
+                return [pageIndex, rowIndex]
+                #return
+        if (pageCurrent (self, tableId) == pageTotal) and pageTotal > 1:
+            self.driver.find_element(By.CSS_SELECTOR, "#" + tableId + " .first").click()
+        elif (pageCurrent (self, tableId) != pageTotal) and pageTotal > 1:
+            self.driver.find_element(By.CSS_SELECTOR, "#" + tableId + " .next").click()
+    return [-1, -1]
+
+def getLocatorXpathStrByPositionCol (self, tableId, position , colName):
+    if pageCount (self, tableId) > 1:
+        self.driver.find_element(By.CSS_SELECTOR, "#" + tableId + " .first").click()
+    tableCols = self.driver.find_elements(By.XPATH,"//table[@id=\'" + tableId + "_head\']/thead/tr/th")
+    tableColsCount = len(tableCols)
+    colIndex = 0
+    for tableCol in range(tableColsCount):
+        testCol = tableCols[tableCol].get_attribute("name")
+        if testCol == colName:
+            colIndex = tableCol + 1
+            break
+    pageIndex = position[0]
+    rowIndex = position[1]
+    self.driver.find_element(By.CSS_SELECTOR, "#" + tableId + " > .pagination > input").click()
+    self.driver.find_element(By.CSS_SELECTOR, "#" + tableId + " > .pagination > input").send_keys(str(pageIndex))
+    self.driver.find_element(By.CSS_SELECTOR, "#" + tableId + " > .pagination > input").send_keys(Keys.ENTER)
+    locatorXpathStr = "//table[@id=\'" + tableId + "_body\']/tbody/tr[" + str(rowIndex) + "]/td[" + str(colIndex) + "]"
+    #element = self.driver.find_element(By.XPATH, "//table[@id=\'" + tableId + "_body\']/tbody/tr[" + str(rowIndex) + "]/td[" + str(colIndex) + "]")
+    return locatorXpathStr
+
+def getPositionByCol (self, tableId, colName, matchValue):
+    if pageCount (self, tableId) > 1:
+        self.driver.find_element(By.CSS_SELECTOR, "#" + tableId + " .first").click()
+    tableCols = self.driver.find_elements(By.XPATH,"//table[@id=\'" + tableId + "_head\']/thead/tr/th")
+    tableColsCount = len(tableCols)
+    colIndex = 0
+    rowIndex = 0
+    for tableCol in range(tableColsCount):
+        testCol = tableCols[tableCol].get_attribute("name")
+        if testCol == colName:
+            colIndex = tableCol + 1
+            break
+    for pageIndex in range(1,pageCount(self,tableId)+1):
+        tableRows = self.driver.find_elements(By.XPATH,"//table[@id=\'" + tableId + "_body\']/tbody/tr")
+        tableRowsCount = len(tableRows)
+        for tableRow in range(tableRowsCount):
+            rowIndex = tableRow + 1
+            testElement = self.driver.find_element(By.XPATH, "//table[@id=\'" + tableId + "_body\']/tbody/tr[" + str(rowIndex) + "]/td[" + str(colIndex) + "]/a")
+            testValue = testElement.text
+            if testValue == matchValue:
+                #testElement.click()
+                return [pageIndex, rowIndex]
+        self.driver.find_element(By.CSS_SELECTOR, "#" + tableId + " .next").click()
+    return [-1, -1]
+
+def getPositionByColNextSort (self, tableId, colName, matchValue):
+    pageTotal = pageCount (self, tableId)
+    tableCols = self.driver.find_elements(By.XPATH,"//table[@id=\'" + tableId + "_head\']/thead/tr/th")
+    tableColsCount = len(tableCols)
+    colIndex = 0
+    rowIndex = 0
+    for tableCol in range(tableColsCount):
+        testCol = tableCols[tableCol].get_attribute("name")
+        if testCol == colName:
+            colIndex = tableCol + 1
+            break
+    for pageIndex in range(1, pageTotal + 1):
+        tableRows = self.driver.find_elements(By.XPATH,"//table[@id=\'" + tableId + "_body\']/tbody/tr")
+        tableRowsCount = len(tableRows)
+        for tableRow in range(tableRowsCount):
+            rowIndex = tableRow + 1
+            #testElement = self.driver.find_element(By.XPATH, "//table[@id=\'" + tableId + "_body\']/tbody/tr[" + str(rowIndex) + "]/td[" + str(colIndex) + "]/a")
+            testElement = self.driver.find_element(By.XPATH, "//table[@id=\'" + tableId + "_body\']/tbody/tr[" + str(rowIndex) + "]/td[" + str(colIndex) + "]")
+            testValue = testElement.text
+            if testValue > matchValue:
+                #print (testValue)
+                return [-1, -1]
+            if testValue == matchValue:
+                elementScrolledIntoView(self, testElement)
+                return [pageCurrent (self, tableId), rowIndex]
+        if (pageCurrent (self, tableId) == pageTotal) and pageTotal > 1:
+            self.driver.find_element(By.CSS_SELECTOR, "#" + tableId + " .first").click()
+        elif (pageCurrent (self, tableId) != pageTotal) and pageTotal > 1:
+            self.driver.find_element(By.CSS_SELECTOR, "#" + tableId + " .next").click()
+    return [-1, -1]
+
+def getPositionByColNext (self, tableId, colName, matchValue):
+    pageTotal = pageCount (self, tableId)
+    tableCols = self.driver.find_elements(By.XPATH,"//table[@id=\'" + tableId + "_head\']/thead/tr/th")
+    tableColsCount = len(tableCols)
+    colIndex = 0
+    rowIndex = 0
+    for tableCol in range(tableColsCount):
+        testCol = tableCols[tableCol].get_attribute("name")
+        if testCol == colName:
+            colIndex = tableCol + 1
+            break
+    for pageIndex in range(1, pageTotal + 1):
+        tableRows = self.driver.find_elements(By.XPATH,"//table[@id=\'" + tableId + "_body\']/tbody/tr")
+        tableRowsCount = len(tableRows)
+        for tableRow in range(tableRowsCount):
+            rowIndex = tableRow + 1
+            #testElement = self.driver.find_element(By.XPATH, "//table[@id=\'" + tableId + "_body\']/tbody/tr[" + str(rowIndex) + "]/td[" + str(colIndex) + "]/a")
+            testElement = self.driver.find_element(By.XPATH, "//table[@id=\'" + tableId + "_body\']/tbody/tr[" + str(rowIndex) + "]/td[" + str(colIndex) + "]")
+            testValue = testElement.text
+            if testValue == matchValue:
+                elementScrolledIntoView(self, testElement)
+                return [pageCurrent (self, tableId), rowIndex]
+        if (pageCurrent (self, tableId) == pageTotal) and pageTotal > 1:
+            self.driver.find_element(By.CSS_SELECTOR, "#" + tableId + " .first").click()
+        elif (pageCurrent (self, tableId) != pageTotal) and pageTotal > 1:
+            self.driver.find_element(By.CSS_SELECTOR, "#" + tableId + " .next").click()
+    return [-1, -1]
+
+def getPositionByColAndClick (self, tableId, colName, matchValue):
+    pageTotal = pageCount (self, tableId)
+    tableCols = self.driver.find_elements(By.XPATH,"//table[@id=\'" + tableId + "_head\']/thead/tr/th")
+    tableColsCount = len(tableCols)
+    colIndex = 0
+    rowIndex = 0
+    for tableCol in range(tableColsCount):
+        testCol = tableCols[tableCol].get_attribute("name")
+        if testCol == colName:
+            colIndex = tableCol + 1
+            break
+    for pageIndex in range(1, pageTotal + 1):
+        tableRows = self.driver.find_elements(By.XPATH,"//table[@id=\'" + tableId + "_body\']/tbody/tr")
+        tableRowsCount = len(tableRows)
+        for tableRow in range(tableRowsCount):
+            rowIndex = tableRow + 1
+            #testElement = self.driver.find_element(By.XPATH, "//table[@id=\'" + tableId + "_body\']/tbody/tr[" + str(rowIndex) + "]/td[" + str(colIndex) + "]/a")
+            testElement = self.driver.find_element(By.XPATH, "//table[@id=\'" + tableId + "_body\']/tbody/tr[" + str(rowIndex) + "]/td[" + str(colIndex) + "]")
+            testValue = testElement.text
+            if testValue == matchValue:
+                elementScrolledIntoView(self, testElement)
+                time.sleep(3)
+                pageNumber = pageCurrent (self, tableId)
+                testElement.click()
+                return [pageNumber, rowIndex]
+        if (pageCurrent (self, tableId) == pageTotal) and pageTotal > 1:
+            self.driver.find_element(By.CSS_SELECTOR, "#" + tableId + " .first").click()
+        elif (pageCurrent (self, tableId) != pageTotal) and pageTotal > 1:
+            self.driver.find_element(By.CSS_SELECTOR, "#" + tableId + " .next").click()
+    return [-1, -1]
+
+def getPositionByColClassNext (self, tableId, colName, matchClass):
+    pageTotal = pageCount (self, tableId)
+    tableCols = self.driver.find_elements(By.XPATH,"//table[@id=\'" + tableId + "_head\']/thead/tr/th")
+    tableColsCount = len(tableCols)
+    colIndex = 0
+    rowIndex = 0
+    for tableCol in range(tableColsCount):
+        testCol = tableCols[tableCol].get_attribute("name")
+        if testCol == colName:
+            colIndex = tableCol + 1
+            break
+    for pageIndex in range(1, pageTotal + 1):
+        tableRows = self.driver.find_elements(By.XPATH,"//table[@id=\'" + tableId + "_body\']/tbody/tr")
+        tableRowsCount = len(tableRows)
+        for tableRow in range(tableRowsCount):
+            rowIndex = tableRow + 1
+            testElement = self.driver.find_element(By.XPATH, "//table[@id=\'" + tableId + "_body\']/tbody/tr[" + str(rowIndex) + "]/td[" + str(colIndex) + "]/a")
+            testValue = testElement.get_attribute("class")
+            if testValue == matchClass:
+                elementScrolledIntoView(self, testElement)
+                return [pageCurrent (self, tableId), rowIndex]
+        if (pageCurrent (self, tableId) == pageTotal) and pageTotal > 1:
+            self.driver.find_element(By.CSS_SELECTOR, "#" + tableId + " .first").click()
+        elif (pageCurrent (self, tableId) != pageTotal) and pageTotal > 1:
+            self.driver.find_element(By.CSS_SELECTOR, "#" + tableId + " .next").click()
+    return [-1, -1]
+
+    
+def getElementByPositionCol (self, tableId, position , colName):
+    tableCols = self.driver.find_elements(By.XPATH,"//table[@id=\'" + tableId + "_head\']/thead/tr/th")
+    tableColsCount = len(tableCols)
+    colIndex = 0
+    for tableCol in range(tableColsCount):
+        testCol = tableCols[tableCol].get_attribute("name")
+        if testCol == colName:
+            colIndex = tableCol + 1
+            break
+    pageIndex = position[0]
+    rowIndex = position[1]
+    if pageIndex != pageCurrent (self, tableId):
+        self.driver.find_element(By.CSS_SELECTOR, "#" + tableId + " > .pagination > input").click()
+        self.driver.find_element(By.CSS_SELECTOR, "#" + tableId + " > .pagination > input").send_keys(str(pageIndex))
+        self.driver.find_element(By.CSS_SELECTOR, "#" + tableId + " > .pagination > input").send_keys(Keys.ENTER)
+        #element = self.driver.find_element(By.XPATH, "//table[@id=\'" + tableId + "_body\']/tbody/tr[" + str(rowIndex) + "]/td[" + str(colIndex) + "]/a")
+    for retryInd in range (retryCount):
+        try:
+            element = self.driver.find_element(By.XPATH, "//table[@id=\'" + tableId + "_body\']/tbody/tr[" + str(rowIndex) + "]/td[" + str(colIndex) + "]")
+            return element
+        except NoSuchElementException:
+            if retryInd < retryCount-1:
+                continue
+            else:
+                raise NoSuchElementException
+
+def getPositionByColNoPage (self, tableId, colName, matchValue):
+    tableCols = self.driver.find_elements(By.XPATH,"//table[@id=\'" + tableId + "_head\']/thead/tr/th")
+    tableColsCount = len(tableCols)
+    colIndex = 0
+    rowIndex = 0
+    for tableCol in range(tableColsCount):
+        testCol = tableCols[tableCol].get_attribute("name")
+        if testCol == colName:
+            colIndex = tableCol + 1
+            break
+    tableRows = self.driver.find_elements(By.XPATH,"//table[@id=\'" + tableId + "_body\']/tbody/tr")
+    tableRowsCount = len(tableRows)
+    for tableRow in range(tableRowsCount):
+        rowIndex = tableRow + 1
+        testElement = self.driver.find_element(By.XPATH, "//table[@id=\'" + tableId + "_body\']/tbody/tr[" + str(rowIndex) + "]/td[" + str(colIndex) + "]/a")
+        testValue = testElement.text
+        if testValue == matchValue:
+            #testElement.click()
+            return rowIndex
+
+def getPositionByColNoPageAndClick (self, tableId, colName, matchValue):
+    tableCols = self.driver.find_elements(By.XPATH,"//table[@id=\'" + tableId + "_head\']/thead/tr/th")
+    tableColsCount = len(tableCols)
+    colIndex = 0
+    rowIndex = 0
+    for tableCol in range(tableColsCount):
+        testCol = tableCols[tableCol].get_attribute("name")
+        if testCol == colName:
+            colIndex = tableCol + 1
+            break
+    tableRows = self.driver.find_elements(By.XPATH,"//table[@id=\'" + tableId + "_body\']/tbody/tr")
+    tableRowsCount = len(tableRows)
+    for tableRow in range(tableRowsCount):
+        rowIndex = tableRow + 1
+        testElement = self.driver.find_element(By.XPATH, "//table[@id=\'" + tableId + "_body\']/tbody/tr[" + str(rowIndex) + "]/td[" + str(colIndex) + "]/a")
+        testValue = testElement.text
+        if testValue == matchValue:
+            testElement.click()
+            return rowIndex
+
+def getElementByPositionColNoPage (self, tableId, rowIndex , colName):
+    tableCols = self.driver.find_elements(By.XPATH,"//table[@id=\'" + tableId + "_head\']/thead/tr/th")
+    tableColsCount = len(tableCols)
+    colIndex = 0
+    for tableCol in range(tableColsCount):
+        testCol = tableCols[tableCol].get_attribute("name")
+        if testCol == colName:
+            colIndex = tableCol + 1
+            break
+    rowIndex
+    #element = self.driver.find_element(By.XPATH, "//table[@id=\'" + tableId + "_body\']/tbody/tr[" + str(rowIndex) + "]/td[" + str(colIndex) + "]/a")
+    element = self.driver.find_element(By.XPATH, "//table[@id=\'" + tableId + "_body\']/tbody/tr[" + str(rowIndex) + "]/td[" + str(colIndex) + "]")
+    return element
+
+#Map Management: nodes left by the 3478 -> 3479 -> 3480 chain
+def findMapNodeByName(self, names):
+    # Exact (case-sensitive) match on the visible tree link text; By.LINK_TEXT fails on these
+    # special-character names, so compare the text of every node link instead.
+    for link in self.driver.find_elements(By.CSS_SELECTOR, "a.device_link"):
+        try:
+            if link.text.strip() in names and link.is_displayed():
+                return link
+        except Exception:
+            continue
+    return None
+
+
+def deleteSelectedMapNode(self):
+    self.driver.find_element(By.XPATH, "//*[@id=\"tab_content_tool\"]/div/div/div[2]/div[2]/input[@value=\"Edit\"]").click()
+    self.driver.find_element(By.XPATH, "//*[@id=\"tab_content_tool\"]/div/div/div[2]/div[2]/input[@value=\"Delete\"]").click()
+    WebDriverWait(self.driver, 180).until(EC.visibility_of_element_located((By.ID, "message_text")))
+    message = waitMessageText(self)
+    self.driver.find_element(By.CSS_SELECTOR, "#message_diag .button").click()
+    WebDriverWait(self.driver, 30).until(EC.invisibility_of_element_located((By.ID, "message_diag")))
+    WebDriverWait(self.driver, 180).until(EC.visibility_of_element_located((By.ID, "node_id_0")))
+    time.sleep(3)
+    return message
+
+
+def cleanupMapManagementNodes(self, submapNames, deviceIps):
+    # Delete devices (by IP) first, then the submaps (EMS checks submap names case-insensitively,
+    # so both the original and the 3479-modified name must be removed before 3478 creates it again)
+    for ip in deviceIps:
+        nodes = self.driver.find_elements(By.XPATH, f"//small[contains(.,'({ip})')]")
+        if nodes:
+            nodes[0].location_once_scrolled_into_view
+            nodes[0].click()
+            time.sleep(2)
+            print(f"cleanupMapManagementNodes: delete device {ip}: {deleteSelectedMapNode(self)}", flush=True)
+    for _ in range(len(submapNames)):
+        link = findMapNodeByName(self, submapNames)
+        if link is None:
+            break
+        name = link.text.strip()
+        link.location_once_scrolled_into_view
+        link.click()
+        time.sleep(2)
+        print(f"cleanupMapManagementNodes: delete submap {name!r}: {deleteSelectedMapNode(self)}", flush=True)
+
+
+#Schedule Result Summary Table
+def waitNewWindowHandle (self, timeout=30):
+    # A click that opens a new tab/window: wait for it instead of reading window_handles[1] at once
+    try:
+        WebDriverWait(self.driver, timeout, poll_frequency=0.5).until(lambda driver: len(driver.window_handles) > 1)
+    except TimeoutException:
+        pass
+    return self.driver.window_handles[1]
+
+def setScheduleName (self, name):
+    # Changing schedule_type redraws the form and may wipe a name typed too early;
+    # type it, wait a moment and re-type until the value stays.
+    locator = (By.ID, "schedule_name")
+    for attempt in range(5):
+        waitInput(self, locator, name)
+        time.sleep(1.5)
+        element = _firstUsable(self.driver, locator)
+        if element is not None and element.get_attribute("value") == name:
+            return
+        print(f"Schedule name was cleared, type again: attempt={attempt + 1}", flush=True)
+    raise AssertionError(f"Cannot keep schedule name {name!r} in the schedule form")
+
+def waitMessageText (self, timeout=30):
+    # The message dialog text is filled in asynchronously; wait until it has content.
+    def visibleText(driver):
+        for element in driver.find_elements(By.ID, "message_text"):
+            try:
+                if element.is_displayed() and element.text.strip():
+                    return element.text
+            except StaleElementReferenceException:
+                continue
+        return False
+    try:
+        return WebDriverWait(self.driver, timeout, poll_frequency=0.5).until(visibleText)
+    except TimeoutException:
+        return self.driver.find_element(By.ID, "message_text").text
+
+def getScheduleResultByCol (self, colName):
+    path = "//*[@id=\"modal_main_pane\"]/div[1]/table/thead/tr/th"
+    # Wait until the schedule result table header (with this column) is rendered
+    try:
+        WebDriverWait(self.driver, 60, poll_frequency=0.5, ignored_exceptions=_RETRY_EXCEPTIONS).until(
+            lambda driver: any(th.text.strip() == colName for th in driver.find_elements(By.XPATH, path))
+        )
+    except TimeoutException:
+        pass
+    tableCols = self.driver.find_elements(By.XPATH,path)
+    colIndex = 0
+    for tableCol in range(len(tableCols)):
+        testCol = self.driver.find_element(By.XPATH, path+"[" + str(tableCol+1) + "]").text.strip()
+        if testCol == colName:
+            colIndex = tableCol + 1
+            break
+    element = self.driver.find_element(By.XPATH, "//*[@id=\"modal_main_pane\"]/div[1]/table/tbody/tr/td[" + str(colIndex) + "]")
+    returnValue = element.text
+    return returnValue
+
+#Schedule Result Detail Table
+def getScheduleResultDetailListByCol (self, colName):
+    returnList = []
+    tableRows = self.driver.find_elements(By.XPATH, "//*[@id=\"schedule_result_detail_table\"]/tbody/tr")
+    rowInd = 0
+    rowCount = len(tableRows)
+    for rowInd in range(rowCount):
+        value = self.driver.find_element(By.XPATH, "//*[@id=\'schedule_result_detail_table\']/tbody/tr[" + str(rowInd+1) + "]/td[@class=\'" + colName + "\']").text.strip()
+        returnList.append(value)
+    return returnList
+
+#Schedule Ont Batch Table
+def getOntBatchTableValueByPositionCol (self, rowIndex , colName):
+    element = self.driver.find_element(By.XPATH, "//*[@id=\'schedule_ont_batch_table\']/tbody/tr[" + str(rowIndex) + "]/td[@class=\'" + colName + "\']")
+    returnValue = element.text
+    return returnValue
+
+# Check the element in the list are same value 
+def checkAllElementInListAre (testList, value):
+    return all(i == value for i in testList)
+
+# Check the element in the list are smaller than value 
+def checkAllElementInListPartialMatch (testList, value):
+    timeZone = " GMT(+8)"
+    patternStr = r'^\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}$'
+    if re.match(patternStr, value):
+        dateFormat = "%Y-%m-%d %H:%M:%S"
+        minTime = datetime.strptime(value, dateFormat)
+        maxTime = minTime + timedelta(seconds = 300)
+        return all(minTime <= datetime.strptime(i.partition(' (')[0], dateFormat) <= maxTime for i in testList)
+    else:
+        return all("Success" in i for i in testList)
+
+def clickBySlotPortOnt (self, deviceName, slotID, portID, ontID):
+    selectSlotID = "--" if slotID == "0" else slotID
+    tableCols = self.driver.find_elements(By.XPATH,"//div[@id=\"maintain_add_ont_table\"]/div[@class=\"zy_tr zy_tr_title\"]/div")
+    tableColsCount = len(tableCols)
+    tableRows = self.driver.find_elements(By.XPATH,"//div[@id=\"maintain_add_ont_table\"]/div")
+    tableRowsCount = len(tableRows)-1
+    colIndexOfName = 0
+    colIndexOfSlot = 0
+    colIndexOfPort = 0
+    colIndexOfOnt = 0
+    rowIndex = 0
+    for tableCol in range(tableColsCount):
+        testCol = tableCols[tableCol].text
+        match testCol:
+            case "Name":
+                colIndexOfName = tableCol + 1
+            case "Slot":
+                colIndexOfSlot = tableCol + 1
+            case "Port":
+                colIndexOfPort = tableCol + 1
+            case "ONT":
+                colIndexOfOnt = tableCol + 1
+    for tableRow in range(tableRowsCount):
+        rowIndex = tableRow + 2
+        testDeviceName = self.driver.find_element(By.XPATH,"//div[@id=\"maintain_add_ont_table\"]/div[" + str(rowIndex) + "]/div[" + str(colIndexOfName) + "]").text
+        testSlotID = self.driver.find_element(By.XPATH,"//div[@id=\"maintain_add_ont_table\"]/div[" + str(rowIndex) + "]/div[" + str(colIndexOfSlot) + "]").text
+        testPortID = self.driver.find_element(By.XPATH,"//div[@id=\"maintain_add_ont_table\"]/div[" + str(rowIndex) + "]/div[" + str(colIndexOfPort) + "]").text
+        testOntID = self.driver.find_element(By.XPATH,"//div[@id=\"maintain_add_ont_table\"]/div[" + str(rowIndex) + "]/div[" + str(colIndexOfOnt) + "]").text
+        if testDeviceName == deviceName and testSlotID == selectSlotID and testPortID == portID and testOntID == ontID:
+            self.driver.find_element(By.XPATH, "//label[@for=\"ont_fw_upgrade_devTable_checkbox2_" + str(tableRow) + "\"]").location_once_scrolled_into_view
+            self.driver.find_element(By.XPATH, "//label[@for=\"ont_fw_upgrade_devTable_checkbox2_" + str(tableRow) + "\"]").click()
+            time.sleep(3)
+            break
+
+def clickBySNPW (self, sn, pw):
+    tableCols = self.driver.find_elements(By.XPATH,"//div[@id=\"provision_select_ont_table\"]/div[@class=\"zy_tr zy_tr_title\"]/div")
+    tableColsCount = len(tableCols)
+    tableRows = self.driver.find_elements(By.XPATH,"//div[@id=\"provision_select_ont_table\"]/div")
+    tableRowsCount = len(tableRows)-1
+    rowIndex = 0
+    for tableCol in range(tableColsCount):
+        testCol = tableCols[tableCol].text
+        match testCol:
+            case "SN":
+                colIndexOfSN = tableCol + 1
+            case "Password":
+                colIndexOfPW = tableCol + 1
+    for tableRow in range(tableRowsCount):
+        rowIndex = tableRow + 2
+        testSN = self.driver.find_element(By.XPATH,"//div[@id=\"provision_select_ont_table\"]/div[" + str(rowIndex) + "]/div[" + str(colIndexOfSN) + "]").text
+        testPW = self.driver.find_element(By.XPATH,"//div[@id=\"provision_select_ont_table\"]/div[" + str(rowIndex) + "]/div[" + str(colIndexOfPW) + "]").text
+        if testSN == sn and testPW == pw:
+            self.driver.find_element(By.XPATH, "//label[@for=\"provision_select_ont_table_checkbox" + str(tableRow+1) + "\"]").location_once_scrolled_into_view
+            self.driver.find_element(By.XPATH, "//label[@for=\"provision_select_ont_table_checkbox" + str(tableRow+1) + "\"]").click()
+            time.sleep(3)
+            return True
+    return False
+
+def clickBySlotPort (self, slot, port):
+    tableCols = self.driver.find_elements(By.XPATH,"//div[@id=\"provision_select_ge_table\"]/div[@class=\"zy_tr zy_tr_title\"]/div")
+    tableColsCount = len(tableCols)
+    tableRows = self.driver.find_elements(By.XPATH,"//div[@id=\"provision_select_ge_table\"]/div")
+    tableRowsCount = len(tableRows)-1
+    rowIndex = 0
+    colIndexOfSlot = 0
+    colIndexOfPort = 0
+    for tableCol in range(tableColsCount):
+        testCol = tableCols[tableCol].text
+        match testCol:
+            case "Slot":
+                colIndexOfSlot = tableCol + 1
+            case "Port":
+                colIndexOfPort = tableCol + 1
+    if colIndexOfSlot == 0 or colIndexOfPort == 0:
+        return False
+    for tableRow in range(tableRowsCount):
+        rowIndex = tableRow + 2
+        testSlot = self.driver.find_element(By.XPATH,"//div[@id=\"provision_select_ge_table\"]/div[" + str(rowIndex) + "]/div[" + str(colIndexOfSlot) + "]").text
+        testPort = self.driver.find_element(By.XPATH,"//div[@id=\"provision_select_ge_table\"]/div[" + str(rowIndex) + "]/div[" + str(colIndexOfPort) + "]").text
+        if testSlot == slot and testPort == port:
+            self.driver.find_element(By.XPATH, "//label[@for=\"provision_select_ge_table_checkbox" + str(tableRow+1) + "\"]").click()
+            time.sleep(3)
+            return True
+    return False
+
+def clickOntInMap (self, ontID):
+    tableCols = self.driver.find_elements(By.XPATH,"//div[@id=\"ont_map_ont_table\"]/div[@class=\"zy_tr zy_tr_title\"]/div")
+    tableColsCount = len(tableCols)
+    tableRows = self.driver.find_elements(By.XPATH,"//div[@id=\"ont_map_ont_table\"]/div")
+    tableRowsCount = len(tableRows)-1
+    colIndexOfOnt = 0
+    rowIndex = 0
+    for tableCol in range(tableColsCount):
+        testCol = tableCols[tableCol].text
+        if testCol == "ONT ID":
+           colIndexOfOnt = tableCol + 1
+    for tableRow in range(tableRowsCount):
+        rowIndex = tableRow + 2
+        testOntID = self.driver.find_element(By.XPATH,"//div[@id=\"ont_map_ont_table\"]/div[" + str(rowIndex) + "]/div[" + str(colIndexOfOnt) + "]").text
+        if testOntID == ontID:
+            self.driver.find_element(By.XPATH, "//label[@for=\"ont_map_ont_checkbox" + str(tableRow+1) + "\"]").click()
+            time.sleep(3)
+            break
+
+
+def getAttributeValue (self, tableId, attributeName):
+    tableTRs = self.driver.find_elements(By.XPATH,"//table[@id=\'" + tableId + "\']/tr")
+    tableTRsCount = len(tableTRs)
+    for tableTR in range(tableTRsCount):
+        testTR = self.driver.find_element(By.XPATH, "//table[@id=\'" + tableId + "\']/tr[" + str(tableTR+1) + "]/th").text
+        if testTR == attributeName:
+            elementValue = self.driver.find_element(By.XPATH, "//table[@id=\'" + tableId + "\']/tr[" + str(tableTR+1) + "]/td").text
+            return elementValue
+
+def deleteAutoMaxFileIfTableFull (self, prfType, fullSize):
+    openProfilePage(self, prfType)
+    while (int(self.driver.find_element(By.ID, "table_total_data_profile_table").text.strip(" Total data:")) >= fullSize):
+        randomNo = random.randint(1, 3000)
+        #print (randomNo)
+        randomPro = "Auto_max_" + str(randomNo)
+        deleteFileIfExisted (self, prfType, randomPro)
+    return
+
+def deleteFileIfExisted (self, prfType, fileName):
+    print(f"Delete profile if it exists: type={prfType}, name={fileName}", flush=True)
+    openProfilePage(self, prfType)
+    entryPosition = getPositionByColNextSort (self, "profile_table", "Name", fileName)
+    if entryPosition !=[-1, -1]:
+        time.sleep (1)
+        waitPageIdle(self)
+        clickElementWhenReady(self, getElementByPositionCol(self, "profile_table", entryPosition , "Checkbox").find_element(By.TAG_NAME, "label"))
+        waitClick(self, (By.CSS_SELECTOR, "#i_action_delete > a"))
+        messageText = WebDriverWait(self.driver, 30).until(
+            lambda driver: next((
+                element.text.strip()
+                for element in driver.find_elements(By.ID, "message_text")
+                if element.is_displayed() and element.text.strip()
+            ), False)
+        )
+        print(
+            f"Delete profile result: type={prfType}, name={fileName}, "
+            f"message={messageText!r}",
+            flush=True,
+        )
+        messageButton = WebDriverWait(self.driver, 30).until(
+            lambda driver: next((
+                element
+                for element in driver.find_elements(By.CSS_SELECTOR, "#message_diag .button")
+                if element.is_displayed() and element.is_enabled()
+            ), False)
+        )
+        self.driver.execute_script(
+            "arguments[0].scrollIntoView({block: 'center'});", messageButton
+        )
+        try:
+            messageButton.click()
+        except ElementNotInteractableException:
+            self.driver.execute_script("arguments[0].click();", messageButton)
+        WebDriverWait(self.driver, 30).until(
+            lambda driver: not any(
+                element.is_displayed()
+                for element in driver.find_elements(By.CSS_SELECTOR, "#message_diag .button")
+            )
+        )
+        return "Success" in messageText
+    else:
+        print(
+            f"Profile does not exist: type={prfType}, name={fileName}",
+            flush=True,
+        )
+        return True
+
+def deleteFileListIfExisted (self, prfType, fileName, count):
+    fileList = [fileName + str(i) for i in range(1,count+1)]
+    for prf in fileList:
+        deleteFileIfExisted(self, prfType, prf)
+    return
+
+def checkPrfExisted (self, prfType, fileName):
+    openProfilePage(self, prfType)
+    entryPosition = getPositionByColNextSort (self, "profile_table", "Name", fileName)
+    if entryPosition == [-1,-1]: return False
+    else: return True
+
+def waitElementTextWithRefresh (self, elementLocator, text, refreshElement, time):
+    for timeInd in range(time):
+        try:
+            refreshElement.click()
+        except (ElementClickInterceptedException, ElementNotInteractableException):
+            # Page is still loading; just check the text again on this round.
+            pass
+        try:
+            WebDriverWait(self.driver, 1).until(EC.text_to_be_present_in_element(elementLocator, text))
+            return True
+        except TimeoutException:
+            if timeInd < time-1:
+                continue
+            else:
+                return False
+
+# Delete provision service with profile
+def deleteServiceWithProfile (self, profileName):
+    queryOntServiceBy(self, "provision_filter_ont_template_checkbox", "provision_filter_ont_template_text", profileName)
+    deleteAllQueriedOntService(self)
+    return
+
+
+def deleteGeServiceWithProfile (self, profileName):
+    queryGeServiceBy(self, [("provision_filter_ge_template_checkbox", "provision_filter_ge_template_text", profileName)])
+    deleteAllQueriedOntService(self)
+    return
+
+# Delete provision service with service ont sn
+def deleteServiceWithSn (self, sn):
+    queryOntServiceBy(self, "provision_filter_ont_sn_checkbox", "provision_filter_ont_sn_text", sn)
+    deleteAllQueriedOntService(self)
+    return
+
+
+def deleteServiceWithPort (self, dutIp, geInfo):
+    queryGeServiceBy(self, geServicePortConditions(dutIp, geInfo))
+    # Delete only when the port has a service
+    if not tableIsEmpty(self, "provision_service_table"):
+        waitClick(self, (By.CSS_SELECTOR, "#provision_service_table_head label"))
+        waitClick(self, (By.CSS_SELECTOR, "#provision_service_delete > a"))
+        clickUntilHidden(self, (By.CSS_SELECTOR, "#message_diag .button"))
+        time.sleep(2)
+        waitPageIdle(self)
+    return
+
+# Create provision service with service ont sn pwd and profile
+def createServiceWithIpSnPwdProfile (self, ip, sn, pwd, profileName):
+    openOntServicePage(self)
+    waitClick(self, (By.CSS_SELECTOR, "#provision_service_create > a"))
+    waitClick(self, (By.XPATH, "//input[@value='Select ONT']"))
+    waitClick(self, (By.XPATH, "//label[@for=\"provision_select_ont_ip_checkbox\"]"))
+    waitInput(self, (By.ID, "provision_select_ont_ip_text"), ip)
+    waitClick(self, (By.ID, "provision_select_ont_search_unregister_ont_btn"))
+    time.sleep (3)
+    waitPageIdle(self, 300)
+
+    # The unregistered ONT list is loaded asynchronously; poll until the ONT row is clicked.
+    def selectOntRow(driver):
+        if isPageLoading(self):
+            return False
+        try:
+            return clickBySNPW(self, sn, pwd)
+        except _RETRY_EXCEPTIONS:
+            return False
+    try:
+        WebDriverWait(self.driver, 120, poll_frequency=2).until(selectOntRow)
+    except TimeoutException as exc:
+        raise AssertionError(
+            f"ONT sn={sn!r} pwd={pwd!r} not found in Select ONT list of {ip}"
+        ) from exc
+    waitPageIdle(self, 300)
+    waitClick(self, (By.CSS_SELECTOR, "#modal_select_ont .modal-footer > .button"), 300)
+    waitHidden(self, (By.ID, "modal_select_ont"))
+    waitPageIdle(self)
+    time.sleep(2)
+    waitClick(self, (By.XPATH, "//td[contains(.,'{}')]"))
+    time.sleep(3)
+    waitClick(self, (By.CSS_SELECTOR, ".highlight-selected"))
+    time.sleep(3)
+    waitClick(self, (By.CSS_SELECTOR, ".highlight-selected"))
+    time.sleep(3)
+    waitClick(self, (By.XPATH, "//label[@for=\"provision_service_active_checkbox\"]"))
+    waitSelect(self, (By.ID, "provision_service_onttemplate_combbox"), profileName)
+    time.sleep(3)
+    waitPageIdle(self)
+    waitClick(self, (By.ID, "provision_save_service_btn"))
+    time.sleep(3)
+    waitClick(self, (By.XPATH, "//input[@value='Save' and not(@id='provision_save_service_btn')]"))
+    clickUntilHidden(self, (By.CSS_SELECTOR, "#message_diag .button"), None, 120)
+    time.sleep(3)
+    waitPageIdle(self)
+    return
+
+# Create provision service with service ont sn pwd and profile and wait
+def createServiceWithIpSnPwdProfileWait (self, ip, sn, pwd, profileName):
+    if self.driver.find_element(By.LINK_TEXT, "Provision").get_attribute("className") == "":
+        self.driver.find_element(By.LINK_TEXT, "Provision").click()
+        time.sleep (3)
+    if self.driver.find_element(By.LINK_TEXT, "Service").get_attribute("className") == "":
+        self.driver.find_element(By.LINK_TEXT, "Service").click()
+        time.sleep (3)
+    if self.driver.find_element(By.ID, "service_tab_ont").get_attribute("className") == "":
+        self.driver.find_element(By.ID, "service_tab_ont").click()
+        time.sleep (3)
+    self.driver.find_element(By.CSS_SELECTOR, "#provision_service_create > a").click()
+    self.driver.find_element(By.XPATH, "//input[@value=\'Select ONT\']").click()
+    time.sleep (3)
+    self.driver.find_element(By.XPATH, "//label[@for=\"provision_select_ont_ip_checkbox\"]").click()
+    self.driver.find_element(By.ID, "provision_select_ont_ip_text").send_keys(ip)
+    self.driver.find_element(By.ID, "provision_select_ont_search_unregister_ont_btn").click()
+    time.sleep (3)
+    clickBySNPW(self, sn, pwd)
+    self.driver.find_element(By.CSS_SELECTOR, "#modal_select_ont .modal-footer > .button").click()
+    time.sleep(3)
+    self.driver.find_element(By.XPATH, "//td[contains(.,\'{}\')]").click()
+    self.driver.find_element(By.CSS_SELECTOR, ".highlight-selected").click()
+    self.driver.find_element(By.CSS_SELECTOR, ".highlight-selected").click()
+    self.driver.find_element(By.XPATH, "//label[@for=\"provision_service_active_checkbox\"]").click()
+    Select(self.driver.find_element(By.ID, "provision_service_onttemplate_combbox")).select_by_visible_text(profileName)
+    time.sleep(5)
+    return
+
+# Create provision GE service with service port info and profile
+def createGeServiceWithPortProfile (self, dutIp, geInfo, profileName):
+    openGeServicePage(self)
+    waitClick(self, (By.CSS_SELECTOR, "#provision_service_create > a"))
+    waitClick(self, (By.XPATH, "//input[@value=\'Select Port\']"))
+    waitClick(self, (By.XPATH, "//label[@for=\"provision_select_ge_ip_checkbox\"]"))
+    waitInput(self, (By.ID, "provision_select_ge_ip_text"), dutIp)
+    waitClick(self, (By.ID, "provision_select_ge_search_btn"))
+    time.sleep (3)
+    waitPageIdle(self, 300)
+    # The port list is loaded asynchronously; retry until the port row is clicked
+    def selectPortRow(driver):
+        if isPageLoading(self):
+            return False
+        try:
+            return clickBySlotPort(self, geInfo[0], geInfo[1])
+        except _RETRY_EXCEPTIONS:
+            return False
+    try:
+        WebDriverWait(self.driver, 120, poll_frequency=2).until(selectPortRow)
+    except TimeoutException as exc:
+        raise AssertionError(f"GE port {geInfo[0]}-{geInfo[1]} not found in Select Port list of {dutIp}") from exc
+    waitClick(self, (By.CSS_SELECTOR, "#modal_select_ge .modal-footer > .button"), 120)
+    waitHidden(self, (By.ID, "modal_select_ge"))
+    waitPageIdle(self)
+    time.sleep(2)
+    cellLocator = (By.XPATH, "//div[@id=\'EditTable2\']/div[2]/table/tbody/tr/td[5]")
+    waitClick(self, cellLocator)
+    time.sleep(2)
+    actions = ActionChains(self.driver)
+    actions.double_click(waitUsable(self, cellLocator)).perform()
+    time.sleep(3)
+    waitClick(self, (By.XPATH, "//*[@id=\'EditTable2\']/div[2]/table/tbody/tr/td[5]/div/div[2]/div[2]/div[contains(.,\'" + profileName + "\')]"))
+    time.sleep(3)
+    waitClick(self, (By.XPATH, "//input[@value=\'Save\']"))
+    clickUntilHidden(self, (By.CSS_SELECTOR, "#message_diag .button"), None, 120)
+    time.sleep(3)
+    waitPageIdle(self)
+    return
+
+# Wait schedule result success
+def waitScheduleSuccess (self, entryPosition):
+    if self.driver.find_element(By.LINK_TEXT, "Maintenance").get_attribute("className") == "":
+        self.driver.find_element(By.LINK_TEXT, "Maintenance").click()
+        time.sleep (3)
+    if self.driver.find_element(By.LINK_TEXT, "Schedule").get_attribute("className") == "":
+        self.driver.find_element(By.LINK_TEXT, "Schedule").click()
+        time.sleep (3)
+    scheduleResultLocatorStr = getLocatorXpathStrByPositionCol(self, "schedule_table", entryPosition , "Result_Hyperlink")
+    waitElementTextWithRefresh(self, (By.XPATH, scheduleResultLocatorStr), "Success", self.driver.find_element(By.CSS_SELECTOR, "#i_action_refresh > a"), 600 )
+    return
+
+# Wait filed update to special status
+def waitFiledUpdate (self, tableId, entryPosition, colName, status, refreshElement):
+    scheduleResultLocatorStr = getLocatorXpathStrByPositionCol(self, tableId, entryPosition , colName)
+    waitElementTextWithRefresh(self, (By.XPATH, scheduleResultLocatorStr), status, refreshElement, 600 )
+    return
+
+# Wait the ont id update in DB
+def waitOntIdUpdate (self, sn, ontid):
+    def clickFresh(locator, timeout=30):
+        def clickWhenReady(driver):
+            try:
+                element = next((
+                    candidate
+                    for candidate in driver.find_elements(*locator)
+                    if candidate.is_displayed() and candidate.is_enabled()
+                ), None)
+                if element is None:
+                    return False
+                element.click()
+                return True
+            except (
+                NoSuchElementException,
+                ElementNotInteractableException,
+                StaleElementReferenceException,
+            ):
+                return False
+
+        WebDriverWait(self.driver, timeout, poll_frequency=0.5).until(
+            clickWhenReady
+        )
+
+    def openMenuIfInactive(linkText):
+        def openWhenReady(driver):
+            try:
+                element = next((
+                    candidate
+                    for candidate in driver.find_elements(By.LINK_TEXT, linkText)
+                    if candidate.is_displayed() and candidate.is_enabled()
+                ), None)
+                if element is None:
+                    return False
+                if element.get_attribute("className") == "":
+                    element.click()
+                return True
+            except (
+                NoSuchElementException,
+                ElementNotInteractableException,
+                StaleElementReferenceException,
+            ):
+                return False
+
+        WebDriverWait(self.driver, 30, poll_frequency=0.5).until(openWhenReady)
+
+    openOntInventoryPage(self)
+
+    filterPanelState = {
+        "click_count": 0,
+        "last_click_time": 0.0,
+    }
+
+    def ensureFilterPanelOpen(driver):
+        try:
+            serialInputs = [
+                element
+                for element in driver.find_elements(By.ID, "serial_Allont")
+                if element.is_displayed() and element.is_enabled()
+            ]
+            if serialInputs:
+                return True
+
+            # The EMS page occasionally ignores the first Filter click while
+            # its table is still being redrawn.  Re-locate and retry the
+            # toggle instead of waiting forever after a single click.
+            now = time.monotonic()
+            if now - filterPanelState["last_click_time"] < 3:
+                return False
+            filterToggle = next((
+                element
+                for element in driver.find_elements(
+                    By.CSS_SELECTOR, "#i_action_filter > a"
+                )
+                if element.is_displayed() and element.is_enabled()
+            ), None)
+            if filterToggle is None:
+                return False
+            try:
+                filterToggle.click()
+            except (
+                ElementClickInterceptedException,
+                ElementNotInteractableException,
+            ):
+                driver.execute_script("arguments[0].click();", filterToggle)
+            filterPanelState["click_count"] += 1
+            filterPanelState["last_click_time"] = now
+            print(
+                "Open Inventory ONT filter panel: "
+                f"attempt={filterPanelState['click_count']}",
+                flush=True,
+            )
+            return False
+        except (
+            NoSuchElementException,
+            ElementClickInterceptedException,
+            ElementNotInteractableException,
+            StaleElementReferenceException,
+        ):
+            return False
+
+    try:
+        WebDriverWait(self.driver, 45, poll_frequency=0.5).until(
+            ensureFilterPanelOpen
+        )
+    except TimeoutException as exc:
+        raise AssertionError(
+            "Inventory ONT filter panel did not open: "
+            f"serial input 'serial_Allont' was not visible after "
+            f"{filterPanelState['click_count']} Filter click attempts"
+        ) from exc
+
+    def enterSerialNumber(driver):
+        try:
+            element = next((
+                candidate
+                for candidate in driver.find_elements(By.ID, "serial_Allont")
+                if candidate.is_displayed() and candidate.is_enabled()
+            ), None)
+            if element is None:
+                return False
+            element.clear()
+            element.send_keys(sn)
+            return element.get_attribute("value") == sn
+        except (
+            NoSuchElementException,
+            ElementNotInteractableException,
+            StaleElementReferenceException,
+        ):
+            return False
+
+    WebDriverWait(self.driver, 30, poll_frequency=0.5).until(enterSerialNumber)
+    clickFresh((By.ID, "inventory_allont_btn"))
+    time.sleep (3)
+    expectedOntId = str(ontid)
+    lastObserved = {
+        "count": None,
+        "sn": None,
+        "ontid": None,
+    }
+
+    def uniqueSnWithExpectedOntId(driver):
+        try:
+            rowCount = totalData(self, "ont_inventory_div")
+            lastObserved["count"] = rowCount
+            lastObserved["sn"] = None
+            lastObserved["ontid"] = None
+            if rowCount == 1:
+                entryPosition = [1, 1]
+                actualSn = getElementByPositionCol(
+                    self, "ont_inventory_div", entryPosition, "sn"
+                ).text.strip()
+                actualOntId = getElementByPositionCol(
+                    self, "ont_inventory_div", entryPosition, "ONT"
+                ).text.strip()
+                lastObserved["sn"] = actualSn
+                lastObserved["ontid"] = actualOntId
+                if actualSn == sn and actualOntId == expectedOntId:
+                    return True
+        except (
+            NoSuchElementException,
+            ElementNotInteractableException,
+            StaleElementReferenceException,
+        ):
+            # Inventory is being redrawn while the database update is in progress.
+            pass
+
+        refreshButtons = [
+            element
+            for element in driver.find_elements(By.ID, "i_action_refresh")
+            if element.is_displayed() and element.is_enabled()
+        ]
+        if refreshButtons:
+            refreshButtons[0].click()
+        return False
+
+    try:
+        WebDriverWait(self.driver, 300, poll_frequency=3).until(
+            uniqueSnWithExpectedOntId
+        )
+    except TimeoutException as exc:
+        raise AssertionError(
+            "Inventory/ONT did not converge to one unique matching row. "
+            f"expected sn={sn!r}, ontid={expectedOntId!r}; "
+            f"last observed count={lastObserved['count']}, "
+            f"sn={lastObserved['sn']!r}, ontid={lastObserved['ontid']!r}"
+        ) from exc
+    return
+
+# Wait Ont service success with sn
+def getOntInfoAfterServiceSuccess (self, sn):
+    queryOntServiceBy(self, "provision_filter_ont_sn_checkbox", "provision_filter_ont_sn_text", sn)
+    serviceResultLocatorStr = getLocatorXpathStrByPositionCol(self, "provision_service_table", [1,1] , "state")
+    waitElementTextWithRefresh(self, (By.XPATH, serviceResultLocatorStr), "Success", waitUsable(self, (By.ID, "provision_service_refresh")), 300 )
+    waitPageIdle(self)
+    waitClick(self, (By.XPATH, serviceResultLocatorStr))
+    time.sleep (3)
+    # Wait until the result dialog is filled in
+    try:
+        WebDriverWait(self.driver, 60, poll_frequency=0.5, ignored_exceptions=_RETRY_EXCEPTIONS).until(
+            lambda driver: driver.find_element(By.ID, "provision_service_result_ont").get_attribute("value") not in ("", None)
+        )
+    except TimeoutException:
+        print(f"Service result dialog of sn={sn!r} has no ONT ID after 60s", flush=True)
+    ontSlot = self.driver.find_element(By.ID, "provision_service_result_slot").get_attribute("value")
+    ontPort = self.driver.find_element(By.ID, "provision_service_result_port").get_attribute("value")
+    ontID = self.driver.find_element(By.ID, "provision_service_result_ont").get_attribute("value")
+    closeServiceResultDialog(self)
+    ontInfo = [ontSlot, ontPort, ontID]
+    return ontInfo
+
+def waitGeServiceSuccess (self, dutIp, geInfo):
+    queryGeServiceBy(self, geServicePortConditions(dutIp, geInfo))
+    serviceResultLocatorStr = getLocatorXpathStrByPositionCol(self, "provision_service_table", [1,1] , "state")
+    waitElementTextWithRefresh(self, (By.XPATH, serviceResultLocatorStr), "Success", waitUsable(self, (By.ID, "provision_service_refresh")), 300 )
+    waitPageIdle(self)
+    waitClick(self, (By.XPATH, serviceResultLocatorStr))
+    time.sleep (3)
+    closeServiceResultDialog(self)
+    return
+
+def filterOntInventory(self, dutIp, ontInfo):
+    openOntInventoryPage(self)
+    # "#i_action_filter > a" toggles the filter panel; only click it when closed.
+    for attempt in range(3):
+        if _firstUsable(self.driver, (By.ID, "ip_Allont")) is not None:
+            break
+        waitClick(self, (By.CSS_SELECTOR, "#i_action_filter > a"))
+        try:
+            waitUsable(self, (By.ID, "ip_Allont"), 10)
+            break
+        except AssertionError:
+            print(f"Open Inventory ONT filter panel retry: attempt={attempt + 1}", flush=True)
+    waitClick(self, (By.ID, "inventory_allont_clear_btn"))
+    waitInput(self, (By.ID, "ip_Allont"), dutIp)
+    if ontInfo[0] == "--": waitInput(self, (By.ID, "slot_Allont"), "0")
+    else: waitInput(self, (By.ID, "slot_Allont"), ontInfo[0])
+    waitInput(self, (By.ID, "port_Allont"), ontInfo[1])
+    waitInput(self, (By.ID, "ontid_Allont"), ontInfo[2])
+    waitClick(self, (By.ID, "inventory_allont_btn"))
+    time.sleep(2)
+    waitPageIdle(self)
+    return
+
+def modifyProfile (self, prfType, fileName):
+    if self.driver.find_element(By.LINK_TEXT, "Provision").get_attribute("className") == "":
+        self.driver.find_element(By.LINK_TEXT, "Provision").click()
+        time.sleep (3)
+    if self.driver.find_element(By.LINK_TEXT, "Profile").get_attribute("className") == "":
+        self.driver.find_element(By.LINK_TEXT, "Profile").click()
+        time.sleep (3)
+    if self.driver.find_element(By.XPATH, "//option[. = \'" + prfType + "\']").is_selected() != True:
+        Select(self.driver.find_element(By.ID, "profile_filtertype")).select_by_visible_text(prfType)
+        time.sleep (3)
+    try:
+        entryPosition = getPositionByCol(self, "profile_table", "Name", fileName)
+        getElementByPositionCol(self, "profile_table", entryPosition , "Modify").click()
+        time.sleep(3)
+    except NoSuchElementException:
+        pass
+    return
+
+def createProfile (self, prfType, fileName, _loadAttempt=0):
+    print(f"Create profile: type={prfType}, name={fileName}", flush=True)
+    openMenu(self, "Provision")
+    openMenu(self, "Profile")
+    waitSelect(self, (By.ID, "profile_filtertype"), prfType)
+    waitPageIdle(self)
+    waitClick(self, (By.CSS_SELECTOR, "#i_action_create_collector > a"))
+    profileNameInput = WebDriverWait(self.driver, 60).until(
+        lambda driver: next((
+            element
+            for element in driver.find_elements(By.ID, "profile_name")
+            if element.is_displayed() and element.is_enabled()
+        ), False)
+    )
+    profileNameInput.clear()
+    profileNameInput.send_keys(fileName)
+
+    requiredFieldsByProfileType = {
+        "ONT QoS Bandwidth Profile": (
+            "bwprofile_sir",
+            "bwprofile_air",
+            "bwprofile_pir",
+        ),
+    }
+    requiredFieldNames = requiredFieldsByProfileType.get(prfType, ())
+    if requiredFieldNames:
+        try:
+            WebDriverWait(self.driver, 60, poll_frequency=0.5).until(
+                lambda driver: all(
+                    any(
+                        element.is_displayed() and element.is_enabled()
+                        for element in driver.find_elements(By.NAME, fieldName)
+                    )
+                    for fieldName in requiredFieldNames
+                )
+            )
+        except TimeoutException:
+            if _loadAttempt >= 1:
+                raise AssertionError(
+                    f"Profile form did not finish loading: type={prfType}, "
+                    f"name={fileName}, missing/unavailable fields="
+                    f"{', '.join(requiredFieldNames)}"
+                )
+            print(
+                f"Profile form load timeout; refresh and retry once: "
+                f"type={prfType}, name={fileName}",
+                flush=True,
+            )
+            self.driver.refresh()
+            WebDriverWait(self.driver, 60).until(
+                lambda driver: driver.execute_script(
+                    "return document.readyState"
+                ) == "complete"
+            )
+            return createProfile(self, prfType, fileName, _loadAttempt + 1)
+    return
+
+def createProfileTest (self, prfType, fileName):
+    #deleteFileIfExisted (self, prfType, fileName)
+    if self.driver.find_element(By.LINK_TEXT, "Provision").get_attribute("className") == "":
+        self.driver.find_element(By.LINK_TEXT, "Provision").click()
+        time.sleep (3)
+    if self.driver.find_element(By.LINK_TEXT, "Profile").get_attribute("className") == "":
+        self.driver.find_element(By.LINK_TEXT, "Profile").click()
+        time.sleep (3)
+    if self.driver.find_element(By.XPATH, "//option[. = \'" + prfType + "\']").is_selected() != True:
+        Select(self.driver.find_element(By.ID, "profile_filtertype")).select_by_visible_text(prfType)
+        time.sleep (3)
+    self.driver.find_element(By.CSS_SELECTOR, "#i_action_create_collector > a").click()
+    time.sleep(3)
+    #self.driver.find_element(By.ID, "provistion_profile_panel").screenshot("./report/CreateProf.png")
+    self.driver.find_element(By.ID, "profile_name").send_keys(fileName)
+
+def saveProfile (self):
+    profileName = next((
+        element.get_attribute("value") or element.text
+        for element in self.driver.find_elements(By.ID, "profile_name")
+        if element.is_displayed()
+    ), "<unknown>")
+    print(f"Save profile: name={profileName}", flush=True)
+
+    saveButton = WebDriverWait(self.driver, 30).until(
+        lambda driver: next((
+            element
+            for element in driver.find_elements(By.XPATH, "//input[@value='Save']")
+            if element.is_displayed() and element.is_enabled()
+        ), False)
+    )
+    self.driver.execute_script(
+        "arguments[0].scrollIntoView({block: 'center'});", saveButton
+    )
+    try:
+        saveButton.click()
+    except ElementNotInteractableException:
+        self.driver.execute_script("arguments[0].click();", saveButton)
+
+    messageText = WebDriverWait(self.driver, 30).until(
+        lambda driver: next((
+            element.text.strip()
+            for element in driver.find_elements(By.ID, "message_text")
+            if element.is_displayed() and element.text.strip()
+        ), False)
+    )
+    print(
+        f"Save profile result: name={profileName}, message={messageText!r}",
+        flush=True,
+    )
+    messageButton = WebDriverWait(self.driver, 30).until(
+        lambda driver: next((
+            element
+            for element in driver.find_elements(By.CSS_SELECTOR, "#message_diag .button")
+            if element.is_displayed() and element.is_enabled()
+        ), False)
+    )
+    self.driver.execute_script(
+        "arguments[0].scrollIntoView({block: 'center'});", messageButton
+    )
+    try:
+        messageButton.click()
+    except ElementNotInteractableException:
+        self.driver.execute_script("arguments[0].click();", messageButton)
+    WebDriverWait(self.driver, 30).until(
+        lambda driver: not any(
+            element.is_displayed()
+            for element in driver.find_elements(By.CSS_SELECTOR, "#message_diag .button")
+        )
+    )
+    return "Success" in messageText
+
+
+async def cliShowOntConfig(dutIp, dutAdminName, dutAdminPwd, serviceOntFlag, ontInfo):
+    returnList = []
+    reader, writer = await telnetlib3.open_connection(dutIp, 23)
+    resultOutput = await reader.readuntil(b": ")
+    writer.write(dutAdminName + "\n")
+    await writer.drain()
+    resultOutput = await reader.readuntil(b"Password: ")
+    writer.write(dutAdminPwd + "\n")
+    await writer.drain()
+    resultOutput = await reader.readuntil(b"# ")
+    if serviceOntFlag == "xont":
+        showCommand = "show in remote xont " + ontInfo[0] + "-" + ontInfo[1] + "-" + ontInfo[2] +" config\n"
+        writer.write(showCommand)
+        await writer.drain()
+        resultOutput = await reader.readuntil(b"# ")
+        writer.close()
+        resultStr = resultOutput.decode()
+        resultList = resultStr.splitlines()
+        resultList = [re.sub(r"^.* :", "", i,flags = re.DOTALL) for i in resultList]
+        resultList = [i.strip() for i in resultList]
+        del resultList [0:3]
+        del resultList [-1]
+        returnList = resultList
+    else:
+        if serviceOntFlag == "ont":
+            showCommand = "show in remote ont " + ontInfo[0] + "-" + ontInfo[1] + "-" + ontInfo[2] +" config\n"
+        else :
+            showCommand = "show remote ont ont-" + ontInfo[1] + "-" + ontInfo[2] + " config\n"
+        writer.write(showCommand)
+        await writer.drain()
+        resultOutput = await reader.readuntil(b"# ")
+        writer.close()
+        resultStr = resultOutput.decode()
+        resultList = resultStr.split("----------------------+------------------------------------------------------------------------------------------------------")
+        del resultList [0:2]
+        del resultList [-1]
+        resultList = [i.split("|") for i in resultList]
+        resultList = [[j.strip() for j in i] for i in resultList]
+        resultList = [[re.sub(r"\r\n +", "", j,flags = re.DOTALL) for j in i] for i in resultList]
+        returnList = resultList
+    return returnList
+
+async def cliShowOntFullConfig(dutIp, dutAdminName, dutAdminPwd, serviceOntFlag, ontInfo):
+    returnList = []
+    reader, writer = await telnetlib3.open_connection(dutIp, 23)
+    resultOutput = await reader.readuntil(b": ")
+    writer.write(dutAdminName + "\n")
+    await writer.drain()
+    resultOutput = await reader.readuntil(b"Password: ")
+    writer.write(dutAdminPwd + "\n")
+    await writer.drain()
+    resultOutput = await reader.readuntil(b"# ")
+    if serviceOntFlag == "xont":
+        showCommand = "show in remote xont " + ontInfo[0] + "-" + ontInfo[1] + "-" + ontInfo[2] +" config\n"
+        writer.write(showCommand)
+        await writer.drain()
+        resultOutput = await reader.readuntil(b"# ")
+        writer.close()
+        resultStr = resultOutput.decode()
+        resultList = resultStr.splitlines()
+        resultList = [re.sub(r"^.* :", "", i,flags = re.DOTALL) for i in resultList]
+        resultList = [i.strip() for i in resultList]
+        del resultList [0:3]
+        del resultList [-1]
+        returnList = resultList
+    else:
+        if serviceOntFlag == "ont":
+            showCommand = "show in remote ont " + ontInfo[0] + "-" + ontInfo[1] + "-" + ontInfo[2] +" config\n"
+        else :
+            showCommand = "show remote ont ont-" + ontInfo[1] + "-" + ontInfo[2] + " config\n"
+        writer.write(showCommand)
+        await writer.drain()
+        resultOutput = await reader.readuntil(b"# ")
+        writer.close()
+        resultStr = resultOutput.decode()
+        resultList = resultStr.split("----------------------+------------------------------------------------------------------------------------------------------")
+        del resultList [0:2]
+        del resultList [-1]
+        resultList = [re.split("\| (?!    |exit)", i) for i in resultList]
+        resultList = [[j.strip() for j in i] for i in resultList]
+        resultList = [[re.sub(r"\r\n +", "", j,flags = re.DOTALL) for j in i] for i in resultList]
+        resultList = [[re.sub(r"\| +", "\n ", j,flags = re.DOTALL) for j in i] for i in resultList]
+        returnList = resultList
+    return returnList
+
+async def cliShowTempProfile(dutIp, dutAdminName, dutAdminPwd, fileName):
+    returnList = []
+    reader, writer = await telnetlib3.open_connection(dutIp, 23)
+    resultOutput = await reader.readuntil(b": ")
+    writer.write(dutAdminName + "\n")
+    await writer.drain()
+    resultOutput = await reader.readuntil(b"Password: ")
+    writer.write(dutAdminPwd + "\n")
+    await writer.drain()
+    resultOutput = await reader.readuntil(b"# ")
+    showCommand = "show xpon template " + fileName + "\n"
+    writer.write(showCommand)
+    await writer.drain()
+    resultOutput = await reader.readuntil(b"# ")
+    writer.close()
+    resultStr = resultOutput.decode()
+    resultList = resultStr.splitlines()
+    del resultList [0:1]
+    del resultList [-1]
+    delItem = {""}
+    resultList = [i for i in resultList if i not in delItem]
+    resultList = [i.strip() for i in resultList]
+    returnList = resultList
+    return returnList
+
+async def cliShowAlarmProfile(dutIp, dutAdminName, dutAdminPwd, serviceOntFlag, fileName):
+    returnList = []
+    reader, writer = await telnetlib3.open_connection(dutIp, 23)
+    resultOutput = await reader.readuntil(b": ")
+    writer.write(dutAdminName + "\n")
+    await writer.drain()
+    resultOutput = await reader.readuntil(b"Password: ")
+    writer.write(dutAdminPwd + "\n")
+    await writer.drain()
+    resultOutput = await reader.readuntil(b"# ")
+    if serviceOntFlag == "ont-14":
+        showCommand = "show ont-alarm-profile " + fileName + "\n"
+        writer.write(showCommand)
+        await writer.drain()
+        resultOutput = await reader.readuntil(b"# ")
+        writer.close()
+        resultStr = resultOutput.decode()
+        resultList = resultStr.splitlines()
+        del resultList [0:5]
+        del resultList [-1]
+        del resultList [-1]
+        resultList = [i.strip() for i in resultList]
+        resultListLower = [re.sub(r"^.+\| Lower: ", "", i,flags = re.DOTALL) for i in resultList]
+        resultListLower = [re.sub(r" V.*| mA.*| degree.*| dBm.*", "", i,flags = re.DOTALL) for i in resultListLower]
+        resultListUpper = [re.sub(r"^.+\| Upper: ", "", i,flags = re.DOTALL) for i in resultList]
+        resultListUpper = [re.sub(r" V.*| mA.*| degree.*| dBm.*", "", i,flags = re.DOTALL) for i in resultListUpper]
+        returnList = resultListLower + resultListUpper
+    else:
+        if serviceOntFlag == "ont":
+            showCommand = "show gpon ont-alarm-profile " + fileName + "\n"
+        else :
+            showCommand = "show xpon ont-alarm-profile " + fileName + "\n"
+        writer.write(showCommand)
+        await writer.drain()
+        resultOutput = await reader.readuntil(b"# ")
+        writer.close()
+        resultStr = resultOutput.decode()
+        resultList = resultStr.splitlines()
+        del resultList [0:6]
+        del resultList [-1]
+        del resultList [-1]
+        del resultList [-1]
+        delItem = {""}
+        resultList = [i for i in resultList if i not in delItem]
+        resultList = [re.sub(r".*:  ", "", i,flags = re.DOTALL) for i in resultList]
+        resultList = [i.strip() for i in resultList]
+        resultList = [i.split() for i in resultList]
+        returnList = resultList[0]+resultList[1]
+    return returnList
+
+async def cliShowACLProfile(dutIp, dutAdminName, dutAdminPwd, serviceOntFlag, fileName):
+    returnList = []
+    showCommand = ""
+    reader, writer = await telnetlib3.open_connection(dutIp, 23)
+    resultOutput = await reader.readuntil(b": ")
+    writer.write(dutAdminName + "\n")
+    await writer.drain()
+    resultOutput = await reader.readuntil(b"Password: ")
+    writer.write(dutAdminPwd + "\n")
+    await writer.drain()
+    resultOutput = await reader.readuntil(b"# ")
+    match serviceOntFlag :
+        case "ont-14": showCommand = "show ont-acl-profile " + fileName + "\n"
+        case "ont": showCommand = "show gpon ont-acl-profile " + fileName + "\n"
+        case "xont": showCommand = "show xpon ont-acl-profile " + fileName + "\n"
+    writer.write(showCommand)
+    await writer.drain()
+    resultOutput = await reader.readuntil(b"# ")
+    writer.close()
+    resultStr = resultOutput.decode()
+    resultList = resultStr.splitlines()
+    startInd = 0
+    endInd = 0
+    for ind, result in enumerate(resultList):
+        if fileName in result: startInd = ind
+        if "Destination MAC address" in result: endInd = ind+1
+    resultList = resultList [startInd:endInd]
+    resultList = [re.sub(r".+\|.+\| ", "", i,flags = re.DOTALL) for i in resultList]
+    delItem = {""}
+    resultList = [i for i in resultList if i not in delItem]
+    resultList = [i.strip() for i in resultList]
+    returnList = resultList
+    return returnList
+
+async def cliShowOntProfile(dutIp, dutAdminName, dutAdminPwd, fileName):
+    returnList = []
+    reader, writer = await telnetlib3.open_connection(dutIp, 23)
+    resultOutput = await reader.readuntil(b": ")
+    writer.write(dutAdminName + "\n")
+    await writer.drain()
+    resultOutput = await reader.readuntil(b"Password: ")
+    writer.write(dutAdminPwd + "\n")
+    await writer.drain()
+    resultOutput = await reader.readuntil(b"# ")
+    showCommand = "show xpon ont-profile " + fileName + "\n"
+    writer.write(showCommand)
+    await writer.drain()
+    resultOutput = await reader.readuntil(b"# ")
+    writer.close()
+    resultStr = resultOutput.decode()
+    resultList = resultStr.split("+-----------------------------------------------------------------------------+")
+    del resultList [0:2]
+    del resultList [-1]
+    resultList = [i.split("|") for i in resultList]
+    resultList = [[j.strip() for j in i] for i in resultList]
+    resultList = [[re.sub(r"\r\n +", "", j,flags = re.DOTALL) for j in i] for i in resultList]
+    delItem = {""}
+    resultList = [[j for j in i if j not in delItem] for i in resultList]
+    resultList = [[re.sub(r"^([^:]*: *){1}", "", j,flags = re.DOTALL) for j in i] for i in resultList]
+    returnList = resultList
+    return returnList
+
+async def cliShowCmonProfile(dutIp, dutAdminName, dutAdminPwd, serviceOntFlag, fileName):
+    returnList = []
+    reader, writer = await telnetlib3.open_connection(dutIp, 23)
+    resultOutput = await reader.readuntil(b": ")
+    writer.write(dutAdminName + "\n")
+    await writer.drain()
+    resultOutput = await reader.readuntil(b"Password: ")
+    writer.write(dutAdminPwd + "\n")
+    await writer.drain()
+    resultOutput = await reader.readuntil(b"# ")
+    match serviceOntFlag:
+        case "ont-14": showCommand = "show voip-common-profile \n"
+        case "ont": showCommand = "show gpon voip-common-profile " + fileName + "\n"
+        case "xont": showCommand = "show xpon voip-common-profile " + fileName + "\n"
+    writer.write(showCommand)
+    await writer.drain()
+    resultOutput = await reader.readuntil(b"# ")
+    writer.close()
+    resultStr = resultOutput.decode()
+    regPattern = re.escape(fileName)
+    resultStr = re.sub(r"^.*"+regPattern, "", resultStr, flags = re.DOTALL)
+    resultList = resultStr.splitlines()
+    startStr = "min local port"
+    startInd = 0
+    endInd = 0
+    for ind, result in enumerate(resultList):
+        if startStr in result: startInd = ind
+        if "signal code" in result: 
+            endInd = ind+1
+            break
+    resultList = resultList [startInd:endInd]
+    resultList = [re.sub(r"^[^\|]+\|[^\|]+\| ", "", i,flags = re.DOTALL) for i in resultList]
+    resultList = [re.sub(r" +\| ", "", i,flags = re.DOTALL) for i in resultList]
+    returnList = resultList
+    return returnList
+
+async def cliShowDialProfile(dutIp, dutAdminName, dutAdminPwd, serviceOntFlag, fileName):
+    returnList = []
+    reader, writer = await telnetlib3.open_connection(dutIp, 23)
+    resultOutput = await reader.readuntil(b": ")
+    writer.write(dutAdminName + "\n")
+    await writer.drain()
+    resultOutput = await reader.readuntil(b"Password: ")
+    writer.write(dutAdminPwd + "\n")
+    await writer.drain()
+    resultOutput = await reader.readuntil(b"# ")
+    match serviceOntFlag:
+        case "ont-14": showCommand = "show voip-dial-plan \n"
+        case "ont": showCommand = "show gpon voip-dial-plan " + fileName + "\n"
+        case "xont": showCommand = "show xpon voip-dial-plan " + fileName + "\n"
+    writer.write(showCommand)
+    await writer.drain()
+    resultOutput = await reader.readuntil(b"# ")
+    writer.close()
+    resultStr = resultOutput.decode()
+    regPattern = re.escape(fileName)
+    resultStr = re.sub(r"^.*"+regPattern, "", resultStr, flags = re.DOTALL)
+    resultStr = re.sub(r"((Dial Plan Name)|(#)).*", "", resultStr, flags = re.DOTALL)
+    resultList = resultStr.splitlines()
+    del resultList [-1]
+    resultList = [i for i in resultList if bool(re.search(r'\d', i))]
+    resultList = [i.strip() for i in resultList]
+    resultList = [re.sub(r"^\|\s+", "", i, flags = re.DOTALL) for i in resultList]
+    resultList = [re.sub(r"^enable\|", "", i, flags = re.DOTALL) for i in resultList]
+    resultList = [re.sub(r"\|$", "", i, flags = re.DOTALL) for i in resultList]
+    resultList = [i.split("|") for i in resultList]
+    resultList = [[j.strip() for j in i] for i in resultList]
+    returnList = resultList
+    return returnList
+
+async def cliShowSipProfile(dutIp, dutAdminName, dutAdminPwd, serviceOntFlag, fileName):
+    returnList = []
+    reader, writer = await telnetlib3.open_connection(dutIp, 23)
+    resultOutput = await reader.readuntil(b": ")
+    writer.write(dutAdminName + "\n")
+    await writer.drain()
+    resultOutput = await reader.readuntil(b"Password: ")
+    writer.write(dutAdminPwd + "\n")
+    await writer.drain()
+    resultOutput = await reader.readuntil(b"# ")
+    match serviceOntFlag:
+        case "ont-14": showCommand = "show voip-sip-profile \n"
+        case "ont": showCommand = "show gpon voip-sip-profile " + fileName + "\n"
+        case "xont": showCommand = "show xpon voip-sip-profile " + fileName + "\n"
+    writer.write(showCommand)
+    await writer.drain()
+    resultOutput = await reader.readuntil(b"# ")
+    writer.close()
+    resultStr = resultOutput.decode()
+    regPattern = re.escape(fileName)
+    resultStr = re.sub(r"^.*"+regPattern, "", resultStr, flags = re.DOTALL)
+    resultStr = re.sub(r"((Profile Name)|(#)).*", "", resultStr, flags = re.DOTALL)
+    resultList = resultStr.splitlines()
+    startStr = "proxy service address"
+    endStr = "conference factory uri"
+    startInd = 0
+    endInd = 0
+    for ind, result in enumerate(resultList):
+        if startStr in result: startInd = ind
+        if endStr in result: 
+            endInd = ind+1
+            break
+    resultList = resultList [startInd:endInd]
+    resultList = [re.sub(r"^.*\|[^\|]+\| ", "", i,flags = re.DOTALL) for i in resultList]
+    resultList = [re.sub(r"\|$", "", i, flags = re.DOTALL) for i in resultList]
+    resultList = [i.strip() for i in resultList]
+    returnList = resultList
+    return returnList
+
+async def cliShowSecurityProfile(dutIp, dutAdminName, dutAdminPwd, fileName):
+    returnList = []
+    reader, writer = await telnetlib3.open_connection(dutIp, 23)
+    resultOutput = await reader.readuntil(b": ")
+    writer.write(dutAdminName + "\n")
+    await writer.drain()
+    resultOutput = await reader.readuntil(b"Password: ")
+    writer.write(dutAdminPwd + "\n")
+    await writer.drain()
+    resultOutput = await reader.readuntil(b"# ")
+    showCommand = "show xpon security-profile " + fileName + "\n"
+    writer.write(showCommand)
+    await writer.drain()
+    resultOutput = await reader.readuntil(b"# ")
+    writer.close()
+    resultStr = resultOutput.decode()
+    regPattern = re.escape(fileName)
+    resultStr = re.sub(r"^.*"+regPattern+r"\s+", "", resultStr, flags = re.DOTALL)
+    resultStr = re.sub(r"\r\n.+", "", resultStr, flags = re.DOTALL)
+    resultStr = re.sub(r"\s+", " ", resultStr, flags = re.DOTALL)
+    resultList = resultStr.split(" ")
+    returnList = resultList
+    return returnList
+
+def gponOntConfigCheckResult (checkList, resultList):
+    result = []
+    print (checkList)
+    print (resultList)
+    for checkInd, subCheckList in enumerate(checkList):
+        for checkElem in subCheckList:
+            result.append([True] == [True for resultElem in resultList[checkInd] if bool(re.match(checkElem + r"$", resultElem))])
+    return all(result)
+
+async def gponOntConfigFullCheckResult (checkList, resultList):
+    result = []
+    for checkInd, subCheckList in enumerate(checkList):
+        match checkInd:
+            case 0: result.append(checkList[checkInd] == resultList[checkInd])
+            case _: 
+                for checkElem in subCheckList:
+                    result.append([True] == [True for resultElem in resultList[checkInd] if bool(re.search("^" + checkElem + "$", resultElem))])
+    return all(result)
+
+async def cliShowUniProfile(dutIp, dutAdminName, dutAdminPwd, fileName):
+    returnList = []
+    reader, writer = await telnetlib3.open_connection(dutIp, 23)
+    resultOutput = await reader.readuntil(b": ")
+    writer.write(dutAdminName + "\n")
+    await writer.drain()
+    resultOutput = await reader.readuntil(b"Password: ")
+    writer.write(dutAdminPwd + "\n")
+    await writer.drain()
+    resultOutput = await reader.readuntil(b"# ")
+    showCommand = "show xpon uni-profile " + fileName + "\n"
+    writer.write(showCommand)
+    await writer.drain()
+    resultOutput = await reader.readuntil(b"# ")
+    writer.close()
+    resultStr = resultOutput.decode()
+    resultStr = re.sub(r"(.*\s-----------------------------------------------------------------------\s)|(.*\s---------------------------------------------------------------------------------\s)", "", resultStr, flags = re.DOTALL)
+    resultStr = re.sub(r"\n?\S+\# $", "", resultStr, flags = re.DOTALL)
+    resultList = resultStr.split("--------------------------------------------------------------------------------------------------")
+    resultList = [i.splitlines() for i in resultList]
+    resultList = [[j.strip() for j in i] for i in resultList]
+    delItem = {"", "lan tag operation", "xlan tag operation", "veip tag operation", "id  type                     port-list    vlan"}
+    resultList = [[j for j in i if j not in delItem] for i in resultList]
+    resultList = [[re.sub(r" +", " ", j, flags = re.DOTALL) for j in i] for i in resultList]
+    returnList = resultList
+    return returnList
+
+async def cliShowBandwidthProfile(dutIp, dutAdminName, dutAdminPwd, serviceOntFlag, fileName):
+    returnList = []
+    reader, writer = await telnetlib3.open_connection(dutIp, 23)
+    resultOutput = await reader.readuntil(b": ")
+    writer.write(dutAdminName + "\n")
+    await writer.drain()
+    resultOutput = await reader.readuntil(b"Password: ")
+    writer.write(dutAdminPwd + "\n")
+    await writer.drain()
+    resultOutput = await reader.readuntil(b"# ")
+    match serviceOntFlag:
+        case "ont-14": showCommand = "show qos Bwprof\n"
+        case "ont": showCommand = "show gpon qos bwprof\n"
+        case "xont": showCommand = "show xpon qos bwprof " + fileName + "\n"
+    writer.write(showCommand)
+    await writer.drain()
+    resultOutput = await reader.readuntil(b"# ")
+    writer.close()
+    resultStr = resultOutput.decode()
+    regPattern = re.escape(fileName)
+    resultStr = re.sub(r"^.*" + regPattern + r" ", "", resultStr, flags = re.DOTALL)
+    resultStr = re.sub(r"\n.*", "", resultStr, flags = re.DOTALL)
+    resultStr = re.sub(r" +", " ", resultStr, flags = re.DOTALL)
+    resultStr = resultStr.strip()
+    resultList = resultStr.split(" ")
+    returnList = resultList
+    return returnList
+
+async def cliShowGroupPrivilegeProfile(dutIp, dutAdminName, dutAdminPwd, fileName):
+    returnList = []
+    reader, writer = await telnetlib3.open_connection(dutIp, 23)
+    resultOutput = await reader.readuntil(b": ")
+    writer.write(dutAdminName + "\n")
+    await writer.drain()
+    resultOutput = await reader.readuntil(b"Password: ")
+    writer.write(dutAdminPwd + "\n")
+    await writer.drain()
+    resultOutput = await reader.readuntil(b"# ")
+    showCommand = "show igmp-mld group-privilege-profile " + fileName + "\n"
+    writer.write(showCommand)
+    await writer.drain()
+    resultOutput = await reader.readuntil(b"# ")
+    writer.close()
+    resultStr = resultOutput.decode()
+    resultStr = re.sub(r"^.*?index ", "", resultStr, 1, flags = re.DOTALL)
+    resultStr = re.sub(r"\s+\S+\# $", "", resultStr, flags = re.DOTALL)
+    resultList = resultStr.split("index ")
+    resultList = [re.sub(r":", "", i, 1, flags = re.DOTALL) for i in resultList]
+    resultList = [i.splitlines() for i in resultList]
+    resultList = [[re.sub(r"[^:]+: ", "", j, flags = re.DOTALL) for j in i] for i in resultList]
+    returnList = resultList
+    return returnList
+
+async def cliShowMulticastProfile(dutIp, dutAdminName, dutAdminPwd, fileName):
+    returnList = []
+    reader, writer = await telnetlib3.open_connection(dutIp, 23)
+    resultOutput = await reader.readuntil(b": ")
+    writer.write(dutAdminName + "\n")
+    await writer.drain()
+    resultOutput = await reader.readuntil(b"Password: ")
+    writer.write(dutAdminPwd + "\n")
+    await writer.drain()
+    resultOutput = await reader.readuntil(b"# ")
+    showCommand = "show xpon multicast-profile " + fileName + "\n"
+    writer.write(showCommand)
+    await writer.drain()
+    resultOutput = await reader.readuntil(b"# ")
+    writer.close()
+    resultStr = resultOutput.decode()
+    regPattern = re.escape(fileName)
+    resultStr = re.sub(r"^.*" + regPattern + r"\s+", "", resultStr,1, flags = re.DOTALL)
+    resultStr = re.sub(r"\r.*$", "", resultStr, flags = re.DOTALL)
+    resultStr = re.sub(r" +", " ", resultStr, flags = re.DOTALL)
+    resultList = resultStr.split(" ")
+    returnList = resultList
+    return returnList
+
+async def cliShowServiceProfile(dutIp, dutAdminName, dutAdminPwd, fileName):
+    returnList = []
+    reader, writer = await telnetlib3.open_connection(dutIp, 23)
+    resultOutput = await reader.readuntil(b": ")
+    writer.write(dutAdminName + "\n")
+    await writer.drain()
+    resultOutput = await reader.readuntil(b"Password: ")
+    writer.write(dutAdminPwd + "\n")
+    await writer.drain()
+    resultOutput = await reader.readuntil(b"# ")
+    showCommand = "show xpon service-profile " + fileName + "\n"
+    writer.write(showCommand)
+    await writer.drain()
+    resultOutput = await reader.readuntil(b"# ")
+    writer.close()
+    resultStr = resultOutput.decode()
+    resultList = resultStr.splitlines()
+    del resultList [0:1]
+    del resultList [-1]
+    delItem = {""}
+    resultList = [i for i in resultList if i not in delItem]
+    resultList = [i.strip() for i in resultList]
+    returnList = resultList
+    return returnList
+
+async def cliShowXontConfigDetail(dutIp, dutAdminName, dutAdminPwd, ontInfo):
+    returnList = []
+    reader, writer = await telnetlib3.open_connection(dutIp, 23)
+    resultOutput = await reader.readuntil(b": ")
+    writer.write(dutAdminName + "\n")
+    await writer.drain()
+    resultOutput = await reader.readuntil(b"Password: ")
+    writer.write(dutAdminPwd + "\n")
+    await writer.drain()
+    resultOutput = await reader.readuntil(b"# ")
+    showCommand = "show in remote xont " + ontInfo[0] + "-" + ontInfo[1] + "-" + ontInfo[2] +" config\n"
+    writer.write(showCommand)
+    await writer.drain()
+    resultOutput = await reader.readuntil(b"# ")
+    writer.close()
+    resultStr = resultOutput.decode()
+    resultList = resultStr.splitlines()
+    #resultList = [re.sub(r" +:", ":", i,flags = re.DOTALL) for i in resultList]
+    resultList = [i.strip() for i in resultList]
+    delItem = {"+------------------------------------------------------------------------------------------------------+"
+               ,"--------------------------------------------------------------------------------------"
+               ,"-------------------------------------------------------------------------------------"
+               ,"-------------------------------------------------------------------------------------------------------"
+               ,""
+               ,"service priority usBwProfileName                 dsBwProfileName                 tcont"
+               ,"service priority usBwProfileName                 dsBwProfileName                 tcont vlan svlan cvlan"
+               ,"tcont serviceList     usBwProfileName                 dsBwProfileName"}
+    resultList = [i for i in resultList if i not in delItem]
+    del resultList [0:2]
+    del resultList [-1]
+    returnList = resultList
+    return returnList
+
+async def cliShowGeRunningConfig(dutIp, dutAdminName, dutAdminPwd, geInfo):
+    returnList = []
+    reader, writer = await telnetlib3.open_connection(dutIp, 23)
+    resultOutput = await reader.readuntil(b": ")
+    writer.write(dutAdminName + "\n")
+    await writer.drain()
+    resultOutput = await reader.readuntil(b"Password: ")
+    writer.write(dutAdminPwd + "\n")
+    await writer.drain()
+    resultOutput = await reader.readuntil(b"# ")
+    showCommand = "show running-config interface ge " + geInfo[0] + "-" + geInfo[1] + "\n"
+    writer.write(showCommand)
+    await writer.drain()
+    resultOutput = await reader.readuntil(b"# ")
+    writer.close()
+    resultStr = resultOutput.decode()
+    resultStr = re.sub(r"^.*interface ge ", "interface ge ", resultStr,flags = re.DOTALL)
+    resultList = resultStr.splitlines()
+    resultList = [i.strip() for i in resultList]
+    delItem = {""}
+    resultList = [i for i in resultList if i not in delItem]
+    del resultList [-1]
+    returnList = resultList
+    return returnList
+
+async def cliShowShapingProfile(dutIp, dutAdminName, dutAdminPwd, fileName):
+    returnList = []
+    reader, writer = await telnetlib3.open_connection(dutIp, 23)
+    resultOutput = await reader.readuntil(b": ")
+    writer.write(dutAdminName + "\n")
+    await writer.drain()
+    resultOutput = await reader.readuntil(b"Password: ")
+    writer.write(dutAdminPwd + "\n")
+    await writer.drain()
+    resultOutput = await reader.readuntil(b"# ")
+    showCommand = "show qos shaping-profile " + fileName + "\n"
+    writer.write(showCommand)
+    await writer.drain()
+    resultOutput = await reader.readuntil(b"# ")
+    writer.close()
+    resultStr = resultOutput.decode()
+    resultStr = re.sub(r"^.*max rate: +", "", resultStr,flags = re.DOTALL)
+    resultStr = re.sub(r"\s+\S+\# $", "", resultStr, flags = re.DOTALL)
+    resultStr = re.sub(r" +", " ", resultStr, flags = re.DOTALL)
+    resultList = resultStr.split(" ")
+    returnList = resultList
+    return returnList
+
+async def cliShowWeightProfile(dutIp, dutAdminName, dutAdminPwd, fileName):
+    returnList = []
+    reader, writer = await telnetlib3.open_connection(dutIp, 23)
+    resultOutput = await reader.readuntil(b": ")
+    writer.write(dutAdminName + "\n")
+    await writer.drain()
+    resultOutput = await reader.readuntil(b"Password: ")
+    writer.write(dutAdminPwd + "\n")
+    await writer.drain()
+    resultOutput = await reader.readuntil(b"# ")
+    showCommand = "show qos weight-profile " + fileName + "\n"
+    writer.write(showCommand)
+    await writer.drain()
+    resultOutput = await reader.readuntil(b"# ")
+    writer.close()
+    resultStr = resultOutput.decode()
+    resultStr = re.sub(r"^.*weight: +", "", resultStr,flags = re.DOTALL)
+    resultStr = re.sub(r"\s+\S+\# $", "", resultStr, flags = re.DOTALL)
+    resultStr = re.sub(r" +", " ", resultStr, flags = re.DOTALL)
+    resultList = resultStr.split(" ")
+    returnList = resultList
+    return returnList
+
+async def cliShowRateLimitProfile(dutIp, dutAdminName, dutAdminPwd, fileName):
+    returnList = []
+    reader, writer = await telnetlib3.open_connection(dutIp, 23)
+    resultOutput = await reader.readuntil(b": ")
+    writer.write(dutAdminName + "\n")
+    await writer.drain()
+    resultOutput = await reader.readuntil(b"Password: ")
+    writer.write(dutAdminPwd + "\n")
+    await writer.drain()
+    resultOutput = await reader.readuntil(b"# ")
+    showCommand = "show qos ratelimit-profile " + fileName + "\n"
+    writer.write(showCommand)
+    await writer.drain()
+    resultOutput = await reader.readuntil(b"# ")
+    writer.close()
+    resultStr = resultOutput.decode()
+    resultStr = re.sub(r"^.*Ingress +", "Ingress ", resultStr,flags = re.DOTALL)
+    resultStr = re.sub(r"\s+\S+\# $", "", resultStr, flags = re.DOTALL)
+    resultStr = re.sub(r"\s+Rate\s+Burst\s+", " ", resultStr, flags = re.DOTALL)
+    resultStr = re.sub(r" +", " ", resultStr, flags = re.DOTALL)
+    resultList = resultStr.split(" ")
+    returnList = resultList
+    return returnList
+
+# Wait the ont id update in DB
+def waitGeUpdate (self, dutIp, geInfo, adminState):
+    openMenu(self, "Inventory")
+    openMenu(self, "Port")
+    # "#i_action_filter > a" toggles the filter panel; only click it when closed.
+    for attempt in range(3):
+        if _firstUsable(self.driver, (By.ID, "ip_all")) is not None:
+            break
+        waitClick(self, (By.CSS_SELECTOR, "#i_action_filter > a"))
+        try:
+            waitUsable(self, (By.ID, "ip_all"), 10)
+            break
+        except AssertionError:
+            print(f"Open Inventory Port filter panel retry: attempt={attempt + 1}", flush=True)
+    waitClick(self, (By.ID, "inventory_allport_clear_btn"))
+    waitInput(self, (By.ID, "ip_all"), dutIp)
+    waitInput(self, (By.ID, "slot_all"), geInfo[0])
+    waitInput(self, (By.ID, "port_all"), geInfo[1])
+    waitClick(self, (By.ID, "inventory_allport_btn"))
+    time.sleep (3)
+    waitPageIdle(self)
+    serviceResultLocatorStr = getLocatorXpathStrByPositionCol(self, "port_inventory_div", [1,1] , "portAdminState")
+    waitElementTextWithRefresh(self, (By.XPATH, serviceResultLocatorStr), adminState, waitUsable(self, (By.ID, "i_action_refresh")), 300 )
+    return
+
+# Create EMS User
+def newEMSUsr (self, usr, pwd, group, region, node=[]):
+    delEMSUsr (self, usr)
+    if self.driver.find_element(By.LINK_TEXT, "System").get_attribute("className") == "":
+        self.driver.find_element(By.LINK_TEXT, "System").click()
+        time.sleep (3)
+    if self.driver.find_element(By.LINK_TEXT, "Security").get_attribute("className") == "":
+        self.driver.find_element(By.LINK_TEXT, "Security").click()
+        time.sleep (3)
+    if self.driver.find_element(By.ID, "user_user").get_attribute("className") == "":
+        self.driver.find_element(By.ID, "user_user").click()
+        time.sleep (3)
+    if self.driver.find_element(By.ID, "admin").get_attribute("className") == "user_link":
+        self.driver.find_element(By.ID, "admin").click()
+        time.sleep (3)
+    self.driver.find_element(By.CSS_SELECTOR, "#i_action_create_user > a").click()
+    WebDriverWait(self.driver, 300).until(EC.visibility_of_element_located((By.ID, "create_user_name")))
+    self.driver.find_element(By.ID, "create_user_name").send_keys(usr)
+    self.driver.find_element(By.ID, "create_password").send_keys(pwd)
+    self.driver.find_element(By.ID, "create_repeatpassword").send_keys(pwd)
+    Select(self.driver.find_element(By.ID, "create_template")).select_by_visible_text(group)
+    Select(self.driver.find_element(By.ID, "region")).select_by_visible_text(region)
+    time.sleep (3)
+    self.driver.find_element(By.XPATH,"//*[@id=\"add_accesstree\"]/ul/li/div[2]").click()
+    time.sleep (3)
+    self.driver.find_element(By.XPATH,"//*[@id=\"add_accesstree\"]/ul/li/div[2]").click()
+    time.sleep (3)
+    for nodename in node:
+        try:
+            self.driver.find_element(By.XPATH,"//*[@id=\"add_accesstree\"]/ul/li//label[contains(.,\'"+ nodename +"\')]/../div[2]").click()
+            time.sleep (3)
+        except NoSuchElementException:
+            pass
+    #for nodename in node:
+    #    allnodeCount = self.driver.find_elements(By.XPATH,"//*[@id=\"create_accessDeviceTree\"]/ul/li/ul/li")
+    #    for count in range(len(allnodeCount)):
+    #        i = str(count + 1)
+    #        xpathStr = "//*[@id=\"create_accessDeviceTree\"]/ul/li/ul/li[" + i + "]/label"
+    #        if nodename == self.driver.find_element(By.XPATH, xpathStr).text:
+    #            nodePath = "//*[@id=\"create_accessDeviceTree\"]/ul/li/ul/li[" + i + "]/div[2]"
+    #            self.driver.find_element(By.XPATH, nodePath).location_once_scrolled_into_view
+    #            self.driver.find_element(By.XPATH, nodePath).click()
+    #            break
+    self.driver.find_element(By.CSS_SELECTOR, "#create_user .button").click()
+    WebDriverWait(self.driver, 300).until(EC.visibility_of_element_located((By.CSS_SELECTOR, "#message_diag .button")))
+    self.driver.find_element(By.CSS_SELECTOR, "#message_diag .button").click()
+    time.sleep (3)
+    return
+
+# Modify EMS User
+def modifyEMSUsr (self, usr, pwd, group, region, node=[]):
+    if self.driver.find_element(By.LINK_TEXT, "System").get_attribute("className") == "":
+        self.driver.find_element(By.LINK_TEXT, "System").click()
+        time.sleep (3)
+    if self.driver.find_element(By.LINK_TEXT, "Security").get_attribute("className") == "":
+        self.driver.find_element(By.LINK_TEXT, "Security").click()
+        time.sleep (3)
+    if self.driver.find_element(By.ID, "user_user").get_attribute("className") == "":
+        self.driver.find_element(By.ID, "user_user").click()
+        time.sleep (3)
+    if self.driver.find_element(By.ID, usr).get_attribute("className") == "user_link":
+        self.driver.find_element(By.ID, usr).click()
+        time.sleep (3)
+    enterUserEditMode(self)
+    WebDriverWait(self.driver, 300).until(EC.visibility_of_element_located((By.ID, "password")))
+    if pwd != "":
+        self.driver.find_element(By.ID, "password").send_keys(pwd)
+        self.driver.find_element(By.ID, "repeatpassword").send_keys(pwd)
+    if group != "":
+        Select(self.driver.find_element(By.ID, "template")).select_by_visible_text(group)
+    if region != "":
+        Select(self.driver.find_element(By.ID, "region")).select_by_visible_text(region)
+    time.sleep (3)
+    self.driver.find_element(By.XPATH,"//*[@id=\"user_accesstree\"]/ul/li/div[2]").click()
+    time.sleep (1)
+    self.driver.find_element(By.XPATH,"//*[@id=\"user_accesstree\"]/ul/li/div[2]").click()
+    time.sleep (1)
+    for nodename in node:
+        try:
+            self.driver.find_element(By.XPATH,"//*[@id=\"user_accesstree\"]/ul/li//label[contains(.,\'"+ nodename +"\')]/../div[2]").click()
+            time.sleep (3)
+        except NoSuchElementException:
+            pass
+    #for nodename in node:
+    #    allnodeCount = self.driver.find_elements(By.XPATH,"//*[@id=\"create_accessDeviceTree\"]/ul/li/ul/li")
+    #    for count in range(len(allnodeCount)):
+    #        i = str(count + 1)
+    #        xpathStr = "//*[@id=\"create_accessDeviceTree\"]/ul/li/ul/li[" + i + "]/label"
+    #        if nodename == self.driver.find_element(By.XPATH, xpathStr).text:
+    #            nodePath = "//*[@id=\"create_accessDeviceTree\"]/ul/li/ul/li[" + i + "]/div[2]"
+    #            self.driver.find_element(By.XPATH, nodePath).location_once_scrolled_into_view
+    #            self.driver.find_element(By.XPATH, nodePath).click()
+    #            break
+    self.driver.find_element(By.CSS_SELECTOR, "#tab_content_User .button:nth-child(4)").click()
+    WebDriverWait(self.driver, 300).until(EC.visibility_of_element_located((By.CSS_SELECTOR, "#message_diag .button")))
+    self.driver.find_element(By.CSS_SELECTOR, "#message_diag .button").click()
+    time.sleep (3)
+    return
+
+# Delete EMS User
+# Provision/Service/ONT create: open the service config dialog of the "{}" cell
+def openServiceConfigDialog(self, attempts=3, timeout=10):
+    # The dialog opens on a double click of the Service Config cell; the test's two separate
+    # clicks are not seen as a double click on a slow page.  Double click the cell and wait for
+    # the dialog (Active checkbox) to show; try again if it does not.
+    activeLabel = (By.XPATH, "//label[@for=\"provision_service_active_checkbox\"]")
+    def dialogShown():
+        return any(e.is_displayed() for e in self.driver.find_elements(*activeLabel))
+    for attempt in range(1, attempts + 1):
+        if dialogShown():
+            return
+        waitPageIdle(self)
+        cells = [e for e in self.driver.find_elements(By.CSS_SELECTOR, ".highlight-selected") if e.is_displayed()]
+        if not cells:
+            cells = [e for e in self.driver.find_elements(By.XPATH, "//td[contains(.,'{}')]") if e.is_displayed()]
+        if cells:
+            try:
+                ActionChains(self.driver).move_to_element(cells[0]).double_click(cells[0]).perform()
+            except Exception as exc:
+                print(f"openServiceConfigDialog: double click failed ({exc.__class__.__name__})", flush=True)
+        try:
+            WebDriverWait(self.driver, timeout, poll_frequency=0.5).until(lambda _: dialogShown())
+            return
+        except TimeoutException:
+            print(f"openServiceConfigDialog: dialog not shown after try {attempt}/{attempts}", flush=True)
+    raise AssertionError("Service config dialog did not open (Active checkbox not shown)")
+
+
+# System/Security/User: switch the selected user into edit mode
+def enterUserEditMode(self, attempts=3, timeout=10):
+    # The user details are loaded after the user link is clicked; an Edit click made before
+    # that finishes is undone when the page re-renders (Delete/Save stay hidden, fields read-only).
+    # Click Edit and wait until the Delete button is shown; click again if it is not.
+    def visible(css):
+        return [e for e in self.driver.find_elements(By.CSS_SELECTOR, css) if e.is_displayed()]
+    for attempt in range(1, attempts + 1):
+        waitPageIdle(self)
+        if visible("#tab_content_User .button_red"):
+            return
+        edit = visible("#tab_content_User .button_center")
+        if edit:
+            edit[0].click()
+        try:
+            WebDriverWait(self.driver, timeout, poll_frequency=0.5).until(
+                lambda _: visible("#tab_content_User .button_red")
+            )
+            time.sleep(1)
+            if visible("#tab_content_User .button_red"):
+                return
+        except TimeoutException:
+            pass
+        print(f"enterUserEditMode: not in edit mode after Edit click {attempt}/{attempts}, retry", flush=True)
+    raise AssertionError("User page did not switch to edit mode (Delete/Save buttons not shown)")
+
+
+def delEMSUsr (self, usr, kickIfOnline=True):
+    if self.driver.find_element(By.LINK_TEXT, "System").get_attribute("className") == "":
+        self.driver.find_element(By.LINK_TEXT, "System").click()
+        time.sleep (3)
+    if self.driver.find_element(By.LINK_TEXT, "Security").get_attribute("className") == "":
+        self.driver.find_element(By.LINK_TEXT, "Security").click()
+        time.sleep (3)
+    if self.driver.find_element(By.ID, "user_user").get_attribute("className") == "":
+        self.driver.find_element(By.ID, "user_user").click()
+        time.sleep (3)
+    try:
+        if self.driver.find_element(By.ID, usr).get_attribute("className") == "user_link":
+            self.driver.find_element(By.ID, usr).click()
+            time.sleep (3)
+        enterUserEditMode(self)
+        self.driver.find_element(By.CSS_SELECTOR, "#tab_content_User .button_red").click()
+        time.sleep (3)
+        message = waitMessageText(self)
+        self.driver.find_element(By.CSS_SELECTOR, "#message_diag .button").click()
+        time.sleep (3)
+    except NoSuchElementException:
+        return
+    # EMS refuses to delete a user that is still online (its session can stay after logout):
+    # kick the user from Online User, then delete again
+    if "online user" in (message or "").lower():
+        if not kickIfOnline:
+            raise AssertionError(f"Delete user {usr} failed: {message}")
+        print(f"delEMSUsr: {message!r}; kick {usr} from Online User and delete again", flush=True)
+        kickUsr(self, usr)
+        time.sleep (3)
+        self.driver.find_element(By.ID, "user_user").click()
+        time.sleep (3)
+        delEMSUsr(self, usr, kickIfOnline=False)
+    return
+
+# Delete EMS Group
+def delEMSGroup (self, group):
+    if self.driver.find_element(By.LINK_TEXT, "System").get_attribute("className") == "":
+        self.driver.find_element(By.LINK_TEXT, "System").click()
+        time.sleep (3)
+    if self.driver.find_element(By.LINK_TEXT, "Security").get_attribute("className") == "":
+        self.driver.find_element(By.LINK_TEXT, "Security").click()
+        time.sleep (3)
+    if self.driver.find_element(By.ID, "user_group").get_attribute("className") == "":
+        self.driver.find_element(By.ID, "user_group").click()
+        time.sleep (3)
+    try:
+        if self.driver.find_element(By.ID, group).get_attribute("className") == "Name":
+            self.driver.find_element(By.ID, group).click()
+            time.sleep (3)
+        self.driver.find_element(By.CSS_SELECTOR, "#tab_content_Template .button_center").click()
+        time.sleep (3)
+        self.driver.find_element(By.CSS_SELECTOR, "#tab_content_Template .button_red").click()
+        time.sleep (3)
+        self.driver.find_element(By.CSS_SELECTOR, "#message_diag .button").click()
+        time.sleep (3)
+    except NoSuchElementException:
+        pass
+    return
+
+# Create EMS Region
+def newEMSRegion (self, region, usr, node):
+    delEMSRegion (self, region)
+    if self.driver.find_element(By.LINK_TEXT, "System").get_attribute("className") == "":
+        self.driver.find_element(By.LINK_TEXT, "System").click()
+        time.sleep (3)
+    if self.driver.find_element(By.LINK_TEXT, "Security").get_attribute("className") == "":
+        self.driver.find_element(By.LINK_TEXT, "Security").click()
+        time.sleep (3)
+    if self.driver.find_element(By.ID, "user_region").get_attribute("className") == "":
+        self.driver.find_element(By.ID, "user_region").click()
+        time.sleep (3)
+    if self.driver.find_element(By.ID, "Global").get_attribute("className") == "user_link":
+        self.driver.find_element(By.ID, "Global").click()
+        time.sleep (3)
+    self.driver.find_element(By.CSS_SELECTOR, "#i_action_create_region > a").click()
+    WebDriverWait(self.driver, 300).until(EC.visibility_of_element_located((By.ID, "createRegionName")))
+    self.driver.find_element(By.ID, "createRegionName").send_keys(region)
+    for usrname in usr:
+        allUsrCount = self.driver.find_elements(By.XPATH,"//*[@id=\"create_accessUserListTree\"]/ul/li/ul/li")
+        for count in range(len(allUsrCount)):
+            i = str(count + 1)
+            xpathStr = "//*[@id=\"create_accessUserListTree\"]/ul/li/ul/li[" + i + "]/label"
+            if usrname == self.driver.find_element(By.XPATH, xpathStr).text:
+                usrPath = "//*[@id=\"create_accessUserListTree\"]/ul/li/ul/li[" + i + "]/div[2]"
+                self.driver.find_element(By.XPATH, usrPath).location_once_scrolled_into_view
+                self.driver.find_element(By.XPATH, usrPath).click()
+                break
+    time.sleep (3)
+    for nodename in node:
+        allnodeCount = self.driver.find_elements(By.XPATH,"//*[@id=\"create_accessDeviceTree\"]/ul/li/ul/li")
+        for count in range(len(allnodeCount)):
+            i = str(count + 1)
+            xpathStr = "//*[@id=\"create_accessDeviceTree\"]/ul/li/ul/li[" + i + "]/label"
+            if nodename == self.driver.find_element(By.XPATH, xpathStr).text:
+                nodePath = "//*[@id=\"create_accessDeviceTree\"]/ul/li/ul/li[" + i + "]/div[2]"
+                self.driver.find_element(By.XPATH, nodePath).location_once_scrolled_into_view
+                self.driver.find_element(By.XPATH, nodePath).click()
+                break
+    self.driver.find_element(By.CSS_SELECTOR, "#create_region .button").click()
+    WebDriverWait(self.driver, 300).until(EC.visibility_of_element_located((By.CSS_SELECTOR, "#message_diag .button")))
+    self.driver.find_element(By.CSS_SELECTOR, "#message_diag .button").click()
+    time.sleep (3)
+    return
+
+# Delete EMS Region
+def delEMSRegion (self, region):
+    if self.driver.find_element(By.LINK_TEXT, "System").get_attribute("className") == "":
+        self.driver.find_element(By.LINK_TEXT, "System").click()
+        time.sleep (3)
+    if self.driver.find_element(By.LINK_TEXT, "Security").get_attribute("className") == "":
+        self.driver.find_element(By.LINK_TEXT, "Security").click()
+        time.sleep (3)
+    if self.driver.find_element(By.ID, "user_region").get_attribute("className") == "":
+        self.driver.find_element(By.ID, "user_region").click()
+        time.sleep (3)
+    try:
+        if self.driver.find_element(By.ID, region).get_attribute("className") == "user_link":
+            self.driver.find_element(By.ID, region).click()
+            time.sleep (3)
+        self.driver.find_element(By.CSS_SELECTOR, "#region_button > .button").click()
+        WebDriverWait(self.driver, 300).until(EC.visibility_of_element_located((By.CSS_SELECTOR, ".button_red:nth-child(1)")))
+        self.driver.find_element(By.CSS_SELECTOR, ".button_red:nth-child(1)").click()
+        WebDriverWait(self.driver, 300).until(EC.visibility_of_element_located((By.CSS_SELECTOR, "#message_diag .button")))
+        self.driver.find_element(By.CSS_SELECTOR, "#message_diag .button").click()
+        time.sleep (3)
+    except NoSuchElementException:
+        pass
+    return
+
+# Login EMS
+def loginEMS (self, usr, pwd):
+    #WebDriverWait(self.driver, 300).until(EC.presence_of_element_located((By.ID, "name")))
+    #WebDriverWait(self.driver, 300).until(EC.visibility_of_element_located((By.ID, "name")))
+    self.driver.find_element(By.ID, "name").clear()
+    self.driver.find_element(By.ID, "name").send_keys(usr)
+    self.driver.find_element(By.ID, "passwd").clear()
+    self.driver.find_element(By.ID, "passwd").send_keys(pwd)
+    self.driver.find_element(By.ID, "signin").click()
+    time.sleep(3)
+
+# Logout EMS
+def logoutEMS (self):
+    self.driver.find_element(By.ID, "index_t_userName").click()
+    self.driver.find_element(By.ID,"index_sign_off").click()
+    WebDriverWait(self.driver, 180).until(EC.visibility_of_element_located((By.CSS_SELECTOR,"#logout_diag .button_green")))
+    self.driver.find_element(By.CSS_SELECTOR,"#logout_diag .button_green").click()
+    time.sleep(3)
+
+def nodeCount (self):
+    if self.driver.find_element(By.LINK_TEXT, "Inventory").get_attribute("className") == "":
+        self.driver.find_element(By.LINK_TEXT, "Inventory").click()
+        time.sleep (3)
+    if self.driver.find_element(By.LINK_TEXT, "Device").get_attribute("className") == "":
+        self.driver.find_element(By.LINK_TEXT, "Device").click()
+        time.sleep (3)
+    return int(self.driver.find_element(By.ID, "table_total_data_dev_inventory_div").text.strip(" Total data:"))
+
+def totalData (self, tableId):
+    return int(self.driver.find_element(By.ID, "table_total_data_" + tableId).text.strip(" Total data:"))
+
+def getOnlineUsrPosition(self):
+    if self.driver.find_element(By.LINK_TEXT, "System").get_attribute("className") == "":
+        self.driver.find_element(By.LINK_TEXT, "System").click()
+        time.sleep (3)
+    if self.driver.find_element(By.LINK_TEXT, "Security").get_attribute("className") == "":
+        self.driver.find_element(By.LINK_TEXT, "Security").click()
+        time.sleep (3)
+    if self.driver.find_element(By.ID, "user_online").get_attribute("className") == "":
+        self.driver.find_element(By.ID, "user_online").click()
+        time.sleep (3)
+    tableId = "onlineUserTable"
+    pageTotal = pageCount (self, tableId)
+    if pageTotal > 1:
+        self.driver.find_element(By.CSS_SELECTOR, "#" + tableId + " .first").click()
+    rowIndex = 0
+    for pageIndex in range(1, pageTotal + 1):
+        tableRows = self.driver.find_elements(By.XPATH,"//table[@id=\'" + tableId + "_body\']/tbody/tr")
+        for tableRow in range(len(tableRows)):
+            rowIndex = tableRow + 1
+            backGroundColor = self.driver.find_element(By.XPATH, "//table[@id=\'" + tableId + "_body\']/tbody/tr[" + str(rowIndex) + "]").get_attribute("style")
+            if backGroundColor == "background-color: rgb(255, 255, 0);":
+                return [pageCurrent (self, tableId), rowIndex]
+        if (pageCurrent (self, tableId) == pageTotal) and pageTotal > 1:
+            self.driver.find_element(By.CSS_SELECTOR, "#" + tableId + " .first").click()
+        elif (pageCurrent (self, tableId) != pageTotal) and pageTotal > 1:
+            self.driver.find_element(By.CSS_SELECTOR, "#" + tableId + " .next").click()
+    return [-1, -1]
+
+def getLoginIP():
+    sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+    sock.connect(("192.168.128.8", 80))
+    return sock.getsockname()[0]
+
+def selectProfile_Remove(self,selectedID, profileName):
+    self.driver.find_element(By.XPATH,"//*[@id=\'" + selectedID + "\']/../div/div[1]").click()
+    time.sleep(3)
+    self.driver.find_element(By.XPATH,"//*[@id=\'" + selectedID + "\']/../div/div[2]/div/div[@data-value=\'" + profileName + "\']").click()
+    return
+
+def selectProfile(self,selectedID, profileName):
+    waitSelect(self, (By.ID, selectedID), profileName)
+    return
+
+
+async def setXponSnLegacy(dutIp, dutAdminName, dutAdminPwd, serviceOntFlag):
+    reader, writer = await telnetlib3.open_connection(dutIp, 23)
+    await reader.readuntil(b": ")
+    writer.write(dutAdminName + "\n")
+    await writer.drain()
+    await reader.readuntil(b"Password: ")
+    writer.write(dutAdminPwd + "\n")
+    await writer.drain()
+    await reader.readuntil(b"# ")
+    configCommand = "configure\n"
+    writer.write(configCommand)
+    await writer.drain()
+    await reader.readuntil(b"# ")
+    if serviceOntFlag == "xont":
+        legacyCommand = "xpon sn-display-style legacy\n"
+        writer.write(legacyCommand)
+        await writer.drain()
+        await reader.readuntil(b"# ")
+    writer.close()
+    return
+
+async def setXponSnNormal(dutIp, dutAdminName, dutAdminPwd):
+    reader, writer = await telnetlib3.open_connection(dutIp, 23)
+    await reader.readuntil(b": ")
+    writer.write(dutAdminName + "\n")
+    await writer.drain()
+    await reader.readuntil(b"Password: ")
+    writer.write(dutAdminPwd + "\n")
+    await writer.drain()
+    await reader.readuntil(b"# ")
+    configCommand = "configure\n"
+    writer.write(configCommand)
+    await writer.drain()
+    await reader.readuntil(b"# ")
+    normalCommand = "xpon sn-display-style normal\n"
+    writer.write(normalCommand)
+    await writer.drain()
+    await reader.readuntil(b"# ")
+    writer.close()
+    return
+
+async def setXponSnStyle(dutIp, dutAdminName, dutAdminPwd, style):
+    reader, writer = await telnetlib3.open_connection(dutIp, 23)
+    await reader.readuntil(b": ")
+    writer.write(dutAdminName + "\n")
+    await writer.drain()
+    await reader.readuntil(b"Password: ")
+    writer.write(dutAdminPwd + "\n")
+    await writer.drain()
+    await reader.readuntil(b"# ")
+    configCommand = "configure\n"
+    writer.write(configCommand)
+    await writer.drain()
+    await reader.readuntil(b"# ")
+    styleCommand = "xpon sn-display-style normal\n"
+    if style == "legacy":
+        styleCommand = "xpon sn-display-style legacy\n"
+    writer.write(styleCommand)
+    await writer.drain()
+    await reader.readuntil(b"# ")
+    writer.close()
+    return
+
+async def cliShowOntProfileWan(dutIp, dutAdminName, dutAdminPwd, fileName):
+    returnList = []
+    reader, writer = await telnetlib3.open_connection(dutIp, 23)
+    resultOutput = await reader.readuntil(b": ")
+    writer.write(dutAdminName + "\n")
+    await writer.drain()
+    resultOutput = await reader.readuntil(b"Password: ")
+    writer.write(dutAdminPwd + "\n")
+    await writer.drain()
+    resultOutput = await reader.readuntil(b"# ")
+    showCommand = "show xpon ont-profile " + fileName + " wan \n"
+    writer.write(showCommand)
+    await writer.drain()
+    resultOutput = await reader.readuntil(b"# ")
+    writer.close()
+    resultStr = resultOutput.decode()
+    resultList = resultStr.split("+--------------------------------------------------------------------------------------------------------------------------+")
+    del resultList [0:2]
+    del resultList [-1]
+    resultList = [i.split("|") for i in resultList]
+    resultList = [[j.strip() for j in i] for i in resultList]
+    resultList = [[re.sub(r"\r\n +", "", j,flags = re.DOTALL) for j in i] for i in resultList]
+    delItem = {"","Wan"}
+    resultList = [[j for j in i if j not in delItem] for i in resultList]
+    resultList = [[re.sub(r"^([^:]*: *){1}", "", j,flags = re.DOTALL) for j in i] for i in resultList]
+    returnList = resultList
+    return returnList
+
+async def cliShowOntProfileLan(dutIp, dutAdminName, dutAdminPwd, fileName):
+    returnList = []
+    reader, writer = await telnetlib3.open_connection(dutIp, 23)
+    resultOutput = await reader.readuntil(b": ")
+    writer.write(dutAdminName + "\n")
+    await writer.drain()
+    resultOutput = await reader.readuntil(b"Password: ")
+    writer.write(dutAdminPwd + "\n")
+    await writer.drain()
+    resultOutput = await reader.readuntil(b"# ")
+    showCommand = "show xpon ont-profile " + fileName + " lan \n"
+    writer.write(showCommand)
+    await writer.drain()
+    resultOutput = await reader.readuntil(b"# ")
+    writer.close()
+    resultStr = resultOutput.decode()
+    resultList = resultStr.split("+--------------------------------------------------------------------------------------------------------------------------+")
+    del resultList [0:2]
+    del resultList [-1]
+    resultList = [i.split("|") for i in resultList]
+    resultList = [[j.strip() for j in i] for i in resultList]
+    resultList = [[re.sub(r"\r\n +", "", j,flags = re.DOTALL) for j in i] for i in resultList]
+    delItem = {"","Lan"}
+    resultList = [[j for j in i if j not in delItem] for i in resultList]
+    resultList = [[re.sub(r"^([^:]*: *){1}", "", j,flags = re.DOTALL) for j in i] for i in resultList]
+    returnList = resultList
+    return returnList
+
+def elementScrolledIntoView(self, element):
+    element.location_once_scrolled_into_view
+    is_in_viewport = elementIsInView(self, element)
+    while ( is_in_viewport!= True ):
+        element.location_once_scrolled_into_view
+        is_in_viewport = elementIsInView(self, element)
+    return
+
+def elementIsInViewStrict(self, element):
+    is_in_viewport = self.driver.execute_script("""
+        var rect = arguments[0].getBoundingClientRect();
+        return (
+            rect.top >= 0 &&
+            rect.left >= 0 &&
+            rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
+            rect.right <= (window.innerWidth || document.documentElement.clientWidth)
+        );
+    """, element)
+    return is_in_viewport
+
+def elementIsInView(self, element):
+    is_in_viewport = self.driver.execute_script("""
+        var rect = arguments[0].getBoundingClientRect();
+        return (
+            rect.top >= 0 &&
+            rect.left >= 0
+        );
+    """, element)
+    return is_in_viewport
+
+async def checkFwUpgradeSuccess(dutIp, dutAdminName, dutAdminPwd, slotID, fwVer):
+    reader, writer = await telnetlib3.open_connection(dutIp, 23)
+    resultOutput = await reader.readuntil(b": ")
+    writer.write(dutAdminName + "\n")
+    await writer.drain()
+    resultOutput = await reader.readuntil(b"Password: ")
+    writer.write(dutAdminPwd + "\n")
+    await writer.drain()
+    resultOutput = await reader.readuntil(b"# ")
+    if slotID != "--":
+        showCardCommand = "show lcman status " + slotID + " \n"
+        writer.write(showCardCommand)
+        await writer.drain()
+        resultOutput = await reader.readuntil(b"# ")
+        writer.close()
+        resultStr = resultOutput.decode()
+        resultStr = re.sub(r"^.*image 1 version", "image 1 version", resultStr,flags = re.DOTALL)
+        resultStr = re.sub(r"((inband mac address)|(config load status)).*", "", resultStr, flags = re.DOTALL)
+        resultList = resultStr.splitlines()
+        resultList = [re.sub(r"^.*: ", "", i,flags = re.DOTALL) for i in resultList]
+        resultList = [i.strip() for i in resultList]
+        nextBootInd = int(resultList[3])-1
+        nextBootVer = resultList[nextBootInd]
+        print(resultList)
+        if ("Successfully" in resultList[4]) and (fwVer in nextBootVer):
+            return True
+        else: return False
+    else:
+        showCardCommand = "show version flash \n"
+        writer.write(showCardCommand)
+        await writer.drain()
+        resultOutput = await reader.readuntil(b"# ")
+        writer.close()
+        resultStr = resultOutput.decode()
+        resultStr = re.sub(r"^.*Flash 1 ZyNOS version", "Flash 1 ZyNOS version", resultStr,flags = re.DOTALL)
+        resultList = resultStr.splitlines()
+        print(resultList)
+        if fwVer in resultList[0]:
+            return True
+        else: return False
+
+#Check the device system uptime
+async def checkSystemUptime(dutIp, dutAdminName, dutAdminPwd, slotID):
+    reader, writer = await telnetlib3.open_connection(dutIp, 23)
+    resultOutput = await reader.readuntil(b": ")
+    writer.write(dutAdminName + "\n")
+    await writer.drain()
+    resultOutput = await reader.readuntil(b"Password: ")
+    writer.write(dutAdminPwd + "\n")
+    await writer.drain()
+    resultOutput = await reader.readuntil(b"# ")
+    if slotID != "--":
+        showCardCommand = "show lcman status " + slotID + " \n"
+        writer.write(showCardCommand)
+        await writer.drain()
+        resultOutput = await reader.readuntil(b"# ")
+        writer.close()
+        resultStr = resultOutput.decode()
+        resultStr = re.sub(r"^.*uptime:", "", resultStr,flags = re.DOTALL)
+        resultStr = re.sub(r"status.*", "", resultStr,flags = re.DOTALL)
+        resultStr = re.sub(r" days,", ":", resultStr,flags = re.DOTALL)
+    else:
+        showCardCommand = "show system \n"
+        writer.write(showCardCommand)
+        await writer.drain()
+        resultOutput = await reader.readuntil(b"# ")
+        writer.close()
+        resultStr = resultOutput.decode()
+        resultStr = re.sub(r"^.*System up Time\s+:", "", resultStr,flags = re.DOTALL)
+        resultStr = re.sub(r"\(.*", "", resultStr,flags = re.DOTALL)
+    resultStr = resultStr.strip()
+    timeBit = resultStr.count(":")
+    resultList = resultStr.split(":")
+    match timeBit:
+        case 1:
+            return (int(resultList[0])*60) + (int(resultList[1]))
+        case 2:
+            return (int(resultList[0])*60*60) + (int(resultList[1])*60) + (int(resultList[2]))
+        case 3:
+            return (int(resultList[0])*60*60*24) + (int(resultList[1])*60*60) + (int(resultList[2])*60) + (int(resultList[3]))
+
+#Config before restore
+async def configLocation(dutIp, dutAdminName, dutAdminPwd, location):
+    reader, writer = await telnetlib3.open_connection(dutIp, 23)
+    resultOutput = await reader.readuntil(b": ")
+    writer.write(dutAdminName + "\n")
+    await writer.drain()
+    resultOutput = await reader.readuntil(b"Password: ")
+    writer.write(dutAdminPwd + "\n")
+    await writer.drain()
+    resultOutput = await reader.readuntil(b"# ")
+    conCommand = "configure \n"
+    writer.write(conCommand)
+    await writer.drain()
+    resultOutput = await reader.readuntil(b"# ")
+    locationCommand = "location " + location + "\n"
+    writer.write(locationCommand)
+    await writer.drain()
+    resultOutput = await reader.readuntil(b"# ")
+    writer.close()
+    resultStr = resultOutput.decode()
+    print(resultStr)
+    return
+
+#Config before restore
+async def configOLT140XLocation(dutIp, dutAdminName, dutAdminPwd, location):
+    reader, writer = await telnetlib3.open_connection(dutIp, 23)
+    resultOutput = await reader.readuntil(b": ")
+    writer.write(dutAdminName + "\n")
+    await writer.drain()
+    resultOutput = await reader.readuntil(b"Password: ")
+    writer.write(dutAdminPwd + "\n")
+    await writer.drain()
+    resultOutput = await reader.readuntil(b"# ")
+    conCommand = "configure \n"
+    writer.write(conCommand)
+    await writer.drain()
+    resultOutput = await reader.readuntil(b"# ")
+    locationCommand = "snmp-server location " + location + "\n"
+    writer.write(locationCommand)
+    await writer.drain()
+    resultOutput = await reader.readuntil(b"# ")
+    writer.close()
+    resultStr = resultOutput.decode()
+    print(resultStr)
+    return
+
+
+# Wait info by column update
+def waitInfoUpdateByCol (self, tableId, entryPosition, col, info):
+    scheduleResultLocatorStr = getLocatorXpathStrByPositionCol(self, tableId, entryPosition , col)
+    waitElementTextWithRefresh(self, (By.XPATH, scheduleResultLocatorStr), info, self.driver.find_element(By.CSS_SELECTOR, "#i_action_refresh > a"), 600 )
+    return
+
+#Check the ont uptime
+async def checkOntUptime(dutIp, dutAdminName, dutAdminPwd, serviceOntFlag, ontInfo):
+    reader, writer = await telnetlib3.open_connection(dutIp, 23)
+    resultOutput = await reader.readuntil(b": ")
+    writer.write(dutAdminName + "\n")
+    await writer.drain()
+    resultOutput = await reader.readuntil(b"Password: ")
+    writer.write(dutAdminPwd + "\n")
+    await writer.drain()
+    resultOutput = await reader.readuntil(b"# ")
+    match serviceOntFlag:
+        case "xont":
+            showCommand = "show in remote xont " + ontInfo[0] + "-" + ontInfo[1] + "-" + ontInfo[2] +" status\n"
+        case "ont":
+            showCommand = "show in remote ont " + ontInfo[0] + "-" + ontInfo[1] + "-" + ontInfo[2] +" status\n"
+        case "ont-14":
+            showCommand = "show remote ont ont-" + ontInfo[1] + "-" + ontInfo[2] +" \n"
+    writer.write(showCommand)
+    await writer.drain()
+    resultOutput = await reader.readuntil(b"# ")
+    writer.close()
+    resultStr = resultOutput.decode()
+    resultStr = re.sub(r"^.*IS \(", "", resultStr,flags = re.DOTALL)
+    resultStr = re.sub(r"\).*$", "", resultStr,flags = re.DOTALL)
+    resultStr = re.sub(r"h|m|s", "", resultStr,flags = re.DOTALL)
+    resultList = resultStr.split(" ")
+    resultList = [i.strip() for i in resultList]
+    timeBit = len(resultList)
+    match timeBit:
+        case 1:
+            return (int(resultList[1]))
+        case 2:
+            return (int(resultList[0])*60) + (int(resultList[1]))
+        case 3:
+            return (int(resultList[0])*60*60) + (int(resultList[1])*60) + (int(resultList[2]))
+        case 4:
+            return (int(resultList[0])*60*60*24) + (int(resultList[1])*60*60) + (int(resultList[2])*60) + (int(resultList[3]))
+
+
+async def cliShowXontIpHost(dutIp, dutAdminName, dutAdminPwd, ontInfo):
+    returnList = []
+    reader, writer = await telnetlib3.open_connection(dutIp, 23)
+    resultOutput = await reader.readuntil(b": ")
+    writer.write(dutAdminName + "\n")
+    await writer.drain()
+    resultOutput = await reader.readuntil(b"Password: ")
+    writer.write(dutAdminPwd + "\n")
+    await writer.drain()
+    resultOutput = await reader.readuntil(b"# ")
+    showCommand = "show in remote xont " + ontInfo[0] + "-" + ontInfo[1] + "-" + ontInfo[2] +" ip-host config\n"
+    writer.write(showCommand)
+    await writer.drain()
+    resultOutput = await reader.readuntil(b"# ")
+    writer.close()
+    resultStr = resultOutput.decode()
+    resultStr = re.sub(r"^.*vlan Id-config", "vlan Id-config", resultStr,flags = re.DOTALL)
+    resultList = resultStr.splitlines()
+    resultList = [re.sub(r"^.* :", "", i,flags = re.DOTALL) for i in resultList]
+    resultList = [i.strip() for i in resultList]
+    delItem = {"----------------------+--------------------"}
+    del resultList [-1]
+    del resultList [-1]
+    resultList = [i for i in resultList if i not in delItem]
+    returnList = resultList
+    print (returnList)
+    return returnList
+
+# Kick user
+def kickUsr(self, usr):
+    if self.driver.find_element(By.LINK_TEXT, "System").get_attribute("className") == "":
+        self.driver.find_element(By.LINK_TEXT, "System").click()
+        time.sleep (3)
+    if self.driver.find_element(By.LINK_TEXT, "Security").get_attribute("className") == "":
+        self.driver.find_element(By.LINK_TEXT, "Security").click()
+        time.sleep (3)
+    if self.driver.find_element(By.ID, "user_online").get_attribute("className") == "":
+        self.driver.find_element(By.ID, "user_online").click()
+        time.sleep (3)
+    entryPosition = getPositionByColNext (self, "onlineUserTable", "userName", usr)
+    while (entryPosition != [-1, -1]):
+        getElementByPositionCol(self, "onlineUserTable", entryPosition , "Checkbox").location_once_scrolled_into_view
+        getElementByPositionCol(self, "onlineUserTable", entryPosition , "Checkbox").click()
+        time.sleep (3)
+        self.driver.find_element(By.ID, "i_action_delete").click()
+        time.sleep (3)
+        self.driver.find_element(By.CSS_SELECTOR, "#message_diag .button").click()
+        time.sleep (3)
+        entryPosition = getPositionByColNext (self, "onlineUserTable", "userName", usr)
+    return
+
+# Multiple click
+def multipleClick(self, element, times):
+    for i in range(times):
+        WebDriverWait(self.driver, 300).until(EC.invisibility_of_element_located((By.ID, "loadind_1")))
+        element.click()
+
+
+# Click the column all element
+def clickAllByCol(self, tableId, colName):
+    pageTotal = pageCount (self, tableId)
+    tableCols = self.driver.find_elements(By.XPATH,"//table[@id=\'" + tableId + "_head\']/thead/tr/th")
+    tableColsCount = len(tableCols)
+    colIndex = 0
+    rowIndex = 0
+    resultList = []
+    for tableCol in range(tableColsCount):
+        testCol = tableCols[tableCol].get_attribute("name")
+        if testCol == colName:
+            colIndex = tableCol + 1
+            break
+    for pageIndex in range(1, pageTotal + 1):
+        tableRows = self.driver.find_elements(By.XPATH,"//table[@id=\'" + tableId + "_body\']/tbody/tr")
+        tableRowsCount = len(tableRows)
+        for tableRow in range(tableRowsCount):
+            rowIndex = tableRow + 1
+            testElement = self.driver.find_element(By.XPATH, "//table[@id=\'" + tableId + "_body\']/tbody/tr[" + str(rowIndex) + "]/td[" + str(colIndex) + "]")
+            #testElement = self.driver.find_element(By.XPATH, "//table[@id=\'" + tableId + "_body\']/tbody/tr[" + str(rowIndex) + "]/td[" + str(colIndex) + "]/label/input")
+            testElement.click()
+        if (pageCurrent (self, tableId) == pageTotal) and pageTotal > 1:
+            self.driver.find_element(By.CSS_SELECTOR, "#" + tableId + " .first").click()
+        elif (pageCurrent (self, tableId) != pageTotal) and pageTotal > 1:
+            self.driver.find_element(By.CSS_SELECTOR, "#" + tableId + " .next").click()
+    return resultList
+
+
+# Get the column list
+def getListByCol(self, tableId, colName):
+    pageTotal = pageCount (self, tableId)
+    tableCols = self.driver.find_elements(By.XPATH,"//table[@id=\'" + tableId + "_head\']/thead/tr/th")
+    tableColsCount = len(tableCols)
+    colIndex = 0
+    rowIndex = 0
+    resultList = []
+    for tableCol in range(tableColsCount):
+        testCol = tableCols[tableCol].get_attribute("name")
+        if testCol == colName:
+            colIndex = tableCol + 1
+            break
+    for pageIndex in range(1, pageTotal + 1):
+        tableRows = self.driver.find_elements(By.XPATH,"//table[@id=\'" + tableId + "_body\']/tbody/tr")
+        tableRowsCount = len(tableRows)
+        for tableRow in range(tableRowsCount):
+            rowIndex = tableRow + 1
+            testElement = self.driver.find_element(By.XPATH, "//table[@id=\'" + tableId + "_body\']/tbody/tr[" + str(rowIndex) + "]/td[" + str(colIndex) + "]")
+            resultList.append(testElement.text)
+        if (pageCurrent (self, tableId) == pageTotal) and pageTotal > 1:
+            self.driver.find_element(By.CSS_SELECTOR, "#" + tableId + " .first").click()
+        elif (pageCurrent (self, tableId) != pageTotal) and pageTotal > 1:
+            self.driver.find_element(By.CSS_SELECTOR, "#" + tableId + " .next").click()
+    return resultList
+
+# Get the pairwise correlation enable list
+def getPairwiseEnableList(self):
+    tableId = "pairwise_correlationTable"
+    colName = "Enable"
+    pageTotal = pageCount (self, tableId)
+    tableCols = self.driver.find_elements(By.XPATH,"//table[@id=\'" + tableId + "_head\']/thead/tr/th")
+    tableColsCount = len(tableCols)
+    colIndex = 0
+    rowIndex = 0
+    resultList = []
+    for tableCol in range(tableColsCount):
+        testCol = tableCols[tableCol].get_attribute("name")
+        if testCol == colName:
+            colIndex = tableCol + 1
+            break
+    for pageIndex in range(1, pageTotal + 1):
+        tableRows = self.driver.find_elements(By.XPATH,"//table[@id=\'" + tableId + "_body\']/tbody/tr")
+        tableRowsCount = len(tableRows)
+        for tableRow in range(tableRowsCount):
+            rowIndex = tableRow + 1
+            testElement = self.driver.find_element(By.XPATH, "//table[@id=\'" + tableId + "_body\']/tbody/tr[" + str(rowIndex) + "]/td[" + str(colIndex) + "]/label/input")
+            resultList.append(testElement.get_attribute("checked"))
+        if (pageCurrent (self, tableId) == pageTotal) and pageTotal > 1:
+            self.driver.find_element(By.CSS_SELECTOR, "#" + tableId + " .first").click()
+        elif (pageCurrent (self, tableId) != pageTotal) and pageTotal > 1:
+            self.driver.find_element(By.CSS_SELECTOR, "#" + tableId + " .next").click()
+    return resultList
+
+
+def deleteScriptIfExisted (self, scriptName):
+    if self.driver.find_element(By.LINK_TEXT, "Script").get_attribute("className") == "":
+        self.driver.find_element(By.LINK_TEXT, "Script").click()
+        time.sleep (3)
+    if self.driver.find_element(By.CSS_SELECTOR, "#tab_background > li:nth-child(1) > a").get_attribute("className") == "":
+        self.driver.find_element(By.CSS_SELECTOR, "#tab_background > li:nth-child(1) > a").click()
+        time.sleep (3)
+    entryPosition = getPositionByColNext (self, "script_table", "Name", scriptName)
+    if entryPosition !=[-1, -1]:
+        time.sleep (3)
+        getElementByPositionCol(self, "script_table", entryPosition , "Checkbox").find_element(By.TAG_NAME, "label").location_once_scrolled_into_view
+        getElementByPositionCol(self, "script_table", entryPosition , "Checkbox").find_element(By.TAG_NAME, "label").click()
+        self.driver.find_element(By.CSS_SELECTOR, "#i_action_delete > a").click()
+        time.sleep (3)
+        if (self.driver.find_element(By.ID, "message_text").text == "Delete success."):
+            self.driver.find_element(By.CSS_SELECTOR, "#message_diag .button").click()
+            time.sleep (3)
+
+def createScriptSelectTag (self, scriptName, content, tagList):
+    deleteScriptIfExisted (self, scriptName)
+    self.driver.find_element(By.CSS_SELECTOR, "#i_action_create_collector > a").click()
+    self.driver.find_element(By.ID, "create_name").send_keys(scriptName)
+    self.driver.find_element(By.ID, "create_content").send_keys(content)
+    self.driver.find_element(By.XPATH, "//input[@value=\'Select\']").click()
+    time.sleep (3)
+    for tag in tagList:
+        self.driver.find_element(By.XPATH, "//label[@for=\"tag_" + tag + "\"]").location_once_scrolled_into_view
+        self.driver.find_element(By.XPATH, "//label[@for=\"tag_" + tag + "\"]").click()
+    self.driver.find_element(By.CSS_SELECTOR, "#ScriptTag .modal-footer > .button_green").click()
+    time.sleep(3)
+    self.driver.find_element(By.XPATH, "//input[@value=\'Save\']").click()
+    time.sleep(3)
+    successButton = WebDriverWait(self.driver, 30).until(
+        EC.element_to_be_clickable((By.CSS_SELECTOR, "#message_diag .button"))
+    )
+    successButton.click()
+    WebDriverWait(self.driver, 30).until(
+        EC.invisibility_of_element_located((By.ID, "message_diag"))
+    )
+
+def getAlarmPositionByIndex (self, tableId, indexDic):
+    pageTotal = pageCount (self, tableId)
+    rowIndex = 0
+    for pageIndex in range(1, pageTotal + 1):
+        tableRows = self.driver.find_elements(By.XPATH,"//table[@id=\'" + tableId + "_body\']/tbody/tr")
+        tableRowsCount = len(tableRows)
+        for tableRow in range(tableRowsCount):
+            rowIndex = tableRow + 1
+            testIndexValue = []
+            for indkey in list(indexDic):
+                testIndexValue.append(self.driver.find_element(By.XPATH, "//table[@id=\'" + tableId + "_body\']/tbody/tr[" + str(rowIndex) + "]").get_attribute(indkey))
+            if testIndexValue == list(indexDic.values()):
+                return [pageCurrent (self, tableId), rowIndex]
+        if (pageCurrent (self, tableId) == pageTotal) and pageTotal > 1:
+            self.driver.find_element(By.CSS_SELECTOR, "#" + tableId + " .first").click()
+        elif (pageCurrent (self, tableId) != pageTotal) and pageTotal > 1:
+            self.driver.find_element(By.CSS_SELECTOR, "#" + tableId + " .next").click()
+    return [-1, -1]
+
+def ontCurrentVerByAIDInventory (self, dutIp, ontInfo):
+    filterOntInventory(self, dutIp, ontInfo)
+    entryPosition = [1,1]
+    ontCurrentVerInd = getElementByPositionCol(self, "ont_inventory_div", entryPosition , "activeVersion").text
+    match ontCurrentVerInd :
+        case "Version 1": ontCurrentVer = getElementByPositionCol(self, "ont_inventory_div", entryPosition , "versionA").text
+        case "Version 2": ontCurrentVer = getElementByPositionCol(self, "ont_inventory_div", entryPosition , "versionB").text
+    return ontCurrentVer
+
+def ontBootImageInd (self, dutIp, ontInfo):
+    filterOntInventory(self, dutIp, ontInfo)
+    entryPosition = [1,1]
+    ontCurrentVerInd = getElementByPositionCol(self, "ont_inventory_div", entryPosition , "activeVersion").text
+    return ontCurrentVerInd
+
+def restoreConfigExisted (self, restoreScheduleName):
+    try:
+        self.driver.find_element(By.XPATH, "//td[contains(.,\'" + restoreScheduleName + "\')]")
+        return True
+    except NoSuchElementException:
+        return False
+
+def createPm (self, page, pmtype, ip, interface):
+    if self.driver.find_element(By.LINK_TEXT, "Performance").get_attribute("className") == "":
+        self.driver.find_element(By.LINK_TEXT, "Performance").click()
+        time.sleep (3)
+    if self.driver.find_element(By.LINK_TEXT, page).get_attribute("className") == "":
+        self.driver.find_element(By.LINK_TEXT, page).click()
+        time.sleep (3)
+    self.driver.find_element(By.CSS_SELECTOR, "#i_action_create_demand > a").click()
+    time.sleep(3)
+    if self.driver.find_element(By.XPATH, "//option[. = \'" + pmtype + "\']").is_selected() != True:
+        Select(self.driver.find_element(By.ID, "create_performance_select")).select_by_visible_text(pmtype)
+        time.sleep (3)
+    if self.driver.find_element(By.XPATH, "//*[@id=\"tree_demand\"]/ul/li/div[1]").get_attribute("className") == "arrow collapsed":
+        self.driver.find_element(By.XPATH, "//*[@id=\"tree_demand\"]/ul/li/div[1]").click()
+        time.sleep (3)
+    interfaceType = ""
+    if re.search("^(PON|ETH)\d+$",interface) != None: interfaceType = "port-14"
+    if re.search("^\d+-\d+$",interface) != None: interfaceType = "port"
+    if re.search("^\d+-\d+-\d+-\d+-\d+$",interface) != None: interfaceType = "ont"
+    if re.search("^\d+-\d+-\d+-\d+$",interface) != None: interfaceType = "xont"
+    if re.search("^(PON|ETH)\d+-\d+-\d+$",interface) != None: interfaceType = "ont-14"
+    match interfaceType:
+        case "port-14":
+            self.driver.find_element(By.XPATH, "//*[@id=\"tree_demand\"]/ul/li//label[contains(.,\'("+ ip +")\')]").click()
+            time.sleep(3)
+            Select(self.driver.find_element(By.ID, "performance_select_port")).select_by_visible_text(interface)
+        case "port":
+            interfaceSplitList = interface.split("-")
+            interfaceSlot = interfaceSplitList[0]
+            interfacePort = interfaceSplitList[1]
+            targetElement = self.driver.find_element(By.XPATH, "//*[@id=\"tree_demand\"]/ul/li//label[contains(.,\'("+ ip +")\')]")
+            elementScrolledIntoView(self, targetElement)
+            self.driver.find_element(By.XPATH, "//*[@id=\"tree_demand\"]/ul/li//label[contains(.,\'("+ ip +")\')]/../div[1]").click()
+            time.sleep(3)
+            self.driver.find_element(By.XPATH, "//*[@id=\"tree_demand\"]/ul/li//label[contains(.,\'("+ ip +")\')]/../ul/li[contains(.,\'"+ interfaceSlot + " - " +"\')]/label").click()
+            time.sleep(3)
+            Select(self.driver.find_element(By.ID, "performance_select_port")).select_by_visible_text(interfacePort)
+        case "ont":
+            interfaceSplitList = interface.split("-")
+            interfaceSlot = interfaceSplitList[0]
+            interfacePort = interfaceSplitList[1]
+            interfaceOntNum = interfaceSplitList[2]
+            interfaceOntCard = interfaceSplitList[3]
+            interfaceOntPort = interfaceSplitList[4]
+            targetElement = self.driver.find_element(By.XPATH, "//*[@id=\"tree_demand\"]/ul/li//label[contains(.,\'("+ ip +")\')]")
+            elementScrolledIntoView(self, targetElement)
+            self.driver.find_element(By.XPATH, "//*[@id=\"tree_demand\"]/ul/li//label[contains(.,\'("+ ip +")\')]/../div[1]").click()
+            time.sleep(3)
+            self.driver.find_element(By.XPATH, "//*[@id=\"tree_demand\"]/ul/li//label[contains(.,\'("+ ip +")\')]/../ul/li[contains(.,\'"+ interfaceSlot + " - " +"\')]/label").click()
+            time.sleep(3)
+            Select(self.driver.find_element(By.ID, "performance_select_port")).select_by_visible_text(interfacePort)
+            time.sleep(3)
+            Select(self.driver.find_element(By.ID, "performance_select_ontNum")).select_by_visible_text(interfaceOntNum)
+            time.sleep(3)
+            Select(self.driver.find_element(By.ID, "performance_select_ontCard")).select_by_visible_text(interfaceOntCard)
+            time.sleep(3)
+            Select(self.driver.find_element(By.ID, "performance_select_ontPort")).select_by_visible_text(interfaceOntPort)
+        case "xont":
+            interfaceSplitList = interface.split("-")
+            interfaceSlot = interfaceSplitList[0]
+            interfacePort = interfaceSplitList[1]
+            interfaceOntNum = interfaceSplitList[2]
+            interfaceOntPort = interfaceSplitList[3]
+            targetElement = self.driver.find_element(By.XPATH, "//*[@id=\"tree_demand\"]/ul/li//label[contains(.,\'("+ ip +")\')]")
+            elementScrolledIntoView(self, targetElement)
+            self.driver.find_element(By.XPATH, "//*[@id=\"tree_demand\"]/ul/li//label[contains(.,\'("+ ip +")\')]/../div[1]").click()
+            time.sleep(3)
+            self.driver.find_element(By.XPATH, "//*[@id=\"tree_demand\"]/ul/li//label[contains(.,\'("+ ip +")\')]/../ul/li[contains(.,\'"+ interfaceSlot + " - " +"\')]/label").click()
+            time.sleep(3)
+            Select(self.driver.find_element(By.ID, "performance_select_port")).select_by_visible_text(interfacePort)
+            time.sleep(3)
+            Select(self.driver.find_element(By.ID, "performance_select_ontNum")).select_by_visible_text(interfaceOntNum)
+            time.sleep(3)
+            Select(self.driver.find_element(By.ID, "performance_select_ontPort")).select_by_visible_text(interfaceOntPort)
+        case "ont-14":
+            interfaceSplitList = interface.split("-")
+            interfacePort = interfaceSplitList[0]
+            interfaceOntNum = interfaceSplitList[1]
+            interfaceOntPort = interfaceSplitList[2]
+            targetElement = self.driver.find_element(By.XPATH, "//*[@id=\"tree_demand\"]/ul/li//label[contains(.,\'("+ ip +")\')]")
+            elementScrolledIntoView(self, targetElement)
+            self.driver.find_element(By.XPATH, "//*[@id=\"tree_demand\"]/ul/li//label[contains(.,\'("+ ip +")\')]/../div[1]").click()
+            time.sleep(3)
+            Select(self.driver.find_element(By.ID, "performance_select_port")).select_by_visible_text(interfacePort)
+            time.sleep(3)
+            Select(self.driver.find_element(By.ID, "performance_select_ontNum")).select_by_visible_text(interfaceOntNum)
+            time.sleep(3)
+            Select(self.driver.find_element(By.ID, "performance_select_ontPort")).select_by_visible_text(interfaceOntPort)
+    self.driver.find_element(By.XPATH, "//input[@value=\'Create\']").click()
+    time.sleep(3)
+
+def deleteAllPm (self, page):
+    if self.driver.find_element(By.LINK_TEXT, "Performance").get_attribute("className") == "":
+        self.driver.find_element(By.LINK_TEXT, "Performance").click()
+        time.sleep (3)
+    if self.driver.find_element(By.LINK_TEXT, page).get_attribute("className") == "":
+        self.driver.find_element(By.LINK_TEXT, page).click()
+        time.sleep (3)
+    try:
+        pmChartNum = len(self.driver.find_elements(By.XPATH, "//*[contains(@id,'pm_')]"))
+        print(pmChartNum)
+        for i in range(pmChartNum):
+            self.driver.find_element(By.XPATH, "//*[contains(@id,'pm_')]/div[1]/div[1]/div").click()
+            time.sleep (3)
+    except NoSuchElementException:
+        pass
+        return
+
+async def cliNoOnt(dutIp, dutAdminName, dutAdminPwd, serviceOntFlag, ontInfo):
+    reader, writer = await telnetlib3.open_connection(dutIp, 23)
+    resultOutput = await reader.readuntil(b": ")
+    writer.write(dutAdminName + "\n")
+    await writer.drain()
+    resultOutput = await reader.readuntil(b"Password: ")
+    writer.write(dutAdminPwd + "\n")
+    await writer.drain()
+    resultOutput = await reader.readuntil(b"# ")
+    match serviceOntFlag:
+        case "xont":
+            noOntCommand = "no interface remote xont " + ontInfo[0] + "-" + ontInfo[1] + "-" + ontInfo[2] +"\n"
+        case "ont":
+            noOntCommand = "no interface remote ont " + ontInfo[0] + "-" + ontInfo[1] + "-" + ontInfo[2] +"\n"
+        case "ont-14":
+            configCommand = "configure\n"
+            writer.write(configCommand)
+            await writer.drain()
+            noOntCommand = "no remote ont ont-" + ontInfo[1] + "-" + ontInfo[2] +" \n"
+    writer.write(noOntCommand)
+    await writer.drain()
+    resultOutput = await reader.readuntil(b"# ")
+    writer.close()
+    resultStr = resultOutput.decode()
+    return
+
+def sn16To12 (sn16):
+    if len(sn16) > 16:
+        return sn16
+    else:
+        title = bytes.fromhex(sn16[0:8]).decode('utf-8')
+        return title + sn16[8:16]
+
+async def cliCommandList (dutIp, dutAdminName, dutAdminPwd, commandList):
+    reader, writer = await telnetlib3.open_connection(dutIp, 23)
+    resultOutput = await reader.readuntil(b": ")
+    writer.write(dutAdminName + "\n")
+    await writer.drain()
+    resultOutput = await reader.readuntil(b"Password: ")
+    writer.write(dutAdminPwd + "\n")
+    await writer.drain()
+    resultOutput = await reader.readuntil(b"# ")
+    for command in commandList:
+        writer.write(command + "\n")
+        await writer.drain()
+        # resultOutput = await reader.readuntil(b"# ")
+        resultOutput = await asyncio.wait_for(reader.readuntil(b"# ") , timeout=600)
+        await asyncio.sleep(0.2)
+    writer.close()
+    resultStr = resultOutput.decode()
+    resultList = resultStr.splitlines()
+    delItem = {""}
+    resultList = [i for i in resultList if i not in delItem]
+    resultList = [i.strip() for i in resultList]
+    returnList = resultList
+    return returnList
+
+
+def waitOntServiceStatus (self, sn, status):
+    if self.driver.find_element(By.LINK_TEXT, "Provision").get_attribute("className") == "":
+        self.driver.find_element(By.LINK_TEXT, "Provision").click()
+        time.sleep (3)
+    if self.driver.find_element(By.LINK_TEXT, "Service").get_attribute("className") == "":
+        self.driver.find_element(By.LINK_TEXT, "Service").click()
+        time.sleep (3)
+    if self.driver.find_element(By.ID, "service_tab_ont").get_attribute("className") == "":
+        self.driver.find_element(By.ID, "service_tab_ont").click()
+        time.sleep (3)
+    self.driver.find_element(By.CSS_SELECTOR, "#provision_service_filter > a").click()
+    self.driver.find_element(By.ID, "provision_service_filter_reset_btn").click()
+    self.driver.find_element(By.XPATH, "//label[@for=\"provision_filter_ont_sn_checkbox\"]").click()
+    self.driver.find_element(By.ID, "provision_filter_ont_sn_text").send_keys(sn)
+    self.driver.find_element(By.ID, "provision_service_filter_query_btn").click()
+    time.sleep (3)
+    serviceResultLocatorStr = getLocatorXpathStrByPositionCol(self, "provision_service_table", [1,1] , "state")
+    waitElementTextWithRefresh(self, (By.XPATH, serviceResultLocatorStr), status, self.driver.find_element(By.ID, "provision_service_refresh"), 300 )
+    return
+
+def clickByCondition (self, tableId, colDic):
+    tableCols = self.driver.find_elements(By.XPATH,"//div[@id=\'" + tableId + "\']/div[@class=\"zy_tr zy_tr_title\"]/div")
+    tableColsCount = len(tableCols)
+    rowIndex = 0
+    colMatchIndexList = []
+    testColMatchElementTextList = []
+    for tableCol in range(tableColsCount):
+        testCol = tableCols[tableCol].text
+        if testCol in colDic.keys():
+            colMatchIndexList.append(tableCol + 1)
+    tableRows = self.driver.find_elements(By.XPATH,"//div[@id=\'" + tableId + "\']/div")
+    tableRowsCount = len(tableRows)-1
+    for tableRow in range(tableRowsCount):
+        rowIndex = tableRow + 2
+        testColMatchElementTextList = []
+        for colMatchIndex in colMatchIndexList:
+            testColMatchElementText = self.driver.find_element(By.XPATH, "//div[@id=\'" + tableId + "\']/div[" + str(rowIndex) + "]/div[" + str(colMatchIndex) + "]").text
+            testColMatchElementTextList.append(testColMatchElementText)
+        if testColMatchElementTextList == list(colDic.values()):
+            self.driver.find_element(By.XPATH, "//label[@for=\'" + tableId + "_checkbox" + str(tableRow+1) + "\']").location_once_scrolled_into_view
+            self.driver.find_element(By.XPATH, "//label[@for=\'" + tableId + "_checkbox" + str(tableRow+1) + "\']").click()
+    return
+
+def selecInDelPrfSyncByIP (self, ip):
+    tableCols = self.driver.find_elements(By.XPATH,"//div[@id=\"provision_delete_profile_sycn_table\"]/div[@class=\"zy_tr zy_tr_title\"]/div")
+    tableColsCount = len(tableCols)
+    tableRows = self.driver.find_elements(By.XPATH,"//div[@id=\"provision_delete_profile_sycn_table\"]/div")
+    tableRowsCount = len(tableRows)-1
+    rowIndex = 0
+    for tableCol in range(tableColsCount):
+        testCol = tableCols[tableCol].text
+        if testCol == "IP Address": colIndexOfIp = tableCol + 1
+    for tableRow in range(tableRowsCount):
+        rowIndex = tableRow + 2
+        testIp = self.driver.find_element(By.XPATH,"//div[@id=\"provision_delete_profile_sycn_table\"]/div[" + str(rowIndex) + "]/div[" + str(colIndexOfIp) + "]").text
+        if testIp == ip:
+            self.driver.find_element(By.XPATH, "//label[@for=\"provision_delete_profile_sync_radio" + str(tableRow) + "\"]").location_once_scrolled_into_view
+            self.driver.find_element(By.XPATH, "//label[@for=\"provision_delete_profile_sync_radio" + str(tableRow) + "\"]").click()
+            time.sleep(3)
+            break   
+    return
+
+def deselectAllPasswordRule (self):
+    passwordRuleList = ["force_change_time", "force_change_first_login", "password_length_greater", "alpha_character"
+                        , "cap_character", "num_character", "special_character", "similar_name", "lock_time"]
+    if self.driver.find_element(By.LINK_TEXT, "System").get_attribute("className") == "":
+        self.driver.find_element(By.LINK_TEXT, "System").click()
+        time.sleep (3)
+    if self.driver.find_element(By.LINK_TEXT, "Security").get_attribute("className") == "":
+        self.driver.find_element(By.LINK_TEXT, "Security").click()
+        time.sleep (3)
+    if self.driver.find_element(By.ID, "user_password_rule").get_attribute("className") == "":
+        self.driver.find_element(By.ID, "user_password_rule").click()
+        time.sleep (3)
+    for passwordRule in passwordRuleList:
+        if self.driver.find_element(By.XPATH, "//*[@id=\'"+ passwordRule +"\']").get_attribute("checked"):
+            self.driver.find_element(By.XPATH, "//label[@for=\'"+ passwordRule +"\']").click()
+    self.driver.find_element(By.XPATH, "//*[@id=\"tab_content_Password_rule\"]/div/div/div[2]/input").click()
+    time.sleep (3)
+    self.driver.find_element(By.CSS_SELECTOR, "#message_diag .button").click()
+    time.sleep(3)
+    return
+
+def enterConfigPage (self, dutNodeName):
+    if self.driver.find_element(By.LINK_TEXT, "Provision").get_attribute("className") == "":
+        self.driver.find_element(By.LINK_TEXT, "Provision").click()
+        time.sleep (3)
+    if self.driver.find_element(By.LINK_TEXT, "Configuration").get_attribute("className") == "":
+        self.driver.find_element(By.LINK_TEXT, "Configuration").click()
+        time.sleep (3)
+    try:
+        if self.driver.find_element(By.XPATH, "//*[@id=\'navMenuTree\']/ul/li[.=\'" + dutNodeName + "\']").get_attribute("classList.length") != 3:
+            self.driver.find_element(By.XPATH, "//*[@id=\'navMenuTree\']/ul/li[.=\'" + dutNodeName + "\']").click()
+            time.sleep (3)
+            self.driver.switch_to.frame(0)
+    except NoSuchElementException:
+        pass
+    return
+
+def enterConigFunPage (self, dutNodeName, mainFun, subFun):
+    self.driver.switch_to.default_content()
+    if self.driver.find_element(By.LINK_TEXT, "Provision").get_attribute("className") == "":
+        self.driver.find_element(By.LINK_TEXT, "Provision").click()
+        time.sleep (3)
+    if self.driver.find_element(By.LINK_TEXT, "Configuration").get_attribute("className") == "":
+        self.driver.find_element(By.LINK_TEXT, "Configuration").click()
+        time.sleep (3)
+    if self.driver.find_element(By.XPATH, "//*[@id=\'navMenuTree\']/ul/li[.=\'" + dutNodeName + "\']").get_attribute("className") == "list-group-item node-navMenuTree":
+        self.driver.find_element(By.XPATH, "//*[@id=\'navMenuTree\']/ul/li[.=\'" + dutNodeName + "\']").click()
+        time.sleep (3)
+    self.driver.switch_to.frame(0)
+    if self.driver.find_element(By.XPATH, "//*[@id=\'config_menu\']/div[.=\'" + mainFun + "\']/following-sibling::div[1]").get_attribute("className") == "collapse config_parent":
+        self.driver.find_element(By.LINK_TEXT, mainFun).click()
+        time.sleep (3)
+    if self.driver.find_element(By.ID, "multicast_mvlan").get_attribute("className") == "":
+        self.driver.find_element(By.LINK_TEXT, subFun).click()
+        time.sleep (3)
+
+
+
+def clickByColsPage (self, tableId, pageBoxId, colDic):
+    pageTotalId = pageBoxId.replace("pageControl", "pageTotal") 
+    btnNextPageId = pageBoxId.replace("pageControl", "btnNextPage") 
+    tableCols = self.driver.find_elements(By.XPATH,"//div[@id=\'" + tableId + "\']/div[@class=\"zy_tr zy_tr_title\"]/div")
+    tableColsCount = len(tableCols)
+    rowIndex = 0
+    colMatchIndexList = []
+    testColMatchElementTextList = []    
+    for tableCol in range(tableColsCount):
+        testCol = tableCols[tableCol].text
+        if testCol in colDic.keys():
+            colMatchIndexList.append(tableCol + 1)
+            pageCount = int(self.driver.find_element(By.ID, pageTotalId).text)          
+    for pageIndex in range(1,pageCount+1):
+        tableRows = self.driver.find_elements(By.XPATH,"//div[@id=\'" + tableId + "\']/div")
+        tableRowsCount = len(tableRows)
+        for tableRow in range(tableRowsCount):
+            rowIndex = tableRow + 2
+            testColMatchElementTextList = []
+            for colMatchIndex in colMatchIndexList:
+                testColMatchElement = self.driver.find_element(By.XPATH, "//div[@id=\'" + tableId + "\']/div[" + str(rowIndex) + "]/div[" + str(colMatchIndex) + "]")
+                testColMatchElementText = testColMatchElement.text
+                testColMatchElementTextList.append(testColMatchElementText)
+            if testColMatchElementTextList == list(colDic.values()):
+                self.driver.find_element(By.XPATH, "//label[@for=\'" + tableId + "_checkbox" + str(tableRow+1) + "\']").click()
+                break
+                #return [pageIndex, rowIndex]
+        self.driver.find_element(By.ID, btnNextPageId).click()
+    return [-1, -1]   
+
+
+
+# ---------------------------------------------------------------------------
+# Table lookups read many cells one by one; when EMS redraws/refreshes the table
+# in the middle, a cell goes stale.  Retry the whole lookup in that case.
+# ---------------------------------------------------------------------------
+def _retryTableLookup (fn):
+    import functools
+
+    @functools.wraps(fn)
+    def wrapper(self, *args, **kwargs):
+        for attempt in range(5):
+            try:
+                return fn(self, *args, **kwargs)
+            except StaleElementReferenceException:
+                if attempt == 4:
+                    raise
+                print(f"{fn.__name__}: table was redrawn while reading, retry {attempt + 1}/4", flush=True)
+                time.sleep(2)
+                waitPageIdle(self)
+    return wrapper
+
+for _tableLookupName in (
+    "getPositionByCols", "getPositionByColsNext", "getPositionsByColsNext",
+    "getLocatorXpathStrByPositionCol", "getPositionByCol", "getPositionByColNextSort",
+    "getPositionByColNext", "getPositionByColClassNext", "getElementByPositionCol",
+    "getPositionByColNoPage", "getElementByPositionColNoPage", "getListByCol",
+    "totalData", "pageCount", "pageCurrent",
+):
+    if _tableLookupName in globals():
+        globals()[_tableLookupName] = _retryTableLookup(globals()[_tableLookupName])
+
+
+async def restoreDeviceSnmp (self):
+    # Put the DUT SNMP version/user and the EMS device settings back to the
+    # configured values.  Cases that change SNMP (v2c/v3 auth level/method) call
+    # this in "finally"; otherwise a failure leaves EMS unable to reach the DUT
+    # ("Connection test is failed") and every later case fails.
+    level = {
+        "Authentication and privacy": "priv",
+        "Authentication and no privacy": "auth",
+        "No authentication and no privacy": "noauth",
+    }.get(self.dutSnmp3Auth, "priv")
+    version = "v3" if "3" in str(self.dutSnmpVer) else "v2c"
+    if "OLT" in self.dutType:
+        usrCmd = ("snmp-server username " + self.dutAdminName + " sec-level " + level + " auth " + self.dutSnmp3Hash.lower()
+                  + " auth-password " + self.dutAdminPwd + " priv " + self.dutSnmp3Encrypt.lower()
+                  + " priv-password " + self.dutAdminPwd + " group readwrite")
+    else:
+        usrCmd = "snmp-server username " + self.dutAdminName + " sec-level " + level + " auth " + self.dutSnmp3Hash.lower() + " priv " + self.dutSnmp3Encrypt.lower()
+    try:
+        await cliCommandList(self.dutIp, self.dutAdminName, self.dutAdminPwd, ["config", "snmp-server version " + version, usrCmd])
+    except Exception as exc:
+        print(f"restoreDeviceSnmp: CLI restore failed: {exc!r}", flush=True)
+    try:
+        from libs.ems_map_management import default_device_settings, ensure_device_exists, update_device_settings_by_ip
+        try:
+            self.driver.switch_to.alert.dismiss()
+        except Exception:
+            pass
+        self.driver.switch_to.default_content()
+        self.driver.get(self.emsURL)
+        time.sleep(3)
+        settings = default_device_settings(self)
+        # Some cases delete and re-create the device node; add it back first if it is gone
+        ensure_device_exists(self.driver, settings)
+        update_device_settings_by_ip(self.driver, self.dutIp, settings)
+        openMenu(self, "Inventory")
+        openMenu(self, "Device")
+        entryPosition = getPositionByColNext(self, "dev_inventory_div", "IPAddress", self.dutIp)
+        waitFiledUpdate(self, "dev_inventory_div", entryPosition, "DevStatus", "Up", waitUsable(self, (By.ID, "i_action_refresh")))
+    except Exception as exc:
+        print(f"restoreDeviceSnmp: EMS device settings restore failed: {exc!r}", flush=True)
+
+
+def openScheduleResult (self, entryPosition):
+    # Click the "Result" link of a schedule row and wait for the result dialog.
+    # Clicking the table cell itself sometimes misses the <a> inside it.
+    for attempt in range(3):
+        cell = getElementByPositionCol(self, "schedule_table", entryPosition, "Result_Hyperlink")
+        links = cell.find_elements(By.TAG_NAME, "a")
+        clickElementWhenReady(self, links[0] if links else cell)
+        try:
+            WebDriverWait(self.driver, 20, poll_frequency=0.5).until(
+                lambda driver: any(e.is_displayed() for e in driver.find_elements(By.ID, "modal_main_pane"))
+            )
+            time.sleep(1)
+            return
+        except TimeoutException:
+            print(f"Schedule result dialog did not open, click again: attempt={attempt + 1}", flush=True)
+
+
+def ensureGePortSetting (self, slotId, portId, speed, linkTimeout=60):
+    # Make the GE (Ethernet Access) port match the environment file before a case
+    # checks it: other cases (e.g. GE template provisioning) may leave it at 1G or
+    # disabled, which keeps a 10G link down.  NeoX CLI only.
+    import re
+    from libs.device_cli import run_ssh_commands
+    if "NeoX" not in str(self.dutType):
+        print(f"ensureGePortSetting: skip, CLI for {self.dutType} not supported", flush=True)
+        return
+    clean = lambda text: re.sub(r"\x1b\[[0-9;]*[A-Za-z]|\[J", "", text)
+    speedCmd = "speed " + str(speed).lower()
+    print(f"ensureGePortSetting: ge {slotId}-{portId} -> {speedCmd}, enable", flush=True)
+    run_ssh_commands(self.dutIp, self.dutAdminName, self.dutAdminPwd,
+                     ["configure", f"interface ge {slotId}-{portId}", speedCmd, "enable"])
+    portLine = re.compile(r"^\s*" + re.escape(str(portId)) + r"\s*\|")
+    endTime = time.time() + linkTimeout
+    status = ""
+    while time.time() < endTime:
+        time.sleep(5)
+        output = clean(run_ssh_commands(self.dutIp, self.dutAdminName, self.dutAdminPwd,
+                                        [f"show interface ge {slotId}-{portId} status"]))
+        lines = [line for line in output.splitlines() if portLine.match(line)]
+        status = lines[0] if lines else ""
+        if "linkup" in status:
+            print(f"ensureGePortSetting: ge {slotId}-{portId} {status.strip()}", flush=True)
+            time.sleep(20)  # let EMS receive the link-up and refresh the port inventory
+            return
+    print(f"ensureGePortSetting: ge {slotId}-{portId} is not linkup after {linkTimeout}s: {status.strip()!r}", flush=True)
+
+
+def parseOntBankVersions (output):
+    # Return the two image versions of an ONT from its CLI status output.
+    #  NeoX / IES xont : "FW version 1 |  V V544ACNM1b1" / "FW version 2 | V544ACNM1C0"
+    #  IES ont (table) : "... Active |    1         V541ACBB1b6v1 | ..."
+    #                    "...     IS |    2      V  V541ACBB1C0v1 | ..."
+    # A leading "V" only marks the active image and is not part of the version.
+    import re
+    versions = []
+    for line in output.splitlines():
+        match = re.match(r"\s*FW version [12]\s*\|\s*(.*)$", line)
+        if match and match.group(1).split():
+            versions.append(match.group(1).split()[-1])
+    if versions:
+        return versions
+    for line in output.splitlines():
+        match = re.search(r"\|\s*([12])\s+(?:V\s+)?([A-Za-z0-9._-]+)\s*\|", line)
+        if match:
+            versions.append(match.group(2))
+    return versions
+
+
+def selectUpgradeOntFW (self):
+    # The ONT keeps two images (bank 1/2).  Upgrading with an image that is already
+    # in a bank does nothing (no reboot), so pick the first candidate from
+    # ZYXEL_DUT.<node>.ONT.<exe_upgrade_ont>.fw_image_list that is in neither bank.
+    import re
+    from libs.device_cli import run_ssh_commands
+    candidates = list(getattr(self, "upgradeOntFWList", None) or [self.upgradeOntFW])
+    flag = str(self.upgradeOntFlag).lower()
+    match flag:
+        case "xont" | "ont":
+            aid = f"{self.upgradeOntSlotID}-{self.upgradeOntPortID}-{self.upgradeOntOntID}"
+            showCommand = f"show interface remote {flag} {aid} status"
+        case "ont-14":
+            aid = f"ont-{self.upgradeOntPortID}-{self.upgradeOntOntID}"
+            showCommand = f"show remote ont {aid}"
+        case _:
+            raise AssertionError(f"selectUpgradeOntFW: unsupported ONT flag {self.upgradeOntFlag!r}")
+    output = re.sub(r"\x1b\[[0-9;]*[A-Za-z]|\[J", "", run_ssh_commands(
+        self.dutIp, self.dutAdminName, self.dutAdminPwd, [showCommand]))
+    bankVersions = parseOntBankVersions(output)
+    if not bankVersions:
+        raise AssertionError(
+            f"selectUpgradeOntFW: cannot read the image versions of ONT {aid} ({showCommand}):\n{output[-800:]}")
+    for image in candidates:
+        if re.sub(r"\..*$", "", image) not in bankVersions:
+            print(f"selectUpgradeOntFW: ONT {aid} banks={bankVersions}, use {image}", flush=True)
+            self.upgradeOntFW = image
+            return image
+    raise AssertionError(
+        f"selectUpgradeOntFW: every candidate {candidates} is already in ONT {aid} banks {bankVersions}; "
+        "add another image to fw_image_list"
+    )

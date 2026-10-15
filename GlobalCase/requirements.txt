@@ -1,0 +1,16 @@
+pytest
+pytest-assume
+pytest-asyncio
+pytest-html
+pytest-rerunfailures
+selenium
+PyAutoGUI
+python-dateutil
+requests
+pandas
+openpyxl
+paramiko
+pyserial
+telnetlib3
+deepdiff
+Pillow

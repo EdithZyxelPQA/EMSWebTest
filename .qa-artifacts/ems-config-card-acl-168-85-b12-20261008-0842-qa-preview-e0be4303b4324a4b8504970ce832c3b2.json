@@ -1,0 +1,290 @@
+{
+  "schema_version": "1.0",
+  "artifact_type": "qa-preview-plan",
+  "operation_id": "ems-config-card-acl-168-85-b12-20261008-0842",
+  "preview_digest": "878c647feea1988797379c5fdada06834dbb87ae9c8acc198695708968bfd4be",
+  "plan": {
+    "schema_version": "1.0",
+    "operation_id": "ems-config-card-acl-168-85-b12-20261008-0842",
+    "correlation_id": "ems-config-card-acl-168-85-b12-20261008-0842",
+    "environment": "corp",
+    "input_digest": "7997acb8ea51a22fd4d7919a7cb3ac197c0574decef55b82a80dea5f0860e165",
+    "report": "D:\\Auto\\EMS\\Agent\\EMSWeb\\qa_normalized_web_ems_config_card_acl_168_85_b12_20261008_0842.txt",
+    "report_schema": "legacy-web-ems-report-v1",
+    "target": {
+      "project": "NetAtlasEMS",
+      "plan": "NetAtlas EMS",
+      "platform": "NetAtlas EMS",
+      "build": "03.00.11 (AAVV.221) b12_redhat"
+    },
+    "redmine_create_bugs": false,
+    "items": [
+      {
+        "result": {
+          "external_id": "EMS1-6136",
+          "testcase_id": null,
+          "version": null,
+          "test_name": "ACL - ACL Rule - Apply with Profile",
+          "testlink_name": null,
+          "raw_status": "Pass",
+          "status": "p",
+          "duration": "0s",
+          "duration_seconds": 0.0
+        },
+        "dedupe_marker": null,
+        "dedupe_digest": null,
+        "redmine_request": null,
+        "redmine_preview": null,
+        "testlink_request": {
+          "operation_id": "ems-config-card-acl-168-85-b12-20261008-0842-b45bed52461eb511",
+          "environment": "corp",
+          "project": "NetAtlasEMS",
+          "plan": "NetAtlas EMS",
+          "platform": "NetAtlas EMS",
+          "build": "03.00.11 (AAVV.221) b12_redhat",
+          "testcase_external_id": "EMS1-6136",
+          "status": "p",
+          "notes": "Operation ID: ems-config-card-acl-168-85-b12-20261008-0842\nReport Schema: legacy-web-ems-report-v1\nReport File: qa_normalized_web_ems_config_card_acl_168_85_b12_20261008_0842.txt\nTestLink Project: NetAtlasEMS\nTest Plan: NetAtlas EMS\nPlatform: NetAtlas EMS\nBuild: 03.00.11 (AAVV.221) b12_redhat\nTest Case: EMS1-6136\nAutomation Test Function: ACL - ACL Rule - Apply with Profile\nResult: Pass",
+          "execution_duration": 0.0
+        },
+        "testlink_preview": {
+          "schema_version": "1.0",
+          "operation_id": "ems-config-card-acl-168-85-b12-20261008-0842-b45bed52461eb511",
+          "environment": "corp",
+          "mode": "preview",
+          "preview_digest": "13eb67a05285e16999aa3f7f7e91cc12002ac656f52075e11502a3dd9aa5440a",
+          "planned_write": true,
+          "target": {
+            "project": {
+              "id": "67654",
+              "name": "NetAtlasEMS"
+            },
+            "plan": {
+              "id": "260150",
+              "name": "NetAtlas EMS"
+            },
+            "platform": {
+              "id": "49",
+              "name": "NetAtlas EMS"
+            },
+            "build": {
+              "id": "20607",
+              "name": "03.00.11 (AAVV.221) b12_redhat"
+            }
+          },
+          "execution": {
+            "testcase_external_id": "EMS1-6136",
+            "status": "p",
+            "notes_digest": "b8a5e791beb9d3f6228945464dcbe955fecb35b1d8bea28150b04de798203a02",
+            "duration_minutes": 0.0
+          },
+          "warnings": []
+        }
+      },
+      {
+        "result": {
+          "external_id": "EMS1-6137",
+          "testcase_id": null,
+          "version": null,
+          "test_name": "ACL - ACL Rule - Apply with Priority",
+          "testlink_name": null,
+          "raw_status": "Pass",
+          "status": "p",
+          "duration": "0s",
+          "duration_seconds": 0.0
+        },
+        "dedupe_marker": null,
+        "dedupe_digest": null,
+        "redmine_request": null,
+        "redmine_preview": null,
+        "testlink_request": {
+          "operation_id": "ems-config-card-acl-168-85-b12-20261008-0842-2c5ab6e1b1d32a5b",
+          "environment": "corp",
+          "project": "NetAtlasEMS",
+          "plan": "NetAtlas EMS",
+          "platform": "NetAtlas EMS",
+          "build": "03.00.11 (AAVV.221) b12_redhat",
+          "testcase_external_id": "EMS1-6137",
+          "status": "p",
+          "notes": "Operation ID: ems-config-card-acl-168-85-b12-20261008-0842\nReport Schema: legacy-web-ems-report-v1\nReport File: qa_normalized_web_ems_config_card_acl_168_85_b12_20261008_0842.txt\nTestLink Project: NetAtlasEMS\nTest Plan: NetAtlas EMS\nPlatform: NetAtlas EMS\nBuild: 03.00.11 (AAVV.221) b12_redhat\nTest Case: EMS1-6137\nAutomation Test Function: ACL - ACL Rule - Apply with Priority\nResult: Pass",
+          "execution_duration": 0.0
+        },
+        "testlink_preview": {
+          "schema_version": "1.0",
+          "operation_id": "ems-config-card-acl-168-85-b12-20261008-0842-2c5ab6e1b1d32a5b",
+          "environment": "corp",
+          "mode": "preview",
+          "preview_digest": "bbc0dcb589f20d69756576846a5c5d405c82f62837e0a620a4520ef6e8d525ef",
+          "planned_write": true,
+          "target": {
+            "project": {
+              "id": "67654",
+              "name": "NetAtlasEMS"
+            },
+            "plan": {
+              "id": "260150",
+              "name": "NetAtlas EMS"
+            },
+            "platform": {
+              "id": "49",
+              "name": "NetAtlas EMS"
+            },
+            "build": {
+              "id": "20607",
+              "name": "03.00.11 (AAVV.221) b12_redhat"
+            }
+          },
+          "execution": {
+            "testcase_external_id": "EMS1-6137",
+            "status": "p",
+            "notes_digest": "6e65bfbeb01a34ce11753e56b17d46ef436fc936e31f27a2d9c70e054840791b",
+            "duration_minutes": 0.0
+          },
+          "warnings": []
+        }
+      },
+      {
+        "result": {
+          "external_id": "EMS1-6138",
+          "testcase_id": null,
+          "version": null,
+          "test_name": "ACL - ACL Rule - Delete",
+          "testlink_name": null,
+          "raw_status": "Pass",
+          "status": "p",
+          "duration": "0s",
+          "duration_seconds": 0.0
+        },
+        "dedupe_marker": null,
+        "dedupe_digest": null,
+        "redmine_request": null,
+        "redmine_preview": null,
+        "testlink_request": {
+          "operation_id": "ems-config-card-acl-168-85-b12-20261008-0842-877b8eb573321c4f",
+          "environment": "corp",
+          "project": "NetAtlasEMS",
+          "plan": "NetAtlas EMS",
+          "platform": "NetAtlas EMS",
+          "build": "03.00.11 (AAVV.221) b12_redhat",
+          "testcase_external_id": "EMS1-6138",
+          "status": "p",
+          "notes": "Operation ID: ems-config-card-acl-168-85-b12-20261008-0842\nReport Schema: legacy-web-ems-report-v1\nReport File: qa_normalized_web_ems_config_card_acl_168_85_b12_20261008_0842.txt\nTestLink Project: NetAtlasEMS\nTest Plan: NetAtlas EMS\nPlatform: NetAtlas EMS\nBuild: 03.00.11 (AAVV.221) b12_redhat\nTest Case: EMS1-6138\nAutomation Test Function: ACL - ACL Rule - Delete\nResult: Pass",
+          "execution_duration": 0.0
+        },
+        "testlink_preview": {
+          "schema_version": "1.0",
+          "operation_id": "ems-config-card-acl-168-85-b12-20261008-0842-877b8eb573321c4f",
+          "environment": "corp",
+          "mode": "preview",
+          "preview_digest": "33ff5afc1b7ddf6147ccd10fc5e3d0d09de575cbd1b5ec5b28ef534c13eaea6f",
+          "planned_write": true,
+          "target": {
+            "project": {
+              "id": "67654",
+              "name": "NetAtlasEMS"
+            },
+            "plan": {
+              "id": "260150",
+              "name": "NetAtlas EMS"
+            },
+            "platform": {
+              "id": "49",
+              "name": "NetAtlas EMS"
+            },
+            "build": {
+              "id": "20607",
+              "name": "03.00.11 (AAVV.221) b12_redhat"
+            }
+          },
+          "execution": {
+            "testcase_external_id": "EMS1-6138",
+            "status": "p",
+            "notes_digest": "5d24b44fa9360753c55a73b5f075c255873378716cd4f0719c7ba5f43d398c59",
+            "duration_minutes": 0.0
+          },
+          "warnings": []
+        }
+      }
+    ],
+    "ignored": [],
+    "warnings": [],
+    "preview_digest": "878c647feea1988797379c5fdada06834dbb87ae9c8acc198695708968bfd4be"
+  },
+  "review": {
+    "schema_version": "1.0",
+    "operation_id": "ems-config-card-acl-168-85-b12-20261008-0842",
+    "correlation_id": "ems-config-card-acl-168-85-b12-20261008-0842",
+    "environment": "corp",
+    "mode": "preview",
+    "preview_digest": "878c647feea1988797379c5fdada06834dbb87ae9c8acc198695708968bfd4be",
+    "planned_write": true,
+    "input_digest": "7997acb8ea51a22fd4d7919a7cb3ac197c0574decef55b82a80dea5f0860e165",
+    "report_schema": "legacy-web-ems-report-v1",
+    "target": {
+      "project": "NetAtlasEMS",
+      "plan": "NetAtlas EMS",
+      "platform": "NetAtlas EMS",
+      "build": "03.00.11 (AAVV.221) b12_redhat"
+    },
+    "parsed_count": 3,
+    "write_count": 3,
+    "ignored_count": 0,
+    "warnings": [],
+    "warning_count": 0,
+    "warnings_truncated": false,
+    "summary": {
+      "status_counts": {
+        "p": 3
+      },
+      "redmine_action_counts": {
+        "none": 3
+      },
+      "sample_testcase_external_ids": [
+        "EMS1-6136",
+        "EMS1-6137",
+        "EMS1-6138"
+      ]
+    },
+    "items": [
+      {
+        "testcase_external_id": "EMS1-6136",
+        "test_name": "ACL - ACL Rule - Apply with Profile",
+        "raw_status": "Pass",
+        "status": "p",
+        "testlink_planned_write": true,
+        "testlink_preview_digest": "13eb67a05285e16999aa3f7f7e91cc12002ac656f52075e11502a3dd9aa5440a",
+        "redmine_action": "none",
+        "redmine_preview_digest": null,
+        "redmine_issue_fields": null,
+        "redmine_issue_payload": null,
+        "dedupe_digest": null
+      },
+      {
+        "testcase_external_id": "EMS1-6137",
+        "test_name": "ACL - ACL Rule - Apply with Priority",
+        "raw_status": "Pass",
+        "status": "p",
+        "testlink_planned_write": true,
+        "testlink_preview_digest": "bbc0dcb589f20d69756576846a5c5d405c82f62837e0a620a4520ef6e8d525ef",
+        "redmine_action": "none",
+        "redmine_preview_digest": null,
+        "redmine_issue_fields": null,
+        "redmine_issue_payload": null,
+        "dedupe_digest": null
+      },
+      {
+        "testcase_external_id": "EMS1-6138",
+        "test_name": "ACL - ACL Rule - Delete",
+        "raw_status": "Pass",
+        "status": "p",
+        "testlink_planned_write": true,
+        "testlink_preview_digest": "33ff5afc1b7ddf6147ccd10fc5e3d0d09de575cbd1b5ec5b28ef534c13eaea6f",
+        "redmine_action": "none",
+        "redmine_preview_digest": null,
+        "redmine_issue_fields": null,
+        "redmine_issue_payload": null,
+        "dedupe_digest": null
+      }
+    ]
+  }
+}

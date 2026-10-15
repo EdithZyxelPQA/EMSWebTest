@@ -1,0 +1,20 @@
+{
+  "schema_version": "1.0",
+  "operation_id": "ems-config-card-full-168-85-ems100-b13redhat-20261012-1f942c01cb5ff772",
+  "environment": "corp",
+  "action": "append-execution",
+  "status": "success",
+  "preview_digest": "491a65add4e7cef977add5d21bc78ae83b8308449e4838724d10acea2a577013",
+  "testcase_external_id": "EMS1-6148",
+  "execution_id": "3169223",
+  "response": [
+    {
+      "status": true,
+      "operation": "reportTCResult",
+      "overwrite": false,
+      "message": "Success!",
+      "id": 3169223
+    }
+  ],
+  "finished_at": "2026-10-12T05:53:08+00:00"
+}

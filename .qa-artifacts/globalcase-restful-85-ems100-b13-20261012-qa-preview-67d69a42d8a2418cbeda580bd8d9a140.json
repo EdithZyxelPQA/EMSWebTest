@@ -1,0 +1,1797 @@
+{
+  "schema_version": "1.0",
+  "artifact_type": "qa-preview-plan",
+  "operation_id": "globalcase-restful-85-ems100-b13-20261012",
+  "preview_digest": "1842ac74f473e998d64407582db95f25fea5c1af2f64936ed07dd5e667df189f",
+  "plan": {
+    "schema_version": "1.0",
+    "operation_id": "globalcase-restful-85-ems100-b13-20261012",
+    "correlation_id": "globalcase-restful-85-ems100-b13-20261012",
+    "environment": "corp",
+    "input_digest": "fa6df1125c18e21762afdb0326d66245f6a13654fe8aee72ba105dd5d1b8a2d9",
+    "report": "D:\\Auto\\EMS\\Agent\\EMSWeb\\qa_normalized_globalcase_restful_ems128_100_neox06_nxc400_b13_20261012_1416.txt",
+    "report_schema": "legacy-web-ems-report-v1",
+    "target": {
+      "project": "NetAtlasEMS",
+      "plan": "NetAtlas EMS",
+      "platform": "NetAtlas EMS",
+      "build": "03.00.11 (AAVV.221) b13_redhat"
+    },
+    "redmine_create_bugs": false,
+    "items": [
+      {
+        "result": {
+          "external_id": "EMS1-6686",
+          "testcase_id": null,
+          "version": null,
+          "test_name": "devDeviceInfo",
+          "testlink_name": null,
+          "raw_status": "Pass",
+          "status": "p",
+          "duration": "0s",
+          "duration_seconds": 0.0
+        },
+        "dedupe_marker": null,
+        "dedupe_digest": null,
+        "redmine_request": null,
+        "redmine_preview": null,
+        "testlink_request": {
+          "operation_id": "globalcase-restful-85-ems100-b13-20261012-ea0457a8136e86ee",
+          "environment": "corp",
+          "project": "NetAtlasEMS",
+          "plan": "NetAtlas EMS",
+          "platform": "NetAtlas EMS",
+          "build": "03.00.11 (AAVV.221) b13_redhat",
+          "testcase_external_id": "EMS1-6686",
+          "status": "p",
+          "notes": "Operation ID: globalcase-restful-85-ems100-b13-20261012\nReport Schema: legacy-web-ems-report-v1\nReport File: qa_normalized_globalcase_restful_ems128_100_neox06_nxc400_b13_20261012_1416.txt\nTestLink Project: NetAtlasEMS\nTest Plan: NetAtlas EMS\nPlatform: NetAtlas EMS\nBuild: 03.00.11 (AAVV.221) b13_redhat\nTest Case: EMS1-6686\nAutomation Test Function: devDeviceInfo\nResult: Pass",
+          "execution_duration": 0.0
+        },
+        "testlink_preview": {
+          "schema_version": "1.0",
+          "operation_id": "globalcase-restful-85-ems100-b13-20261012-ea0457a8136e86ee",
+          "environment": "corp",
+          "mode": "preview",
+          "preview_digest": "d4d035b8c11016860eb838c2a81139720da6e79c1da5523614f6bf35ada0e954",
+          "planned_write": true,
+          "target": {
+            "project": {
+              "id": "67654",
+              "name": "NetAtlasEMS"
+            },
+            "plan": {
+              "id": "260150",
+              "name": "NetAtlas EMS"
+            },
+            "platform": {
+              "id": "49",
+              "name": "NetAtlas EMS"
+            },
+            "build": {
+              "id": "20644",
+              "name": "03.00.11 (AAVV.221) b13_redhat"
+            }
+          },
+          "execution": {
+            "testcase_external_id": "EMS1-6686",
+            "status": "p",
+            "notes_digest": "2f93b00369d27cbb353903db4551f95f598bce8c595ba70aa4512243cc168c83",
+            "duration_minutes": 0.0
+          },
+          "warnings": []
+        }
+      },
+      {
+        "result": {
+          "external_id": "EMS1-6687",
+          "testcase_id": null,
+          "version": null,
+          "test_name": "devDeviceInfoDashboard",
+          "testlink_name": null,
+          "raw_status": "Pass",
+          "status": "p",
+          "duration": "0s",
+          "duration_seconds": 0.0
+        },
+        "dedupe_marker": null,
+        "dedupe_digest": null,
+        "redmine_request": null,
+        "redmine_preview": null,
+        "testlink_request": {
+          "operation_id": "globalcase-restful-85-ems100-b13-20261012-688b47c6260b9df8",
+          "environment": "corp",
+          "project": "NetAtlasEMS",
+          "plan": "NetAtlas EMS",
+          "platform": "NetAtlas EMS",
+          "build": "03.00.11 (AAVV.221) b13_redhat",
+          "testcase_external_id": "EMS1-6687",
+          "status": "p",
+          "notes": "Operation ID: globalcase-restful-85-ems100-b13-20261012\nReport Schema: legacy-web-ems-report-v1\nReport File: qa_normalized_globalcase_restful_ems128_100_neox06_nxc400_b13_20261012_1416.txt\nTestLink Project: NetAtlasEMS\nTest Plan: NetAtlas EMS\nPlatform: NetAtlas EMS\nBuild: 03.00.11 (AAVV.221) b13_redhat\nTest Case: EMS1-6687\nAutomation Test Function: devDeviceInfoDashboard\nResult: Pass",
+          "execution_duration": 0.0
+        },
+        "testlink_preview": {
+          "schema_version": "1.0",
+          "operation_id": "globalcase-restful-85-ems100-b13-20261012-688b47c6260b9df8",
+          "environment": "corp",
+          "mode": "preview",
+          "preview_digest": "44fabfe30e9f96ec3d8260dbb5cffe4c5109cc373afa435c282a48a00dc6f722",
+          "planned_write": true,
+          "target": {
+            "project": {
+              "id": "67654",
+              "name": "NetAtlasEMS"
+            },
+            "plan": {
+              "id": "260150",
+              "name": "NetAtlas EMS"
+            },
+            "platform": {
+              "id": "49",
+              "name": "NetAtlas EMS"
+            },
+            "build": {
+              "id": "20644",
+              "name": "03.00.11 (AAVV.221) b13_redhat"
+            }
+          },
+          "execution": {
+            "testcase_external_id": "EMS1-6687",
+            "status": "p",
+            "notes_digest": "394dbaf53ef44b2cefdf42a155628e3ea7892d9bcdedceb35afdc5f5a3bb6664",
+            "duration_minutes": 0.0
+          },
+          "warnings": []
+        }
+      },
+      {
+        "result": {
+          "external_id": "EMS1-6688",
+          "testcase_id": null,
+          "version": null,
+          "test_name": "devSlotInfo",
+          "testlink_name": null,
+          "raw_status": "Pass",
+          "status": "p",
+          "duration": "0s",
+          "duration_seconds": 0.0
+        },
+        "dedupe_marker": null,
+        "dedupe_digest": null,
+        "redmine_request": null,
+        "redmine_preview": null,
+        "testlink_request": {
+          "operation_id": "globalcase-restful-85-ems100-b13-20261012-c33db4b6391bc172",
+          "environment": "corp",
+          "project": "NetAtlasEMS",
+          "plan": "NetAtlas EMS",
+          "platform": "NetAtlas EMS",
+          "build": "03.00.11 (AAVV.221) b13_redhat",
+          "testcase_external_id": "EMS1-6688",
+          "status": "p",
+          "notes": "Operation ID: globalcase-restful-85-ems100-b13-20261012\nReport Schema: legacy-web-ems-report-v1\nReport File: qa_normalized_globalcase_restful_ems128_100_neox06_nxc400_b13_20261012_1416.txt\nTestLink Project: NetAtlasEMS\nTest Plan: NetAtlas EMS\nPlatform: NetAtlas EMS\nBuild: 03.00.11 (AAVV.221) b13_redhat\nTest Case: EMS1-6688\nAutomation Test Function: devSlotInfo\nResult: Pass",
+          "execution_duration": 0.0
+        },
+        "testlink_preview": {
+          "schema_version": "1.0",
+          "operation_id": "globalcase-restful-85-ems100-b13-20261012-c33db4b6391bc172",
+          "environment": "corp",
+          "mode": "preview",
+          "preview_digest": "7282911017cb01fec7a5376c58de190e778ddd2f5e1c9ace7c48b4ebaf5447eb",
+          "planned_write": true,
+          "target": {
+            "project": {
+              "id": "67654",
+              "name": "NetAtlasEMS"
+            },
+            "plan": {
+              "id": "260150",
+              "name": "NetAtlas EMS"
+            },
+            "platform": {
+              "id": "49",
+              "name": "NetAtlas EMS"
+            },
+            "build": {
+              "id": "20644",
+              "name": "03.00.11 (AAVV.221) b13_redhat"
+            }
+          },
+          "execution": {
+            "testcase_external_id": "EMS1-6688",
+            "status": "p",
+            "notes_digest": "c7497c01583eca5667c58a0e60bf2aa98a126e6c846c56d0af6a7010ff002c8f",
+            "duration_minutes": 0.0
+          },
+          "warnings": []
+        }
+      },
+      {
+        "result": {
+          "external_id": "EMS1-6689",
+          "testcase_id": null,
+          "version": null,
+          "test_name": "devPortInfoInventoryAllPort",
+          "testlink_name": null,
+          "raw_status": "Pass",
+          "status": "p",
+          "duration": "0s",
+          "duration_seconds": 0.0
+        },
+        "dedupe_marker": null,
+        "dedupe_digest": null,
+        "redmine_request": null,
+        "redmine_preview": null,
+        "testlink_request": {
+          "operation_id": "globalcase-restful-85-ems100-b13-20261012-08753088934fead5",
+          "environment": "corp",
+          "project": "NetAtlasEMS",
+          "plan": "NetAtlas EMS",
+          "platform": "NetAtlas EMS",
+          "build": "03.00.11 (AAVV.221) b13_redhat",
+          "testcase_external_id": "EMS1-6689",
+          "status": "p",
+          "notes": "Operation ID: globalcase-restful-85-ems100-b13-20261012\nReport Schema: legacy-web-ems-report-v1\nReport File: qa_normalized_globalcase_restful_ems128_100_neox06_nxc400_b13_20261012_1416.txt\nTestLink Project: NetAtlasEMS\nTest Plan: NetAtlas EMS\nPlatform: NetAtlas EMS\nBuild: 03.00.11 (AAVV.221) b13_redhat\nTest Case: EMS1-6689\nAutomation Test Function: devPortInfoInventoryAllPort\nResult: Pass",
+          "execution_duration": 0.0
+        },
+        "testlink_preview": {
+          "schema_version": "1.0",
+          "operation_id": "globalcase-restful-85-ems100-b13-20261012-08753088934fead5",
+          "environment": "corp",
+          "mode": "preview",
+          "preview_digest": "c090ef806c2d092c5aee540a612ebb604985a92677ca3b782dfa91d1b0fdcd91",
+          "planned_write": true,
+          "target": {
+            "project": {
+              "id": "67654",
+              "name": "NetAtlasEMS"
+            },
+            "plan": {
+              "id": "260150",
+              "name": "NetAtlas EMS"
+            },
+            "platform": {
+              "id": "49",
+              "name": "NetAtlas EMS"
+            },
+            "build": {
+              "id": "20644",
+              "name": "03.00.11 (AAVV.221) b13_redhat"
+            }
+          },
+          "execution": {
+            "testcase_external_id": "EMS1-6689",
+            "status": "p",
+            "notes_digest": "6d74f3c6b8568d8576f0f3b089abb15f15fea45ecb88f5ffaaa306f5478b1322",
+            "duration_minutes": 0.0
+          },
+          "warnings": []
+        }
+      },
+      {
+        "result": {
+          "external_id": "EMS1-6690",
+          "testcase_id": null,
+          "version": null,
+          "test_name": "devPortInfoInventoryTypePort",
+          "testlink_name": null,
+          "raw_status": "Pass",
+          "status": "p",
+          "duration": "0s",
+          "duration_seconds": 0.0
+        },
+        "dedupe_marker": null,
+        "dedupe_digest": null,
+        "redmine_request": null,
+        "redmine_preview": null,
+        "testlink_request": {
+          "operation_id": "globalcase-restful-85-ems100-b13-20261012-0216000deaab87fa",
+          "environment": "corp",
+          "project": "NetAtlasEMS",
+          "plan": "NetAtlas EMS",
+          "platform": "NetAtlas EMS",
+          "build": "03.00.11 (AAVV.221) b13_redhat",
+          "testcase_external_id": "EMS1-6690",
+          "status": "p",
+          "notes": "Operation ID: globalcase-restful-85-ems100-b13-20261012\nReport Schema: legacy-web-ems-report-v1\nReport File: qa_normalized_globalcase_restful_ems128_100_neox06_nxc400_b13_20261012_1416.txt\nTestLink Project: NetAtlasEMS\nTest Plan: NetAtlas EMS\nPlatform: NetAtlas EMS\nBuild: 03.00.11 (AAVV.221) b13_redhat\nTest Case: EMS1-6690\nAutomation Test Function: devPortInfoInventoryTypePort\nResult: Pass",
+          "execution_duration": 0.0
+        },
+        "testlink_preview": {
+          "schema_version": "1.0",
+          "operation_id": "globalcase-restful-85-ems100-b13-20261012-0216000deaab87fa",
+          "environment": "corp",
+          "mode": "preview",
+          "preview_digest": "c6d7971e96800ef38b0a258c17a30013cbfe1c5216966b635a024de420012cfe",
+          "planned_write": true,
+          "target": {
+            "project": {
+              "id": "67654",
+              "name": "NetAtlasEMS"
+            },
+            "plan": {
+              "id": "260150",
+              "name": "NetAtlas EMS"
+            },
+            "platform": {
+              "id": "49",
+              "name": "NetAtlas EMS"
+            },
+            "build": {
+              "id": "20644",
+              "name": "03.00.11 (AAVV.221) b13_redhat"
+            }
+          },
+          "execution": {
+            "testcase_external_id": "EMS1-6690",
+            "status": "p",
+            "notes_digest": "2e98e039b3ad0e22e001ab6aaa1ba482b920d04e9a89056e19dcbab89fac8f65",
+            "duration_minutes": 0.0
+          },
+          "warnings": []
+        }
+      },
+      {
+        "result": {
+          "external_id": "EMS1-6691",
+          "testcase_id": null,
+          "version": null,
+          "test_name": "devPortInfoMapPort",
+          "testlink_name": null,
+          "raw_status": "Pass",
+          "status": "p",
+          "duration": "0s",
+          "duration_seconds": 0.0
+        },
+        "dedupe_marker": null,
+        "dedupe_digest": null,
+        "redmine_request": null,
+        "redmine_preview": null,
+        "testlink_request": {
+          "operation_id": "globalcase-restful-85-ems100-b13-20261012-75fc50b298dda293",
+          "environment": "corp",
+          "project": "NetAtlasEMS",
+          "plan": "NetAtlas EMS",
+          "platform": "NetAtlas EMS",
+          "build": "03.00.11 (AAVV.221) b13_redhat",
+          "testcase_external_id": "EMS1-6691",
+          "status": "p",
+          "notes": "Operation ID: globalcase-restful-85-ems100-b13-20261012\nReport Schema: legacy-web-ems-report-v1\nReport File: qa_normalized_globalcase_restful_ems128_100_neox06_nxc400_b13_20261012_1416.txt\nTestLink Project: NetAtlasEMS\nTest Plan: NetAtlas EMS\nPlatform: NetAtlas EMS\nBuild: 03.00.11 (AAVV.221) b13_redhat\nTest Case: EMS1-6691\nAutomation Test Function: devPortInfoMapPort\nResult: Pass",
+          "execution_duration": 0.0
+        },
+        "testlink_preview": {
+          "schema_version": "1.0",
+          "operation_id": "globalcase-restful-85-ems100-b13-20261012-75fc50b298dda293",
+          "environment": "corp",
+          "mode": "preview",
+          "preview_digest": "4ddb817d6c77dc1a9cd2a67dac64fb9213dd278065e9950bbfb383a238e69e07",
+          "planned_write": true,
+          "target": {
+            "project": {
+              "id": "67654",
+              "name": "NetAtlasEMS"
+            },
+            "plan": {
+              "id": "260150",
+              "name": "NetAtlas EMS"
+            },
+            "platform": {
+              "id": "49",
+              "name": "NetAtlas EMS"
+            },
+            "build": {
+              "id": "20644",
+              "name": "03.00.11 (AAVV.221) b13_redhat"
+            }
+          },
+          "execution": {
+            "testcase_external_id": "EMS1-6691",
+            "status": "p",
+            "notes_digest": "9fc765ff0bbb64ba9a18faecd1cc00028d706ed4d253cf994ca7c200309b152d",
+            "duration_minutes": 0.0
+          },
+          "warnings": []
+        }
+      },
+      {
+        "result": {
+          "external_id": "EMS1-6692",
+          "testcase_id": null,
+          "version": null,
+          "test_name": "devOntInfoInventoryAllOnt",
+          "testlink_name": null,
+          "raw_status": "Pass",
+          "status": "p",
+          "duration": "0s",
+          "duration_seconds": 0.0
+        },
+        "dedupe_marker": null,
+        "dedupe_digest": null,
+        "redmine_request": null,
+        "redmine_preview": null,
+        "testlink_request": {
+          "operation_id": "globalcase-restful-85-ems100-b13-20261012-55a0a3b9843c6135",
+          "environment": "corp",
+          "project": "NetAtlasEMS",
+          "plan": "NetAtlas EMS",
+          "platform": "NetAtlas EMS",
+          "build": "03.00.11 (AAVV.221) b13_redhat",
+          "testcase_external_id": "EMS1-6692",
+          "status": "p",
+          "notes": "Operation ID: globalcase-restful-85-ems100-b13-20261012\nReport Schema: legacy-web-ems-report-v1\nReport File: qa_normalized_globalcase_restful_ems128_100_neox06_nxc400_b13_20261012_1416.txt\nTestLink Project: NetAtlasEMS\nTest Plan: NetAtlas EMS\nPlatform: NetAtlas EMS\nBuild: 03.00.11 (AAVV.221) b13_redhat\nTest Case: EMS1-6692\nAutomation Test Function: devOntInfoInventoryAllOnt\nResult: Pass",
+          "execution_duration": 0.0
+        },
+        "testlink_preview": {
+          "schema_version": "1.0",
+          "operation_id": "globalcase-restful-85-ems100-b13-20261012-55a0a3b9843c6135",
+          "environment": "corp",
+          "mode": "preview",
+          "preview_digest": "ac6b33bf26f34bb560bc7e7f92201a0fb3d38bb6658183b9e8ed7f3602a7aa45",
+          "planned_write": true,
+          "target": {
+            "project": {
+              "id": "67654",
+              "name": "NetAtlasEMS"
+            },
+            "plan": {
+              "id": "260150",
+              "name": "NetAtlas EMS"
+            },
+            "platform": {
+              "id": "49",
+              "name": "NetAtlas EMS"
+            },
+            "build": {
+              "id": "20644",
+              "name": "03.00.11 (AAVV.221) b13_redhat"
+            }
+          },
+          "execution": {
+            "testcase_external_id": "EMS1-6692",
+            "status": "p",
+            "notes_digest": "c49719e17e18c6fc598d6c0ba84e4d69a945098dacebf1ac03c2b4fee0216537",
+            "duration_minutes": 0.0
+          },
+          "warnings": []
+        }
+      },
+      {
+        "result": {
+          "external_id": "EMS1-6693",
+          "testcase_id": null,
+          "version": null,
+          "test_name": "devOntInfoMapDevice",
+          "testlink_name": null,
+          "raw_status": "Pass",
+          "status": "p",
+          "duration": "0s",
+          "duration_seconds": 0.0
+        },
+        "dedupe_marker": null,
+        "dedupe_digest": null,
+        "redmine_request": null,
+        "redmine_preview": null,
+        "testlink_request": {
+          "operation_id": "globalcase-restful-85-ems100-b13-20261012-8faad532622c536e",
+          "environment": "corp",
+          "project": "NetAtlasEMS",
+          "plan": "NetAtlas EMS",
+          "platform": "NetAtlas EMS",
+          "build": "03.00.11 (AAVV.221) b13_redhat",
+          "testcase_external_id": "EMS1-6693",
+          "status": "p",
+          "notes": "Operation ID: globalcase-restful-85-ems100-b13-20261012\nReport Schema: legacy-web-ems-report-v1\nReport File: qa_normalized_globalcase_restful_ems128_100_neox06_nxc400_b13_20261012_1416.txt\nTestLink Project: NetAtlasEMS\nTest Plan: NetAtlas EMS\nPlatform: NetAtlas EMS\nBuild: 03.00.11 (AAVV.221) b13_redhat\nTest Case: EMS1-6693\nAutomation Test Function: devOntInfoMapDevice\nResult: Pass",
+          "execution_duration": 0.0
+        },
+        "testlink_preview": {
+          "schema_version": "1.0",
+          "operation_id": "globalcase-restful-85-ems100-b13-20261012-8faad532622c536e",
+          "environment": "corp",
+          "mode": "preview",
+          "preview_digest": "bd7ef0e4f5f993f0560ad786a159e04dae3a82657cd540e06b889abe33270a7c",
+          "planned_write": true,
+          "target": {
+            "project": {
+              "id": "67654",
+              "name": "NetAtlasEMS"
+            },
+            "plan": {
+              "id": "260150",
+              "name": "NetAtlas EMS"
+            },
+            "platform": {
+              "id": "49",
+              "name": "NetAtlas EMS"
+            },
+            "build": {
+              "id": "20644",
+              "name": "03.00.11 (AAVV.221) b13_redhat"
+            }
+          },
+          "execution": {
+            "testcase_external_id": "EMS1-6693",
+            "status": "p",
+            "notes_digest": "5834723bc3421fd732a01660ff3ef93f09bbf634d386ea228d9f8c1e511ee62c",
+            "duration_minutes": 0.0
+          },
+          "warnings": []
+        }
+      },
+      {
+        "result": {
+          "external_id": "EMS1-6694",
+          "testcase_id": null,
+          "version": null,
+          "test_name": "devOntInfoMapDeviceOntDashboard",
+          "testlink_name": null,
+          "raw_status": "Pass",
+          "status": "p",
+          "duration": "0s",
+          "duration_seconds": 0.0
+        },
+        "dedupe_marker": null,
+        "dedupe_digest": null,
+        "redmine_request": null,
+        "redmine_preview": null,
+        "testlink_request": {
+          "operation_id": "globalcase-restful-85-ems100-b13-20261012-1876f2e3d90bf8ea",
+          "environment": "corp",
+          "project": "NetAtlasEMS",
+          "plan": "NetAtlas EMS",
+          "platform": "NetAtlas EMS",
+          "build": "03.00.11 (AAVV.221) b13_redhat",
+          "testcase_external_id": "EMS1-6694",
+          "status": "p",
+          "notes": "Operation ID: globalcase-restful-85-ems100-b13-20261012\nReport Schema: legacy-web-ems-report-v1\nReport File: qa_normalized_globalcase_restful_ems128_100_neox06_nxc400_b13_20261012_1416.txt\nTestLink Project: NetAtlasEMS\nTest Plan: NetAtlas EMS\nPlatform: NetAtlas EMS\nBuild: 03.00.11 (AAVV.221) b13_redhat\nTest Case: EMS1-6694\nAutomation Test Function: devOntInfoMapDeviceOntDashboard\nResult: Pass",
+          "execution_duration": 0.0
+        },
+        "testlink_preview": {
+          "schema_version": "1.0",
+          "operation_id": "globalcase-restful-85-ems100-b13-20261012-1876f2e3d90bf8ea",
+          "environment": "corp",
+          "mode": "preview",
+          "preview_digest": "7807be1c30074d909db68c9e062f874023c70dcbede0519476d71e74985f5437",
+          "planned_write": true,
+          "target": {
+            "project": {
+              "id": "67654",
+              "name": "NetAtlasEMS"
+            },
+            "plan": {
+              "id": "260150",
+              "name": "NetAtlas EMS"
+            },
+            "platform": {
+              "id": "49",
+              "name": "NetAtlas EMS"
+            },
+            "build": {
+              "id": "20644",
+              "name": "03.00.11 (AAVV.221) b13_redhat"
+            }
+          },
+          "execution": {
+            "testcase_external_id": "EMS1-6694",
+            "status": "p",
+            "notes_digest": "536c0030b7b72b07ae93312be6b043dace3e49dbc2b04d6e433a0f35c8f78b9f",
+            "duration_minutes": 0.0
+          },
+          "warnings": []
+        }
+      },
+      {
+        "result": {
+          "external_id": "EMS1-6695",
+          "testcase_id": null,
+          "version": null,
+          "test_name": "devOntInfoMapCardOntDashboard",
+          "testlink_name": null,
+          "raw_status": "Pass",
+          "status": "p",
+          "duration": "0s",
+          "duration_seconds": 0.0
+        },
+        "dedupe_marker": null,
+        "dedupe_digest": null,
+        "redmine_request": null,
+        "redmine_preview": null,
+        "testlink_request": {
+          "operation_id": "globalcase-restful-85-ems100-b13-20261012-89373acb98d02658",
+          "environment": "corp",
+          "project": "NetAtlasEMS",
+          "plan": "NetAtlas EMS",
+          "platform": "NetAtlas EMS",
+          "build": "03.00.11 (AAVV.221) b13_redhat",
+          "testcase_external_id": "EMS1-6695",
+          "status": "p",
+          "notes": "Operation ID: globalcase-restful-85-ems100-b13-20261012\nReport Schema: legacy-web-ems-report-v1\nReport File: qa_normalized_globalcase_restful_ems128_100_neox06_nxc400_b13_20261012_1416.txt\nTestLink Project: NetAtlasEMS\nTest Plan: NetAtlas EMS\nPlatform: NetAtlas EMS\nBuild: 03.00.11 (AAVV.221) b13_redhat\nTest Case: EMS1-6695\nAutomation Test Function: devOntInfoMapCardOntDashboard\nResult: Pass",
+          "execution_duration": 0.0
+        },
+        "testlink_preview": {
+          "schema_version": "1.0",
+          "operation_id": "globalcase-restful-85-ems100-b13-20261012-89373acb98d02658",
+          "environment": "corp",
+          "mode": "preview",
+          "preview_digest": "560e6f3d6da19d8d511e709c6d3bd0829e0b1c1d04973894a059784e719135cc",
+          "planned_write": true,
+          "target": {
+            "project": {
+              "id": "67654",
+              "name": "NetAtlasEMS"
+            },
+            "plan": {
+              "id": "260150",
+              "name": "NetAtlas EMS"
+            },
+            "platform": {
+              "id": "49",
+              "name": "NetAtlas EMS"
+            },
+            "build": {
+              "id": "20644",
+              "name": "03.00.11 (AAVV.221) b13_redhat"
+            }
+          },
+          "execution": {
+            "testcase_external_id": "EMS1-6695",
+            "status": "p",
+            "notes_digest": "f4404881e49edc6605389bf3e500a072978cdc9cd66374db7abd43b7a05e95d4",
+            "duration_minutes": 0.0
+          },
+          "warnings": []
+        }
+      },
+      {
+        "result": {
+          "external_id": "EMS1-6696",
+          "testcase_id": null,
+          "version": null,
+          "test_name": "devOntInfoMapCard",
+          "testlink_name": null,
+          "raw_status": "Pass",
+          "status": "p",
+          "duration": "0s",
+          "duration_seconds": 0.0
+        },
+        "dedupe_marker": null,
+        "dedupe_digest": null,
+        "redmine_request": null,
+        "redmine_preview": null,
+        "testlink_request": {
+          "operation_id": "globalcase-restful-85-ems100-b13-20261012-3b9f06d6434e28fe",
+          "environment": "corp",
+          "project": "NetAtlasEMS",
+          "plan": "NetAtlas EMS",
+          "platform": "NetAtlas EMS",
+          "build": "03.00.11 (AAVV.221) b13_redhat",
+          "testcase_external_id": "EMS1-6696",
+          "status": "p",
+          "notes": "Operation ID: globalcase-restful-85-ems100-b13-20261012\nReport Schema: legacy-web-ems-report-v1\nReport File: qa_normalized_globalcase_restful_ems128_100_neox06_nxc400_b13_20261012_1416.txt\nTestLink Project: NetAtlasEMS\nTest Plan: NetAtlas EMS\nPlatform: NetAtlas EMS\nBuild: 03.00.11 (AAVV.221) b13_redhat\nTest Case: EMS1-6696\nAutomation Test Function: devOntInfoMapCard\nResult: Pass",
+          "execution_duration": 0.0
+        },
+        "testlink_preview": {
+          "schema_version": "1.0",
+          "operation_id": "globalcase-restful-85-ems100-b13-20261012-3b9f06d6434e28fe",
+          "environment": "corp",
+          "mode": "preview",
+          "preview_digest": "da78b518fbe0274e896a76b8411f5938c1ce39c58700ad8dcc976589806c99e6",
+          "planned_write": true,
+          "target": {
+            "project": {
+              "id": "67654",
+              "name": "NetAtlasEMS"
+            },
+            "plan": {
+              "id": "260150",
+              "name": "NetAtlas EMS"
+            },
+            "platform": {
+              "id": "49",
+              "name": "NetAtlas EMS"
+            },
+            "build": {
+              "id": "20644",
+              "name": "03.00.11 (AAVV.221) b13_redhat"
+            }
+          },
+          "execution": {
+            "testcase_external_id": "EMS1-6696",
+            "status": "p",
+            "notes_digest": "4b992d3c71ff83f45308763162f913c3319d05b9685205a4792aa53a52931198",
+            "duration_minutes": 0.0
+          },
+          "warnings": []
+        }
+      },
+      {
+        "result": {
+          "external_id": "EMS1-6697",
+          "testcase_id": null,
+          "version": null,
+          "test_name": "devOntInfoDashboard",
+          "testlink_name": null,
+          "raw_status": "Pass",
+          "status": "p",
+          "duration": "0s",
+          "duration_seconds": 0.0
+        },
+        "dedupe_marker": null,
+        "dedupe_digest": null,
+        "redmine_request": null,
+        "redmine_preview": null,
+        "testlink_request": {
+          "operation_id": "globalcase-restful-85-ems100-b13-20261012-21b8bd913a39fe4e",
+          "environment": "corp",
+          "project": "NetAtlasEMS",
+          "plan": "NetAtlas EMS",
+          "platform": "NetAtlas EMS",
+          "build": "03.00.11 (AAVV.221) b13_redhat",
+          "testcase_external_id": "EMS1-6697",
+          "status": "p",
+          "notes": "Operation ID: globalcase-restful-85-ems100-b13-20261012\nReport Schema: legacy-web-ems-report-v1\nReport File: qa_normalized_globalcase_restful_ems128_100_neox06_nxc400_b13_20261012_1416.txt\nTestLink Project: NetAtlasEMS\nTest Plan: NetAtlas EMS\nPlatform: NetAtlas EMS\nBuild: 03.00.11 (AAVV.221) b13_redhat\nTest Case: EMS1-6697\nAutomation Test Function: devOntInfoDashboard\nResult: Pass",
+          "execution_duration": 0.0
+        },
+        "testlink_preview": {
+          "schema_version": "1.0",
+          "operation_id": "globalcase-restful-85-ems100-b13-20261012-21b8bd913a39fe4e",
+          "environment": "corp",
+          "mode": "preview",
+          "preview_digest": "5aa7aaae553394ec9adc6ee7b21a26bf8a650d2f6c7c9e3cb32a2933a48d2e3b",
+          "planned_write": true,
+          "target": {
+            "project": {
+              "id": "67654",
+              "name": "NetAtlasEMS"
+            },
+            "plan": {
+              "id": "260150",
+              "name": "NetAtlas EMS"
+            },
+            "platform": {
+              "id": "49",
+              "name": "NetAtlas EMS"
+            },
+            "build": {
+              "id": "20644",
+              "name": "03.00.11 (AAVV.221) b13_redhat"
+            }
+          },
+          "execution": {
+            "testcase_external_id": "EMS1-6697",
+            "status": "p",
+            "notes_digest": "153bd4bdc7a268c867cf6a35aaf1eeea18e91cfcfc3857d223411356bbee9c0a",
+            "duration_minutes": 0.0
+          },
+          "warnings": []
+        }
+      },
+      {
+        "result": {
+          "external_id": "EMS1-6698",
+          "testcase_id": null,
+          "version": null,
+          "test_name": "devOntInfoDashboardOntDashboard",
+          "testlink_name": null,
+          "raw_status": "Pass",
+          "status": "p",
+          "duration": "0s",
+          "duration_seconds": 0.0
+        },
+        "dedupe_marker": null,
+        "dedupe_digest": null,
+        "redmine_request": null,
+        "redmine_preview": null,
+        "testlink_request": {
+          "operation_id": "globalcase-restful-85-ems100-b13-20261012-3d921d873b013520",
+          "environment": "corp",
+          "project": "NetAtlasEMS",
+          "plan": "NetAtlas EMS",
+          "platform": "NetAtlas EMS",
+          "build": "03.00.11 (AAVV.221) b13_redhat",
+          "testcase_external_id": "EMS1-6698",
+          "status": "p",
+          "notes": "Operation ID: globalcase-restful-85-ems100-b13-20261012\nReport Schema: legacy-web-ems-report-v1\nReport File: qa_normalized_globalcase_restful_ems128_100_neox06_nxc400_b13_20261012_1416.txt\nTestLink Project: NetAtlasEMS\nTest Plan: NetAtlas EMS\nPlatform: NetAtlas EMS\nBuild: 03.00.11 (AAVV.221) b13_redhat\nTest Case: EMS1-6698\nAutomation Test Function: devOntInfoDashboardOntDashboard\nResult: Pass",
+          "execution_duration": 0.0
+        },
+        "testlink_preview": {
+          "schema_version": "1.0",
+          "operation_id": "globalcase-restful-85-ems100-b13-20261012-3d921d873b013520",
+          "environment": "corp",
+          "mode": "preview",
+          "preview_digest": "5d0ea8bb638e38915206401b5319032b569c720b3c0c7b4b3b1eb49ce995a2f4",
+          "planned_write": true,
+          "target": {
+            "project": {
+              "id": "67654",
+              "name": "NetAtlasEMS"
+            },
+            "plan": {
+              "id": "260150",
+              "name": "NetAtlas EMS"
+            },
+            "platform": {
+              "id": "49",
+              "name": "NetAtlas EMS"
+            },
+            "build": {
+              "id": "20644",
+              "name": "03.00.11 (AAVV.221) b13_redhat"
+            }
+          },
+          "execution": {
+            "testcase_external_id": "EMS1-6698",
+            "status": "p",
+            "notes_digest": "5bca921b4a6b1d5abc2cd7dbde76814d866956aaca77428dd9289b7cdb66bfb7",
+            "duration_minutes": 0.0
+          },
+          "warnings": []
+        }
+      },
+      {
+        "result": {
+          "external_id": "EMS1-6699",
+          "testcase_id": null,
+          "version": null,
+          "test_name": "devXontInfoInventoryAllOnt",
+          "testlink_name": null,
+          "raw_status": "Pass",
+          "status": "p",
+          "duration": "0s",
+          "duration_seconds": 0.0
+        },
+        "dedupe_marker": null,
+        "dedupe_digest": null,
+        "redmine_request": null,
+        "redmine_preview": null,
+        "testlink_request": {
+          "operation_id": "globalcase-restful-85-ems100-b13-20261012-24914d320c7c7555",
+          "environment": "corp",
+          "project": "NetAtlasEMS",
+          "plan": "NetAtlas EMS",
+          "platform": "NetAtlas EMS",
+          "build": "03.00.11 (AAVV.221) b13_redhat",
+          "testcase_external_id": "EMS1-6699",
+          "status": "p",
+          "notes": "Operation ID: globalcase-restful-85-ems100-b13-20261012\nReport Schema: legacy-web-ems-report-v1\nReport File: qa_normalized_globalcase_restful_ems128_100_neox06_nxc400_b13_20261012_1416.txt\nTestLink Project: NetAtlasEMS\nTest Plan: NetAtlas EMS\nPlatform: NetAtlas EMS\nBuild: 03.00.11 (AAVV.221) b13_redhat\nTest Case: EMS1-6699\nAutomation Test Function: devXontInfoInventoryAllOnt\nResult: Pass",
+          "execution_duration": 0.0
+        },
+        "testlink_preview": {
+          "schema_version": "1.0",
+          "operation_id": "globalcase-restful-85-ems100-b13-20261012-24914d320c7c7555",
+          "environment": "corp",
+          "mode": "preview",
+          "preview_digest": "f57104791a30b54b07a2cb96551ab4c280bbd2a0c0551ffb0b61fc5b4e430e28",
+          "planned_write": true,
+          "target": {
+            "project": {
+              "id": "67654",
+              "name": "NetAtlasEMS"
+            },
+            "plan": {
+              "id": "260150",
+              "name": "NetAtlas EMS"
+            },
+            "platform": {
+              "id": "49",
+              "name": "NetAtlas EMS"
+            },
+            "build": {
+              "id": "20644",
+              "name": "03.00.11 (AAVV.221) b13_redhat"
+            }
+          },
+          "execution": {
+            "testcase_external_id": "EMS1-6699",
+            "status": "p",
+            "notes_digest": "ca283a1f0fc75804f8433d66fa9dd6f5a6e7af202f616e60b2049c55d7e1418a",
+            "duration_minutes": 0.0
+          },
+          "warnings": []
+        }
+      },
+      {
+        "result": {
+          "external_id": "EMS1-6700",
+          "testcase_id": null,
+          "version": null,
+          "test_name": "devXontInfoMapDevice",
+          "testlink_name": null,
+          "raw_status": "Pass",
+          "status": "p",
+          "duration": "0s",
+          "duration_seconds": 0.0
+        },
+        "dedupe_marker": null,
+        "dedupe_digest": null,
+        "redmine_request": null,
+        "redmine_preview": null,
+        "testlink_request": {
+          "operation_id": "globalcase-restful-85-ems100-b13-20261012-4727943490c1564c",
+          "environment": "corp",
+          "project": "NetAtlasEMS",
+          "plan": "NetAtlas EMS",
+          "platform": "NetAtlas EMS",
+          "build": "03.00.11 (AAVV.221) b13_redhat",
+          "testcase_external_id": "EMS1-6700",
+          "status": "p",
+          "notes": "Operation ID: globalcase-restful-85-ems100-b13-20261012\nReport Schema: legacy-web-ems-report-v1\nReport File: qa_normalized_globalcase_restful_ems128_100_neox06_nxc400_b13_20261012_1416.txt\nTestLink Project: NetAtlasEMS\nTest Plan: NetAtlas EMS\nPlatform: NetAtlas EMS\nBuild: 03.00.11 (AAVV.221) b13_redhat\nTest Case: EMS1-6700\nAutomation Test Function: devXontInfoMapDevice\nResult: Pass",
+          "execution_duration": 0.0
+        },
+        "testlink_preview": {
+          "schema_version": "1.0",
+          "operation_id": "globalcase-restful-85-ems100-b13-20261012-4727943490c1564c",
+          "environment": "corp",
+          "mode": "preview",
+          "preview_digest": "2e1507aa4532f9aee9af61ff1a9a2fe99d91c9b50654d0cf93bb3e6121888074",
+          "planned_write": true,
+          "target": {
+            "project": {
+              "id": "67654",
+              "name": "NetAtlasEMS"
+            },
+            "plan": {
+              "id": "260150",
+              "name": "NetAtlas EMS"
+            },
+            "platform": {
+              "id": "49",
+              "name": "NetAtlas EMS"
+            },
+            "build": {
+              "id": "20644",
+              "name": "03.00.11 (AAVV.221) b13_redhat"
+            }
+          },
+          "execution": {
+            "testcase_external_id": "EMS1-6700",
+            "status": "p",
+            "notes_digest": "d84603ef6c14089bdc535a611139ee85f7c14a4257214e12e77a2133914504ea",
+            "duration_minutes": 0.0
+          },
+          "warnings": []
+        }
+      },
+      {
+        "result": {
+          "external_id": "EMS1-6701",
+          "testcase_id": null,
+          "version": null,
+          "test_name": "devXontInfoMapDeviceOntDashboard",
+          "testlink_name": null,
+          "raw_status": "Pass",
+          "status": "p",
+          "duration": "0s",
+          "duration_seconds": 0.0
+        },
+        "dedupe_marker": null,
+        "dedupe_digest": null,
+        "redmine_request": null,
+        "redmine_preview": null,
+        "testlink_request": {
+          "operation_id": "globalcase-restful-85-ems100-b13-20261012-5409224d10b6ebea",
+          "environment": "corp",
+          "project": "NetAtlasEMS",
+          "plan": "NetAtlas EMS",
+          "platform": "NetAtlas EMS",
+          "build": "03.00.11 (AAVV.221) b13_redhat",
+          "testcase_external_id": "EMS1-6701",
+          "status": "p",
+          "notes": "Operation ID: globalcase-restful-85-ems100-b13-20261012\nReport Schema: legacy-web-ems-report-v1\nReport File: qa_normalized_globalcase_restful_ems128_100_neox06_nxc400_b13_20261012_1416.txt\nTestLink Project: NetAtlasEMS\nTest Plan: NetAtlas EMS\nPlatform: NetAtlas EMS\nBuild: 03.00.11 (AAVV.221) b13_redhat\nTest Case: EMS1-6701\nAutomation Test Function: devXontInfoMapDeviceOntDashboard\nResult: Pass",
+          "execution_duration": 0.0
+        },
+        "testlink_preview": {
+          "schema_version": "1.0",
+          "operation_id": "globalcase-restful-85-ems100-b13-20261012-5409224d10b6ebea",
+          "environment": "corp",
+          "mode": "preview",
+          "preview_digest": "3082acfa0978a1f88e88fcfdffb14b4741eda19af81605834675c8def9f1c6ea",
+          "planned_write": true,
+          "target": {
+            "project": {
+              "id": "67654",
+              "name": "NetAtlasEMS"
+            },
+            "plan": {
+              "id": "260150",
+              "name": "NetAtlas EMS"
+            },
+            "platform": {
+              "id": "49",
+              "name": "NetAtlas EMS"
+            },
+            "build": {
+              "id": "20644",
+              "name": "03.00.11 (AAVV.221) b13_redhat"
+            }
+          },
+          "execution": {
+            "testcase_external_id": "EMS1-6701",
+            "status": "p",
+            "notes_digest": "7a17edb74f8604f94ec8191f49e00264115927719d3928d2a961757238bb402c",
+            "duration_minutes": 0.0
+          },
+          "warnings": []
+        }
+      },
+      {
+        "result": {
+          "external_id": "EMS1-6702",
+          "testcase_id": null,
+          "version": null,
+          "test_name": "devXontInfoMapCardOntDashboard",
+          "testlink_name": null,
+          "raw_status": "Pass",
+          "status": "p",
+          "duration": "0s",
+          "duration_seconds": 0.0
+        },
+        "dedupe_marker": null,
+        "dedupe_digest": null,
+        "redmine_request": null,
+        "redmine_preview": null,
+        "testlink_request": {
+          "operation_id": "globalcase-restful-85-ems100-b13-20261012-49a822cf9afcf45f",
+          "environment": "corp",
+          "project": "NetAtlasEMS",
+          "plan": "NetAtlas EMS",
+          "platform": "NetAtlas EMS",
+          "build": "03.00.11 (AAVV.221) b13_redhat",
+          "testcase_external_id": "EMS1-6702",
+          "status": "p",
+          "notes": "Operation ID: globalcase-restful-85-ems100-b13-20261012\nReport Schema: legacy-web-ems-report-v1\nReport File: qa_normalized_globalcase_restful_ems128_100_neox06_nxc400_b13_20261012_1416.txt\nTestLink Project: NetAtlasEMS\nTest Plan: NetAtlas EMS\nPlatform: NetAtlas EMS\nBuild: 03.00.11 (AAVV.221) b13_redhat\nTest Case: EMS1-6702\nAutomation Test Function: devXontInfoMapCardOntDashboard\nResult: Pass",
+          "execution_duration": 0.0
+        },
+        "testlink_preview": {
+          "schema_version": "1.0",
+          "operation_id": "globalcase-restful-85-ems100-b13-20261012-49a822cf9afcf45f",
+          "environment": "corp",
+          "mode": "preview",
+          "preview_digest": "4f6e2778e01b40c691c72cae036170d9c544781076c2bd800de0c58032b6736f",
+          "planned_write": true,
+          "target": {
+            "project": {
+              "id": "67654",
+              "name": "NetAtlasEMS"
+            },
+            "plan": {
+              "id": "260150",
+              "name": "NetAtlas EMS"
+            },
+            "platform": {
+              "id": "49",
+              "name": "NetAtlas EMS"
+            },
+            "build": {
+              "id": "20644",
+              "name": "03.00.11 (AAVV.221) b13_redhat"
+            }
+          },
+          "execution": {
+            "testcase_external_id": "EMS1-6702",
+            "status": "p",
+            "notes_digest": "564f3036e609c1243610c8c4ee64929201111ba220239df2c0b9b74831105f86",
+            "duration_minutes": 0.0
+          },
+          "warnings": []
+        }
+      },
+      {
+        "result": {
+          "external_id": "EMS1-6703",
+          "testcase_id": null,
+          "version": null,
+          "test_name": "devXontInfoMapCard",
+          "testlink_name": null,
+          "raw_status": "Pass",
+          "status": "p",
+          "duration": "0s",
+          "duration_seconds": 0.0
+        },
+        "dedupe_marker": null,
+        "dedupe_digest": null,
+        "redmine_request": null,
+        "redmine_preview": null,
+        "testlink_request": {
+          "operation_id": "globalcase-restful-85-ems100-b13-20261012-0e868a68a19a7036",
+          "environment": "corp",
+          "project": "NetAtlasEMS",
+          "plan": "NetAtlas EMS",
+          "platform": "NetAtlas EMS",
+          "build": "03.00.11 (AAVV.221) b13_redhat",
+          "testcase_external_id": "EMS1-6703",
+          "status": "p",
+          "notes": "Operation ID: globalcase-restful-85-ems100-b13-20261012\nReport Schema: legacy-web-ems-report-v1\nReport File: qa_normalized_globalcase_restful_ems128_100_neox06_nxc400_b13_20261012_1416.txt\nTestLink Project: NetAtlasEMS\nTest Plan: NetAtlas EMS\nPlatform: NetAtlas EMS\nBuild: 03.00.11 (AAVV.221) b13_redhat\nTest Case: EMS1-6703\nAutomation Test Function: devXontInfoMapCard\nResult: Pass",
+          "execution_duration": 0.0
+        },
+        "testlink_preview": {
+          "schema_version": "1.0",
+          "operation_id": "globalcase-restful-85-ems100-b13-20261012-0e868a68a19a7036",
+          "environment": "corp",
+          "mode": "preview",
+          "preview_digest": "33ca750afe073c52cab6fff9590a52a41b17b474ef119bf63064a286e9f47b2b",
+          "planned_write": true,
+          "target": {
+            "project": {
+              "id": "67654",
+              "name": "NetAtlasEMS"
+            },
+            "plan": {
+              "id": "260150",
+              "name": "NetAtlas EMS"
+            },
+            "platform": {
+              "id": "49",
+              "name": "NetAtlas EMS"
+            },
+            "build": {
+              "id": "20644",
+              "name": "03.00.11 (AAVV.221) b13_redhat"
+            }
+          },
+          "execution": {
+            "testcase_external_id": "EMS1-6703",
+            "status": "p",
+            "notes_digest": "6e76d686fc4c8c376dec0a66cee9df861e54b803dcabe5c634df8f036f96cde9",
+            "duration_minutes": 0.0
+          },
+          "warnings": []
+        }
+      },
+      {
+        "result": {
+          "external_id": "EMS1-6704",
+          "testcase_id": null,
+          "version": null,
+          "test_name": "devXontInfoDashboard",
+          "testlink_name": null,
+          "raw_status": "Pass",
+          "status": "p",
+          "duration": "0s",
+          "duration_seconds": 0.0
+        },
+        "dedupe_marker": null,
+        "dedupe_digest": null,
+        "redmine_request": null,
+        "redmine_preview": null,
+        "testlink_request": {
+          "operation_id": "globalcase-restful-85-ems100-b13-20261012-c6b6d49a47f7bcfc",
+          "environment": "corp",
+          "project": "NetAtlasEMS",
+          "plan": "NetAtlas EMS",
+          "platform": "NetAtlas EMS",
+          "build": "03.00.11 (AAVV.221) b13_redhat",
+          "testcase_external_id": "EMS1-6704",
+          "status": "p",
+          "notes": "Operation ID: globalcase-restful-85-ems100-b13-20261012\nReport Schema: legacy-web-ems-report-v1\nReport File: qa_normalized_globalcase_restful_ems128_100_neox06_nxc400_b13_20261012_1416.txt\nTestLink Project: NetAtlasEMS\nTest Plan: NetAtlas EMS\nPlatform: NetAtlas EMS\nBuild: 03.00.11 (AAVV.221) b13_redhat\nTest Case: EMS1-6704\nAutomation Test Function: devXontInfoDashboard\nResult: Pass",
+          "execution_duration": 0.0
+        },
+        "testlink_preview": {
+          "schema_version": "1.0",
+          "operation_id": "globalcase-restful-85-ems100-b13-20261012-c6b6d49a47f7bcfc",
+          "environment": "corp",
+          "mode": "preview",
+          "preview_digest": "2ddfcecc4badc5d62124da55f78e26327582294dc41a1f51fa918d188ffa9b06",
+          "planned_write": true,
+          "target": {
+            "project": {
+              "id": "67654",
+              "name": "NetAtlasEMS"
+            },
+            "plan": {
+              "id": "260150",
+              "name": "NetAtlas EMS"
+            },
+            "platform": {
+              "id": "49",
+              "name": "NetAtlas EMS"
+            },
+            "build": {
+              "id": "20644",
+              "name": "03.00.11 (AAVV.221) b13_redhat"
+            }
+          },
+          "execution": {
+            "testcase_external_id": "EMS1-6704",
+            "status": "p",
+            "notes_digest": "264c422380df84db923702a097d673872e9cbc535c14587e076e21189d735bab",
+            "duration_minutes": 0.0
+          },
+          "warnings": []
+        }
+      },
+      {
+        "result": {
+          "external_id": "EMS1-6705",
+          "testcase_id": null,
+          "version": null,
+          "test_name": "devXontInfoDashboardOntDashboard",
+          "testlink_name": null,
+          "raw_status": "Pass",
+          "status": "p",
+          "duration": "0s",
+          "duration_seconds": 0.0
+        },
+        "dedupe_marker": null,
+        "dedupe_digest": null,
+        "redmine_request": null,
+        "redmine_preview": null,
+        "testlink_request": {
+          "operation_id": "globalcase-restful-85-ems100-b13-20261012-6e3bd1f43a6f42c2",
+          "environment": "corp",
+          "project": "NetAtlasEMS",
+          "plan": "NetAtlas EMS",
+          "platform": "NetAtlas EMS",
+          "build": "03.00.11 (AAVV.221) b13_redhat",
+          "testcase_external_id": "EMS1-6705",
+          "status": "p",
+          "notes": "Operation ID: globalcase-restful-85-ems100-b13-20261012\nReport Schema: legacy-web-ems-report-v1\nReport File: qa_normalized_globalcase_restful_ems128_100_neox06_nxc400_b13_20261012_1416.txt\nTestLink Project: NetAtlasEMS\nTest Plan: NetAtlas EMS\nPlatform: NetAtlas EMS\nBuild: 03.00.11 (AAVV.221) b13_redhat\nTest Case: EMS1-6705\nAutomation Test Function: devXontInfoDashboardOntDashboard\nResult: Pass",
+          "execution_duration": 0.0
+        },
+        "testlink_preview": {
+          "schema_version": "1.0",
+          "operation_id": "globalcase-restful-85-ems100-b13-20261012-6e3bd1f43a6f42c2",
+          "environment": "corp",
+          "mode": "preview",
+          "preview_digest": "d5a96af2b38d772f6e4763dc315be9922b1ed036aa6ad20452ae03a4060effaf",
+          "planned_write": true,
+          "target": {
+            "project": {
+              "id": "67654",
+              "name": "NetAtlasEMS"
+            },
+            "plan": {
+              "id": "260150",
+              "name": "NetAtlas EMS"
+            },
+            "platform": {
+              "id": "49",
+              "name": "NetAtlas EMS"
+            },
+            "build": {
+              "id": "20644",
+              "name": "03.00.11 (AAVV.221) b13_redhat"
+            }
+          },
+          "execution": {
+            "testcase_external_id": "EMS1-6705",
+            "status": "p",
+            "notes_digest": "288743fc6cb88da401574609151f7616d58d62e54c0a1abc52e50e48e8038f2d",
+            "duration_minutes": 0.0
+          },
+          "warnings": []
+        }
+      },
+      {
+        "result": {
+          "external_id": "EMS1-7080",
+          "testcase_id": null,
+          "version": null,
+          "test_name": "devPortInfoInventoryTransceiver",
+          "testlink_name": null,
+          "raw_status": "Pass",
+          "status": "p",
+          "duration": "0s",
+          "duration_seconds": 0.0
+        },
+        "dedupe_marker": null,
+        "dedupe_digest": null,
+        "redmine_request": null,
+        "redmine_preview": null,
+        "testlink_request": {
+          "operation_id": "globalcase-restful-85-ems100-b13-20261012-3d4b82bf8d670fe0",
+          "environment": "corp",
+          "project": "NetAtlasEMS",
+          "plan": "NetAtlas EMS",
+          "platform": "NetAtlas EMS",
+          "build": "03.00.11 (AAVV.221) b13_redhat",
+          "testcase_external_id": "EMS1-7080",
+          "status": "p",
+          "notes": "Operation ID: globalcase-restful-85-ems100-b13-20261012\nReport Schema: legacy-web-ems-report-v1\nReport File: qa_normalized_globalcase_restful_ems128_100_neox06_nxc400_b13_20261012_1416.txt\nTestLink Project: NetAtlasEMS\nTest Plan: NetAtlas EMS\nPlatform: NetAtlas EMS\nBuild: 03.00.11 (AAVV.221) b13_redhat\nTest Case: EMS1-7080\nAutomation Test Function: devPortInfoInventoryTransceiver\nResult: Pass",
+          "execution_duration": 0.0
+        },
+        "testlink_preview": {
+          "schema_version": "1.0",
+          "operation_id": "globalcase-restful-85-ems100-b13-20261012-3d4b82bf8d670fe0",
+          "environment": "corp",
+          "mode": "preview",
+          "preview_digest": "0521f64b2cef3dd6065dd158910e1a74f6f65e21ba3caa1d8da105d7be1988ef",
+          "planned_write": true,
+          "target": {
+            "project": {
+              "id": "67654",
+              "name": "NetAtlasEMS"
+            },
+            "plan": {
+              "id": "260150",
+              "name": "NetAtlas EMS"
+            },
+            "platform": {
+              "id": "49",
+              "name": "NetAtlas EMS"
+            },
+            "build": {
+              "id": "20644",
+              "name": "03.00.11 (AAVV.221) b13_redhat"
+            }
+          },
+          "execution": {
+            "testcase_external_id": "EMS1-7080",
+            "status": "p",
+            "notes_digest": "679d6c27e9d9cae0c33151aa88f79c812c65ce75ab611b83663f610fe10b8836",
+            "duration_minutes": 0.0
+          },
+          "warnings": []
+        }
+      },
+      {
+        "result": {
+          "external_id": "EMS1-7091",
+          "testcase_id": null,
+          "version": null,
+          "test_name": "devGePortInfoDashboard",
+          "testlink_name": null,
+          "raw_status": "Pass",
+          "status": "p",
+          "duration": "0s",
+          "duration_seconds": 0.0
+        },
+        "dedupe_marker": null,
+        "dedupe_digest": null,
+        "redmine_request": null,
+        "redmine_preview": null,
+        "testlink_request": {
+          "operation_id": "globalcase-restful-85-ems100-b13-20261012-e3e85db3f537c2ca",
+          "environment": "corp",
+          "project": "NetAtlasEMS",
+          "plan": "NetAtlas EMS",
+          "platform": "NetAtlas EMS",
+          "build": "03.00.11 (AAVV.221) b13_redhat",
+          "testcase_external_id": "EMS1-7091",
+          "status": "p",
+          "notes": "Operation ID: globalcase-restful-85-ems100-b13-20261012\nReport Schema: legacy-web-ems-report-v1\nReport File: qa_normalized_globalcase_restful_ems128_100_neox06_nxc400_b13_20261012_1416.txt\nTestLink Project: NetAtlasEMS\nTest Plan: NetAtlas EMS\nPlatform: NetAtlas EMS\nBuild: 03.00.11 (AAVV.221) b13_redhat\nTest Case: EMS1-7091\nAutomation Test Function: devGePortInfoDashboard\nResult: Pass",
+          "execution_duration": 0.0
+        },
+        "testlink_preview": {
+          "schema_version": "1.0",
+          "operation_id": "globalcase-restful-85-ems100-b13-20261012-e3e85db3f537c2ca",
+          "environment": "corp",
+          "mode": "preview",
+          "preview_digest": "35f9524f2fc9f8baf89f498d2a66b9312b7f783f8a0f4e5531038e1d16867da4",
+          "planned_write": true,
+          "target": {
+            "project": {
+              "id": "67654",
+              "name": "NetAtlasEMS"
+            },
+            "plan": {
+              "id": "260150",
+              "name": "NetAtlas EMS"
+            },
+            "platform": {
+              "id": "49",
+              "name": "NetAtlas EMS"
+            },
+            "build": {
+              "id": "20644",
+              "name": "03.00.11 (AAVV.221) b13_redhat"
+            }
+          },
+          "execution": {
+            "testcase_external_id": "EMS1-7091",
+            "status": "p",
+            "notes_digest": "28cd5f99a78151de0d771bac09008273246a9f34895f65d069f157155730bf9d",
+            "duration_minutes": 0.0
+          },
+          "warnings": []
+        }
+      },
+      {
+        "result": {
+          "external_id": "EMS1-7092",
+          "testcase_id": null,
+          "version": null,
+          "test_name": "devGePortInfoMapDevice",
+          "testlink_name": null,
+          "raw_status": "Pass",
+          "status": "p",
+          "duration": "0s",
+          "duration_seconds": 0.0
+        },
+        "dedupe_marker": null,
+        "dedupe_digest": null,
+        "redmine_request": null,
+        "redmine_preview": null,
+        "testlink_request": {
+          "operation_id": "globalcase-restful-85-ems100-b13-20261012-10be58abb6843eb3",
+          "environment": "corp",
+          "project": "NetAtlasEMS",
+          "plan": "NetAtlas EMS",
+          "platform": "NetAtlas EMS",
+          "build": "03.00.11 (AAVV.221) b13_redhat",
+          "testcase_external_id": "EMS1-7092",
+          "status": "p",
+          "notes": "Operation ID: globalcase-restful-85-ems100-b13-20261012\nReport Schema: legacy-web-ems-report-v1\nReport File: qa_normalized_globalcase_restful_ems128_100_neox06_nxc400_b13_20261012_1416.txt\nTestLink Project: NetAtlasEMS\nTest Plan: NetAtlas EMS\nPlatform: NetAtlas EMS\nBuild: 03.00.11 (AAVV.221) b13_redhat\nTest Case: EMS1-7092\nAutomation Test Function: devGePortInfoMapDevice\nResult: Pass",
+          "execution_duration": 0.0
+        },
+        "testlink_preview": {
+          "schema_version": "1.0",
+          "operation_id": "globalcase-restful-85-ems100-b13-20261012-10be58abb6843eb3",
+          "environment": "corp",
+          "mode": "preview",
+          "preview_digest": "2c1864db1a296d74b60895de37e3c7e99ce98c6683625dd760f89741a8de7b10",
+          "planned_write": true,
+          "target": {
+            "project": {
+              "id": "67654",
+              "name": "NetAtlasEMS"
+            },
+            "plan": {
+              "id": "260150",
+              "name": "NetAtlas EMS"
+            },
+            "platform": {
+              "id": "49",
+              "name": "NetAtlas EMS"
+            },
+            "build": {
+              "id": "20644",
+              "name": "03.00.11 (AAVV.221) b13_redhat"
+            }
+          },
+          "execution": {
+            "testcase_external_id": "EMS1-7092",
+            "status": "p",
+            "notes_digest": "bb15e127ea6ee69ee87c6d001ffad7c9371bb40aab13abf83872e2319f21019a",
+            "duration_minutes": 0.0
+          },
+          "warnings": []
+        }
+      }
+    ],
+    "ignored": [],
+    "warnings": [],
+    "preview_digest": "1842ac74f473e998d64407582db95f25fea5c1af2f64936ed07dd5e667df189f"
+  },
+  "review": {
+    "schema_version": "1.0",
+    "operation_id": "globalcase-restful-85-ems100-b13-20261012",
+    "correlation_id": "globalcase-restful-85-ems100-b13-20261012",
+    "environment": "corp",
+    "mode": "preview",
+    "preview_digest": "1842ac74f473e998d64407582db95f25fea5c1af2f64936ed07dd5e667df189f",
+    "planned_write": true,
+    "input_digest": "fa6df1125c18e21762afdb0326d66245f6a13654fe8aee72ba105dd5d1b8a2d9",
+    "report_schema": "legacy-web-ems-report-v1",
+    "target": {
+      "project": "NetAtlasEMS",
+      "plan": "NetAtlas EMS",
+      "platform": "NetAtlas EMS",
+      "build": "03.00.11 (AAVV.221) b13_redhat"
+    },
+    "parsed_count": 23,
+    "write_count": 23,
+    "ignored_count": 0,
+    "warnings": [],
+    "warning_count": 0,
+    "warnings_truncated": false,
+    "summary": {
+      "status_counts": {
+        "p": 23
+      },
+      "redmine_action_counts": {
+        "none": 23
+      },
+      "sample_testcase_external_ids": [
+        "EMS1-6686",
+        "EMS1-6687",
+        "EMS1-6688",
+        "EMS1-6689",
+        "EMS1-6690",
+        "EMS1-6691",
+        "EMS1-6692",
+        "EMS1-6693",
+        "EMS1-6694",
+        "EMS1-6695"
+      ]
+    },
+    "items": [
+      {
+        "testcase_external_id": "EMS1-6686",
+        "test_name": "devDeviceInfo",
+        "raw_status": "Pass",
+        "status": "p",
+        "testlink_planned_write": true,
+        "testlink_preview_digest": "d4d035b8c11016860eb838c2a81139720da6e79c1da5523614f6bf35ada0e954",
+        "redmine_action": "none",
+        "redmine_preview_digest": null,
+        "redmine_issue_fields": null,
+        "redmine_issue_payload": null,
+        "dedupe_digest": null
+      },
+      {
+        "testcase_external_id": "EMS1-6687",
+        "test_name": "devDeviceInfoDashboard",
+        "raw_status": "Pass",
+        "status": "p",
+        "testlink_planned_write": true,
+        "testlink_preview_digest": "44fabfe30e9f96ec3d8260dbb5cffe4c5109cc373afa435c282a48a00dc6f722",
+        "redmine_action": "none",
+        "redmine_preview_digest": null,
+        "redmine_issue_fields": null,
+        "redmine_issue_payload": null,
+        "dedupe_digest": null
+      },
+      {
+        "testcase_external_id": "EMS1-6688",
+        "test_name": "devSlotInfo",
+        "raw_status": "Pass",
+        "status": "p",
+        "testlink_planned_write": true,
+        "testlink_preview_digest": "7282911017cb01fec7a5376c58de190e778ddd2f5e1c9ace7c48b4ebaf5447eb",
+        "redmine_action": "none",
+        "redmine_preview_digest": null,
+        "redmine_issue_fields": null,
+        "redmine_issue_payload": null,
+        "dedupe_digest": null
+      },
+      {
+        "testcase_external_id": "EMS1-6689",
+        "test_name": "devPortInfoInventoryAllPort",
+        "raw_status": "Pass",
+        "status": "p",
+        "testlink_planned_write": true,
+        "testlink_preview_digest": "c090ef806c2d092c5aee540a612ebb604985a92677ca3b782dfa91d1b0fdcd91",
+        "redmine_action": "none",
+        "redmine_preview_digest": null,
+        "redmine_issue_fields": null,
+        "redmine_issue_payload": null,
+        "dedupe_digest": null
+      },
+      {
+        "testcase_external_id": "EMS1-6690",
+        "test_name": "devPortInfoInventoryTypePort",
+        "raw_status": "Pass",
+        "status": "p",
+        "testlink_planned_write": true,
+        "testlink_preview_digest": "c6d7971e96800ef38b0a258c17a30013cbfe1c5216966b635a024de420012cfe",
+        "redmine_action": "none",
+        "redmine_preview_digest": null,
+        "redmine_issue_fields": null,
+        "redmine_issue_payload": null,
+        "dedupe_digest": null
+      },
+      {
+        "testcase_external_id": "EMS1-6691",
+        "test_name": "devPortInfoMapPort",
+        "raw_status": "Pass",
+        "status": "p",
+        "testlink_planned_write": true,
+        "testlink_preview_digest": "4ddb817d6c77dc1a9cd2a67dac64fb9213dd278065e9950bbfb383a238e69e07",
+        "redmine_action": "none",
+        "redmine_preview_digest": null,
+        "redmine_issue_fields": null,
+        "redmine_issue_payload": null,
+        "dedupe_digest": null
+      },
+      {
+        "testcase_external_id": "EMS1-6692",
+        "test_name": "devOntInfoInventoryAllOnt",
+        "raw_status": "Pass",
+        "status": "p",
+        "testlink_planned_write": true,
+        "testlink_preview_digest": "ac6b33bf26f34bb560bc7e7f92201a0fb3d38bb6658183b9e8ed7f3602a7aa45",
+        "redmine_action": "none",
+        "redmine_preview_digest": null,
+        "redmine_issue_fields": null,
+        "redmine_issue_payload": null,
+        "dedupe_digest": null
+      },
+      {
+        "testcase_external_id": "EMS1-6693",
+        "test_name": "devOntInfoMapDevice",
+        "raw_status": "Pass",
+        "status": "p",
+        "testlink_planned_write": true,
+        "testlink_preview_digest": "bd7ef0e4f5f993f0560ad786a159e04dae3a82657cd540e06b889abe33270a7c",
+        "redmine_action": "none",
+        "redmine_preview_digest": null,
+        "redmine_issue_fields": null,
+        "redmine_issue_payload": null,
+        "dedupe_digest": null
+      },
+      {
+        "testcase_external_id": "EMS1-6694",
+        "test_name": "devOntInfoMapDeviceOntDashboard",
+        "raw_status": "Pass",
+        "status": "p",
+        "testlink_planned_write": true,
+        "testlink_preview_digest": "7807be1c30074d909db68c9e062f874023c70dcbede0519476d71e74985f5437",
+        "redmine_action": "none",
+        "redmine_preview_digest": null,
+        "redmine_issue_fields": null,
+        "redmine_issue_payload": null,
+        "dedupe_digest": null
+      },
+      {
+        "testcase_external_id": "EMS1-6695",
+        "test_name": "devOntInfoMapCardOntDashboard",
+        "raw_status": "Pass",
+        "status": "p",
+        "testlink_planned_write": true,
+        "testlink_preview_digest": "560e6f3d6da19d8d511e709c6d3bd0829e0b1c1d04973894a059784e719135cc",
+        "redmine_action": "none",
+        "redmine_preview_digest": null,
+        "redmine_issue_fields": null,
+        "redmine_issue_payload": null,
+        "dedupe_digest": null
+      },
+      {
+        "testcase_external_id": "EMS1-6696",
+        "test_name": "devOntInfoMapCard",
+        "raw_status": "Pass",
+        "status": "p",
+        "testlink_planned_write": true,
+        "testlink_preview_digest": "da78b518fbe0274e896a76b8411f5938c1ce39c58700ad8dcc976589806c99e6",
+        "redmine_action": "none",
+        "redmine_preview_digest": null,
+        "redmine_issue_fields": null,
+        "redmine_issue_payload": null,
+        "dedupe_digest": null
+      },
+      {
+        "testcase_external_id": "EMS1-6697",
+        "test_name": "devOntInfoDashboard",
+        "raw_status": "Pass",
+        "status": "p",
+        "testlink_planned_write": true,
+        "testlink_preview_digest": "5aa7aaae553394ec9adc6ee7b21a26bf8a650d2f6c7c9e3cb32a2933a48d2e3b",
+        "redmine_action": "none",
+        "redmine_preview_digest": null,
+        "redmine_issue_fields": null,
+        "redmine_issue_payload": null,
+        "dedupe_digest": null
+      },
+      {
+        "testcase_external_id": "EMS1-6698",
+        "test_name": "devOntInfoDashboardOntDashboard",
+        "raw_status": "Pass",
+        "status": "p",
+        "testlink_planned_write": true,
+        "testlink_preview_digest": "5d0ea8bb638e38915206401b5319032b569c720b3c0c7b4b3b1eb49ce995a2f4",
+        "redmine_action": "none",
+        "redmine_preview_digest": null,
+        "redmine_issue_fields": null,
+        "redmine_issue_payload": null,
+        "dedupe_digest": null
+      },
+      {
+        "testcase_external_id": "EMS1-6699",
+        "test_name": "devXontInfoInventoryAllOnt",
+        "raw_status": "Pass",
+        "status": "p",
+        "testlink_planned_write": true,
+        "testlink_preview_digest": "f57104791a30b54b07a2cb96551ab4c280bbd2a0c0551ffb0b61fc5b4e430e28",
+        "redmine_action": "none",
+        "redmine_preview_digest": null,
+        "redmine_issue_fields": null,
+        "redmine_issue_payload": null,
+        "dedupe_digest": null
+      },
+      {
+        "testcase_external_id": "EMS1-6700",
+        "test_name": "devXontInfoMapDevice",
+        "raw_status": "Pass",
+        "status": "p",
+        "testlink_planned_write": true,
+        "testlink_preview_digest": "2e1507aa4532f9aee9af61ff1a9a2fe99d91c9b50654d0cf93bb3e6121888074",
+        "redmine_action": "none",
+        "redmine_preview_digest": null,
+        "redmine_issue_fields": null,
+        "redmine_issue_payload": null,
+        "dedupe_digest": null
+      },
+      {
+        "testcase_external_id": "EMS1-6701",
+        "test_name": "devXontInfoMapDeviceOntDashboard",
+        "raw_status": "Pass",
+        "status": "p",
+        "testlink_planned_write": true,
+        "testlink_preview_digest": "3082acfa0978a1f88e88fcfdffb14b4741eda19af81605834675c8def9f1c6ea",
+        "redmine_action": "none",
+        "redmine_preview_digest": null,
+        "redmine_issue_fields": null,
+        "redmine_issue_payload": null,
+        "dedupe_digest": null
+      },
+      {
+        "testcase_external_id": "EMS1-6702",
+        "test_name": "devXontInfoMapCardOntDashboard",
+        "raw_status": "Pass",
+        "status": "p",
+        "testlink_planned_write": true,
+        "testlink_preview_digest": "4f6e2778e01b40c691c72cae036170d9c544781076c2bd800de0c58032b6736f",
+        "redmine_action": "none",
+        "redmine_preview_digest": null,
+        "redmine_issue_fields": null,
+        "redmine_issue_payload": null,
+        "dedupe_digest": null
+      },
+      {
+        "testcase_external_id": "EMS1-6703",
+        "test_name": "devXontInfoMapCard",
+        "raw_status": "Pass",
+        "status": "p",
+        "testlink_planned_write": true,
+        "testlink_preview_digest": "33ca750afe073c52cab6fff9590a52a41b17b474ef119bf63064a286e9f47b2b",
+        "redmine_action": "none",
+        "redmine_preview_digest": null,
+        "redmine_issue_fields": null,
+        "redmine_issue_payload": null,
+        "dedupe_digest": null
+      },
+      {
+        "testcase_external_id": "EMS1-6704",
+        "test_name": "devXontInfoDashboard",
+        "raw_status": "Pass",
+        "status": "p",
+        "testlink_planned_write": true,
+        "testlink_preview_digest": "2ddfcecc4badc5d62124da55f78e26327582294dc41a1f51fa918d188ffa9b06",
+        "redmine_action": "none",
+        "redmine_preview_digest": null,
+        "redmine_issue_fields": null,
+        "redmine_issue_payload": null,
+        "dedupe_digest": null
+      },
+      {
+        "testcase_external_id": "EMS1-6705",
+        "test_name": "devXontInfoDashboardOntDashboard",
+        "raw_status": "Pass",
+        "status": "p",
+        "testlink_planned_write": true,
+        "testlink_preview_digest": "d5a96af2b38d772f6e4763dc315be9922b1ed036aa6ad20452ae03a4060effaf",
+        "redmine_action": "none",
+        "redmine_preview_digest": null,
+        "redmine_issue_fields": null,
+        "redmine_issue_payload": null,
+        "dedupe_digest": null
+      },
+      {
+        "testcase_external_id": "EMS1-7080",
+        "test_name": "devPortInfoInventoryTransceiver",
+        "raw_status": "Pass",
+        "status": "p",
+        "testlink_planned_write": true,
+        "testlink_preview_digest": "0521f64b2cef3dd6065dd158910e1a74f6f65e21ba3caa1d8da105d7be1988ef",
+        "redmine_action": "none",
+        "redmine_preview_digest": null,
+        "redmine_issue_fields": null,
+        "redmine_issue_payload": null,
+        "dedupe_digest": null
+      },
+      {
+        "testcase_external_id": "EMS1-7091",
+        "test_name": "devGePortInfoDashboard",
+        "raw_status": "Pass",
+        "status": "p",
+        "testlink_planned_write": true,
+        "testlink_preview_digest": "35f9524f2fc9f8baf89f498d2a66b9312b7f783f8a0f4e5531038e1d16867da4",
+        "redmine_action": "none",
+        "redmine_preview_digest": null,
+        "redmine_issue_fields": null,
+        "redmine_issue_payload": null,
+        "dedupe_digest": null
+      },
+      {
+        "testcase_external_id": "EMS1-7092",
+        "test_name": "devGePortInfoMapDevice",
+        "raw_status": "Pass",
+        "status": "p",
+        "testlink_planned_write": true,
+        "testlink_preview_digest": "2c1864db1a296d74b60895de37e3c7e99ce98c6683625dd760f89741a8de7b10",
+        "redmine_action": "none",
+        "redmine_preview_digest": null,
+        "redmine_issue_fields": null,
+        "redmine_issue_payload": null,
+        "dedupe_digest": null
+      }
+    ]
+  }
+}

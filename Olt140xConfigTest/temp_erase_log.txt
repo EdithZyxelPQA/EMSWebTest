@@ -1,0 +1,18 @@
+
+= = = = = = = = start = = = = = = = = = = = = = = = =
+
+### telnet 192.168.168.84
+b'\r\nUser name: '
+b'admin\r\n\r\nPassword: '
+b'****\r\nCopyright (c) 1994 - 2024 Zyxel Communications Corp.\r\nOLT1404A# '
+b'er ru ext'
+:Do you really want to erase configuration? [y/N]'
+
+
+b'y'
+:'
+
+
+
+= = = = = = = = done. = = = = = = = = = = = = = = = =
+

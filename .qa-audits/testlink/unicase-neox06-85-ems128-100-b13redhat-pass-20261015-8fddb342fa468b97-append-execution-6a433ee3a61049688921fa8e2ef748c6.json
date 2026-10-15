@@ -1,0 +1,20 @@
+{
+  "schema_version": "1.0",
+  "operation_id": "unicase-neox06-85-ems128-100-b13redhat-pass-20261015-8fddb342fa468b97",
+  "environment": "corp",
+  "action": "append-execution",
+  "status": "success",
+  "preview_digest": "f1d44de70ee9ee919b984da6f0ce58e7030f66977c965dc8974455671ab58c97",
+  "testcase_external_id": "EMS1-7093",
+  "execution_id": "3174717",
+  "response": [
+    {
+      "status": true,
+      "operation": "reportTCResult",
+      "overwrite": false,
+      "message": "Success!",
+      "id": 3174717
+    }
+  ],
+  "finished_at": "2026-10-15T07:26:17+00:00"
+}

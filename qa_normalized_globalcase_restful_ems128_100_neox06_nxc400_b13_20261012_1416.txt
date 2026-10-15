@@ -1,0 +1,29 @@
+Report generated on: 2026-10-12_14-16-52
+EMS Version: 03.00.11(AAVV.221)b13
+Device: NeoX-06 / NXC400
+Firmware: NXC400 V1.02(ACKG.1)_260604c
+
+Test Results:
+[EMS1-6686][devDeviceInfo] Result Pass (0s)
+[EMS1-6687][devDeviceInfoDashboard] Result Pass (0s)
+[EMS1-6688][devSlotInfo] Result Pass (0s)
+[EMS1-6689][devPortInfoInventoryAllPort] Result Pass (0s)
+[EMS1-6690][devPortInfoInventoryTypePort] Result Pass (0s)
+[EMS1-6691][devPortInfoMapPort] Result Pass (0s)
+[EMS1-6692][devOntInfoInventoryAllOnt] Result Pass (0s)
+[EMS1-6693][devOntInfoMapDevice] Result Pass (0s)
+[EMS1-6694][devOntInfoMapDeviceOntDashboard] Result Pass (0s)
+[EMS1-6695][devOntInfoMapCardOntDashboard] Result Pass (0s)
+[EMS1-6696][devOntInfoMapCard] Result Pass (0s)
+[EMS1-6697][devOntInfoDashboard] Result Pass (0s)
+[EMS1-6698][devOntInfoDashboardOntDashboard] Result Pass (0s)
+[EMS1-6699][devXontInfoInventoryAllOnt] Result Pass (0s)
+[EMS1-6700][devXontInfoMapDevice] Result Pass (0s)
+[EMS1-6701][devXontInfoMapDeviceOntDashboard] Result Pass (0s)
+[EMS1-6702][devXontInfoMapCardOntDashboard] Result Pass (0s)
+[EMS1-6703][devXontInfoMapCard] Result Pass (0s)
+[EMS1-6704][devXontInfoDashboard] Result Pass (0s)
+[EMS1-6705][devXontInfoDashboardOntDashboard] Result Pass (0s)
+[EMS1-7080][devPortInfoInventoryTransceiver] Result Pass (0s)
+[EMS1-7091][devGePortInfoDashboard] Result Pass (0s)
+[EMS1-7092][devGePortInfoMapDevice] Result Pass (0s)

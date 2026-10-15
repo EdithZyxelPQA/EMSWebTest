@@ -1,0 +1,20 @@
+{
+  "schema_version": "1.0",
+  "operation_id": "unicase-ems128-100-neox06-b12redhat-20261007-1717-72e623afab6adf63",
+  "environment": "corp",
+  "action": "append-execution",
+  "status": "success",
+  "preview_digest": "ce76a9b6a04869df899f717e2a5663d201674f94f79bb1fa86dfbf4b8013c80b",
+  "testcase_external_id": "EMS1-4363",
+  "execution_id": "3163668",
+  "response": [
+    {
+      "status": true,
+      "operation": "reportTCResult",
+      "overwrite": false,
+      "message": "Success!",
+      "id": 3163668
+    }
+  ],
+  "finished_at": "2026-10-07T09:18:05+00:00"
+}

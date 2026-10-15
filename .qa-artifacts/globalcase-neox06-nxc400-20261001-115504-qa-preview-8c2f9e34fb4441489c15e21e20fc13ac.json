@@ -1,0 +1,3672 @@
+{
+  "schema_version": "1.0",
+  "artifact_type": "qa-preview-plan",
+  "operation_id": "globalcase-neox06-nxc400-20261001-115504",
+  "preview_digest": "07aba8a7eec60fbd533a17c6e7b6f5a71ab40f23261ef8ab37438a3d735c4cba",
+  "plan": {
+    "schema_version": "1.0",
+    "operation_id": "globalcase-neox06-nxc400-20261001-115504",
+    "correlation_id": "globalcase-neox06-nxc400-20261001-115504",
+    "environment": "corp",
+    "input_digest": "b59e0e811f966dfb29fa7aba10937a2e596fdcc7b71b557cc663140995d68309",
+    "report": "D:\\Auto\\EMS\\Agent\\EMSWeb\\qa_normalized_provision_neox06_nxc400_b13_20261001_115504.txt",
+    "report_schema": "legacy-web-ems-report-v1",
+    "target": {
+      "project": "NetAtlasEMS",
+      "plan": "NetAtlas EMS",
+      "platform": "NetAtlas EMS",
+      "build": "03.00.11 (AAVV.221) b12_redhat"
+    },
+    "redmine_create_bugs": false,
+    "items": [
+      {
+        "result": {
+          "external_id": "EMS1-5708",
+          "testcase_id": null,
+          "version": null,
+          "test_name": "ontAlarmPrfAdd",
+          "testlink_name": null,
+          "raw_status": "Pass",
+          "status": "p",
+          "duration": "0s",
+          "duration_seconds": 0.0
+        },
+        "dedupe_marker": null,
+        "dedupe_digest": null,
+        "redmine_request": null,
+        "redmine_preview": null,
+        "testlink_request": {
+          "operation_id": "globalcase-neox06-nxc400-20261001-115504-4267e140cb83a7a5",
+          "environment": "corp",
+          "project": "NetAtlasEMS",
+          "plan": "NetAtlas EMS",
+          "platform": "NetAtlas EMS",
+          "build": "03.00.11 (AAVV.221) b12_redhat",
+          "testcase_external_id": "EMS1-5708",
+          "status": "p",
+          "notes": "Operation ID: globalcase-neox06-nxc400-20261001-115504\nReport Schema: legacy-web-ems-report-v1\nReport File: qa_normalized_provision_neox06_nxc400_b13_20261001_115504.txt\nTestLink Project: NetAtlasEMS\nTest Plan: NetAtlas EMS\nPlatform: NetAtlas EMS\nBuild: 03.00.11 (AAVV.221) b12_redhat\nTest Case: EMS1-5708\nAutomation Test Function: ontAlarmPrfAdd\nResult: Pass",
+          "execution_duration": 0.0
+        },
+        "testlink_preview": {
+          "schema_version": "1.0",
+          "operation_id": "globalcase-neox06-nxc400-20261001-115504-4267e140cb83a7a5",
+          "environment": "corp",
+          "mode": "preview",
+          "preview_digest": "b28c6bfbfee485f9bf31c88743b3a2031998974b9738336303e015aa9f0a5755",
+          "planned_write": true,
+          "target": {
+            "project": {
+              "id": "67654",
+              "name": "NetAtlasEMS"
+            },
+            "plan": {
+              "id": "260150",
+              "name": "NetAtlas EMS"
+            },
+            "platform": {
+              "id": "49",
+              "name": "NetAtlas EMS"
+            },
+            "build": {
+              "id": "20607",
+              "name": "03.00.11 (AAVV.221) b12_redhat"
+            }
+          },
+          "execution": {
+            "testcase_external_id": "EMS1-5708",
+            "status": "p",
+            "notes_digest": "b6830a5c3543c64d7ba120b4bbe4decabb849171dbb6c031e6c779a8bbf859a7",
+            "duration_minutes": 0.0
+          },
+          "warnings": []
+        }
+      },
+      {
+        "result": {
+          "external_id": "EMS1-5713",
+          "testcase_id": null,
+          "version": null,
+          "test_name": "ontAlarmPrfModify",
+          "testlink_name": null,
+          "raw_status": "Pass",
+          "status": "p",
+          "duration": "0s",
+          "duration_seconds": 0.0
+        },
+        "dedupe_marker": null,
+        "dedupe_digest": null,
+        "redmine_request": null,
+        "redmine_preview": null,
+        "testlink_request": {
+          "operation_id": "globalcase-neox06-nxc400-20261001-115504-93808baf7dc6c4e7",
+          "environment": "corp",
+          "project": "NetAtlasEMS",
+          "plan": "NetAtlas EMS",
+          "platform": "NetAtlas EMS",
+          "build": "03.00.11 (AAVV.221) b12_redhat",
+          "testcase_external_id": "EMS1-5713",
+          "status": "p",
+          "notes": "Operation ID: globalcase-neox06-nxc400-20261001-115504\nReport Schema: legacy-web-ems-report-v1\nReport File: qa_normalized_provision_neox06_nxc400_b13_20261001_115504.txt\nTestLink Project: NetAtlasEMS\nTest Plan: NetAtlas EMS\nPlatform: NetAtlas EMS\nBuild: 03.00.11 (AAVV.221) b12_redhat\nTest Case: EMS1-5713\nAutomation Test Function: ontAlarmPrfModify\nResult: Pass",
+          "execution_duration": 0.0
+        },
+        "testlink_preview": {
+          "schema_version": "1.0",
+          "operation_id": "globalcase-neox06-nxc400-20261001-115504-93808baf7dc6c4e7",
+          "environment": "corp",
+          "mode": "preview",
+          "preview_digest": "01927ff1d02ddd43b1dede5c172bef7bf001ea08fd94a6dc027cbcf1d4f370b6",
+          "planned_write": true,
+          "target": {
+            "project": {
+              "id": "67654",
+              "name": "NetAtlasEMS"
+            },
+            "plan": {
+              "id": "260150",
+              "name": "NetAtlas EMS"
+            },
+            "platform": {
+              "id": "49",
+              "name": "NetAtlas EMS"
+            },
+            "build": {
+              "id": "20607",
+              "name": "03.00.11 (AAVV.221) b12_redhat"
+            }
+          },
+          "execution": {
+            "testcase_external_id": "EMS1-5713",
+            "status": "p",
+            "notes_digest": "a37752b5490cfc939baed4fc4f4203181a2b827f1cb934b12b5e8dc053af3662",
+            "duration_minutes": 0.0
+          },
+          "warnings": []
+        }
+      },
+      {
+        "result": {
+          "external_id": "EMS1-5698",
+          "testcase_id": null,
+          "version": null,
+          "test_name": "ontACLPrfAdd",
+          "testlink_name": null,
+          "raw_status": "Pass",
+          "status": "p",
+          "duration": "0s",
+          "duration_seconds": 0.0
+        },
+        "dedupe_marker": null,
+        "dedupe_digest": null,
+        "redmine_request": null,
+        "redmine_preview": null,
+        "testlink_request": {
+          "operation_id": "globalcase-neox06-nxc400-20261001-115504-013e69f7b9264589",
+          "environment": "corp",
+          "project": "NetAtlasEMS",
+          "plan": "NetAtlas EMS",
+          "platform": "NetAtlas EMS",
+          "build": "03.00.11 (AAVV.221) b12_redhat",
+          "testcase_external_id": "EMS1-5698",
+          "status": "p",
+          "notes": "Operation ID: globalcase-neox06-nxc400-20261001-115504\nReport Schema: legacy-web-ems-report-v1\nReport File: qa_normalized_provision_neox06_nxc400_b13_20261001_115504.txt\nTestLink Project: NetAtlasEMS\nTest Plan: NetAtlas EMS\nPlatform: NetAtlas EMS\nBuild: 03.00.11 (AAVV.221) b12_redhat\nTest Case: EMS1-5698\nAutomation Test Function: ontACLPrfAdd\nResult: Pass",
+          "execution_duration": 0.0
+        },
+        "testlink_preview": {
+          "schema_version": "1.0",
+          "operation_id": "globalcase-neox06-nxc400-20261001-115504-013e69f7b9264589",
+          "environment": "corp",
+          "mode": "preview",
+          "preview_digest": "f2d5b2d57043f633a52b79f73f037e43cceec7b19aa9cf09ae45f1829b71f12e",
+          "planned_write": true,
+          "target": {
+            "project": {
+              "id": "67654",
+              "name": "NetAtlasEMS"
+            },
+            "plan": {
+              "id": "260150",
+              "name": "NetAtlas EMS"
+            },
+            "platform": {
+              "id": "49",
+              "name": "NetAtlas EMS"
+            },
+            "build": {
+              "id": "20607",
+              "name": "03.00.11 (AAVV.221) b12_redhat"
+            }
+          },
+          "execution": {
+            "testcase_external_id": "EMS1-5698",
+            "status": "p",
+            "notes_digest": "e2112aeaa413a663c551df564a62c5ad6be8508cf9499882e2233f9d55ee3dbe",
+            "duration_minutes": 0.0
+          },
+          "warnings": []
+        }
+      },
+      {
+        "result": {
+          "external_id": "EMS1-5703",
+          "testcase_id": null,
+          "version": null,
+          "test_name": "ontACLPrfModify",
+          "testlink_name": null,
+          "raw_status": "Pass",
+          "status": "p",
+          "duration": "0s",
+          "duration_seconds": 0.0
+        },
+        "dedupe_marker": null,
+        "dedupe_digest": null,
+        "redmine_request": null,
+        "redmine_preview": null,
+        "testlink_request": {
+          "operation_id": "globalcase-neox06-nxc400-20261001-115504-76c0d850b7825523",
+          "environment": "corp",
+          "project": "NetAtlasEMS",
+          "plan": "NetAtlas EMS",
+          "platform": "NetAtlas EMS",
+          "build": "03.00.11 (AAVV.221) b12_redhat",
+          "testcase_external_id": "EMS1-5703",
+          "status": "p",
+          "notes": "Operation ID: globalcase-neox06-nxc400-20261001-115504\nReport Schema: legacy-web-ems-report-v1\nReport File: qa_normalized_provision_neox06_nxc400_b13_20261001_115504.txt\nTestLink Project: NetAtlasEMS\nTest Plan: NetAtlas EMS\nPlatform: NetAtlas EMS\nBuild: 03.00.11 (AAVV.221) b12_redhat\nTest Case: EMS1-5703\nAutomation Test Function: ontACLPrfModify\nResult: Pass",
+          "execution_duration": 0.0
+        },
+        "testlink_preview": {
+          "schema_version": "1.0",
+          "operation_id": "globalcase-neox06-nxc400-20261001-115504-76c0d850b7825523",
+          "environment": "corp",
+          "mode": "preview",
+          "preview_digest": "99ca78fc33bbbf1b7a3ea98a9f13b1d8a987bcfe1a3433f90e71414f156b8cad",
+          "planned_write": true,
+          "target": {
+            "project": {
+              "id": "67654",
+              "name": "NetAtlasEMS"
+            },
+            "plan": {
+              "id": "260150",
+              "name": "NetAtlas EMS"
+            },
+            "platform": {
+              "id": "49",
+              "name": "NetAtlas EMS"
+            },
+            "build": {
+              "id": "20607",
+              "name": "03.00.11 (AAVV.221) b12_redhat"
+            }
+          },
+          "execution": {
+            "testcase_external_id": "EMS1-5703",
+            "status": "p",
+            "notes_digest": "62e457eb03291953883ce1ccb6074f64cd362be2440c6df1f73326e0aa2ca976",
+            "duration_minutes": 0.0
+          },
+          "warnings": []
+        }
+      },
+      {
+        "result": {
+          "external_id": "EMS1-5668",
+          "testcase_id": null,
+          "version": null,
+          "test_name": "ontVoipPrfAdd",
+          "testlink_name": null,
+          "raw_status": "Pass",
+          "status": "p",
+          "duration": "0s",
+          "duration_seconds": 0.0
+        },
+        "dedupe_marker": null,
+        "dedupe_digest": null,
+        "redmine_request": null,
+        "redmine_preview": null,
+        "testlink_request": {
+          "operation_id": "globalcase-neox06-nxc400-20261001-115504-89ed8e37adad8ef9",
+          "environment": "corp",
+          "project": "NetAtlasEMS",
+          "plan": "NetAtlas EMS",
+          "platform": "NetAtlas EMS",
+          "build": "03.00.11 (AAVV.221) b12_redhat",
+          "testcase_external_id": "EMS1-5668",
+          "status": "p",
+          "notes": "Operation ID: globalcase-neox06-nxc400-20261001-115504\nReport Schema: legacy-web-ems-report-v1\nReport File: qa_normalized_provision_neox06_nxc400_b13_20261001_115504.txt\nTestLink Project: NetAtlasEMS\nTest Plan: NetAtlas EMS\nPlatform: NetAtlas EMS\nBuild: 03.00.11 (AAVV.221) b12_redhat\nTest Case: EMS1-5668\nAutomation Test Function: ontVoipPrfAdd\nResult: Pass",
+          "execution_duration": 0.0
+        },
+        "testlink_preview": {
+          "schema_version": "1.0",
+          "operation_id": "globalcase-neox06-nxc400-20261001-115504-89ed8e37adad8ef9",
+          "environment": "corp",
+          "mode": "preview",
+          "preview_digest": "f512f96029ed9e61cf6296f5c3f8db0c405cae84ef4c489409895848bb125072",
+          "planned_write": true,
+          "target": {
+            "project": {
+              "id": "67654",
+              "name": "NetAtlasEMS"
+            },
+            "plan": {
+              "id": "260150",
+              "name": "NetAtlas EMS"
+            },
+            "platform": {
+              "id": "49",
+              "name": "NetAtlas EMS"
+            },
+            "build": {
+              "id": "20607",
+              "name": "03.00.11 (AAVV.221) b12_redhat"
+            }
+          },
+          "execution": {
+            "testcase_external_id": "EMS1-5668",
+            "status": "p",
+            "notes_digest": "842171898c4889363bc961351b5ab8f710fe9b9c1f6c0d33df27cfba2f4453e0",
+            "duration_minutes": 0.0
+          },
+          "warnings": []
+        }
+      },
+      {
+        "result": {
+          "external_id": "EMS1-5678",
+          "testcase_id": null,
+          "version": null,
+          "test_name": "ontVoipPrfAdd",
+          "testlink_name": null,
+          "raw_status": "Pass",
+          "status": "p",
+          "duration": "0s",
+          "duration_seconds": 0.0
+        },
+        "dedupe_marker": null,
+        "dedupe_digest": null,
+        "redmine_request": null,
+        "redmine_preview": null,
+        "testlink_request": {
+          "operation_id": "globalcase-neox06-nxc400-20261001-115504-379a07bd370f46a3",
+          "environment": "corp",
+          "project": "NetAtlasEMS",
+          "plan": "NetAtlas EMS",
+          "platform": "NetAtlas EMS",
+          "build": "03.00.11 (AAVV.221) b12_redhat",
+          "testcase_external_id": "EMS1-5678",
+          "status": "p",
+          "notes": "Operation ID: globalcase-neox06-nxc400-20261001-115504\nReport Schema: legacy-web-ems-report-v1\nReport File: qa_normalized_provision_neox06_nxc400_b13_20261001_115504.txt\nTestLink Project: NetAtlasEMS\nTest Plan: NetAtlas EMS\nPlatform: NetAtlas EMS\nBuild: 03.00.11 (AAVV.221) b12_redhat\nTest Case: EMS1-5678\nAutomation Test Function: ontVoipPrfAdd\nResult: Pass",
+          "execution_duration": 0.0
+        },
+        "testlink_preview": {
+          "schema_version": "1.0",
+          "operation_id": "globalcase-neox06-nxc400-20261001-115504-379a07bd370f46a3",
+          "environment": "corp",
+          "mode": "preview",
+          "preview_digest": "d07ac4d20d02fe68e368239f1f5716f44bc877f5ed93bdf68bc3491b895fc437",
+          "planned_write": true,
+          "target": {
+            "project": {
+              "id": "67654",
+              "name": "NetAtlasEMS"
+            },
+            "plan": {
+              "id": "260150",
+              "name": "NetAtlas EMS"
+            },
+            "platform": {
+              "id": "49",
+              "name": "NetAtlas EMS"
+            },
+            "build": {
+              "id": "20607",
+              "name": "03.00.11 (AAVV.221) b12_redhat"
+            }
+          },
+          "execution": {
+            "testcase_external_id": "EMS1-5678",
+            "status": "p",
+            "notes_digest": "28dc49e2d112f96a1f630d0b026932d748b1a0b6a89149da319ae003f7aa90c2",
+            "duration_minutes": 0.0
+          },
+          "warnings": []
+        }
+      },
+      {
+        "result": {
+          "external_id": "EMS1-5688",
+          "testcase_id": null,
+          "version": null,
+          "test_name": "ontVoipPrfAdd",
+          "testlink_name": null,
+          "raw_status": "Pass",
+          "status": "p",
+          "duration": "0s",
+          "duration_seconds": 0.0
+        },
+        "dedupe_marker": null,
+        "dedupe_digest": null,
+        "redmine_request": null,
+        "redmine_preview": null,
+        "testlink_request": {
+          "operation_id": "globalcase-neox06-nxc400-20261001-115504-34db1da29913b95c",
+          "environment": "corp",
+          "project": "NetAtlasEMS",
+          "plan": "NetAtlas EMS",
+          "platform": "NetAtlas EMS",
+          "build": "03.00.11 (AAVV.221) b12_redhat",
+          "testcase_external_id": "EMS1-5688",
+          "status": "p",
+          "notes": "Operation ID: globalcase-neox06-nxc400-20261001-115504\nReport Schema: legacy-web-ems-report-v1\nReport File: qa_normalized_provision_neox06_nxc400_b13_20261001_115504.txt\nTestLink Project: NetAtlasEMS\nTest Plan: NetAtlas EMS\nPlatform: NetAtlas EMS\nBuild: 03.00.11 (AAVV.221) b12_redhat\nTest Case: EMS1-5688\nAutomation Test Function: ontVoipPrfAdd\nResult: Pass",
+          "execution_duration": 0.0
+        },
+        "testlink_preview": {
+          "schema_version": "1.0",
+          "operation_id": "globalcase-neox06-nxc400-20261001-115504-34db1da29913b95c",
+          "environment": "corp",
+          "mode": "preview",
+          "preview_digest": "03f7896612cef67aaae94b9f978ba42c2863fcc30b1f9ba3bc35ff1e23ac65d1",
+          "planned_write": true,
+          "target": {
+            "project": {
+              "id": "67654",
+              "name": "NetAtlasEMS"
+            },
+            "plan": {
+              "id": "260150",
+              "name": "NetAtlas EMS"
+            },
+            "platform": {
+              "id": "49",
+              "name": "NetAtlas EMS"
+            },
+            "build": {
+              "id": "20607",
+              "name": "03.00.11 (AAVV.221) b12_redhat"
+            }
+          },
+          "execution": {
+            "testcase_external_id": "EMS1-5688",
+            "status": "p",
+            "notes_digest": "aac7b23dee712e93e879dd7258bba6f836adda534a3d90dfc3e36b3b2c75054a",
+            "duration_minutes": 0.0
+          },
+          "warnings": []
+        }
+      },
+      {
+        "result": {
+          "external_id": "EMS1-5673",
+          "testcase_id": null,
+          "version": null,
+          "test_name": "ontVoipSipPrfModify",
+          "testlink_name": null,
+          "raw_status": "Pass",
+          "status": "p",
+          "duration": "0s",
+          "duration_seconds": 0.0
+        },
+        "dedupe_marker": null,
+        "dedupe_digest": null,
+        "redmine_request": null,
+        "redmine_preview": null,
+        "testlink_request": {
+          "operation_id": "globalcase-neox06-nxc400-20261001-115504-2218b3871a3460d3",
+          "environment": "corp",
+          "project": "NetAtlasEMS",
+          "plan": "NetAtlas EMS",
+          "platform": "NetAtlas EMS",
+          "build": "03.00.11 (AAVV.221) b12_redhat",
+          "testcase_external_id": "EMS1-5673",
+          "status": "p",
+          "notes": "Operation ID: globalcase-neox06-nxc400-20261001-115504\nReport Schema: legacy-web-ems-report-v1\nReport File: qa_normalized_provision_neox06_nxc400_b13_20261001_115504.txt\nTestLink Project: NetAtlasEMS\nTest Plan: NetAtlas EMS\nPlatform: NetAtlas EMS\nBuild: 03.00.11 (AAVV.221) b12_redhat\nTest Case: EMS1-5673\nAutomation Test Function: ontVoipSipPrfModify\nResult: Pass",
+          "execution_duration": 0.0
+        },
+        "testlink_preview": {
+          "schema_version": "1.0",
+          "operation_id": "globalcase-neox06-nxc400-20261001-115504-2218b3871a3460d3",
+          "environment": "corp",
+          "mode": "preview",
+          "preview_digest": "281670672ecc5b937ea56d250f36d48180302c69b471b741fc2e0c65bf2f5c66",
+          "planned_write": true,
+          "target": {
+            "project": {
+              "id": "67654",
+              "name": "NetAtlasEMS"
+            },
+            "plan": {
+              "id": "260150",
+              "name": "NetAtlas EMS"
+            },
+            "platform": {
+              "id": "49",
+              "name": "NetAtlas EMS"
+            },
+            "build": {
+              "id": "20607",
+              "name": "03.00.11 (AAVV.221) b12_redhat"
+            }
+          },
+          "execution": {
+            "testcase_external_id": "EMS1-5673",
+            "status": "p",
+            "notes_digest": "46ed31f637edf35cd6ee01757a19f97ee1cf3731eef3a227ce3e53545afaf958",
+            "duration_minutes": 0.0
+          },
+          "warnings": []
+        }
+      },
+      {
+        "result": {
+          "external_id": "EMS1-5683",
+          "testcase_id": null,
+          "version": null,
+          "test_name": "ontVoipComnPrfModify",
+          "testlink_name": null,
+          "raw_status": "Pass",
+          "status": "p",
+          "duration": "0s",
+          "duration_seconds": 0.0
+        },
+        "dedupe_marker": null,
+        "dedupe_digest": null,
+        "redmine_request": null,
+        "redmine_preview": null,
+        "testlink_request": {
+          "operation_id": "globalcase-neox06-nxc400-20261001-115504-0add93bd6b329bc3",
+          "environment": "corp",
+          "project": "NetAtlasEMS",
+          "plan": "NetAtlas EMS",
+          "platform": "NetAtlas EMS",
+          "build": "03.00.11 (AAVV.221) b12_redhat",
+          "testcase_external_id": "EMS1-5683",
+          "status": "p",
+          "notes": "Operation ID: globalcase-neox06-nxc400-20261001-115504\nReport Schema: legacy-web-ems-report-v1\nReport File: qa_normalized_provision_neox06_nxc400_b13_20261001_115504.txt\nTestLink Project: NetAtlasEMS\nTest Plan: NetAtlas EMS\nPlatform: NetAtlas EMS\nBuild: 03.00.11 (AAVV.221) b12_redhat\nTest Case: EMS1-5683\nAutomation Test Function: ontVoipComnPrfModify\nResult: Pass",
+          "execution_duration": 0.0
+        },
+        "testlink_preview": {
+          "schema_version": "1.0",
+          "operation_id": "globalcase-neox06-nxc400-20261001-115504-0add93bd6b329bc3",
+          "environment": "corp",
+          "mode": "preview",
+          "preview_digest": "2c6da100731ff43680357d82fb67ea1a33f7c3407b9ec9a61cafa754f7a8ec12",
+          "planned_write": true,
+          "target": {
+            "project": {
+              "id": "67654",
+              "name": "NetAtlasEMS"
+            },
+            "plan": {
+              "id": "260150",
+              "name": "NetAtlas EMS"
+            },
+            "platform": {
+              "id": "49",
+              "name": "NetAtlas EMS"
+            },
+            "build": {
+              "id": "20607",
+              "name": "03.00.11 (AAVV.221) b12_redhat"
+            }
+          },
+          "execution": {
+            "testcase_external_id": "EMS1-5683",
+            "status": "p",
+            "notes_digest": "f70ab8c2cee190c8d2e6c4cef1736ea770818b13961c8bfc36ff27c0d6c890da",
+            "duration_minutes": 0.0
+          },
+          "warnings": []
+        }
+      },
+      {
+        "result": {
+          "external_id": "EMS1-5693",
+          "testcase_id": null,
+          "version": null,
+          "test_name": "ontVoipDialPrfModify",
+          "testlink_name": null,
+          "raw_status": "Pass",
+          "status": "p",
+          "duration": "0s",
+          "duration_seconds": 0.0
+        },
+        "dedupe_marker": null,
+        "dedupe_digest": null,
+        "redmine_request": null,
+        "redmine_preview": null,
+        "testlink_request": {
+          "operation_id": "globalcase-neox06-nxc400-20261001-115504-b7fa6e413212b438",
+          "environment": "corp",
+          "project": "NetAtlasEMS",
+          "plan": "NetAtlas EMS",
+          "platform": "NetAtlas EMS",
+          "build": "03.00.11 (AAVV.221) b12_redhat",
+          "testcase_external_id": "EMS1-5693",
+          "status": "p",
+          "notes": "Operation ID: globalcase-neox06-nxc400-20261001-115504\nReport Schema: legacy-web-ems-report-v1\nReport File: qa_normalized_provision_neox06_nxc400_b13_20261001_115504.txt\nTestLink Project: NetAtlasEMS\nTest Plan: NetAtlas EMS\nPlatform: NetAtlas EMS\nBuild: 03.00.11 (AAVV.221) b12_redhat\nTest Case: EMS1-5693\nAutomation Test Function: ontVoipDialPrfModify\nResult: Pass",
+          "execution_duration": 0.0
+        },
+        "testlink_preview": {
+          "schema_version": "1.0",
+          "operation_id": "globalcase-neox06-nxc400-20261001-115504-b7fa6e413212b438",
+          "environment": "corp",
+          "mode": "preview",
+          "preview_digest": "529a59a3c162d3a52ac26c449a54868d1121a96b87ffa9397f620be56ad87ae9",
+          "planned_write": true,
+          "target": {
+            "project": {
+              "id": "67654",
+              "name": "NetAtlasEMS"
+            },
+            "plan": {
+              "id": "260150",
+              "name": "NetAtlas EMS"
+            },
+            "platform": {
+              "id": "49",
+              "name": "NetAtlas EMS"
+            },
+            "build": {
+              "id": "20607",
+              "name": "03.00.11 (AAVV.221) b12_redhat"
+            }
+          },
+          "execution": {
+            "testcase_external_id": "EMS1-5693",
+            "status": "p",
+            "notes_digest": "4750cddb3f655b9b26e87cbc2efc6424002547a9046ef6673b5676c320ca90ea",
+            "duration_minutes": 0.0
+          },
+          "warnings": []
+        }
+      },
+      {
+        "result": {
+          "external_id": "EMS1-5658",
+          "testcase_id": null,
+          "version": null,
+          "test_name": "ontOntPrfAdd",
+          "testlink_name": null,
+          "raw_status": "Pass",
+          "status": "p",
+          "duration": "0s",
+          "duration_seconds": 0.0
+        },
+        "dedupe_marker": null,
+        "dedupe_digest": null,
+        "redmine_request": null,
+        "redmine_preview": null,
+        "testlink_request": {
+          "operation_id": "globalcase-neox06-nxc400-20261001-115504-c7bd002b6f0fa83b",
+          "environment": "corp",
+          "project": "NetAtlasEMS",
+          "plan": "NetAtlas EMS",
+          "platform": "NetAtlas EMS",
+          "build": "03.00.11 (AAVV.221) b12_redhat",
+          "testcase_external_id": "EMS1-5658",
+          "status": "p",
+          "notes": "Operation ID: globalcase-neox06-nxc400-20261001-115504\nReport Schema: legacy-web-ems-report-v1\nReport File: qa_normalized_provision_neox06_nxc400_b13_20261001_115504.txt\nTestLink Project: NetAtlasEMS\nTest Plan: NetAtlas EMS\nPlatform: NetAtlas EMS\nBuild: 03.00.11 (AAVV.221) b12_redhat\nTest Case: EMS1-5658\nAutomation Test Function: ontOntPrfAdd\nResult: Pass",
+          "execution_duration": 0.0
+        },
+        "testlink_preview": {
+          "schema_version": "1.0",
+          "operation_id": "globalcase-neox06-nxc400-20261001-115504-c7bd002b6f0fa83b",
+          "environment": "corp",
+          "mode": "preview",
+          "preview_digest": "f8b38453c0e37f9b7bcb31d06865793ce93d5164c16ef7a7a73dc9232b0d4548",
+          "planned_write": true,
+          "target": {
+            "project": {
+              "id": "67654",
+              "name": "NetAtlasEMS"
+            },
+            "plan": {
+              "id": "260150",
+              "name": "NetAtlas EMS"
+            },
+            "platform": {
+              "id": "49",
+              "name": "NetAtlas EMS"
+            },
+            "build": {
+              "id": "20607",
+              "name": "03.00.11 (AAVV.221) b12_redhat"
+            }
+          },
+          "execution": {
+            "testcase_external_id": "EMS1-5658",
+            "status": "p",
+            "notes_digest": "070167f154158411a2c9b5ecba5dc1fa5275760406ff0e697910d9c0d68e4fc7",
+            "duration_minutes": 0.0
+          },
+          "warnings": []
+        }
+      },
+      {
+        "result": {
+          "external_id": "EMS1-5663",
+          "testcase_id": null,
+          "version": null,
+          "test_name": "ontOntPrfModify",
+          "testlink_name": null,
+          "raw_status": "Pass",
+          "status": "p",
+          "duration": "0s",
+          "duration_seconds": 0.0
+        },
+        "dedupe_marker": null,
+        "dedupe_digest": null,
+        "redmine_request": null,
+        "redmine_preview": null,
+        "testlink_request": {
+          "operation_id": "globalcase-neox06-nxc400-20261001-115504-20ad722a19a75ae1",
+          "environment": "corp",
+          "project": "NetAtlasEMS",
+          "plan": "NetAtlas EMS",
+          "platform": "NetAtlas EMS",
+          "build": "03.00.11 (AAVV.221) b12_redhat",
+          "testcase_external_id": "EMS1-5663",
+          "status": "p",
+          "notes": "Operation ID: globalcase-neox06-nxc400-20261001-115504\nReport Schema: legacy-web-ems-report-v1\nReport File: qa_normalized_provision_neox06_nxc400_b13_20261001_115504.txt\nTestLink Project: NetAtlasEMS\nTest Plan: NetAtlas EMS\nPlatform: NetAtlas EMS\nBuild: 03.00.11 (AAVV.221) b12_redhat\nTest Case: EMS1-5663\nAutomation Test Function: ontOntPrfModify\nResult: Pass",
+          "execution_duration": 0.0
+        },
+        "testlink_preview": {
+          "schema_version": "1.0",
+          "operation_id": "globalcase-neox06-nxc400-20261001-115504-20ad722a19a75ae1",
+          "environment": "corp",
+          "mode": "preview",
+          "preview_digest": "d16915125361e68163c8bb6c5304a9369b061faab6b558a4c8dec264ada1a94b",
+          "planned_write": true,
+          "target": {
+            "project": {
+              "id": "67654",
+              "name": "NetAtlasEMS"
+            },
+            "plan": {
+              "id": "260150",
+              "name": "NetAtlas EMS"
+            },
+            "platform": {
+              "id": "49",
+              "name": "NetAtlas EMS"
+            },
+            "build": {
+              "id": "20607",
+              "name": "03.00.11 (AAVV.221) b12_redhat"
+            }
+          },
+          "execution": {
+            "testcase_external_id": "EMS1-5663",
+            "status": "p",
+            "notes_digest": "8f2db9a42ab3f812ebc5870d506ed8bfa3d8603b450c689ce08ccf7791318266",
+            "duration_minutes": 0.0
+          },
+          "warnings": []
+        }
+      },
+      {
+        "result": {
+          "external_id": "EMS1-5648",
+          "testcase_id": null,
+          "version": null,
+          "test_name": "ontSecurityPrfAdd",
+          "testlink_name": null,
+          "raw_status": "Pass",
+          "status": "p",
+          "duration": "0s",
+          "duration_seconds": 0.0
+        },
+        "dedupe_marker": null,
+        "dedupe_digest": null,
+        "redmine_request": null,
+        "redmine_preview": null,
+        "testlink_request": {
+          "operation_id": "globalcase-neox06-nxc400-20261001-115504-b288168cf8a5cf18",
+          "environment": "corp",
+          "project": "NetAtlasEMS",
+          "plan": "NetAtlas EMS",
+          "platform": "NetAtlas EMS",
+          "build": "03.00.11 (AAVV.221) b12_redhat",
+          "testcase_external_id": "EMS1-5648",
+          "status": "p",
+          "notes": "Operation ID: globalcase-neox06-nxc400-20261001-115504\nReport Schema: legacy-web-ems-report-v1\nReport File: qa_normalized_provision_neox06_nxc400_b13_20261001_115504.txt\nTestLink Project: NetAtlasEMS\nTest Plan: NetAtlas EMS\nPlatform: NetAtlas EMS\nBuild: 03.00.11 (AAVV.221) b12_redhat\nTest Case: EMS1-5648\nAutomation Test Function: ontSecurityPrfAdd\nResult: Pass",
+          "execution_duration": 0.0
+        },
+        "testlink_preview": {
+          "schema_version": "1.0",
+          "operation_id": "globalcase-neox06-nxc400-20261001-115504-b288168cf8a5cf18",
+          "environment": "corp",
+          "mode": "preview",
+          "preview_digest": "439133119d145cb30dcfece743fe39dfcf1e65cb971d47ddd21e4512f9e66e88",
+          "planned_write": true,
+          "target": {
+            "project": {
+              "id": "67654",
+              "name": "NetAtlasEMS"
+            },
+            "plan": {
+              "id": "260150",
+              "name": "NetAtlas EMS"
+            },
+            "platform": {
+              "id": "49",
+              "name": "NetAtlas EMS"
+            },
+            "build": {
+              "id": "20607",
+              "name": "03.00.11 (AAVV.221) b12_redhat"
+            }
+          },
+          "execution": {
+            "testcase_external_id": "EMS1-5648",
+            "status": "p",
+            "notes_digest": "ea905668417e34730269b89e8d165080dfe61c043f6f7645cd14f2a530942fd8",
+            "duration_minutes": 0.0
+          },
+          "warnings": []
+        }
+      },
+      {
+        "result": {
+          "external_id": "EMS1-5653",
+          "testcase_id": null,
+          "version": null,
+          "test_name": "ontSecurityPrfModify",
+          "testlink_name": null,
+          "raw_status": "Pass",
+          "status": "p",
+          "duration": "0s",
+          "duration_seconds": 0.0
+        },
+        "dedupe_marker": null,
+        "dedupe_digest": null,
+        "redmine_request": null,
+        "redmine_preview": null,
+        "testlink_request": {
+          "operation_id": "globalcase-neox06-nxc400-20261001-115504-e4b884ca83318fb6",
+          "environment": "corp",
+          "project": "NetAtlasEMS",
+          "plan": "NetAtlas EMS",
+          "platform": "NetAtlas EMS",
+          "build": "03.00.11 (AAVV.221) b12_redhat",
+          "testcase_external_id": "EMS1-5653",
+          "status": "p",
+          "notes": "Operation ID: globalcase-neox06-nxc400-20261001-115504\nReport Schema: legacy-web-ems-report-v1\nReport File: qa_normalized_provision_neox06_nxc400_b13_20261001_115504.txt\nTestLink Project: NetAtlasEMS\nTest Plan: NetAtlas EMS\nPlatform: NetAtlas EMS\nBuild: 03.00.11 (AAVV.221) b12_redhat\nTest Case: EMS1-5653\nAutomation Test Function: ontSecurityPrfModify\nResult: Pass",
+          "execution_duration": 0.0
+        },
+        "testlink_preview": {
+          "schema_version": "1.0",
+          "operation_id": "globalcase-neox06-nxc400-20261001-115504-e4b884ca83318fb6",
+          "environment": "corp",
+          "mode": "preview",
+          "preview_digest": "a9f7fb59ba1250d061abfa507406c71b236f54aeba91346f9121f0b06c2b09eb",
+          "planned_write": true,
+          "target": {
+            "project": {
+              "id": "67654",
+              "name": "NetAtlasEMS"
+            },
+            "plan": {
+              "id": "260150",
+              "name": "NetAtlas EMS"
+            },
+            "platform": {
+              "id": "49",
+              "name": "NetAtlas EMS"
+            },
+            "build": {
+              "id": "20607",
+              "name": "03.00.11 (AAVV.221) b12_redhat"
+            }
+          },
+          "execution": {
+            "testcase_external_id": "EMS1-5653",
+            "status": "p",
+            "notes_digest": "c03f43ceaf6442bf7a4c53ab27bbb1343b4af070d94b4dbb497840055e08a083",
+            "duration_minutes": 0.0
+          },
+          "warnings": []
+        }
+      },
+      {
+        "result": {
+          "external_id": "EMS1-5638",
+          "testcase_id": null,
+          "version": null,
+          "test_name": "ontUniPrfAdd",
+          "testlink_name": null,
+          "raw_status": "Pass",
+          "status": "p",
+          "duration": "0s",
+          "duration_seconds": 0.0
+        },
+        "dedupe_marker": null,
+        "dedupe_digest": null,
+        "redmine_request": null,
+        "redmine_preview": null,
+        "testlink_request": {
+          "operation_id": "globalcase-neox06-nxc400-20261001-115504-aee89f6d278df690",
+          "environment": "corp",
+          "project": "NetAtlasEMS",
+          "plan": "NetAtlas EMS",
+          "platform": "NetAtlas EMS",
+          "build": "03.00.11 (AAVV.221) b12_redhat",
+          "testcase_external_id": "EMS1-5638",
+          "status": "p",
+          "notes": "Operation ID: globalcase-neox06-nxc400-20261001-115504\nReport Schema: legacy-web-ems-report-v1\nReport File: qa_normalized_provision_neox06_nxc400_b13_20261001_115504.txt\nTestLink Project: NetAtlasEMS\nTest Plan: NetAtlas EMS\nPlatform: NetAtlas EMS\nBuild: 03.00.11 (AAVV.221) b12_redhat\nTest Case: EMS1-5638\nAutomation Test Function: ontUniPrfAdd\nResult: Pass",
+          "execution_duration": 0.0
+        },
+        "testlink_preview": {
+          "schema_version": "1.0",
+          "operation_id": "globalcase-neox06-nxc400-20261001-115504-aee89f6d278df690",
+          "environment": "corp",
+          "mode": "preview",
+          "preview_digest": "695640ae65cc38ed5f97cb603000fa56edaa008af9630f906df3db288aa48481",
+          "planned_write": true,
+          "target": {
+            "project": {
+              "id": "67654",
+              "name": "NetAtlasEMS"
+            },
+            "plan": {
+              "id": "260150",
+              "name": "NetAtlas EMS"
+            },
+            "platform": {
+              "id": "49",
+              "name": "NetAtlas EMS"
+            },
+            "build": {
+              "id": "20607",
+              "name": "03.00.11 (AAVV.221) b12_redhat"
+            }
+          },
+          "execution": {
+            "testcase_external_id": "EMS1-5638",
+            "status": "p",
+            "notes_digest": "77004fafeafa1c5cca7fe7f2ec62fc1f99a176cb09b30bb8ab14e766bc3a9bd7",
+            "duration_minutes": 0.0
+          },
+          "warnings": []
+        }
+      },
+      {
+        "result": {
+          "external_id": "EMS1-6994",
+          "testcase_id": null,
+          "version": null,
+          "test_name": "ontQoSBandwidthPrfModifyGpon",
+          "testlink_name": null,
+          "raw_status": "Pass",
+          "status": "p",
+          "duration": "0s",
+          "duration_seconds": 0.0
+        },
+        "dedupe_marker": null,
+        "dedupe_digest": null,
+        "redmine_request": null,
+        "redmine_preview": null,
+        "testlink_request": {
+          "operation_id": "globalcase-neox06-nxc400-20261001-115504-1632d4d084407586",
+          "environment": "corp",
+          "project": "NetAtlasEMS",
+          "plan": "NetAtlas EMS",
+          "platform": "NetAtlas EMS",
+          "build": "03.00.11 (AAVV.221) b12_redhat",
+          "testcase_external_id": "EMS1-6994",
+          "status": "p",
+          "notes": "Operation ID: globalcase-neox06-nxc400-20261001-115504\nReport Schema: legacy-web-ems-report-v1\nReport File: qa_normalized_provision_neox06_nxc400_b13_20261001_115504.txt\nTestLink Project: NetAtlasEMS\nTest Plan: NetAtlas EMS\nPlatform: NetAtlas EMS\nBuild: 03.00.11 (AAVV.221) b12_redhat\nTest Case: EMS1-6994\nAutomation Test Function: ontQoSBandwidthPrfModifyGpon\nResult: Pass",
+          "execution_duration": 0.0
+        },
+        "testlink_preview": {
+          "schema_version": "1.0",
+          "operation_id": "globalcase-neox06-nxc400-20261001-115504-1632d4d084407586",
+          "environment": "corp",
+          "mode": "preview",
+          "preview_digest": "99463fe717e63648b69599674044c3529092edcfdf06c5f431d7e64410af3840",
+          "planned_write": true,
+          "target": {
+            "project": {
+              "id": "67654",
+              "name": "NetAtlasEMS"
+            },
+            "plan": {
+              "id": "260150",
+              "name": "NetAtlas EMS"
+            },
+            "platform": {
+              "id": "49",
+              "name": "NetAtlas EMS"
+            },
+            "build": {
+              "id": "20607",
+              "name": "03.00.11 (AAVV.221) b12_redhat"
+            }
+          },
+          "execution": {
+            "testcase_external_id": "EMS1-6994",
+            "status": "p",
+            "notes_digest": "cd608629d0f9f6c1f40c86b652552debc2ccd5936c53eeba17f11764576bd478",
+            "duration_minutes": 0.0
+          },
+          "warnings": []
+        }
+      },
+      {
+        "result": {
+          "external_id": "EMS1-5643",
+          "testcase_id": null,
+          "version": null,
+          "test_name": "ontUniPrfModify",
+          "testlink_name": null,
+          "raw_status": "Pass",
+          "status": "p",
+          "duration": "0s",
+          "duration_seconds": 0.0
+        },
+        "dedupe_marker": null,
+        "dedupe_digest": null,
+        "redmine_request": null,
+        "redmine_preview": null,
+        "testlink_request": {
+          "operation_id": "globalcase-neox06-nxc400-20261001-115504-a23256b9ee0f6c89",
+          "environment": "corp",
+          "project": "NetAtlasEMS",
+          "plan": "NetAtlas EMS",
+          "platform": "NetAtlas EMS",
+          "build": "03.00.11 (AAVV.221) b12_redhat",
+          "testcase_external_id": "EMS1-5643",
+          "status": "p",
+          "notes": "Operation ID: globalcase-neox06-nxc400-20261001-115504\nReport Schema: legacy-web-ems-report-v1\nReport File: qa_normalized_provision_neox06_nxc400_b13_20261001_115504.txt\nTestLink Project: NetAtlasEMS\nTest Plan: NetAtlas EMS\nPlatform: NetAtlas EMS\nBuild: 03.00.11 (AAVV.221) b12_redhat\nTest Case: EMS1-5643\nAutomation Test Function: ontUniPrfModify\nResult: Pass",
+          "execution_duration": 0.0
+        },
+        "testlink_preview": {
+          "schema_version": "1.0",
+          "operation_id": "globalcase-neox06-nxc400-20261001-115504-a23256b9ee0f6c89",
+          "environment": "corp",
+          "mode": "preview",
+          "preview_digest": "783f11c41c5f919ae75c6fbdbd28ae5290967ddf762689fcb8ab551c7d39331b",
+          "planned_write": true,
+          "target": {
+            "project": {
+              "id": "67654",
+              "name": "NetAtlasEMS"
+            },
+            "plan": {
+              "id": "260150",
+              "name": "NetAtlas EMS"
+            },
+            "platform": {
+              "id": "49",
+              "name": "NetAtlas EMS"
+            },
+            "build": {
+              "id": "20607",
+              "name": "03.00.11 (AAVV.221) b12_redhat"
+            }
+          },
+          "execution": {
+            "testcase_external_id": "EMS1-5643",
+            "status": "p",
+            "notes_digest": "fd0eac42b9ee8cf31a02439b2737c05a7b293270328173ba85cc89274023ab7f",
+            "duration_minutes": 0.0
+          },
+          "warnings": []
+        }
+      },
+      {
+        "result": {
+          "external_id": "EMS1-5753",
+          "testcase_id": null,
+          "version": null,
+          "test_name": "ontMulticastPrfAdd",
+          "testlink_name": null,
+          "raw_status": "Pass",
+          "status": "p",
+          "duration": "0s",
+          "duration_seconds": 0.0
+        },
+        "dedupe_marker": null,
+        "dedupe_digest": null,
+        "redmine_request": null,
+        "redmine_preview": null,
+        "testlink_request": {
+          "operation_id": "globalcase-neox06-nxc400-20261001-115504-89991ae459afa400",
+          "environment": "corp",
+          "project": "NetAtlasEMS",
+          "plan": "NetAtlas EMS",
+          "platform": "NetAtlas EMS",
+          "build": "03.00.11 (AAVV.221) b12_redhat",
+          "testcase_external_id": "EMS1-5753",
+          "status": "p",
+          "notes": "Operation ID: globalcase-neox06-nxc400-20261001-115504\nReport Schema: legacy-web-ems-report-v1\nReport File: qa_normalized_provision_neox06_nxc400_b13_20261001_115504.txt\nTestLink Project: NetAtlasEMS\nTest Plan: NetAtlas EMS\nPlatform: NetAtlas EMS\nBuild: 03.00.11 (AAVV.221) b12_redhat\nTest Case: EMS1-5753\nAutomation Test Function: ontMulticastPrfAdd\nResult: Pass",
+          "execution_duration": 0.0
+        },
+        "testlink_preview": {
+          "schema_version": "1.0",
+          "operation_id": "globalcase-neox06-nxc400-20261001-115504-89991ae459afa400",
+          "environment": "corp",
+          "mode": "preview",
+          "preview_digest": "884f483e33806fe78f76b76a3866237b9f69bafc108f87ea4157e9781db192e7",
+          "planned_write": true,
+          "target": {
+            "project": {
+              "id": "67654",
+              "name": "NetAtlasEMS"
+            },
+            "plan": {
+              "id": "260150",
+              "name": "NetAtlas EMS"
+            },
+            "platform": {
+              "id": "49",
+              "name": "NetAtlas EMS"
+            },
+            "build": {
+              "id": "20607",
+              "name": "03.00.11 (AAVV.221) b12_redhat"
+            }
+          },
+          "execution": {
+            "testcase_external_id": "EMS1-5753",
+            "status": "p",
+            "notes_digest": "fb8acc010c5113d34e749a89024f653bc4ae4f297c8b15313416780c7be15827",
+            "duration_minutes": 0.0
+          },
+          "warnings": []
+        }
+      },
+      {
+        "result": {
+          "external_id": "EMS1-5628",
+          "testcase_id": null,
+          "version": null,
+          "test_name": "ontMulticastPrfAdd",
+          "testlink_name": null,
+          "raw_status": "Pass",
+          "status": "p",
+          "duration": "0s",
+          "duration_seconds": 0.0
+        },
+        "dedupe_marker": null,
+        "dedupe_digest": null,
+        "redmine_request": null,
+        "redmine_preview": null,
+        "testlink_request": {
+          "operation_id": "globalcase-neox06-nxc400-20261001-115504-bcdd914e2b54c7ba",
+          "environment": "corp",
+          "project": "NetAtlasEMS",
+          "plan": "NetAtlas EMS",
+          "platform": "NetAtlas EMS",
+          "build": "03.00.11 (AAVV.221) b12_redhat",
+          "testcase_external_id": "EMS1-5628",
+          "status": "p",
+          "notes": "Operation ID: globalcase-neox06-nxc400-20261001-115504\nReport Schema: legacy-web-ems-report-v1\nReport File: qa_normalized_provision_neox06_nxc400_b13_20261001_115504.txt\nTestLink Project: NetAtlasEMS\nTest Plan: NetAtlas EMS\nPlatform: NetAtlas EMS\nBuild: 03.00.11 (AAVV.221) b12_redhat\nTest Case: EMS1-5628\nAutomation Test Function: ontMulticastPrfAdd\nResult: Pass",
+          "execution_duration": 0.0
+        },
+        "testlink_preview": {
+          "schema_version": "1.0",
+          "operation_id": "globalcase-neox06-nxc400-20261001-115504-bcdd914e2b54c7ba",
+          "environment": "corp",
+          "mode": "preview",
+          "preview_digest": "a7bdd171e1ee72db515d50b445e26925c152372742602977739a2ffbe655a54f",
+          "planned_write": true,
+          "target": {
+            "project": {
+              "id": "67654",
+              "name": "NetAtlasEMS"
+            },
+            "plan": {
+              "id": "260150",
+              "name": "NetAtlas EMS"
+            },
+            "platform": {
+              "id": "49",
+              "name": "NetAtlas EMS"
+            },
+            "build": {
+              "id": "20607",
+              "name": "03.00.11 (AAVV.221) b12_redhat"
+            }
+          },
+          "execution": {
+            "testcase_external_id": "EMS1-5628",
+            "status": "p",
+            "notes_digest": "6426fd90d696bc2cc7cf1e69b77e4594a9a65644eede50f1abb140be6c67c2ae",
+            "duration_minutes": 0.0
+          },
+          "warnings": []
+        }
+      },
+      {
+        "result": {
+          "external_id": "EMS1-5759",
+          "testcase_id": null,
+          "version": null,
+          "test_name": "igmpGroupPrivilegePrfModify",
+          "testlink_name": null,
+          "raw_status": "Pass",
+          "status": "p",
+          "duration": "0s",
+          "duration_seconds": 0.0
+        },
+        "dedupe_marker": null,
+        "dedupe_digest": null,
+        "redmine_request": null,
+        "redmine_preview": null,
+        "testlink_request": {
+          "operation_id": "globalcase-neox06-nxc400-20261001-115504-15622fd4aee3ed7f",
+          "environment": "corp",
+          "project": "NetAtlasEMS",
+          "plan": "NetAtlas EMS",
+          "platform": "NetAtlas EMS",
+          "build": "03.00.11 (AAVV.221) b12_redhat",
+          "testcase_external_id": "EMS1-5759",
+          "status": "p",
+          "notes": "Operation ID: globalcase-neox06-nxc400-20261001-115504\nReport Schema: legacy-web-ems-report-v1\nReport File: qa_normalized_provision_neox06_nxc400_b13_20261001_115504.txt\nTestLink Project: NetAtlasEMS\nTest Plan: NetAtlas EMS\nPlatform: NetAtlas EMS\nBuild: 03.00.11 (AAVV.221) b12_redhat\nTest Case: EMS1-5759\nAutomation Test Function: igmpGroupPrivilegePrfModify\nResult: Pass",
+          "execution_duration": 0.0
+        },
+        "testlink_preview": {
+          "schema_version": "1.0",
+          "operation_id": "globalcase-neox06-nxc400-20261001-115504-15622fd4aee3ed7f",
+          "environment": "corp",
+          "mode": "preview",
+          "preview_digest": "5027e96aa4e0520065afcf6991f950015ac654dcdc7ae6b1e5bf9658b60fa135",
+          "planned_write": true,
+          "target": {
+            "project": {
+              "id": "67654",
+              "name": "NetAtlasEMS"
+            },
+            "plan": {
+              "id": "260150",
+              "name": "NetAtlas EMS"
+            },
+            "platform": {
+              "id": "49",
+              "name": "NetAtlas EMS"
+            },
+            "build": {
+              "id": "20607",
+              "name": "03.00.11 (AAVV.221) b12_redhat"
+            }
+          },
+          "execution": {
+            "testcase_external_id": "EMS1-5759",
+            "status": "p",
+            "notes_digest": "0a2a27d1c8990754d1e13c960019c4b1f3d5dc93d24c258bc2d5765cee385dbf",
+            "duration_minutes": 0.0
+          },
+          "warnings": []
+        }
+      },
+      {
+        "result": {
+          "external_id": "EMS1-5633",
+          "testcase_id": null,
+          "version": null,
+          "test_name": "ontMulticastPrfModify",
+          "testlink_name": null,
+          "raw_status": "Pass",
+          "status": "p",
+          "duration": "0s",
+          "duration_seconds": 0.0
+        },
+        "dedupe_marker": null,
+        "dedupe_digest": null,
+        "redmine_request": null,
+        "redmine_preview": null,
+        "testlink_request": {
+          "operation_id": "globalcase-neox06-nxc400-20261001-115504-0c89ef052d8cb01d",
+          "environment": "corp",
+          "project": "NetAtlasEMS",
+          "plan": "NetAtlas EMS",
+          "platform": "NetAtlas EMS",
+          "build": "03.00.11 (AAVV.221) b12_redhat",
+          "testcase_external_id": "EMS1-5633",
+          "status": "p",
+          "notes": "Operation ID: globalcase-neox06-nxc400-20261001-115504\nReport Schema: legacy-web-ems-report-v1\nReport File: qa_normalized_provision_neox06_nxc400_b13_20261001_115504.txt\nTestLink Project: NetAtlasEMS\nTest Plan: NetAtlas EMS\nPlatform: NetAtlas EMS\nBuild: 03.00.11 (AAVV.221) b12_redhat\nTest Case: EMS1-5633\nAutomation Test Function: ontMulticastPrfModify\nResult: Pass",
+          "execution_duration": 0.0
+        },
+        "testlink_preview": {
+          "schema_version": "1.0",
+          "operation_id": "globalcase-neox06-nxc400-20261001-115504-0c89ef052d8cb01d",
+          "environment": "corp",
+          "mode": "preview",
+          "preview_digest": "a61316c949b832cc368d50ebf9a783d02ace9c006ca83caef5b07ee2797db600",
+          "planned_write": true,
+          "target": {
+            "project": {
+              "id": "67654",
+              "name": "NetAtlasEMS"
+            },
+            "plan": {
+              "id": "260150",
+              "name": "NetAtlas EMS"
+            },
+            "platform": {
+              "id": "49",
+              "name": "NetAtlas EMS"
+            },
+            "build": {
+              "id": "20607",
+              "name": "03.00.11 (AAVV.221) b12_redhat"
+            }
+          },
+          "execution": {
+            "testcase_external_id": "EMS1-5633",
+            "status": "p",
+            "notes_digest": "af7bb3eef31da9b7cc4624eb941c5de5439eb8ab94be316b5c06a4c8f5f82c39",
+            "duration_minutes": 0.0
+          },
+          "warnings": []
+        }
+      },
+      {
+        "result": {
+          "external_id": "EMS1-6264",
+          "testcase_id": null,
+          "version": null,
+          "test_name": "ontServiceAddGpon",
+          "testlink_name": null,
+          "raw_status": "Pass",
+          "status": "p",
+          "duration": "0s",
+          "duration_seconds": 0.0
+        },
+        "dedupe_marker": null,
+        "dedupe_digest": null,
+        "redmine_request": null,
+        "redmine_preview": null,
+        "testlink_request": {
+          "operation_id": "globalcase-neox06-nxc400-20261001-115504-b0b5d89eafe24b41",
+          "environment": "corp",
+          "project": "NetAtlasEMS",
+          "plan": "NetAtlas EMS",
+          "platform": "NetAtlas EMS",
+          "build": "03.00.11 (AAVV.221) b12_redhat",
+          "testcase_external_id": "EMS1-6264",
+          "status": "p",
+          "notes": "Operation ID: globalcase-neox06-nxc400-20261001-115504\nReport Schema: legacy-web-ems-report-v1\nReport File: qa_normalized_provision_neox06_nxc400_b13_20261001_115504.txt\nTestLink Project: NetAtlasEMS\nTest Plan: NetAtlas EMS\nPlatform: NetAtlas EMS\nBuild: 03.00.11 (AAVV.221) b12_redhat\nTest Case: EMS1-6264\nAutomation Test Function: ontServiceAddGpon\nResult: Pass",
+          "execution_duration": 0.0
+        },
+        "testlink_preview": {
+          "schema_version": "1.0",
+          "operation_id": "globalcase-neox06-nxc400-20261001-115504-b0b5d89eafe24b41",
+          "environment": "corp",
+          "mode": "preview",
+          "preview_digest": "b4649566a222a33085e2b72d4a9e4b6b03daaf0bc7d1e26ffe397460d04d80c4",
+          "planned_write": true,
+          "target": {
+            "project": {
+              "id": "67654",
+              "name": "NetAtlasEMS"
+            },
+            "plan": {
+              "id": "260150",
+              "name": "NetAtlas EMS"
+            },
+            "platform": {
+              "id": "49",
+              "name": "NetAtlas EMS"
+            },
+            "build": {
+              "id": "20607",
+              "name": "03.00.11 (AAVV.221) b12_redhat"
+            }
+          },
+          "execution": {
+            "testcase_external_id": "EMS1-6264",
+            "status": "p",
+            "notes_digest": "f2470f404d256d2e4b6c8f5c9cdb2b07da2481d8954ddd57886cb06d27008b71",
+            "duration_minutes": 0.0
+          },
+          "warnings": []
+        }
+      },
+      {
+        "result": {
+          "external_id": "EMS1-6998",
+          "testcase_id": null,
+          "version": null,
+          "test_name": "ontServiceModifyGpon",
+          "testlink_name": null,
+          "raw_status": "Pass",
+          "status": "p",
+          "duration": "0s",
+          "duration_seconds": 0.0
+        },
+        "dedupe_marker": null,
+        "dedupe_digest": null,
+        "redmine_request": null,
+        "redmine_preview": null,
+        "testlink_request": {
+          "operation_id": "globalcase-neox06-nxc400-20261001-115504-4217f4197a2c1025",
+          "environment": "corp",
+          "project": "NetAtlasEMS",
+          "plan": "NetAtlas EMS",
+          "platform": "NetAtlas EMS",
+          "build": "03.00.11 (AAVV.221) b12_redhat",
+          "testcase_external_id": "EMS1-6998",
+          "status": "p",
+          "notes": "Operation ID: globalcase-neox06-nxc400-20261001-115504\nReport Schema: legacy-web-ems-report-v1\nReport File: qa_normalized_provision_neox06_nxc400_b13_20261001_115504.txt\nTestLink Project: NetAtlasEMS\nTest Plan: NetAtlas EMS\nPlatform: NetAtlas EMS\nBuild: 03.00.11 (AAVV.221) b12_redhat\nTest Case: EMS1-6998\nAutomation Test Function: ontServiceModifyGpon\nResult: Pass",
+          "execution_duration": 0.0
+        },
+        "testlink_preview": {
+          "schema_version": "1.0",
+          "operation_id": "globalcase-neox06-nxc400-20261001-115504-4217f4197a2c1025",
+          "environment": "corp",
+          "mode": "preview",
+          "preview_digest": "b9b5acc38f5cf63105703099edbb8ed1db7bd89add549e8c1e3e40c7c05cf18d",
+          "planned_write": true,
+          "target": {
+            "project": {
+              "id": "67654",
+              "name": "NetAtlasEMS"
+            },
+            "plan": {
+              "id": "260150",
+              "name": "NetAtlas EMS"
+            },
+            "platform": {
+              "id": "49",
+              "name": "NetAtlas EMS"
+            },
+            "build": {
+              "id": "20607",
+              "name": "03.00.11 (AAVV.221) b12_redhat"
+            }
+          },
+          "execution": {
+            "testcase_external_id": "EMS1-6998",
+            "status": "p",
+            "notes_digest": "30b0a6d8ac6761b82e03000bac88b8f2355c192a6c53bc60b9e58ef60933ebbd",
+            "duration_minutes": 0.0
+          },
+          "warnings": []
+        }
+      },
+      {
+        "result": {
+          "external_id": "EMS1-6990",
+          "testcase_id": null,
+          "version": null,
+          "test_name": "ontServiceDeleteGpon",
+          "testlink_name": null,
+          "raw_status": "Pass",
+          "status": "p",
+          "duration": "0s",
+          "duration_seconds": 0.0
+        },
+        "dedupe_marker": null,
+        "dedupe_digest": null,
+        "redmine_request": null,
+        "redmine_preview": null,
+        "testlink_request": {
+          "operation_id": "globalcase-neox06-nxc400-20261001-115504-7fb21ba9bbc893b2",
+          "environment": "corp",
+          "project": "NetAtlasEMS",
+          "plan": "NetAtlas EMS",
+          "platform": "NetAtlas EMS",
+          "build": "03.00.11 (AAVV.221) b12_redhat",
+          "testcase_external_id": "EMS1-6990",
+          "status": "p",
+          "notes": "Operation ID: globalcase-neox06-nxc400-20261001-115504\nReport Schema: legacy-web-ems-report-v1\nReport File: qa_normalized_provision_neox06_nxc400_b13_20261001_115504.txt\nTestLink Project: NetAtlasEMS\nTest Plan: NetAtlas EMS\nPlatform: NetAtlas EMS\nBuild: 03.00.11 (AAVV.221) b12_redhat\nTest Case: EMS1-6990\nAutomation Test Function: ontServiceDeleteGpon\nResult: Pass",
+          "execution_duration": 0.0
+        },
+        "testlink_preview": {
+          "schema_version": "1.0",
+          "operation_id": "globalcase-neox06-nxc400-20261001-115504-7fb21ba9bbc893b2",
+          "environment": "corp",
+          "mode": "preview",
+          "preview_digest": "33e8761e43ceefc857986abd8ab1bdccc9d0f40d482d01e19e957923b2c0e6a6",
+          "planned_write": true,
+          "target": {
+            "project": {
+              "id": "67654",
+              "name": "NetAtlasEMS"
+            },
+            "plan": {
+              "id": "260150",
+              "name": "NetAtlas EMS"
+            },
+            "platform": {
+              "id": "49",
+              "name": "NetAtlas EMS"
+            },
+            "build": {
+              "id": "20607",
+              "name": "03.00.11 (AAVV.221) b12_redhat"
+            }
+          },
+          "execution": {
+            "testcase_external_id": "EMS1-6990",
+            "status": "p",
+            "notes_digest": "c76cca3c5c46135c4d1d0e119998bf823056a1060ccc0106ea51271542363d3a",
+            "duration_minutes": 0.0
+          },
+          "warnings": []
+        }
+      },
+      {
+        "result": {
+          "external_id": "EMS1-5618",
+          "testcase_id": null,
+          "version": null,
+          "test_name": "ontBandwidthServicePrfAdd",
+          "testlink_name": null,
+          "raw_status": "Pass",
+          "status": "p",
+          "duration": "0s",
+          "duration_seconds": 0.0
+        },
+        "dedupe_marker": null,
+        "dedupe_digest": null,
+        "redmine_request": null,
+        "redmine_preview": null,
+        "testlink_request": {
+          "operation_id": "globalcase-neox06-nxc400-20261001-115504-50c6926e9c74104f",
+          "environment": "corp",
+          "project": "NetAtlasEMS",
+          "plan": "NetAtlas EMS",
+          "platform": "NetAtlas EMS",
+          "build": "03.00.11 (AAVV.221) b12_redhat",
+          "testcase_external_id": "EMS1-5618",
+          "status": "p",
+          "notes": "Operation ID: globalcase-neox06-nxc400-20261001-115504\nReport Schema: legacy-web-ems-report-v1\nReport File: qa_normalized_provision_neox06_nxc400_b13_20261001_115504.txt\nTestLink Project: NetAtlasEMS\nTest Plan: NetAtlas EMS\nPlatform: NetAtlas EMS\nBuild: 03.00.11 (AAVV.221) b12_redhat\nTest Case: EMS1-5618\nAutomation Test Function: ontBandwidthServicePrfAdd\nResult: Pass",
+          "execution_duration": 0.0
+        },
+        "testlink_preview": {
+          "schema_version": "1.0",
+          "operation_id": "globalcase-neox06-nxc400-20261001-115504-50c6926e9c74104f",
+          "environment": "corp",
+          "mode": "preview",
+          "preview_digest": "ebc3081eb71de3225a4738e2d3825ce0b7c8a6b647c2969ad79db32492ae5404",
+          "planned_write": true,
+          "target": {
+            "project": {
+              "id": "67654",
+              "name": "NetAtlasEMS"
+            },
+            "plan": {
+              "id": "260150",
+              "name": "NetAtlas EMS"
+            },
+            "platform": {
+              "id": "49",
+              "name": "NetAtlas EMS"
+            },
+            "build": {
+              "id": "20607",
+              "name": "03.00.11 (AAVV.221) b12_redhat"
+            }
+          },
+          "execution": {
+            "testcase_external_id": "EMS1-5618",
+            "status": "p",
+            "notes_digest": "9cd98ad3c307f17145a8a655b22e23669f9dbfb645abf02a5c29b1ad47d05461",
+            "duration_minutes": 0.0
+          },
+          "warnings": []
+        }
+      },
+      {
+        "result": {
+          "external_id": "EMS1-5608",
+          "testcase_id": null,
+          "version": null,
+          "test_name": "ontBandwidthServicePrfAdd",
+          "testlink_name": null,
+          "raw_status": "Pass",
+          "status": "p",
+          "duration": "0s",
+          "duration_seconds": 0.0
+        },
+        "dedupe_marker": null,
+        "dedupe_digest": null,
+        "redmine_request": null,
+        "redmine_preview": null,
+        "testlink_request": {
+          "operation_id": "globalcase-neox06-nxc400-20261001-115504-19bb3ecb466be1ff",
+          "environment": "corp",
+          "project": "NetAtlasEMS",
+          "plan": "NetAtlas EMS",
+          "platform": "NetAtlas EMS",
+          "build": "03.00.11 (AAVV.221) b12_redhat",
+          "testcase_external_id": "EMS1-5608",
+          "status": "p",
+          "notes": "Operation ID: globalcase-neox06-nxc400-20261001-115504\nReport Schema: legacy-web-ems-report-v1\nReport File: qa_normalized_provision_neox06_nxc400_b13_20261001_115504.txt\nTestLink Project: NetAtlasEMS\nTest Plan: NetAtlas EMS\nPlatform: NetAtlas EMS\nBuild: 03.00.11 (AAVV.221) b12_redhat\nTest Case: EMS1-5608\nAutomation Test Function: ontBandwidthServicePrfAdd\nResult: Pass",
+          "execution_duration": 0.0
+        },
+        "testlink_preview": {
+          "schema_version": "1.0",
+          "operation_id": "globalcase-neox06-nxc400-20261001-115504-19bb3ecb466be1ff",
+          "environment": "corp",
+          "mode": "preview",
+          "preview_digest": "6dc3ca26295e5cce187945fe99dcbb1f90082d6143c5299d71b53fb7e893a341",
+          "planned_write": true,
+          "target": {
+            "project": {
+              "id": "67654",
+              "name": "NetAtlasEMS"
+            },
+            "plan": {
+              "id": "260150",
+              "name": "NetAtlas EMS"
+            },
+            "platform": {
+              "id": "49",
+              "name": "NetAtlas EMS"
+            },
+            "build": {
+              "id": "20607",
+              "name": "03.00.11 (AAVV.221) b12_redhat"
+            }
+          },
+          "execution": {
+            "testcase_external_id": "EMS1-5608",
+            "status": "p",
+            "notes_digest": "0e5dde4f2c07a0f40c468141ff95d0c5d0d49100bc2caa5ecf9b1a4fcd734b70",
+            "duration_minutes": 0.0
+          },
+          "warnings": []
+        }
+      },
+      {
+        "result": {
+          "external_id": "EMS1-5623",
+          "testcase_id": null,
+          "version": null,
+          "test_name": "ontQoSBandwidthPrfModify",
+          "testlink_name": null,
+          "raw_status": "Pass",
+          "status": "p",
+          "duration": "0s",
+          "duration_seconds": 0.0
+        },
+        "dedupe_marker": null,
+        "dedupe_digest": null,
+        "redmine_request": null,
+        "redmine_preview": null,
+        "testlink_request": {
+          "operation_id": "globalcase-neox06-nxc400-20261001-115504-46b7dc87d6a63e47",
+          "environment": "corp",
+          "project": "NetAtlasEMS",
+          "plan": "NetAtlas EMS",
+          "platform": "NetAtlas EMS",
+          "build": "03.00.11 (AAVV.221) b12_redhat",
+          "testcase_external_id": "EMS1-5623",
+          "status": "p",
+          "notes": "Operation ID: globalcase-neox06-nxc400-20261001-115504\nReport Schema: legacy-web-ems-report-v1\nReport File: qa_normalized_provision_neox06_nxc400_b13_20261001_115504.txt\nTestLink Project: NetAtlasEMS\nTest Plan: NetAtlas EMS\nPlatform: NetAtlas EMS\nBuild: 03.00.11 (AAVV.221) b12_redhat\nTest Case: EMS1-5623\nAutomation Test Function: ontQoSBandwidthPrfModify\nResult: Pass",
+          "execution_duration": 0.0
+        },
+        "testlink_preview": {
+          "schema_version": "1.0",
+          "operation_id": "globalcase-neox06-nxc400-20261001-115504-46b7dc87d6a63e47",
+          "environment": "corp",
+          "mode": "preview",
+          "preview_digest": "67d7e341a0807ae1bb878112d38332625b0846560556ddfa3fb0329b7f8e7f1d",
+          "planned_write": true,
+          "target": {
+            "project": {
+              "id": "67654",
+              "name": "NetAtlasEMS"
+            },
+            "plan": {
+              "id": "260150",
+              "name": "NetAtlas EMS"
+            },
+            "platform": {
+              "id": "49",
+              "name": "NetAtlas EMS"
+            },
+            "build": {
+              "id": "20607",
+              "name": "03.00.11 (AAVV.221) b12_redhat"
+            }
+          },
+          "execution": {
+            "testcase_external_id": "EMS1-5623",
+            "status": "p",
+            "notes_digest": "efd47152ef2fb2bed0950d4f19464ee52b0eb14db2812a1242fa491829031d70",
+            "duration_minutes": 0.0
+          },
+          "warnings": []
+        }
+      },
+      {
+        "result": {
+          "external_id": "EMS1-5613",
+          "testcase_id": null,
+          "version": null,
+          "test_name": "ontServicePrfModify",
+          "testlink_name": null,
+          "raw_status": "Pass",
+          "status": "p",
+          "duration": "0s",
+          "duration_seconds": 0.0
+        },
+        "dedupe_marker": null,
+        "dedupe_digest": null,
+        "redmine_request": null,
+        "redmine_preview": null,
+        "testlink_request": {
+          "operation_id": "globalcase-neox06-nxc400-20261001-115504-c681aa8327c5a0ab",
+          "environment": "corp",
+          "project": "NetAtlasEMS",
+          "plan": "NetAtlas EMS",
+          "platform": "NetAtlas EMS",
+          "build": "03.00.11 (AAVV.221) b12_redhat",
+          "testcase_external_id": "EMS1-5613",
+          "status": "p",
+          "notes": "Operation ID: globalcase-neox06-nxc400-20261001-115504\nReport Schema: legacy-web-ems-report-v1\nReport File: qa_normalized_provision_neox06_nxc400_b13_20261001_115504.txt\nTestLink Project: NetAtlasEMS\nTest Plan: NetAtlas EMS\nPlatform: NetAtlas EMS\nBuild: 03.00.11 (AAVV.221) b12_redhat\nTest Case: EMS1-5613\nAutomation Test Function: ontServicePrfModify\nResult: Pass",
+          "execution_duration": 0.0
+        },
+        "testlink_preview": {
+          "schema_version": "1.0",
+          "operation_id": "globalcase-neox06-nxc400-20261001-115504-c681aa8327c5a0ab",
+          "environment": "corp",
+          "mode": "preview",
+          "preview_digest": "8b5e5053cae968eba51d738b0e0bd9cdf7c66e3697a284703a0640cbad7d2bad",
+          "planned_write": true,
+          "target": {
+            "project": {
+              "id": "67654",
+              "name": "NetAtlasEMS"
+            },
+            "plan": {
+              "id": "260150",
+              "name": "NetAtlas EMS"
+            },
+            "platform": {
+              "id": "49",
+              "name": "NetAtlas EMS"
+            },
+            "build": {
+              "id": "20607",
+              "name": "03.00.11 (AAVV.221) b12_redhat"
+            }
+          },
+          "execution": {
+            "testcase_external_id": "EMS1-5613",
+            "status": "p",
+            "notes_digest": "63cbbbbe516e74fdba31e4b0c21c223213c41ba39111da2686264e7173ceb0ed",
+            "duration_minutes": 0.0
+          },
+          "warnings": []
+        }
+      },
+      {
+        "result": {
+          "external_id": "EMS1-6279",
+          "testcase_id": null,
+          "version": null,
+          "test_name": "ontServiceAdd",
+          "testlink_name": null,
+          "raw_status": "Pass",
+          "status": "p",
+          "duration": "0s",
+          "duration_seconds": 0.0
+        },
+        "dedupe_marker": null,
+        "dedupe_digest": null,
+        "redmine_request": null,
+        "redmine_preview": null,
+        "testlink_request": {
+          "operation_id": "globalcase-neox06-nxc400-20261001-115504-ff6da5fc546bf1a7",
+          "environment": "corp",
+          "project": "NetAtlasEMS",
+          "plan": "NetAtlas EMS",
+          "platform": "NetAtlas EMS",
+          "build": "03.00.11 (AAVV.221) b12_redhat",
+          "testcase_external_id": "EMS1-6279",
+          "status": "p",
+          "notes": "Operation ID: globalcase-neox06-nxc400-20261001-115504\nReport Schema: legacy-web-ems-report-v1\nReport File: qa_normalized_provision_neox06_nxc400_b13_20261001_115504.txt\nTestLink Project: NetAtlasEMS\nTest Plan: NetAtlas EMS\nPlatform: NetAtlas EMS\nBuild: 03.00.11 (AAVV.221) b12_redhat\nTest Case: EMS1-6279\nAutomation Test Function: ontServiceAdd\nResult: Pass",
+          "execution_duration": 0.0
+        },
+        "testlink_preview": {
+          "schema_version": "1.0",
+          "operation_id": "globalcase-neox06-nxc400-20261001-115504-ff6da5fc546bf1a7",
+          "environment": "corp",
+          "mode": "preview",
+          "preview_digest": "0fde58e2c06d35501d982226b8808e138f23e545089acc8cb65ede8e2e7eafe6",
+          "planned_write": true,
+          "target": {
+            "project": {
+              "id": "67654",
+              "name": "NetAtlasEMS"
+            },
+            "plan": {
+              "id": "260150",
+              "name": "NetAtlas EMS"
+            },
+            "platform": {
+              "id": "49",
+              "name": "NetAtlas EMS"
+            },
+            "build": {
+              "id": "20607",
+              "name": "03.00.11 (AAVV.221) b12_redhat"
+            }
+          },
+          "execution": {
+            "testcase_external_id": "EMS1-6279",
+            "status": "p",
+            "notes_digest": "4b7571a1c43be482062b582a05c1cf0a835fb87a0a1e1f660aa0ba7083165d71",
+            "duration_minutes": 0.0
+          },
+          "warnings": []
+        }
+      },
+      {
+        "result": {
+          "external_id": "EMS1-6882",
+          "testcase_id": null,
+          "version": null,
+          "test_name": "ontServiceModify",
+          "testlink_name": null,
+          "raw_status": "Pass",
+          "status": "p",
+          "duration": "0s",
+          "duration_seconds": 0.0
+        },
+        "dedupe_marker": null,
+        "dedupe_digest": null,
+        "redmine_request": null,
+        "redmine_preview": null,
+        "testlink_request": {
+          "operation_id": "globalcase-neox06-nxc400-20261001-115504-9b80019109f18557",
+          "environment": "corp",
+          "project": "NetAtlasEMS",
+          "plan": "NetAtlas EMS",
+          "platform": "NetAtlas EMS",
+          "build": "03.00.11 (AAVV.221) b12_redhat",
+          "testcase_external_id": "EMS1-6882",
+          "status": "p",
+          "notes": "Operation ID: globalcase-neox06-nxc400-20261001-115504\nReport Schema: legacy-web-ems-report-v1\nReport File: qa_normalized_provision_neox06_nxc400_b13_20261001_115504.txt\nTestLink Project: NetAtlasEMS\nTest Plan: NetAtlas EMS\nPlatform: NetAtlas EMS\nBuild: 03.00.11 (AAVV.221) b12_redhat\nTest Case: EMS1-6882\nAutomation Test Function: ontServiceModify\nResult: Pass",
+          "execution_duration": 0.0
+        },
+        "testlink_preview": {
+          "schema_version": "1.0",
+          "operation_id": "globalcase-neox06-nxc400-20261001-115504-9b80019109f18557",
+          "environment": "corp",
+          "mode": "preview",
+          "preview_digest": "3e2b5a37a51f5264d6391c460a93bb4d2db22d4c61bc0a74a5f63a752c896d31",
+          "planned_write": true,
+          "target": {
+            "project": {
+              "id": "67654",
+              "name": "NetAtlasEMS"
+            },
+            "plan": {
+              "id": "260150",
+              "name": "NetAtlas EMS"
+            },
+            "platform": {
+              "id": "49",
+              "name": "NetAtlas EMS"
+            },
+            "build": {
+              "id": "20607",
+              "name": "03.00.11 (AAVV.221) b12_redhat"
+            }
+          },
+          "execution": {
+            "testcase_external_id": "EMS1-6882",
+            "status": "p",
+            "notes_digest": "95046035bc50f9ed3425adb93826e84be294d52c65fad18f0941eb28a4abafea",
+            "duration_minutes": 0.0
+          },
+          "warnings": []
+        }
+      },
+      {
+        "result": {
+          "external_id": "EMS1-6883",
+          "testcase_id": null,
+          "version": null,
+          "test_name": "ontServiceDelete",
+          "testlink_name": null,
+          "raw_status": "Pass",
+          "status": "p",
+          "duration": "0s",
+          "duration_seconds": 0.0
+        },
+        "dedupe_marker": null,
+        "dedupe_digest": null,
+        "redmine_request": null,
+        "redmine_preview": null,
+        "testlink_request": {
+          "operation_id": "globalcase-neox06-nxc400-20261001-115504-702a6968d016864a",
+          "environment": "corp",
+          "project": "NetAtlasEMS",
+          "plan": "NetAtlas EMS",
+          "platform": "NetAtlas EMS",
+          "build": "03.00.11 (AAVV.221) b12_redhat",
+          "testcase_external_id": "EMS1-6883",
+          "status": "p",
+          "notes": "Operation ID: globalcase-neox06-nxc400-20261001-115504\nReport Schema: legacy-web-ems-report-v1\nReport File: qa_normalized_provision_neox06_nxc400_b13_20261001_115504.txt\nTestLink Project: NetAtlasEMS\nTest Plan: NetAtlas EMS\nPlatform: NetAtlas EMS\nBuild: 03.00.11 (AAVV.221) b12_redhat\nTest Case: EMS1-6883\nAutomation Test Function: ontServiceDelete\nResult: Pass",
+          "execution_duration": 0.0
+        },
+        "testlink_preview": {
+          "schema_version": "1.0",
+          "operation_id": "globalcase-neox06-nxc400-20261001-115504-702a6968d016864a",
+          "environment": "corp",
+          "mode": "preview",
+          "preview_digest": "4fd85384bb41d9f658942a0cf7d17e42bbc47a4f72227c36c8ed3e7254dda16c",
+          "planned_write": true,
+          "target": {
+            "project": {
+              "id": "67654",
+              "name": "NetAtlasEMS"
+            },
+            "plan": {
+              "id": "260150",
+              "name": "NetAtlas EMS"
+            },
+            "platform": {
+              "id": "49",
+              "name": "NetAtlas EMS"
+            },
+            "build": {
+              "id": "20607",
+              "name": "03.00.11 (AAVV.221) b12_redhat"
+            }
+          },
+          "execution": {
+            "testcase_external_id": "EMS1-6883",
+            "status": "p",
+            "notes_digest": "6bf5477c4801162c5365af1027c0d7fbe02c8288fdd938612b534811a429c3cf",
+            "duration_minutes": 0.0
+          },
+          "warnings": []
+        }
+      },
+      {
+        "result": {
+          "external_id": "EMS1-3633",
+          "testcase_id": null,
+          "version": null,
+          "test_name": "ontTempPrfAdd",
+          "testlink_name": null,
+          "raw_status": "Pass",
+          "status": "p",
+          "duration": "0s",
+          "duration_seconds": 0.0
+        },
+        "dedupe_marker": null,
+        "dedupe_digest": null,
+        "redmine_request": null,
+        "redmine_preview": null,
+        "testlink_request": {
+          "operation_id": "globalcase-neox06-nxc400-20261001-115504-24e9c4a582a0a37e",
+          "environment": "corp",
+          "project": "NetAtlasEMS",
+          "plan": "NetAtlas EMS",
+          "platform": "NetAtlas EMS",
+          "build": "03.00.11 (AAVV.221) b12_redhat",
+          "testcase_external_id": "EMS1-3633",
+          "status": "p",
+          "notes": "Operation ID: globalcase-neox06-nxc400-20261001-115504\nReport Schema: legacy-web-ems-report-v1\nReport File: qa_normalized_provision_neox06_nxc400_b13_20261001_115504.txt\nTestLink Project: NetAtlasEMS\nTest Plan: NetAtlas EMS\nPlatform: NetAtlas EMS\nBuild: 03.00.11 (AAVV.221) b12_redhat\nTest Case: EMS1-3633\nAutomation Test Function: ontTempPrfAdd\nResult: Pass",
+          "execution_duration": 0.0
+        },
+        "testlink_preview": {
+          "schema_version": "1.0",
+          "operation_id": "globalcase-neox06-nxc400-20261001-115504-24e9c4a582a0a37e",
+          "environment": "corp",
+          "mode": "preview",
+          "preview_digest": "537f2e7565f9b4ab91e0d42ec6e04d4b9a7cdb0de22f914325578e9487b0c5a3",
+          "planned_write": true,
+          "target": {
+            "project": {
+              "id": "67654",
+              "name": "NetAtlasEMS"
+            },
+            "plan": {
+              "id": "260150",
+              "name": "NetAtlas EMS"
+            },
+            "platform": {
+              "id": "49",
+              "name": "NetAtlas EMS"
+            },
+            "build": {
+              "id": "20607",
+              "name": "03.00.11 (AAVV.221) b12_redhat"
+            }
+          },
+          "execution": {
+            "testcase_external_id": "EMS1-3633",
+            "status": "p",
+            "notes_digest": "c1d7b9cc274f9560620c359f615099eb00a41d70dceecedff032fb83b90e1bd3",
+            "duration_minutes": 0.0
+          },
+          "warnings": []
+        }
+      },
+      {
+        "result": {
+          "external_id": "EMS1-5603",
+          "testcase_id": null,
+          "version": null,
+          "test_name": "ontTempPrfModify",
+          "testlink_name": null,
+          "raw_status": "Pass",
+          "status": "p",
+          "duration": "0s",
+          "duration_seconds": 0.0
+        },
+        "dedupe_marker": null,
+        "dedupe_digest": null,
+        "redmine_request": null,
+        "redmine_preview": null,
+        "testlink_request": {
+          "operation_id": "globalcase-neox06-nxc400-20261001-115504-834e0c21322f8e8c",
+          "environment": "corp",
+          "project": "NetAtlasEMS",
+          "plan": "NetAtlas EMS",
+          "platform": "NetAtlas EMS",
+          "build": "03.00.11 (AAVV.221) b12_redhat",
+          "testcase_external_id": "EMS1-5603",
+          "status": "p",
+          "notes": "Operation ID: globalcase-neox06-nxc400-20261001-115504\nReport Schema: legacy-web-ems-report-v1\nReport File: qa_normalized_provision_neox06_nxc400_b13_20261001_115504.txt\nTestLink Project: NetAtlasEMS\nTest Plan: NetAtlas EMS\nPlatform: NetAtlas EMS\nBuild: 03.00.11 (AAVV.221) b12_redhat\nTest Case: EMS1-5603\nAutomation Test Function: ontTempPrfModify\nResult: Pass",
+          "execution_duration": 0.0
+        },
+        "testlink_preview": {
+          "schema_version": "1.0",
+          "operation_id": "globalcase-neox06-nxc400-20261001-115504-834e0c21322f8e8c",
+          "environment": "corp",
+          "mode": "preview",
+          "preview_digest": "3acf96ee74f98a9e1d6c8a7cde5137300f8d7636d2aaab558e02b1d3a94f3b6e",
+          "planned_write": true,
+          "target": {
+            "project": {
+              "id": "67654",
+              "name": "NetAtlasEMS"
+            },
+            "plan": {
+              "id": "260150",
+              "name": "NetAtlas EMS"
+            },
+            "platform": {
+              "id": "49",
+              "name": "NetAtlas EMS"
+            },
+            "build": {
+              "id": "20607",
+              "name": "03.00.11 (AAVV.221) b12_redhat"
+            }
+          },
+          "execution": {
+            "testcase_external_id": "EMS1-5603",
+            "status": "p",
+            "notes_digest": "ffed5b6232dd66586c3a71d9359d68924a5a6cfdd8374877baecbdc2e44cdaca",
+            "duration_minutes": 0.0
+          },
+          "warnings": []
+        }
+      },
+      {
+        "result": {
+          "external_id": "EMS1-3631",
+          "testcase_id": null,
+          "version": null,
+          "test_name": "ontTempPrfDel",
+          "testlink_name": null,
+          "raw_status": "Pass",
+          "status": "p",
+          "duration": "0s",
+          "duration_seconds": 0.0
+        },
+        "dedupe_marker": null,
+        "dedupe_digest": null,
+        "redmine_request": null,
+        "redmine_preview": null,
+        "testlink_request": {
+          "operation_id": "globalcase-neox06-nxc400-20261001-115504-74c9a4604effcc14",
+          "environment": "corp",
+          "project": "NetAtlasEMS",
+          "plan": "NetAtlas EMS",
+          "platform": "NetAtlas EMS",
+          "build": "03.00.11 (AAVV.221) b12_redhat",
+          "testcase_external_id": "EMS1-3631",
+          "status": "p",
+          "notes": "Operation ID: globalcase-neox06-nxc400-20261001-115504\nReport Schema: legacy-web-ems-report-v1\nReport File: qa_normalized_provision_neox06_nxc400_b13_20261001_115504.txt\nTestLink Project: NetAtlasEMS\nTest Plan: NetAtlas EMS\nPlatform: NetAtlas EMS\nBuild: 03.00.11 (AAVV.221) b12_redhat\nTest Case: EMS1-3631\nAutomation Test Function: ontTempPrfDel\nResult: Pass",
+          "execution_duration": 0.0
+        },
+        "testlink_preview": {
+          "schema_version": "1.0",
+          "operation_id": "globalcase-neox06-nxc400-20261001-115504-74c9a4604effcc14",
+          "environment": "corp",
+          "mode": "preview",
+          "preview_digest": "5143f3553081a52f09a1ac7993f271e61ff65c3767aad678e91a604c0850bcb3",
+          "planned_write": true,
+          "target": {
+            "project": {
+              "id": "67654",
+              "name": "NetAtlasEMS"
+            },
+            "plan": {
+              "id": "260150",
+              "name": "NetAtlas EMS"
+            },
+            "platform": {
+              "id": "49",
+              "name": "NetAtlas EMS"
+            },
+            "build": {
+              "id": "20607",
+              "name": "03.00.11 (AAVV.221) b12_redhat"
+            }
+          },
+          "execution": {
+            "testcase_external_id": "EMS1-3631",
+            "status": "p",
+            "notes_digest": "7a771aa09da233cda4e90f115fc8cb1e952ad0b9435b6a7fa2325338e5deaa3c",
+            "duration_minutes": 0.0
+          },
+          "warnings": []
+        }
+      },
+      {
+        "result": {
+          "external_id": "EMS1-5764",
+          "testcase_id": null,
+          "version": null,
+          "test_name": "qosPrfAdd",
+          "testlink_name": null,
+          "raw_status": "Pass",
+          "status": "p",
+          "duration": "0s",
+          "duration_seconds": 0.0
+        },
+        "dedupe_marker": null,
+        "dedupe_digest": null,
+        "redmine_request": null,
+        "redmine_preview": null,
+        "testlink_request": {
+          "operation_id": "globalcase-neox06-nxc400-20261001-115504-f61612260ea37123",
+          "environment": "corp",
+          "project": "NetAtlasEMS",
+          "plan": "NetAtlas EMS",
+          "platform": "NetAtlas EMS",
+          "build": "03.00.11 (AAVV.221) b12_redhat",
+          "testcase_external_id": "EMS1-5764",
+          "status": "p",
+          "notes": "Operation ID: globalcase-neox06-nxc400-20261001-115504\nReport Schema: legacy-web-ems-report-v1\nReport File: qa_normalized_provision_neox06_nxc400_b13_20261001_115504.txt\nTestLink Project: NetAtlasEMS\nTest Plan: NetAtlas EMS\nPlatform: NetAtlas EMS\nBuild: 03.00.11 (AAVV.221) b12_redhat\nTest Case: EMS1-5764\nAutomation Test Function: qosPrfAdd\nResult: Pass",
+          "execution_duration": 0.0
+        },
+        "testlink_preview": {
+          "schema_version": "1.0",
+          "operation_id": "globalcase-neox06-nxc400-20261001-115504-f61612260ea37123",
+          "environment": "corp",
+          "mode": "preview",
+          "preview_digest": "4a0928b2d73bfa61e1758b6f68b02c77e265f9932097574cf820da42a69cfdc2",
+          "planned_write": true,
+          "target": {
+            "project": {
+              "id": "67654",
+              "name": "NetAtlasEMS"
+            },
+            "plan": {
+              "id": "260150",
+              "name": "NetAtlas EMS"
+            },
+            "platform": {
+              "id": "49",
+              "name": "NetAtlas EMS"
+            },
+            "build": {
+              "id": "20607",
+              "name": "03.00.11 (AAVV.221) b12_redhat"
+            }
+          },
+          "execution": {
+            "testcase_external_id": "EMS1-5764",
+            "status": "p",
+            "notes_digest": "3b1d59aa6a61c37a4d52c6ec4de00afed578e4b786d570733a17e612898f1338",
+            "duration_minutes": 0.0
+          },
+          "warnings": []
+        }
+      },
+      {
+        "result": {
+          "external_id": "EMS1-5775",
+          "testcase_id": null,
+          "version": null,
+          "test_name": "qosPrfAdd",
+          "testlink_name": null,
+          "raw_status": "Pass",
+          "status": "p",
+          "duration": "0s",
+          "duration_seconds": 0.0
+        },
+        "dedupe_marker": null,
+        "dedupe_digest": null,
+        "redmine_request": null,
+        "redmine_preview": null,
+        "testlink_request": {
+          "operation_id": "globalcase-neox06-nxc400-20261001-115504-66e690f35c5e22fd",
+          "environment": "corp",
+          "project": "NetAtlasEMS",
+          "plan": "NetAtlas EMS",
+          "platform": "NetAtlas EMS",
+          "build": "03.00.11 (AAVV.221) b12_redhat",
+          "testcase_external_id": "EMS1-5775",
+          "status": "p",
+          "notes": "Operation ID: globalcase-neox06-nxc400-20261001-115504\nReport Schema: legacy-web-ems-report-v1\nReport File: qa_normalized_provision_neox06_nxc400_b13_20261001_115504.txt\nTestLink Project: NetAtlasEMS\nTest Plan: NetAtlas EMS\nPlatform: NetAtlas EMS\nBuild: 03.00.11 (AAVV.221) b12_redhat\nTest Case: EMS1-5775\nAutomation Test Function: qosPrfAdd\nResult: Pass",
+          "execution_duration": 0.0
+        },
+        "testlink_preview": {
+          "schema_version": "1.0",
+          "operation_id": "globalcase-neox06-nxc400-20261001-115504-66e690f35c5e22fd",
+          "environment": "corp",
+          "mode": "preview",
+          "preview_digest": "b303a045ed14e2b3a02c9950a68b6bd99cb8810e62ba20a8ec33e71ca868f891",
+          "planned_write": true,
+          "target": {
+            "project": {
+              "id": "67654",
+              "name": "NetAtlasEMS"
+            },
+            "plan": {
+              "id": "260150",
+              "name": "NetAtlas EMS"
+            },
+            "platform": {
+              "id": "49",
+              "name": "NetAtlas EMS"
+            },
+            "build": {
+              "id": "20607",
+              "name": "03.00.11 (AAVV.221) b12_redhat"
+            }
+          },
+          "execution": {
+            "testcase_external_id": "EMS1-5775",
+            "status": "p",
+            "notes_digest": "d91f785009e26d84db961c01c47dac6e218720e9d8b0233587cceda7387d1bcb",
+            "duration_minutes": 0.0
+          },
+          "warnings": []
+        }
+      },
+      {
+        "result": {
+          "external_id": "EMS1-5786",
+          "testcase_id": null,
+          "version": null,
+          "test_name": "qosPrfAdd",
+          "testlink_name": null,
+          "raw_status": "Pass",
+          "status": "p",
+          "duration": "0s",
+          "duration_seconds": 0.0
+        },
+        "dedupe_marker": null,
+        "dedupe_digest": null,
+        "redmine_request": null,
+        "redmine_preview": null,
+        "testlink_request": {
+          "operation_id": "globalcase-neox06-nxc400-20261001-115504-13311791e11b876b",
+          "environment": "corp",
+          "project": "NetAtlasEMS",
+          "plan": "NetAtlas EMS",
+          "platform": "NetAtlas EMS",
+          "build": "03.00.11 (AAVV.221) b12_redhat",
+          "testcase_external_id": "EMS1-5786",
+          "status": "p",
+          "notes": "Operation ID: globalcase-neox06-nxc400-20261001-115504\nReport Schema: legacy-web-ems-report-v1\nReport File: qa_normalized_provision_neox06_nxc400_b13_20261001_115504.txt\nTestLink Project: NetAtlasEMS\nTest Plan: NetAtlas EMS\nPlatform: NetAtlas EMS\nBuild: 03.00.11 (AAVV.221) b12_redhat\nTest Case: EMS1-5786\nAutomation Test Function: qosPrfAdd\nResult: Pass",
+          "execution_duration": 0.0
+        },
+        "testlink_preview": {
+          "schema_version": "1.0",
+          "operation_id": "globalcase-neox06-nxc400-20261001-115504-13311791e11b876b",
+          "environment": "corp",
+          "mode": "preview",
+          "preview_digest": "6a534e845fd5cdf776559013938767ffa202fac8e73f0fa0602dc40d77f891d9",
+          "planned_write": true,
+          "target": {
+            "project": {
+              "id": "67654",
+              "name": "NetAtlasEMS"
+            },
+            "plan": {
+              "id": "260150",
+              "name": "NetAtlas EMS"
+            },
+            "platform": {
+              "id": "49",
+              "name": "NetAtlas EMS"
+            },
+            "build": {
+              "id": "20607",
+              "name": "03.00.11 (AAVV.221) b12_redhat"
+            }
+          },
+          "execution": {
+            "testcase_external_id": "EMS1-5786",
+            "status": "p",
+            "notes_digest": "fa08f65ed37bb78d48eaae47048dd5902147f306e9cb86d0b904e4b73088d6ec",
+            "duration_minutes": 0.0
+          },
+          "warnings": []
+        }
+      },
+      {
+        "result": {
+          "external_id": "EMS1-5792",
+          "testcase_id": null,
+          "version": null,
+          "test_name": "WeightPrfModify",
+          "testlink_name": null,
+          "raw_status": "Pass",
+          "status": "p",
+          "duration": "0s",
+          "duration_seconds": 0.0
+        },
+        "dedupe_marker": null,
+        "dedupe_digest": null,
+        "redmine_request": null,
+        "redmine_preview": null,
+        "testlink_request": {
+          "operation_id": "globalcase-neox06-nxc400-20261001-115504-bc53916f3ed8101a",
+          "environment": "corp",
+          "project": "NetAtlasEMS",
+          "plan": "NetAtlas EMS",
+          "platform": "NetAtlas EMS",
+          "build": "03.00.11 (AAVV.221) b12_redhat",
+          "testcase_external_id": "EMS1-5792",
+          "status": "p",
+          "notes": "Operation ID: globalcase-neox06-nxc400-20261001-115504\nReport Schema: legacy-web-ems-report-v1\nReport File: qa_normalized_provision_neox06_nxc400_b13_20261001_115504.txt\nTestLink Project: NetAtlasEMS\nTest Plan: NetAtlas EMS\nPlatform: NetAtlas EMS\nBuild: 03.00.11 (AAVV.221) b12_redhat\nTest Case: EMS1-5792\nAutomation Test Function: WeightPrfModify\nResult: Pass",
+          "execution_duration": 0.0
+        },
+        "testlink_preview": {
+          "schema_version": "1.0",
+          "operation_id": "globalcase-neox06-nxc400-20261001-115504-bc53916f3ed8101a",
+          "environment": "corp",
+          "mode": "preview",
+          "preview_digest": "78e275dfa7b3e5b86a232abbce76499ece46cb2653954b2cd424bd706c24e2c1",
+          "planned_write": true,
+          "target": {
+            "project": {
+              "id": "67654",
+              "name": "NetAtlasEMS"
+            },
+            "plan": {
+              "id": "260150",
+              "name": "NetAtlas EMS"
+            },
+            "platform": {
+              "id": "49",
+              "name": "NetAtlas EMS"
+            },
+            "build": {
+              "id": "20607",
+              "name": "03.00.11 (AAVV.221) b12_redhat"
+            }
+          },
+          "execution": {
+            "testcase_external_id": "EMS1-5792",
+            "status": "p",
+            "notes_digest": "f696b90c77ff1bf95027749c6fea43abf9f5572fc9807f6af817d5347e9a8d26",
+            "duration_minutes": 0.0
+          },
+          "warnings": []
+        }
+      },
+      {
+        "result": {
+          "external_id": "EMS1-5781",
+          "testcase_id": null,
+          "version": null,
+          "test_name": "ShapingPrfModify",
+          "testlink_name": null,
+          "raw_status": "Pass",
+          "status": "p",
+          "duration": "0s",
+          "duration_seconds": 0.0
+        },
+        "dedupe_marker": null,
+        "dedupe_digest": null,
+        "redmine_request": null,
+        "redmine_preview": null,
+        "testlink_request": {
+          "operation_id": "globalcase-neox06-nxc400-20261001-115504-bfa4a2f5caa5cbc5",
+          "environment": "corp",
+          "project": "NetAtlasEMS",
+          "plan": "NetAtlas EMS",
+          "platform": "NetAtlas EMS",
+          "build": "03.00.11 (AAVV.221) b12_redhat",
+          "testcase_external_id": "EMS1-5781",
+          "status": "p",
+          "notes": "Operation ID: globalcase-neox06-nxc400-20261001-115504\nReport Schema: legacy-web-ems-report-v1\nReport File: qa_normalized_provision_neox06_nxc400_b13_20261001_115504.txt\nTestLink Project: NetAtlasEMS\nTest Plan: NetAtlas EMS\nPlatform: NetAtlas EMS\nBuild: 03.00.11 (AAVV.221) b12_redhat\nTest Case: EMS1-5781\nAutomation Test Function: ShapingPrfModify\nResult: Pass",
+          "execution_duration": 0.0
+        },
+        "testlink_preview": {
+          "schema_version": "1.0",
+          "operation_id": "globalcase-neox06-nxc400-20261001-115504-bfa4a2f5caa5cbc5",
+          "environment": "corp",
+          "mode": "preview",
+          "preview_digest": "8d7b100e7c11eb5c3393d7d965f71a424f1b597f57cf26285bdc8d8ffc994b1c",
+          "planned_write": true,
+          "target": {
+            "project": {
+              "id": "67654",
+              "name": "NetAtlasEMS"
+            },
+            "plan": {
+              "id": "260150",
+              "name": "NetAtlas EMS"
+            },
+            "platform": {
+              "id": "49",
+              "name": "NetAtlas EMS"
+            },
+            "build": {
+              "id": "20607",
+              "name": "03.00.11 (AAVV.221) b12_redhat"
+            }
+          },
+          "execution": {
+            "testcase_external_id": "EMS1-5781",
+            "status": "p",
+            "notes_digest": "93123fbd3796d9df8873fa0df80c6063b17878ca45617c6616671a083755a723",
+            "duration_minutes": 0.0
+          },
+          "warnings": []
+        }
+      },
+      {
+        "result": {
+          "external_id": "EMS1-5770",
+          "testcase_id": null,
+          "version": null,
+          "test_name": "RateLimitPrfModify",
+          "testlink_name": null,
+          "raw_status": "Pass",
+          "status": "p",
+          "duration": "0s",
+          "duration_seconds": 0.0
+        },
+        "dedupe_marker": null,
+        "dedupe_digest": null,
+        "redmine_request": null,
+        "redmine_preview": null,
+        "testlink_request": {
+          "operation_id": "globalcase-neox06-nxc400-20261001-115504-0ba45aa3a984c91a",
+          "environment": "corp",
+          "project": "NetAtlasEMS",
+          "plan": "NetAtlas EMS",
+          "platform": "NetAtlas EMS",
+          "build": "03.00.11 (AAVV.221) b12_redhat",
+          "testcase_external_id": "EMS1-5770",
+          "status": "p",
+          "notes": "Operation ID: globalcase-neox06-nxc400-20261001-115504\nReport Schema: legacy-web-ems-report-v1\nReport File: qa_normalized_provision_neox06_nxc400_b13_20261001_115504.txt\nTestLink Project: NetAtlasEMS\nTest Plan: NetAtlas EMS\nPlatform: NetAtlas EMS\nBuild: 03.00.11 (AAVV.221) b12_redhat\nTest Case: EMS1-5770\nAutomation Test Function: RateLimitPrfModify\nResult: Pass",
+          "execution_duration": 0.0
+        },
+        "testlink_preview": {
+          "schema_version": "1.0",
+          "operation_id": "globalcase-neox06-nxc400-20261001-115504-0ba45aa3a984c91a",
+          "environment": "corp",
+          "mode": "preview",
+          "preview_digest": "7f29b34e0d52ef7b315dbacacf6edd11ff5dc0b93dc29bfa7d5be24f04c9515d",
+          "planned_write": true,
+          "target": {
+            "project": {
+              "id": "67654",
+              "name": "NetAtlasEMS"
+            },
+            "plan": {
+              "id": "260150",
+              "name": "NetAtlas EMS"
+            },
+            "platform": {
+              "id": "49",
+              "name": "NetAtlas EMS"
+            },
+            "build": {
+              "id": "20607",
+              "name": "03.00.11 (AAVV.221) b12_redhat"
+            }
+          },
+          "execution": {
+            "testcase_external_id": "EMS1-5770",
+            "status": "p",
+            "notes_digest": "5df29b200781b570ede08bfe95063157d9aca0cb383bce5a0ac3b95c291c52a5",
+            "duration_minutes": 0.0
+          },
+          "warnings": []
+        }
+      },
+      {
+        "result": {
+          "external_id": "EMS1-6995",
+          "testcase_id": null,
+          "version": null,
+          "test_name": "igmpGroupPrivilegePrfAddGe",
+          "testlink_name": null,
+          "raw_status": "Pass",
+          "status": "p",
+          "duration": "0s",
+          "duration_seconds": 0.0
+        },
+        "dedupe_marker": null,
+        "dedupe_digest": null,
+        "redmine_request": null,
+        "redmine_preview": null,
+        "testlink_request": {
+          "operation_id": "globalcase-neox06-nxc400-20261001-115504-d930964a0387ded3",
+          "environment": "corp",
+          "project": "NetAtlasEMS",
+          "plan": "NetAtlas EMS",
+          "platform": "NetAtlas EMS",
+          "build": "03.00.11 (AAVV.221) b12_redhat",
+          "testcase_external_id": "EMS1-6995",
+          "status": "p",
+          "notes": "Operation ID: globalcase-neox06-nxc400-20261001-115504\nReport Schema: legacy-web-ems-report-v1\nReport File: qa_normalized_provision_neox06_nxc400_b13_20261001_115504.txt\nTestLink Project: NetAtlasEMS\nTest Plan: NetAtlas EMS\nPlatform: NetAtlas EMS\nBuild: 03.00.11 (AAVV.221) b12_redhat\nTest Case: EMS1-6995\nAutomation Test Function: igmpGroupPrivilegePrfAddGe\nResult: Pass",
+          "execution_duration": 0.0
+        },
+        "testlink_preview": {
+          "schema_version": "1.0",
+          "operation_id": "globalcase-neox06-nxc400-20261001-115504-d930964a0387ded3",
+          "environment": "corp",
+          "mode": "preview",
+          "preview_digest": "4febb28bfe0ccce1b6857fc072c2e04123f34ce77106d84b08c84c09b050b936",
+          "planned_write": true,
+          "target": {
+            "project": {
+              "id": "67654",
+              "name": "NetAtlasEMS"
+            },
+            "plan": {
+              "id": "260150",
+              "name": "NetAtlas EMS"
+            },
+            "platform": {
+              "id": "49",
+              "name": "NetAtlas EMS"
+            },
+            "build": {
+              "id": "20607",
+              "name": "03.00.11 (AAVV.221) b12_redhat"
+            }
+          },
+          "execution": {
+            "testcase_external_id": "EMS1-6995",
+            "status": "p",
+            "notes_digest": "bab18c3fe2939736db4aa978ff7599fc24229cc7714a6f6a36d2ca006ff8937e",
+            "duration_minutes": 0.0
+          },
+          "warnings": []
+        }
+      },
+      {
+        "result": {
+          "external_id": "EMS1-6996",
+          "testcase_id": null,
+          "version": null,
+          "test_name": "igmpGroupPrivilegePrfModifyGe",
+          "testlink_name": null,
+          "raw_status": "Pass",
+          "status": "p",
+          "duration": "0s",
+          "duration_seconds": 0.0
+        },
+        "dedupe_marker": null,
+        "dedupe_digest": null,
+        "redmine_request": null,
+        "redmine_preview": null,
+        "testlink_request": {
+          "operation_id": "globalcase-neox06-nxc400-20261001-115504-c60cafc6e14b74a8",
+          "environment": "corp",
+          "project": "NetAtlasEMS",
+          "plan": "NetAtlas EMS",
+          "platform": "NetAtlas EMS",
+          "build": "03.00.11 (AAVV.221) b12_redhat",
+          "testcase_external_id": "EMS1-6996",
+          "status": "p",
+          "notes": "Operation ID: globalcase-neox06-nxc400-20261001-115504\nReport Schema: legacy-web-ems-report-v1\nReport File: qa_normalized_provision_neox06_nxc400_b13_20261001_115504.txt\nTestLink Project: NetAtlasEMS\nTest Plan: NetAtlas EMS\nPlatform: NetAtlas EMS\nBuild: 03.00.11 (AAVV.221) b12_redhat\nTest Case: EMS1-6996\nAutomation Test Function: igmpGroupPrivilegePrfModifyGe\nResult: Pass",
+          "execution_duration": 0.0
+        },
+        "testlink_preview": {
+          "schema_version": "1.0",
+          "operation_id": "globalcase-neox06-nxc400-20261001-115504-c60cafc6e14b74a8",
+          "environment": "corp",
+          "mode": "preview",
+          "preview_digest": "23f45d54f0cca7acea2f5fde731ed6dde6a068fc3033e65c7f046c79339e66e7",
+          "planned_write": true,
+          "target": {
+            "project": {
+              "id": "67654",
+              "name": "NetAtlasEMS"
+            },
+            "plan": {
+              "id": "260150",
+              "name": "NetAtlas EMS"
+            },
+            "platform": {
+              "id": "49",
+              "name": "NetAtlas EMS"
+            },
+            "build": {
+              "id": "20607",
+              "name": "03.00.11 (AAVV.221) b12_redhat"
+            }
+          },
+          "execution": {
+            "testcase_external_id": "EMS1-6996",
+            "status": "p",
+            "notes_digest": "ef289aa3617de1a367ea5b242e3a5e2bb69037e92be45810939de1725b98e3fb",
+            "duration_minutes": 0.0
+          },
+          "warnings": []
+        }
+      },
+      {
+        "result": {
+          "external_id": "EMS1-5742",
+          "testcase_id": null,
+          "version": null,
+          "test_name": "geTempPrfAdd",
+          "testlink_name": null,
+          "raw_status": "Pass",
+          "status": "p",
+          "duration": "0s",
+          "duration_seconds": 0.0
+        },
+        "dedupe_marker": null,
+        "dedupe_digest": null,
+        "redmine_request": null,
+        "redmine_preview": null,
+        "testlink_request": {
+          "operation_id": "globalcase-neox06-nxc400-20261001-115504-608ccad1f581e5eb",
+          "environment": "corp",
+          "project": "NetAtlasEMS",
+          "plan": "NetAtlas EMS",
+          "platform": "NetAtlas EMS",
+          "build": "03.00.11 (AAVV.221) b12_redhat",
+          "testcase_external_id": "EMS1-5742",
+          "status": "p",
+          "notes": "Operation ID: globalcase-neox06-nxc400-20261001-115504\nReport Schema: legacy-web-ems-report-v1\nReport File: qa_normalized_provision_neox06_nxc400_b13_20261001_115504.txt\nTestLink Project: NetAtlasEMS\nTest Plan: NetAtlas EMS\nPlatform: NetAtlas EMS\nBuild: 03.00.11 (AAVV.221) b12_redhat\nTest Case: EMS1-5742\nAutomation Test Function: geTempPrfAdd\nResult: Pass",
+          "execution_duration": 0.0
+        },
+        "testlink_preview": {
+          "schema_version": "1.0",
+          "operation_id": "globalcase-neox06-nxc400-20261001-115504-608ccad1f581e5eb",
+          "environment": "corp",
+          "mode": "preview",
+          "preview_digest": "e35ccb5ec9802be71101c405f7fd09a08a37a0f7508eb48440616f6045e3a876",
+          "planned_write": true,
+          "target": {
+            "project": {
+              "id": "67654",
+              "name": "NetAtlasEMS"
+            },
+            "plan": {
+              "id": "260150",
+              "name": "NetAtlas EMS"
+            },
+            "platform": {
+              "id": "49",
+              "name": "NetAtlas EMS"
+            },
+            "build": {
+              "id": "20607",
+              "name": "03.00.11 (AAVV.221) b12_redhat"
+            }
+          },
+          "execution": {
+            "testcase_external_id": "EMS1-5742",
+            "status": "p",
+            "notes_digest": "7fab39832b151d01c01e511cf341050207c82c73ef7a9d396d208ebc57b7699d",
+            "duration_minutes": 0.0
+          },
+          "warnings": []
+        }
+      },
+      {
+        "result": {
+          "external_id": "EMS1-5748",
+          "testcase_id": null,
+          "version": null,
+          "test_name": "geTempPrfModify",
+          "testlink_name": null,
+          "raw_status": "Pass",
+          "status": "p",
+          "duration": "0s",
+          "duration_seconds": 0.0
+        },
+        "dedupe_marker": null,
+        "dedupe_digest": null,
+        "redmine_request": null,
+        "redmine_preview": null,
+        "testlink_request": {
+          "operation_id": "globalcase-neox06-nxc400-20261001-115504-b72c451ccddd32a9",
+          "environment": "corp",
+          "project": "NetAtlasEMS",
+          "plan": "NetAtlas EMS",
+          "platform": "NetAtlas EMS",
+          "build": "03.00.11 (AAVV.221) b12_redhat",
+          "testcase_external_id": "EMS1-5748",
+          "status": "p",
+          "notes": "Operation ID: globalcase-neox06-nxc400-20261001-115504\nReport Schema: legacy-web-ems-report-v1\nReport File: qa_normalized_provision_neox06_nxc400_b13_20261001_115504.txt\nTestLink Project: NetAtlasEMS\nTest Plan: NetAtlas EMS\nPlatform: NetAtlas EMS\nBuild: 03.00.11 (AAVV.221) b12_redhat\nTest Case: EMS1-5748\nAutomation Test Function: geTempPrfModify\nResult: Pass",
+          "execution_duration": 0.0
+        },
+        "testlink_preview": {
+          "schema_version": "1.0",
+          "operation_id": "globalcase-neox06-nxc400-20261001-115504-b72c451ccddd32a9",
+          "environment": "corp",
+          "mode": "preview",
+          "preview_digest": "9d0c116dfc03a17db634768c8eb909c480e1d3179ebea30e4bae55938671c155",
+          "planned_write": true,
+          "target": {
+            "project": {
+              "id": "67654",
+              "name": "NetAtlasEMS"
+            },
+            "plan": {
+              "id": "260150",
+              "name": "NetAtlas EMS"
+            },
+            "platform": {
+              "id": "49",
+              "name": "NetAtlas EMS"
+            },
+            "build": {
+              "id": "20607",
+              "name": "03.00.11 (AAVV.221) b12_redhat"
+            }
+          },
+          "execution": {
+            "testcase_external_id": "EMS1-5748",
+            "status": "p",
+            "notes_digest": "ccf5e7bfdbacada41a614e6c05e927a3f49b5ba4be10c2b2eab3b39e7df75135",
+            "duration_minutes": 0.0
+          },
+          "warnings": []
+        }
+      },
+      {
+        "result": {
+          "external_id": "EMS1-5740",
+          "testcase_id": null,
+          "version": null,
+          "test_name": "geTempPrfDel",
+          "testlink_name": null,
+          "raw_status": "Pass",
+          "status": "p",
+          "duration": "0s",
+          "duration_seconds": 0.0
+        },
+        "dedupe_marker": null,
+        "dedupe_digest": null,
+        "redmine_request": null,
+        "redmine_preview": null,
+        "testlink_request": {
+          "operation_id": "globalcase-neox06-nxc400-20261001-115504-685a4b6544223ab1",
+          "environment": "corp",
+          "project": "NetAtlasEMS",
+          "plan": "NetAtlas EMS",
+          "platform": "NetAtlas EMS",
+          "build": "03.00.11 (AAVV.221) b12_redhat",
+          "testcase_external_id": "EMS1-5740",
+          "status": "p",
+          "notes": "Operation ID: globalcase-neox06-nxc400-20261001-115504\nReport Schema: legacy-web-ems-report-v1\nReport File: qa_normalized_provision_neox06_nxc400_b13_20261001_115504.txt\nTestLink Project: NetAtlasEMS\nTest Plan: NetAtlas EMS\nPlatform: NetAtlas EMS\nBuild: 03.00.11 (AAVV.221) b12_redhat\nTest Case: EMS1-5740\nAutomation Test Function: geTempPrfDel\nResult: Pass",
+          "execution_duration": 0.0
+        },
+        "testlink_preview": {
+          "schema_version": "1.0",
+          "operation_id": "globalcase-neox06-nxc400-20261001-115504-685a4b6544223ab1",
+          "environment": "corp",
+          "mode": "preview",
+          "preview_digest": "e3c8c02444e7631f1a80b1148f993481ff9e749168c46cec5ad186bc1989df1e",
+          "planned_write": true,
+          "target": {
+            "project": {
+              "id": "67654",
+              "name": "NetAtlasEMS"
+            },
+            "plan": {
+              "id": "260150",
+              "name": "NetAtlas EMS"
+            },
+            "platform": {
+              "id": "49",
+              "name": "NetAtlas EMS"
+            },
+            "build": {
+              "id": "20607",
+              "name": "03.00.11 (AAVV.221) b12_redhat"
+            }
+          },
+          "execution": {
+            "testcase_external_id": "EMS1-5740",
+            "status": "p",
+            "notes_digest": "e67990bc4e559bfd537c23e066106536c62e3a0c7f7c32a8d2db47922e045da0",
+            "duration_minutes": 0.0
+          },
+          "warnings": []
+        }
+      },
+      {
+        "result": {
+          "external_id": "EMS1-6646",
+          "testcase_id": null,
+          "version": null,
+          "test_name": "addIpHost",
+          "testlink_name": null,
+          "raw_status": "Pass",
+          "status": "p",
+          "duration": "0s",
+          "duration_seconds": 0.0
+        },
+        "dedupe_marker": null,
+        "dedupe_digest": null,
+        "redmine_request": null,
+        "redmine_preview": null,
+        "testlink_request": {
+          "operation_id": "globalcase-neox06-nxc400-20261001-115504-79867acbbb1ed858",
+          "environment": "corp",
+          "project": "NetAtlasEMS",
+          "plan": "NetAtlas EMS",
+          "platform": "NetAtlas EMS",
+          "build": "03.00.11 (AAVV.221) b12_redhat",
+          "testcase_external_id": "EMS1-6646",
+          "status": "p",
+          "notes": "Operation ID: globalcase-neox06-nxc400-20261001-115504\nReport Schema: legacy-web-ems-report-v1\nReport File: qa_normalized_provision_neox06_nxc400_b13_20261001_115504.txt\nTestLink Project: NetAtlasEMS\nTest Plan: NetAtlas EMS\nPlatform: NetAtlas EMS\nBuild: 03.00.11 (AAVV.221) b12_redhat\nTest Case: EMS1-6646\nAutomation Test Function: addIpHost\nResult: Pass",
+          "execution_duration": 0.0
+        },
+        "testlink_preview": {
+          "schema_version": "1.0",
+          "operation_id": "globalcase-neox06-nxc400-20261001-115504-79867acbbb1ed858",
+          "environment": "corp",
+          "mode": "preview",
+          "preview_digest": "59950be5cf4577f4c7edd84e21f94de1cc97d98eaadeda2914c2f36a14208e74",
+          "planned_write": true,
+          "target": {
+            "project": {
+              "id": "67654",
+              "name": "NetAtlasEMS"
+            },
+            "plan": {
+              "id": "260150",
+              "name": "NetAtlas EMS"
+            },
+            "platform": {
+              "id": "49",
+              "name": "NetAtlas EMS"
+            },
+            "build": {
+              "id": "20607",
+              "name": "03.00.11 (AAVV.221) b12_redhat"
+            }
+          },
+          "execution": {
+            "testcase_external_id": "EMS1-6646",
+            "status": "p",
+            "notes_digest": "85b924d66803474f4f9a885ba3e790dea74154d1c62ac7a8b9e754d45f4d2464",
+            "duration_minutes": 0.0
+          },
+          "warnings": []
+        }
+      },
+      {
+        "result": {
+          "external_id": "EMS1-6880",
+          "testcase_id": null,
+          "version": null,
+          "test_name": "modifyIpHost",
+          "testlink_name": null,
+          "raw_status": "Pass",
+          "status": "p",
+          "duration": "0s",
+          "duration_seconds": 0.0
+        },
+        "dedupe_marker": null,
+        "dedupe_digest": null,
+        "redmine_request": null,
+        "redmine_preview": null,
+        "testlink_request": {
+          "operation_id": "globalcase-neox06-nxc400-20261001-115504-832d94b355f01551",
+          "environment": "corp",
+          "project": "NetAtlasEMS",
+          "plan": "NetAtlas EMS",
+          "platform": "NetAtlas EMS",
+          "build": "03.00.11 (AAVV.221) b12_redhat",
+          "testcase_external_id": "EMS1-6880",
+          "status": "p",
+          "notes": "Operation ID: globalcase-neox06-nxc400-20261001-115504\nReport Schema: legacy-web-ems-report-v1\nReport File: qa_normalized_provision_neox06_nxc400_b13_20261001_115504.txt\nTestLink Project: NetAtlasEMS\nTest Plan: NetAtlas EMS\nPlatform: NetAtlas EMS\nBuild: 03.00.11 (AAVV.221) b12_redhat\nTest Case: EMS1-6880\nAutomation Test Function: modifyIpHost\nResult: Pass",
+          "execution_duration": 0.0
+        },
+        "testlink_preview": {
+          "schema_version": "1.0",
+          "operation_id": "globalcase-neox06-nxc400-20261001-115504-832d94b355f01551",
+          "environment": "corp",
+          "mode": "preview",
+          "preview_digest": "0217124d7eda5d6db2b6fa8164a9a787f8912463b3bef8a262e33c41f30a2a60",
+          "planned_write": true,
+          "target": {
+            "project": {
+              "id": "67654",
+              "name": "NetAtlasEMS"
+            },
+            "plan": {
+              "id": "260150",
+              "name": "NetAtlas EMS"
+            },
+            "platform": {
+              "id": "49",
+              "name": "NetAtlas EMS"
+            },
+            "build": {
+              "id": "20607",
+              "name": "03.00.11 (AAVV.221) b12_redhat"
+            }
+          },
+          "execution": {
+            "testcase_external_id": "EMS1-6880",
+            "status": "p",
+            "notes_digest": "0041219a9ce96f9c958b6d90dc9300106a8a42cc0694e9059ac55a1ef3a47e84",
+            "duration_minutes": 0.0
+          },
+          "warnings": []
+        }
+      },
+      {
+        "result": {
+          "external_id": "EMS1-6881",
+          "testcase_id": null,
+          "version": null,
+          "test_name": "deleteIpHost",
+          "testlink_name": null,
+          "raw_status": "Pass",
+          "status": "p",
+          "duration": "0s",
+          "duration_seconds": 0.0
+        },
+        "dedupe_marker": null,
+        "dedupe_digest": null,
+        "redmine_request": null,
+        "redmine_preview": null,
+        "testlink_request": {
+          "operation_id": "globalcase-neox06-nxc400-20261001-115504-df93e2e5d0666d64",
+          "environment": "corp",
+          "project": "NetAtlasEMS",
+          "plan": "NetAtlas EMS",
+          "platform": "NetAtlas EMS",
+          "build": "03.00.11 (AAVV.221) b12_redhat",
+          "testcase_external_id": "EMS1-6881",
+          "status": "p",
+          "notes": "Operation ID: globalcase-neox06-nxc400-20261001-115504\nReport Schema: legacy-web-ems-report-v1\nReport File: qa_normalized_provision_neox06_nxc400_b13_20261001_115504.txt\nTestLink Project: NetAtlasEMS\nTest Plan: NetAtlas EMS\nPlatform: NetAtlas EMS\nBuild: 03.00.11 (AAVV.221) b12_redhat\nTest Case: EMS1-6881\nAutomation Test Function: deleteIpHost\nResult: Pass",
+          "execution_duration": 0.0
+        },
+        "testlink_preview": {
+          "schema_version": "1.0",
+          "operation_id": "globalcase-neox06-nxc400-20261001-115504-df93e2e5d0666d64",
+          "environment": "corp",
+          "mode": "preview",
+          "preview_digest": "eebe06444c6153d794d26286e047b659d28cb3106227aa969a958df6d2bac393",
+          "planned_write": true,
+          "target": {
+            "project": {
+              "id": "67654",
+              "name": "NetAtlasEMS"
+            },
+            "plan": {
+              "id": "260150",
+              "name": "NetAtlas EMS"
+            },
+            "platform": {
+              "id": "49",
+              "name": "NetAtlas EMS"
+            },
+            "build": {
+              "id": "20607",
+              "name": "03.00.11 (AAVV.221) b12_redhat"
+            }
+          },
+          "execution": {
+            "testcase_external_id": "EMS1-6881",
+            "status": "p",
+            "notes_digest": "00e774070f49ab80c039ce865e2bbf4660962bb2cc74b1818aa179bca58b61f3",
+            "duration_minutes": 0.0
+          },
+          "warnings": []
+        }
+      }
+    ],
+    "ignored": [],
+    "warnings": [],
+    "preview_digest": "07aba8a7eec60fbd533a17c6e7b6f5a71ab40f23261ef8ab37438a3d735c4cba"
+  },
+  "review": {
+    "schema_version": "1.0",
+    "operation_id": "globalcase-neox06-nxc400-20261001-115504",
+    "correlation_id": "globalcase-neox06-nxc400-20261001-115504",
+    "environment": "corp",
+    "mode": "preview",
+    "preview_digest": "07aba8a7eec60fbd533a17c6e7b6f5a71ab40f23261ef8ab37438a3d735c4cba",
+    "planned_write": true,
+    "input_digest": "b59e0e811f966dfb29fa7aba10937a2e596fdcc7b71b557cc663140995d68309",
+    "report_schema": "legacy-web-ems-report-v1",
+    "target": {
+      "project": "NetAtlasEMS",
+      "plan": "NetAtlas EMS",
+      "platform": "NetAtlas EMS",
+      "build": "03.00.11 (AAVV.221) b12_redhat"
+    },
+    "parsed_count": 48,
+    "write_count": 48,
+    "ignored_count": 0,
+    "warnings": [],
+    "warning_count": 0,
+    "warnings_truncated": false,
+    "summary": {
+      "status_counts": {
+        "p": 48
+      },
+      "redmine_action_counts": {
+        "none": 48
+      },
+      "sample_testcase_external_ids": [
+        "EMS1-5708",
+        "EMS1-5713",
+        "EMS1-5698",
+        "EMS1-5703",
+        "EMS1-5668",
+        "EMS1-5678",
+        "EMS1-5688",
+        "EMS1-5673",
+        "EMS1-5683",
+        "EMS1-5693"
+      ]
+    },
+    "items": [
+      {
+        "testcase_external_id": "EMS1-5708",
+        "test_name": "ontAlarmPrfAdd",
+        "raw_status": "Pass",
+        "status": "p",
+        "testlink_planned_write": true,
+        "testlink_preview_digest": "b28c6bfbfee485f9bf31c88743b3a2031998974b9738336303e015aa9f0a5755",
+        "redmine_action": "none",
+        "redmine_preview_digest": null,
+        "redmine_issue_fields": null,
+        "redmine_issue_payload": null,
+        "dedupe_digest": null
+      },
+      {
+        "testcase_external_id": "EMS1-5713",
+        "test_name": "ontAlarmPrfModify",
+        "raw_status": "Pass",
+        "status": "p",
+        "testlink_planned_write": true,
+        "testlink_preview_digest": "01927ff1d02ddd43b1dede5c172bef7bf001ea08fd94a6dc027cbcf1d4f370b6",
+        "redmine_action": "none",
+        "redmine_preview_digest": null,
+        "redmine_issue_fields": null,
+        "redmine_issue_payload": null,
+        "dedupe_digest": null
+      },
+      {
+        "testcase_external_id": "EMS1-5698",
+        "test_name": "ontACLPrfAdd",
+        "raw_status": "Pass",
+        "status": "p",
+        "testlink_planned_write": true,
+        "testlink_preview_digest": "f2d5b2d57043f633a52b79f73f037e43cceec7b19aa9cf09ae45f1829b71f12e",
+        "redmine_action": "none",
+        "redmine_preview_digest": null,
+        "redmine_issue_fields": null,
+        "redmine_issue_payload": null,
+        "dedupe_digest": null
+      },
+      {
+        "testcase_external_id": "EMS1-5703",
+        "test_name": "ontACLPrfModify",
+        "raw_status": "Pass",
+        "status": "p",
+        "testlink_planned_write": true,
+        "testlink_preview_digest": "99ca78fc33bbbf1b7a3ea98a9f13b1d8a987bcfe1a3433f90e71414f156b8cad",
+        "redmine_action": "none",
+        "redmine_preview_digest": null,
+        "redmine_issue_fields": null,
+        "redmine_issue_payload": null,
+        "dedupe_digest": null
+      },
+      {
+        "testcase_external_id": "EMS1-5668",
+        "test_name": "ontVoipPrfAdd",
+        "raw_status": "Pass",
+        "status": "p",
+        "testlink_planned_write": true,
+        "testlink_preview_digest": "f512f96029ed9e61cf6296f5c3f8db0c405cae84ef4c489409895848bb125072",
+        "redmine_action": "none",
+        "redmine_preview_digest": null,
+        "redmine_issue_fields": null,
+        "redmine_issue_payload": null,
+        "dedupe_digest": null
+      },
+      {
+        "testcase_external_id": "EMS1-5678",
+        "test_name": "ontVoipPrfAdd",
+        "raw_status": "Pass",
+        "status": "p",
+        "testlink_planned_write": true,
+        "testlink_preview_digest": "d07ac4d20d02fe68e368239f1f5716f44bc877f5ed93bdf68bc3491b895fc437",
+        "redmine_action": "none",
+        "redmine_preview_digest": null,
+        "redmine_issue_fields": null,
+        "redmine_issue_payload": null,
+        "dedupe_digest": null
+      },
+      {
+        "testcase_external_id": "EMS1-5688",
+        "test_name": "ontVoipPrfAdd",
+        "raw_status": "Pass",
+        "status": "p",
+        "testlink_planned_write": true,
+        "testlink_preview_digest": "03f7896612cef67aaae94b9f978ba42c2863fcc30b1f9ba3bc35ff1e23ac65d1",
+        "redmine_action": "none",
+        "redmine_preview_digest": null,
+        "redmine_issue_fields": null,
+        "redmine_issue_payload": null,
+        "dedupe_digest": null
+      },
+      {
+        "testcase_external_id": "EMS1-5673",
+        "test_name": "ontVoipSipPrfModify",
+        "raw_status": "Pass",
+        "status": "p",
+        "testlink_planned_write": true,
+        "testlink_preview_digest": "281670672ecc5b937ea56d250f36d48180302c69b471b741fc2e0c65bf2f5c66",
+        "redmine_action": "none",
+        "redmine_preview_digest": null,
+        "redmine_issue_fields": null,
+        "redmine_issue_payload": null,
+        "dedupe_digest": null
+      },
+      {
+        "testcase_external_id": "EMS1-5683",
+        "test_name": "ontVoipComnPrfModify",
+        "raw_status": "Pass",
+        "status": "p",
+        "testlink_planned_write": true,
+        "testlink_preview_digest": "2c6da100731ff43680357d82fb67ea1a33f7c3407b9ec9a61cafa754f7a8ec12",
+        "redmine_action": "none",
+        "redmine_preview_digest": null,
+        "redmine_issue_fields": null,
+        "redmine_issue_payload": null,
+        "dedupe_digest": null
+      },
+      {
+        "testcase_external_id": "EMS1-5693",
+        "test_name": "ontVoipDialPrfModify",
+        "raw_status": "Pass",
+        "status": "p",
+        "testlink_planned_write": true,
+        "testlink_preview_digest": "529a59a3c162d3a52ac26c449a54868d1121a96b87ffa9397f620be56ad87ae9",
+        "redmine_action": "none",
+        "redmine_preview_digest": null,
+        "redmine_issue_fields": null,
+        "redmine_issue_payload": null,
+        "dedupe_digest": null
+      },
+      {
+        "testcase_external_id": "EMS1-5658",
+        "test_name": "ontOntPrfAdd",
+        "raw_status": "Pass",
+        "status": "p",
+        "testlink_planned_write": true,
+        "testlink_preview_digest": "f8b38453c0e37f9b7bcb31d06865793ce93d5164c16ef7a7a73dc9232b0d4548",
+        "redmine_action": "none",
+        "redmine_preview_digest": null,
+        "redmine_issue_fields": null,
+        "redmine_issue_payload": null,
+        "dedupe_digest": null
+      },
+      {
+        "testcase_external_id": "EMS1-5663",
+        "test_name": "ontOntPrfModify",
+        "raw_status": "Pass",
+        "status": "p",
+        "testlink_planned_write": true,
+        "testlink_preview_digest": "d16915125361e68163c8bb6c5304a9369b061faab6b558a4c8dec264ada1a94b",
+        "redmine_action": "none",
+        "redmine_preview_digest": null,
+        "redmine_issue_fields": null,
+        "redmine_issue_payload": null,
+        "dedupe_digest": null
+      },
+      {
+        "testcase_external_id": "EMS1-5648",
+        "test_name": "ontSecurityPrfAdd",
+        "raw_status": "Pass",
+        "status": "p",
+        "testlink_planned_write": true,
+        "testlink_preview_digest": "439133119d145cb30dcfece743fe39dfcf1e65cb971d47ddd21e4512f9e66e88",
+        "redmine_action": "none",
+        "redmine_preview_digest": null,
+        "redmine_issue_fields": null,
+        "redmine_issue_payload": null,
+        "dedupe_digest": null
+      },
+      {
+        "testcase_external_id": "EMS1-5653",
+        "test_name": "ontSecurityPrfModify",
+        "raw_status": "Pass",
+        "status": "p",
+        "testlink_planned_write": true,
+        "testlink_preview_digest": "a9f7fb59ba1250d061abfa507406c71b236f54aeba91346f9121f0b06c2b09eb",
+        "redmine_action": "none",
+        "redmine_preview_digest": null,
+        "redmine_issue_fields": null,
+        "redmine_issue_payload": null,
+        "dedupe_digest": null
+      },
+      {
+        "testcase_external_id": "EMS1-5638",
+        "test_name": "ontUniPrfAdd",
+        "raw_status": "Pass",
+        "status": "p",
+        "testlink_planned_write": true,
+        "testlink_preview_digest": "695640ae65cc38ed5f97cb603000fa56edaa008af9630f906df3db288aa48481",
+        "redmine_action": "none",
+        "redmine_preview_digest": null,
+        "redmine_issue_fields": null,
+        "redmine_issue_payload": null,
+        "dedupe_digest": null
+      },
+      {
+        "testcase_external_id": "EMS1-6994",
+        "test_name": "ontQoSBandwidthPrfModifyGpon",
+        "raw_status": "Pass",
+        "status": "p",
+        "testlink_planned_write": true,
+        "testlink_preview_digest": "99463fe717e63648b69599674044c3529092edcfdf06c5f431d7e64410af3840",
+        "redmine_action": "none",
+        "redmine_preview_digest": null,
+        "redmine_issue_fields": null,
+        "redmine_issue_payload": null,
+        "dedupe_digest": null
+      },
+      {
+        "testcase_external_id": "EMS1-5643",
+        "test_name": "ontUniPrfModify",
+        "raw_status": "Pass",
+        "status": "p",
+        "testlink_planned_write": true,
+        "testlink_preview_digest": "783f11c41c5f919ae75c6fbdbd28ae5290967ddf762689fcb8ab551c7d39331b",
+        "redmine_action": "none",
+        "redmine_preview_digest": null,
+        "redmine_issue_fields": null,
+        "redmine_issue_payload": null,
+        "dedupe_digest": null
+      },
+      {
+        "testcase_external_id": "EMS1-5753",
+        "test_name": "ontMulticastPrfAdd",
+        "raw_status": "Pass",
+        "status": "p",
+        "testlink_planned_write": true,
+        "testlink_preview_digest": "884f483e33806fe78f76b76a3866237b9f69bafc108f87ea4157e9781db192e7",
+        "redmine_action": "none",
+        "redmine_preview_digest": null,
+        "redmine_issue_fields": null,
+        "redmine_issue_payload": null,
+        "dedupe_digest": null
+      },
+      {
+        "testcase_external_id": "EMS1-5628",
+        "test_name": "ontMulticastPrfAdd",
+        "raw_status": "Pass",
+        "status": "p",
+        "testlink_planned_write": true,
+        "testlink_preview_digest": "a7bdd171e1ee72db515d50b445e26925c152372742602977739a2ffbe655a54f",
+        "redmine_action": "none",
+        "redmine_preview_digest": null,
+        "redmine_issue_fields": null,
+        "redmine_issue_payload": null,
+        "dedupe_digest": null
+      },
+      {
+        "testcase_external_id": "EMS1-5759",
+        "test_name": "igmpGroupPrivilegePrfModify",
+        "raw_status": "Pass",
+        "status": "p",
+        "testlink_planned_write": true,
+        "testlink_preview_digest": "5027e96aa4e0520065afcf6991f950015ac654dcdc7ae6b1e5bf9658b60fa135",
+        "redmine_action": "none",
+        "redmine_preview_digest": null,
+        "redmine_issue_fields": null,
+        "redmine_issue_payload": null,
+        "dedupe_digest": null
+      },
+      {
+        "testcase_external_id": "EMS1-5633",
+        "test_name": "ontMulticastPrfModify",
+        "raw_status": "Pass",
+        "status": "p",
+        "testlink_planned_write": true,
+        "testlink_preview_digest": "a61316c949b832cc368d50ebf9a783d02ace9c006ca83caef5b07ee2797db600",
+        "redmine_action": "none",
+        "redmine_preview_digest": null,
+        "redmine_issue_fields": null,
+        "redmine_issue_payload": null,
+        "dedupe_digest": null
+      },
+      {
+        "testcase_external_id": "EMS1-6264",
+        "test_name": "ontServiceAddGpon",
+        "raw_status": "Pass",
+        "status": "p",
+        "testlink_planned_write": true,
+        "testlink_preview_digest": "b4649566a222a33085e2b72d4a9e4b6b03daaf0bc7d1e26ffe397460d04d80c4",
+        "redmine_action": "none",
+        "redmine_preview_digest": null,
+        "redmine_issue_fields": null,
+        "redmine_issue_payload": null,
+        "dedupe_digest": null
+      },
+      {
+        "testcase_external_id": "EMS1-6998",
+        "test_name": "ontServiceModifyGpon",
+        "raw_status": "Pass",
+        "status": "p",
+        "testlink_planned_write": true,
+        "testlink_preview_digest": "b9b5acc38f5cf63105703099edbb8ed1db7bd89add549e8c1e3e40c7c05cf18d",
+        "redmine_action": "none",
+        "redmine_preview_digest": null,
+        "redmine_issue_fields": null,
+        "redmine_issue_payload": null,
+        "dedupe_digest": null
+      },
+      {
+        "testcase_external_id": "EMS1-6990",
+        "test_name": "ontServiceDeleteGpon",
+        "raw_status": "Pass",
+        "status": "p",
+        "testlink_planned_write": true,
+        "testlink_preview_digest": "33e8761e43ceefc857986abd8ab1bdccc9d0f40d482d01e19e957923b2c0e6a6",
+        "redmine_action": "none",
+        "redmine_preview_digest": null,
+        "redmine_issue_fields": null,
+        "redmine_issue_payload": null,
+        "dedupe_digest": null
+      },
+      {
+        "testcase_external_id": "EMS1-5618",
+        "test_name": "ontBandwidthServicePrfAdd",
+        "raw_status": "Pass",
+        "status": "p",
+        "testlink_planned_write": true,
+        "testlink_preview_digest": "ebc3081eb71de3225a4738e2d3825ce0b7c8a6b647c2969ad79db32492ae5404",
+        "redmine_action": "none",
+        "redmine_preview_digest": null,
+        "redmine_issue_fields": null,
+        "redmine_issue_payload": null,
+        "dedupe_digest": null
+      },
+      {
+        "testcase_external_id": "EMS1-5608",
+        "test_name": "ontBandwidthServicePrfAdd",
+        "raw_status": "Pass",
+        "status": "p",
+        "testlink_planned_write": true,
+        "testlink_preview_digest": "6dc3ca26295e5cce187945fe99dcbb1f90082d6143c5299d71b53fb7e893a341",
+        "redmine_action": "none",
+        "redmine_preview_digest": null,
+        "redmine_issue_fields": null,
+        "redmine_issue_payload": null,
+        "dedupe_digest": null
+      },
+      {
+        "testcase_external_id": "EMS1-5623",
+        "test_name": "ontQoSBandwidthPrfModify",
+        "raw_status": "Pass",
+        "status": "p",
+        "testlink_planned_write": true,
+        "testlink_preview_digest": "67d7e341a0807ae1bb878112d38332625b0846560556ddfa3fb0329b7f8e7f1d",
+        "redmine_action": "none",
+        "redmine_preview_digest": null,
+        "redmine_issue_fields": null,
+        "redmine_issue_payload": null,
+        "dedupe_digest": null
+      },
+      {
+        "testcase_external_id": "EMS1-5613",
+        "test_name": "ontServicePrfModify",
+        "raw_status": "Pass",
+        "status": "p",
+        "testlink_planned_write": true,
+        "testlink_preview_digest": "8b5e5053cae968eba51d738b0e0bd9cdf7c66e3697a284703a0640cbad7d2bad",
+        "redmine_action": "none",
+        "redmine_preview_digest": null,
+        "redmine_issue_fields": null,
+        "redmine_issue_payload": null,
+        "dedupe_digest": null
+      },
+      {
+        "testcase_external_id": "EMS1-6279",
+        "test_name": "ontServiceAdd",
+        "raw_status": "Pass",
+        "status": "p",
+        "testlink_planned_write": true,
+        "testlink_preview_digest": "0fde58e2c06d35501d982226b8808e138f23e545089acc8cb65ede8e2e7eafe6",
+        "redmine_action": "none",
+        "redmine_preview_digest": null,
+        "redmine_issue_fields": null,
+        "redmine_issue_payload": null,
+        "dedupe_digest": null
+      },
+      {
+        "testcase_external_id": "EMS1-6882",
+        "test_name": "ontServiceModify",
+        "raw_status": "Pass",
+        "status": "p",
+        "testlink_planned_write": true,
+        "testlink_preview_digest": "3e2b5a37a51f5264d6391c460a93bb4d2db22d4c61bc0a74a5f63a752c896d31",
+        "redmine_action": "none",
+        "redmine_preview_digest": null,
+        "redmine_issue_fields": null,
+        "redmine_issue_payload": null,
+        "dedupe_digest": null
+      },
+      {
+        "testcase_external_id": "EMS1-6883",
+        "test_name": "ontServiceDelete",
+        "raw_status": "Pass",
+        "status": "p",
+        "testlink_planned_write": true,
+        "testlink_preview_digest": "4fd85384bb41d9f658942a0cf7d17e42bbc47a4f72227c36c8ed3e7254dda16c",
+        "redmine_action": "none",
+        "redmine_preview_digest": null,
+        "redmine_issue_fields": null,
+        "redmine_issue_payload": null,
+        "dedupe_digest": null
+      },
+      {
+        "testcase_external_id": "EMS1-3633",
+        "test_name": "ontTempPrfAdd",
+        "raw_status": "Pass",
+        "status": "p",
+        "testlink_planned_write": true,
+        "testlink_preview_digest": "537f2e7565f9b4ab91e0d42ec6e04d4b9a7cdb0de22f914325578e9487b0c5a3",
+        "redmine_action": "none",
+        "redmine_preview_digest": null,
+        "redmine_issue_fields": null,
+        "redmine_issue_payload": null,
+        "dedupe_digest": null
+      },
+      {
+        "testcase_external_id": "EMS1-5603",
+        "test_name": "ontTempPrfModify",
+        "raw_status": "Pass",
+        "status": "p",
+        "testlink_planned_write": true,
+        "testlink_preview_digest": "3acf96ee74f98a9e1d6c8a7cde5137300f8d7636d2aaab558e02b1d3a94f3b6e",
+        "redmine_action": "none",
+        "redmine_preview_digest": null,
+        "redmine_issue_fields": null,
+        "redmine_issue_payload": null,
+        "dedupe_digest": null
+      },
+      {
+        "testcase_external_id": "EMS1-3631",
+        "test_name": "ontTempPrfDel",
+        "raw_status": "Pass",
+        "status": "p",
+        "testlink_planned_write": true,
+        "testlink_preview_digest": "5143f3553081a52f09a1ac7993f271e61ff65c3767aad678e91a604c0850bcb3",
+        "redmine_action": "none",
+        "redmine_preview_digest": null,
+        "redmine_issue_fields": null,
+        "redmine_issue_payload": null,
+        "dedupe_digest": null
+      },
+      {
+        "testcase_external_id": "EMS1-5764",
+        "test_name": "qosPrfAdd",
+        "raw_status": "Pass",
+        "status": "p",
+        "testlink_planned_write": true,
+        "testlink_preview_digest": "4a0928b2d73bfa61e1758b6f68b02c77e265f9932097574cf820da42a69cfdc2",
+        "redmine_action": "none",
+        "redmine_preview_digest": null,
+        "redmine_issue_fields": null,
+        "redmine_issue_payload": null,
+        "dedupe_digest": null
+      },
+      {
+        "testcase_external_id": "EMS1-5775",
+        "test_name": "qosPrfAdd",
+        "raw_status": "Pass",
+        "status": "p",
+        "testlink_planned_write": true,
+        "testlink_preview_digest": "b303a045ed14e2b3a02c9950a68b6bd99cb8810e62ba20a8ec33e71ca868f891",
+        "redmine_action": "none",
+        "redmine_preview_digest": null,
+        "redmine_issue_fields": null,
+        "redmine_issue_payload": null,
+        "dedupe_digest": null
+      },
+      {
+        "testcase_external_id": "EMS1-5786",
+        "test_name": "qosPrfAdd",
+        "raw_status": "Pass",
+        "status": "p",
+        "testlink_planned_write": true,
+        "testlink_preview_digest": "6a534e845fd5cdf776559013938767ffa202fac8e73f0fa0602dc40d77f891d9",
+        "redmine_action": "none",
+        "redmine_preview_digest": null,
+        "redmine_issue_fields": null,
+        "redmine_issue_payload": null,
+        "dedupe_digest": null
+      },
+      {
+        "testcase_external_id": "EMS1-5792",
+        "test_name": "WeightPrfModify",
+        "raw_status": "Pass",
+        "status": "p",
+        "testlink_planned_write": true,
+        "testlink_preview_digest": "78e275dfa7b3e5b86a232abbce76499ece46cb2653954b2cd424bd706c24e2c1",
+        "redmine_action": "none",
+        "redmine_preview_digest": null,
+        "redmine_issue_fields": null,
+        "redmine_issue_payload": null,
+        "dedupe_digest": null
+      },
+      {
+        "testcase_external_id": "EMS1-5781",
+        "test_name": "ShapingPrfModify",
+        "raw_status": "Pass",
+        "status": "p",
+        "testlink_planned_write": true,
+        "testlink_preview_digest": "8d7b100e7c11eb5c3393d7d965f71a424f1b597f57cf26285bdc8d8ffc994b1c",
+        "redmine_action": "none",
+        "redmine_preview_digest": null,
+        "redmine_issue_fields": null,
+        "redmine_issue_payload": null,
+        "dedupe_digest": null
+      },
+      {
+        "testcase_external_id": "EMS1-5770",
+        "test_name": "RateLimitPrfModify",
+        "raw_status": "Pass",
+        "status": "p",
+        "testlink_planned_write": true,
+        "testlink_preview_digest": "7f29b34e0d52ef7b315dbacacf6edd11ff5dc0b93dc29bfa7d5be24f04c9515d",
+        "redmine_action": "none",
+        "redmine_preview_digest": null,
+        "redmine_issue_fields": null,
+        "redmine_issue_payload": null,
+        "dedupe_digest": null
+      },
+      {
+        "testcase_external_id": "EMS1-6995",
+        "test_name": "igmpGroupPrivilegePrfAddGe",
+        "raw_status": "Pass",
+        "status": "p",
+        "testlink_planned_write": true,
+        "testlink_preview_digest": "4febb28bfe0ccce1b6857fc072c2e04123f34ce77106d84b08c84c09b050b936",
+        "redmine_action": "none",
+        "redmine_preview_digest": null,
+        "redmine_issue_fields": null,
+        "redmine_issue_payload": null,
+        "dedupe_digest": null
+      },
+      {
+        "testcase_external_id": "EMS1-6996",
+        "test_name": "igmpGroupPrivilegePrfModifyGe",
+        "raw_status": "Pass",
+        "status": "p",
+        "testlink_planned_write": true,
+        "testlink_preview_digest": "23f45d54f0cca7acea2f5fde731ed6dde6a068fc3033e65c7f046c79339e66e7",
+        "redmine_action": "none",
+        "redmine_preview_digest": null,
+        "redmine_issue_fields": null,
+        "redmine_issue_payload": null,
+        "dedupe_digest": null
+      },
+      {
+        "testcase_external_id": "EMS1-5742",
+        "test_name": "geTempPrfAdd",
+        "raw_status": "Pass",
+        "status": "p",
+        "testlink_planned_write": true,
+        "testlink_preview_digest": "e35ccb5ec9802be71101c405f7fd09a08a37a0f7508eb48440616f6045e3a876",
+        "redmine_action": "none",
+        "redmine_preview_digest": null,
+        "redmine_issue_fields": null,
+        "redmine_issue_payload": null,
+        "dedupe_digest": null
+      },
+      {
+        "testcase_external_id": "EMS1-5748",
+        "test_name": "geTempPrfModify",
+        "raw_status": "Pass",
+        "status": "p",
+        "testlink_planned_write": true,
+        "testlink_preview_digest": "9d0c116dfc03a17db634768c8eb909c480e1d3179ebea30e4bae55938671c155",
+        "redmine_action": "none",
+        "redmine_preview_digest": null,
+        "redmine_issue_fields": null,
+        "redmine_issue_payload": null,
+        "dedupe_digest": null
+      },
+      {
+        "testcase_external_id": "EMS1-5740",
+        "test_name": "geTempPrfDel",
+        "raw_status": "Pass",
+        "status": "p",
+        "testlink_planned_write": true,
+        "testlink_preview_digest": "e3c8c02444e7631f1a80b1148f993481ff9e749168c46cec5ad186bc1989df1e",
+        "redmine_action": "none",
+        "redmine_preview_digest": null,
+        "redmine_issue_fields": null,
+        "redmine_issue_payload": null,
+        "dedupe_digest": null
+      },
+      {
+        "testcase_external_id": "EMS1-6646",
+        "test_name": "addIpHost",
+        "raw_status": "Pass",
+        "status": "p",
+        "testlink_planned_write": true,
+        "testlink_preview_digest": "59950be5cf4577f4c7edd84e21f94de1cc97d98eaadeda2914c2f36a14208e74",
+        "redmine_action": "none",
+        "redmine_preview_digest": null,
+        "redmine_issue_fields": null,
+        "redmine_issue_payload": null,
+        "dedupe_digest": null
+      },
+      {
+        "testcase_external_id": "EMS1-6880",
+        "test_name": "modifyIpHost",
+        "raw_status": "Pass",
+        "status": "p",
+        "testlink_planned_write": true,
+        "testlink_preview_digest": "0217124d7eda5d6db2b6fa8164a9a787f8912463b3bef8a262e33c41f30a2a60",
+        "redmine_action": "none",
+        "redmine_preview_digest": null,
+        "redmine_issue_fields": null,
+        "redmine_issue_payload": null,
+        "dedupe_digest": null
+      },
+      {
+        "testcase_external_id": "EMS1-6881",
+        "test_name": "deleteIpHost",
+        "raw_status": "Pass",
+        "status": "p",
+        "testlink_planned_write": true,
+        "testlink_preview_digest": "eebe06444c6153d794d26286e047b659d28cb3106227aa969a958df6d2bac393",
+        "redmine_action": "none",
+        "redmine_preview_digest": null,
+        "redmine_issue_fields": null,
+        "redmine_issue_payload": null,
+        "dedupe_digest": null
+      }
+    ]
+  }
+}

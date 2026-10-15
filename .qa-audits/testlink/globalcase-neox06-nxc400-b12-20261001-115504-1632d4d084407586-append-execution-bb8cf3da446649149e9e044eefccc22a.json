@@ -1,0 +1,13 @@
+{
+  "schema_version": "1.0",
+  "operation_id": "globalcase-neox06-nxc400-b12-20261001-115504-1632d4d084407586",
+  "environment": "corp",
+  "action": "append-execution",
+  "status": "failed",
+  "preview_digest": "f05d951a61e4a6bf4d6320c3008604ffb42863a603aca2867059fc2b85f624de",
+  "error": {
+    "type": "TestLinkError",
+    "message": "TestLink did not record the execution: Test Case (name=Profile Modification Update To Device - Gpon/id=994005) is not associated with Test Plan (name=NetAtlas EMS/id=260150) for Platform (name=NetAtlas EMS/id=49)."
+  },
+  "finished_at": "2026-10-05T00:44:22+00:00"
+}

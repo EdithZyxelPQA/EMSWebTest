@@ -1,0 +1,20 @@
+{
+  "schema_version": "1.0",
+  "operation_id": "profiles-ems128-100-b13-redhat-20261008-dbb904563b7da533",
+  "environment": "corp",
+  "action": "append-execution",
+  "status": "success",
+  "preview_digest": "7f1f32e55916e870d0f15e5cc13df0e5c4f2cfd00a0aca289c2b1dd43a636107",
+  "testcase_external_id": "EMS1-5646",
+  "execution_id": "3165614",
+  "response": [
+    {
+      "status": true,
+      "operation": "reportTCResult",
+      "overwrite": false,
+      "message": "Success!",
+      "id": 3165614
+    }
+  ],
+  "finished_at": "2026-10-08T08:10:10+00:00"
+}

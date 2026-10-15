@@ -1,0 +1,22 @@
+
+2026-09-15 14
+Update_Chromedriver3 start - - - - - - - - - - - - - -  - - - - - - - - - - - - - - - - - - -  - - - - - 
+152.0.7977 152.0.7977 https://storage.googleapis.com/chrome-for-testing-public/152.0.7977.0/win64/chromedriver-win64.zip
+152.0.7977 152.0.7977 https://storage.googleapis.com/chrome-for-testing-public/152.0.7977.2/win64/chromedriver-win64.zip
+152.0.7977 152.0.7977 https://storage.googleapis.com/chrome-for-testing-public/152.0.7977.6/win64/chromedriver-win64.zip
+152.0.7977 152.0.7977 https://storage.googleapis.com/chrome-for-testing-public/152.0.7977.7/win64/chromedriver-win64.zip
+152.0.7977 152.0.7977 https://storage.googleapis.com/chrome-for-testing-public/152.0.7977.8/win64/chromedriver-win64.zip
+152.0.7977 152.0.7977 https://storage.googleapis.com/chrome-for-testing-public/152.0.7977.13/win64/chromedriver-win64.zip
+152.0.7977 152.0.7977 https://storage.googleapis.com/chrome-for-testing-public/152.0.7977.30/win64/chromedriver-win64.zip
+152.0.7977 152.0.7977 https://storage.googleapis.com/chrome-for-testing-public/152.0.7977.42/win64/chromedriver-win64.zip
+152.0.7977 152.0.7977 https://storage.googleapis.com/chrome-for-testing-public/152.0.7977.54/win64/chromedriver-win64.zip
+152.0.7977 152.0.7977 https://storage.googleapis.com/chrome-for-testing-public/152.0.7977.64/win64/chromedriver-win64.zip
+152.0.7977 152.0.7977 https://storage.googleapis.com/chrome-for-testing-public/152.0.7977.75/win64/chromedriver-win64.zip
+152.0.7977 152.0.7977 https://storage.googleapis.com/chrome-for-testing-public/152.0.7977.82/win64/chromedriver-win64.zip
+
+Download url: https://storage.googleapis.com/chrome-for-testing-public/152.0.7977.82/win64/chromedriver-win64.zip
+Chrome version is not match with driver version, download another one.
+
+Download done.
+Update_Chromedriver3 finished - - - - - - - - - - - - - -  - - - - - - - - - - - - - - - - - - -  - - - - - 
+

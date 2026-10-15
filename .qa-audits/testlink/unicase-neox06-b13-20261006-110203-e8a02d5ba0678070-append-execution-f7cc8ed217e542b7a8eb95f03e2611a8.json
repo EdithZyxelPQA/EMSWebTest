@@ -1,0 +1,20 @@
+{
+  "schema_version": "1.0",
+  "operation_id": "unicase-neox06-b13-20261006-110203-e8a02d5ba0678070",
+  "environment": "corp",
+  "action": "append-execution",
+  "status": "success",
+  "preview_digest": "5ec604bd3e903d7efa26a34ffbb1408f60f843880bc89d4cdb880af05dbf7cd4",
+  "testcase_external_id": "EMS1-6885",
+  "execution_id": "3160537",
+  "response": [
+    {
+      "status": true,
+      "operation": "reportTCResult",
+      "overwrite": false,
+      "message": "Success!",
+      "id": 3160537
+    }
+  ],
+  "finished_at": "2026-10-06T03:02:36+00:00"
+}

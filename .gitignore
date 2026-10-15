@@ -22,3 +22,5 @@ env/
 
 *.local.json
 environment_parameter.local.json
+
+debug_artifacts/
